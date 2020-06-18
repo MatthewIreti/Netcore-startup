@@ -1,0 +1,17 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NCELAP", "NCELAP\NCELAP.csproj", "{ACA8A35D-71F6-4522-A709-012AC52F26FD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ACA8A35D-71F6-4522-A709-012AC52F26FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACA8A35D-71F6-4522-A709-012AC52F26FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACA8A35D-71F6-4522-A709-012AC52F26FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ACA8A35D-71F6-4522-A709-012AC52F26FD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
