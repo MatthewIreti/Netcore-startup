@@ -1,0 +1,6 @@
+﻿https://github.com/NLog/NLog/wiki/Getting-started-with-ASP.NET-Core-3
+https://dotnetcoretutorials.com/2020/01/31/using-swagger-in-net-core-3/
+https://docs.microsoft.com/en-us/aspnet/core/tutorials/getting-started-with-swashbuckle?view=aspnetcore-3.1&tabs=visual-studio
+https://www.hanselman.com/blog/ASPNETCoreRESTfulWebAPIVersioningMadeEasy.aspx
+https://github.com/microsoft/aspnet-api-versioning
+https://codingfreaks.de/dotnet-core-api-versioning/
