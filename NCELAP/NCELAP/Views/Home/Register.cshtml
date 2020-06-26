@@ -1,0 +1,129 @@
+﻿
+@{
+    ViewData["Title"] = "Register";
+    Layout = "_LayoutLogin";
+}
+
+<section class="row flexbox-container">
+    <div class="col-xl-6 col-10 justify-content-center">
+        <div class="card bg-authentication rounded-0 mb-0">
+            <div class="row m-0">
+               
+                <div class="col-lg-12 col-12 p-0">
+                    <div class="card rounded-0 mb-0 p-2">
+                        <div class="card-header pt-50 pb-1">
+                            <div class="card-title">
+                                <h4 class="mb-0">Create Account</h4>
+                            </div>
+                        </div>
+                        <p class="px-2">Fill the below form to create a new account.</p>
+                        <div class="card-content">
+                            <div class="card-body pt-0">
+                                <form>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="businessName" class="mb-1 font-weight-bold">Business Name</label>
+                                                <input type="text" id="businessName" class="form-control" placeholder="Business Name" required>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="businessEmail" class="mb-1 font-weight-bold">Email Address</label>
+                                                <input type="email" id="businessEmail" class="form-control" placeholder="Email Address" required>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="businessPassword" class="mb-1 font-weight-bold">Password</label>
+                                                <input type="password" id="businessPassword" class="form-control" placeholder="Password" required>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="businessConfPassword" class="mb-1 font-weight-bold">Confirm Password</label>
+                                                <input type="password" id="businessConfPassword" class="form-control" placeholder="Confirm Password" required>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="businessTel" class="mb-1 font-weight-bold">Telephone</label>
+                                                <input type="tel" id="businessTel" class="form-control" placeholder="+2348137427373" required>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="businessMobile" class="mb-1 font-weight-bold">Mobile</label>
+                                                <input type="tel" id="businessMobile" class="form-control" placeholder="+2348137427373" required>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="businessPostalCode" class="mb-1 font-weight-bold">Postal Code</label>
+                                                <input type="tel" id="businessPostalCode" class="form-control" placeholder="123456" required>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="businessWebAddress" class="mb-1 font-weight-bold">Web Address</label>
+                                                <input type="tel" id="businessWebAddress" class="form-control" placeholder="www.website.com" required>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="businessAddress" class="mb-1 font-weight-bold">Location</label>
+                                                <input type="tel" id="businessAddress" class="form-control" placeholder="Lekki, Lagos" required>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <div class="col-12">
+                                            <fieldset class="checkbox float-left">
+                                                <div class="vs-checkbox-con vs-checkbox-primary">
+                                                    <input type="checkbox" checked>
+                                                    <span class="vs-checkbox">
+                                                        <span class="vs-checkbox--check">
+                                                            <i class="vs-icon feather icon-check"></i>
+                                                        </span>
+                                                    </span>
+                                                    <span class=""> I accept the terms & conditions.</span>
+                                                </div>
+                                            </fieldset>
+                                            <button class="btn btn-primary float-right btn-inline mb-50">Register</button>
+
+
+                                        </div>
+                                    </div>
+                                    <p class="center text-center">
+                                        Already have an account? <a asp-controller="Home" asp-action="Login">Login</a>
+                                    </p>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
