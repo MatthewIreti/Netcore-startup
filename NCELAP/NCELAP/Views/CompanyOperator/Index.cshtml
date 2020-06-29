@@ -6,9 +6,36 @@
 
 
 
+<div class="content-header row">
+    <div class="content-header-left col-md-9 col-12 mb-2">
+        <div class="row breadcrumbs-top">
+            <div class="col-12">
+                <h2 class="content-header-title float-left mb-0">Dashboard</h2>
+                <div class="breadcrumb-wrapper col-12">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a>Home</a>
+                        </li>
+                        <li class="breadcrumb-item active">
+                            <a href="#">Dashboard</a>
+                        </li>
 
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content-header-right text-md-right col-md-3 col-12 d-md-block d-none">
+        <div class="form-group breadcrum-right">
+            <div class="dropdown">
+                <button class="btn-icon btn btn-primary btn-round btn-sm dropdown-toggle waves-effect waves-light" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="feather icon-settings"></i></button>
+                <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="#">Chat</a><a class="dropdown-item" href="#">Email</a><a class="dropdown-item" href="#">Calendar</a></div>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="row">
-    <div class="col-lg-4 col-sm-6 col-12">
+    <div class="col-lg-3 col-sm-6 col-12">
         <div class="card">
             <div class="card-header d-flex align-items-start pb-0">
                 <div>
@@ -23,7 +50,7 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-4 col-sm-6 col-12">
+    <div class="col-lg-3 col-sm-6 col-12">
         <div class="card">
             <div class="card-header d-flex align-items-start pb-0">
                 <div>
@@ -38,7 +65,7 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-4 col-sm-6 col-12">
+    <div class="col-lg-3 col-sm-6 col-12">
         <div class="card">
             <div class="card-header d-flex align-items-start pb-0">
                 <div>
@@ -48,6 +75,23 @@
                 <div class="avatar bg-rgba-danger p-50 m-0">
                     <div class="avatar-content">
                         <i class="feather icon-x text-danger font-medium-5"></i>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-3 col-sm-6 col-12">
+        <div class="card">
+            <div class="card-header d-flex align-items-start pb-0">
+                <div>
+                    <h2 class="text-bold-700 mb-0">2</h2>
+                    <p>Payments</p>
+                </div>
+                <div class="avatar bg-rgba-info p-50 m-0">
+                    <div class="avatar-content">
+                        <i class="feather icon-heart text-info font-medium-5"></i>
 
                     </div>
                 </div>
@@ -65,115 +109,183 @@
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">Applications</h4>
-                    <hr />
+                    <div class="float-right">
+                        <button class="btn btn-info" data-toggle="modal" data-target="#licenseInquiry">Licence Inquiry</button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="licenseInquiry" tabindex="-1" role="dialog"
+                             aria-labelledby="licenseInquiryTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-dialog-centered modal-dialog-scrollable"
+                                 role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="licenseInquiryTitle">Licence Inquiry</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form>
+                                            <div class="form-group">
+                                                <label>License Type</label>
+                                                <select class="form-control">
+                                                    <option>Gas Shipper</option>
+                                                    <option>Gas Transporter</option>
+                                                    <option>Gas Shipper Agent</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>License Category</label>
+                                                <select class="form-control">
+                                                    <option>T1:</option>
+                                                    <option>T2: </option>
+                                                    <option>T3: </option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Capacity</label>
+                                                <select class="form-control">
+                                                    <option> Systems with capacity < 1 BSCF/D</option>
+                                                    <option>Systems with capacity < 10 BSCF/D</option>
+                                                    <option>Systems with capacity < 100 BSCF/D</option>
+                                                </select>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button class="btn btn-success" data-toggle="modal" data-target="#licenseDetails">Submit Inquiry</button>
+                                                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <a class="btn btn-success text-white"><i class="fa fa-plus"></i> &nbsp; Application</a>
+
+                    </div>
                 </div>
-               
+                <hr />
                 <div class="card-content">
                     <div class="card-body card-dashboard">
                         <div class="table-responsive">
                             <table class="table zero-configuration">
                                 <thead>
                                     <tr>
-                                        <th>Name</th>
-                                        <th>Position</th>
-                                        <th>Office</th>
-                                        <th>Age</th>
-                                        <th>Start date</th>
-                                        <th>Salary</th>
+                                        <th>Application ID</th>
+                                        <th>Application Date</th>
+                                        <th>Duration</th>
+                                        <th>Business Name</th>
+                                        <th>Authorized Representative</th>
+                                        <th>LIcense Type</th>
+                                        <th>Effective Date</th>
+                                        <th>Status</th>
+                                        <th class="largeHead">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                  
+
                                     <tr>
-                                        <td>Bradley Greer</td>
-                                        <td>Software Engineer</td>
-                                        <td>London</td>
-                                        <td>41</td>
-                                        <td>2012/10/13</td>
-                                        <td>$132,000</td>
+                                        <td>001</td>
+                                        <td>22/10/2020</td>
+                                        <td>12 months</td>
+                                        <td>Wade and co</td>
+                                        <td>Giwa Adams</td>
+                                        <td>Gas transporter</td>
+                                        <td>22/10/2020</td>
+                                        <td><div class="badge badge-pill badge-warning">Pending</div></td>
+                                        <td><a class="btn btn-primary text-white">View Details</a></td>
                                     </tr>
                                     <tr>
-                                        <td>Dai Rios</td>
-                                        <td>Personnel Lead</td>
-                                        <td>Edinburgh</td>
-                                        <td>35</td>
-                                        <td>2012/09/26</td>
-                                        <td>$217,500</td>
+                                        <td>001</td>
+                                        <td>22/10/2020</td>
+                                        <td>12 months</td>
+                                        <td>Wade and co</td>
+                                        <td>Giwa Adams</td>
+                                        <td>Gas transporter</td>
+                                        <td>22/10/2020</td>
+                                        <td><div class="badge badge-pill badge-warning">Pending</div></td>
+                                        <td><a class="btn btn-primary text-white">View Details</a></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>001</td>
+                                        <td>22/10/2020</td>
+                                        <td>12 months</td>
+                                        <td>Wade and co</td>
+                                        <td>Giwa Adams</td>
+                                        <td>Gas transporter</td>
+                                        <td>22/10/2020</td>
+                                        <td><div class="badge badge-pill badge-warning">Pending</div></td>
+                                        <td><a class="btn btn-primary text-white">View Details</a></td>
                                     </tr>
                                     <tr>
-                                        <td>Jenette Caldwell</td>
-                                        <td>Development Lead</td>
-                                        <td>New York</td>
-                                        <td>30</td>
-                                        <td>2011/09/03</td>
-                                        <td>$345,000</td>
+                                        <td>001</td>
+                                        <td>22/10/2020</td>
+                                        <td>12 months</td>
+                                        <td>Wade and co</td>
+                                        <td>Giwa Adams</td>
+                                        <td>Gas transporter</td>
+                                        <td>22/10/2020</td>
+                                        <td><div class="badge badge-pill badge-warning">Pending</div></td>
+                                        <td><a class="btn btn-primary text-white">View Details</a></td>
                                     </tr>
                                     <tr>
-                                        <td>Yuri Berry</td>
-                                        <td>Chief Marketing Officer (CMO)</td>
-                                        <td>New York</td>
-                                        <td>40</td>
-                                        <td>2009/06/25</td>
-                                        <td>$675,000</td>
+                                        <td>001</td>
+                                        <td>22/10/2020</td>
+                                        <td>12 months</td>
+                                        <td>Wade and co</td>
+                                        <td>Giwa Adams</td>
+                                        <td>Gas transporter</td>
+                                        <td>22/10/2020</td>
+                                        <td><div class="badge badge-pill badge-warning">Pending</div></td>
+                                        <td><a class="btn btn-primary text-white">View Details</a></td>
                                     </tr>
                                     <tr>
-                                        <td>Cara Stevens</td>
-                                        <td>Sales Assistant</td>
-                                        <td>New York</td>
-                                        <td>46</td>
-                                        <td>2011/12/06</td>
-                                        <td>$145,600</td>
+                                        <td>001</td>
+                                        <td>22/10/2020</td>
+                                        <td>12 months</td>
+                                        <td>Wade and co</td>
+                                        <td>Giwa Adams</td>
+                                        <td>Gas transporter</td>
+                                        <td>22/10/2020</td>
+                                        <td><div class="badge badge-pill badge-warning">Pending</div></td>
+                                        <td><a class="btn btn-primary text-white">View Details</a></td>
                                     </tr>
                                     <tr>
-                                        <td>Hermione Butler</td>
-                                        <td>Regional Director</td>
-                                        <td>London</td>
-                                        <td>47</td>
-                                        <td>2011/03/21</td>
-                                        <td>$356,250</td>
+                                        <td>001</td>
+                                        <td>22/10/2020</td>
+                                        <td>12 months</td>
+                                        <td>Wade and co</td>
+                                        <td>Giwa Adams</td>
+                                        <td>Gas transporter</td>
+                                        <td>22/10/2020</td>
+                                        <td><div class="badge badge-pill badge-warning">Pending</div></td>
+                                        <td><a class="btn btn-primary text-white">View Details</a></td>
                                     </tr>
                                     <tr>
-                                        <td>Lael Greer</td>
-                                        <td>Systems Administrator</td>
-                                        <td>London</td>
-                                        <td>21</td>
-                                        <td>2009/02/27</td>
-                                        <td>$103,500</td>
+                                        <td>001</td>
+                                        <td>22/10/2020</td>
+                                        <td>12 months</td>
+                                        <td>Wade and co</td>
+                                        <td>Giwa Adams</td>
+                                        <td>Gas transporter</td>
+                                        <td>22/10/2020</td>
+                                        <td><div class="badge badge-pill badge-warning">Pending</div></td>
+                                        <td><a class="btn btn-primary text-white">View Details</a></td>
                                     </tr>
                                     <tr>
-                                        <td>Jonas Alexander</td>
-                                        <td>Developer</td>
-                                        <td>San Francisco</td>
-                                        <td>30</td>
-                                        <td>2010/07/14</td>
-                                        <td>$86,500</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Shad Decker</td>
-                                        <td>Regional Director</td>
-                                        <td>Edinburgh</td>
-                                        <td>51</td>
-                                        <td>2008/11/13</td>
-                                        <td>$183,000</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Michael Bruce</td>
-                                        <td>Javascript Developer</td>
-                                        <td>Singapore</td>
-                                        <td>29</td>
-                                        <td>2011/06/27</td>
-                                        <td>$183,000</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Donna Snider</td>
-                                        <td>Customer Support</td>
-                                        <td>New York</td>
-                                        <td>27</td>
-                                        <td>2011/01/25</td>
-                                        <td>$112,000</td>
+                                        <td>001</td>
+                                        <td>22/10/2020</td>
+                                        <td>12 months</td>
+                                        <td>Wade and co</td>
+                                        <td>Giwa Adams</td>
+                                        <td>Gas transporter</td>
+                                        <td>22/10/2020</td>
+                                        <td><div class="badge badge-pill badge-warning">Pending</div></td>
+                                        <td><a class="btn btn-primary text-white">View Details</a></td>
                                     </tr>
                                 </tbody>
-                               
+
                             </table>
                         </div>
                     </div>
@@ -215,30 +327,69 @@
 
 
 
-
-<div id="regulationModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <!-- Modal content-->
+<!-- Modal -->
+<div class="modal fade" id="licenseDetails" tabindex="-1" role="dialog"
+     aria-labelledby="licenseDetailsTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-centered modal-dialog-scrollable"
+         role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Modal Header</h4>
+                <h5 class="modal-title" id="licenseDetailsTitle">Licence Inquiry</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
-                <p>Some text in the modal.</p>
+                <form>
+                    <h6>Your Licence Inquiry Fee is detailed below</h6>
+                    <div class="form-group">
+                        <label>License Type</label>
+                        <select class="form-control">
+                            <option>Gas Shipper</option>
+                            <option>Gas Transporter</option>
+                            <option>Gas Shipper Agent</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>License Category</label>
+                        <select class="form-control">
+                            <option>T1:</option>
+                            <option>T2: </option>
+                            <option>T3: </option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Capacity</label>
+                        <select class="form-control">
+                            <option> Systems with capacity < 1 BSCF/D</option>
+                            <option>Systems with capacity < 10 BSCF/D</option>
+                            <option>Systems with capacity < 100 BSCF/D</option>
+                        </select>
+                    </div>
+                    <div>
+                        <p>
+                            Proposed License Fee includes:
+                        </p>
+                        <div class="row">
+                            <div class="col-lg-4 col-md-4 col-sm-12">
+                                <span>Statutory Fee:</span><span> 0.5</span>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-12">
+                                <span>Processing Fee:</span><span> 1.0</span>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-12">
+                                <span>Total:</span><span> 1.5</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <a class="btn btn-success text-white">Proceed to new Application</a>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </div>
 
+        </div>
     </div>
 </div>
-
-<script>
-
-    $(document).ready(function () {
-        $('#large').modal('show');
-    });
-</script>
 

@@ -12,5 +12,9 @@ namespace NCELAP.Controllers
         {
             return View();
         }
+        public IActionResult NewApplication()
+        {
+            return View();
+        }
     }
 }
