@@ -1,0 +1,100 @@
+﻿
+@{
+    ViewData["Title"] = "ViewTicket";
+    Layout = "_LayoutDashboard";
+}
+
+    <div class="content-header row">
+        <div class="content-header-left col-md-9 col-12 mb-2">
+            <div class="row breadcrumbs-top">
+                <div class="col-12">
+                    <h2 class="content-header-title float-left mb-0">Dashboard</h2>
+                    <div class="breadcrumb-wrapper col-12">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a>Home</a>
+                            </li>
+                            <li class="breadcrumb-item active">
+                                <a href="#">Ticket Details</a>
+                            </li>
+
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content-header-right text-md-right col-md-3 col-12 d-md-block d-none">
+            <div class="form-group breadcrum-right">
+                <div class="dropdown">
+                    <button class="btn-icon btn btn-primary btn-round btn-sm dropdown-toggle waves-effect waves-light" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="feather icon-settings"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <section>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Ticket Details</h4>
+                     
+                    </div>
+                    <hr />
+                    <div class="card-content">
+                        <div class="card-body card-dashboard">
+                            
+                            <div class="row">
+                                <div class="col-lg-6 offset-lg-3 col-md-6 offset-md-6">
+                                    <form>
+                                        <div class="form-group">
+                                            <label>Ticket ID</label>
+                                            <input type="text" class="form-control" readonly="readonly" value="#fe12we34">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Subject</label>
+                                            <input type="text" value="Processing fee for licence renewal" readonly="readonly" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Your Message</label>
+                                            <textarea rows="5" class="form-control" readonly="readonly">Processing fee for licence renewal, Processing fee for licence renewal, Processing fee for licence renewal, Processing fee for licence renewal, Processing fee for licence renewal,Processing fee for licence renewal</textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Attach Supporting File</label>
+                                            <div class="custom-file">
+                                                <button class="btn btn-primary"><i class="fa fa-download"></i> Download</button> Document.pdf
+
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Priority</label>
+                                            <select class="form-control" readonly="readonly">
+
+                                                <option>High</option>
+                                                <option>Medium </option>
+                                                <option>Low </option>
+                                            </select>
+                                        </div>
+
+                                        <h6 class="mt-2">Response</h6>
+                                        <hr />
+
+                                        <div class="form-group">
+                                            <label>Your Message</label>
+                                            <textarea rows="5" class="form-control" readonly="readonly">Processing fee for licence renewal, Processing fee for licence renewal, Processing fee for licence renewal, Processing fee for licence renewal, Processing fee for licence renewal,Processing fee for licence renewal</textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Status</label><br />
+                                            <button class="btn btn-light">Closed</button>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>

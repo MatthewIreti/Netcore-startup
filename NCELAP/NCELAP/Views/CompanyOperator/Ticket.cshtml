@@ -1,0 +1,308 @@
+﻿
+@{
+    ViewData["Title"] = "Ticket";
+    Layout = "_LayoutDashboard";
+}
+
+
+<div class="content-header row">
+    <div class="content-header-left col-md-9 col-12 mb-2">
+        <div class="row breadcrumbs-top">
+            <div class="col-12">
+                <h2 class="content-header-title float-left mb-0">Dashboard</h2>
+                <div class="breadcrumb-wrapper col-12">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a>Home</a>
+                        </li>
+                        <li class="breadcrumb-item active">
+                            <a href="#">Ticket</a>
+                        </li>
+
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content-header-right text-md-right col-md-3 col-12 d-md-block d-none">
+        <div class="form-group breadcrum-right">
+            <div class="dropdown">
+                <button class="btn-icon btn btn-primary btn-round btn-sm dropdown-toggle waves-effect waves-light" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="feather icon-settings"></i></button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-3 col-sm-6 col-12">
+        <div class="card">
+            <div class="card-header d-flex align-items-start pb-0">
+                <div>
+                    <h2 class="text-bold-700 mb-0">8</h2>
+                    <p>New Tickets</p>
+                </div>
+                <div class="avatar bg-rgba-primary p-50 m-0">
+                    <div class="avatar-content">
+                        <i class="feather icon-edit-2 text-primary font-medium-5"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-sm-6 col-12">
+        <div class="card">
+            <div class="card-header d-flex align-items-start pb-0">
+                <div>
+                    <h2 class="text-bold-700 mb-0">1</h2>
+                    <p>Ticket Resolved</p>
+                </div>
+                <div class="avatar bg-rgba-success p-50 m-0">
+                    <div class="avatar-content">
+                        <i class="feather icon-check text-success font-medium-5"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-sm-6 col-12">
+        <div class="card">
+            <div class="card-header d-flex align-items-start pb-0">
+                <div>
+                    <h2 class="text-bold-700 mb-0">2</h2>
+                    <p>Ticket Unreplied</p>
+                </div>
+                <div class="avatar bg-rgba-danger p-50 m-0">
+                    <div class="avatar-content">
+                        <i class="feather icon-x text-danger font-medium-5"></i>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-3 col-sm-6 col-12">
+        <div class="card">
+            <div class="card-header d-flex align-items-start pb-0">
+                <div>
+                    <h2 class="text-bold-700 mb-0">2</h2>
+                    <p>Replies Per Ticket</p>
+                </div>
+                <div class="avatar bg-rgba-info p-50 m-0">
+                    <div class="avatar-content">
+                        <i class="feather icon-heart text-info font-medium-5"></i>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<!-- Zero configuration table -->
+<section id="basic-datatable">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Applications</h4>
+                    <div class="float-right">
+                        <a class="btn btn-success text-white" data-toggle="modal" data-target="#newTicket"><i class="fa fa-plus"></i> &nbsp; Ticket</a>
+                        <!-- Modal -->
+                        <div class="modal fade" id="newTicket" tabindex="-1" role="dialog"
+                             aria-labelledby="newTicketTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-dialog-centered modal-dialog-scrollable"
+                                 role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="newTicketTitle">Ticket ID</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form>
+                                            <div class="form-group">
+                                                <label>Ticket ID</label>
+                                                <input type="text" class="form-control" id="readonlyInput" readonly="readonly" value="#fe12we34">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Subject</label>
+                                                <input type="text" class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Your Message</label>
+                                                <textarea class="form-control"></textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Attach Supporting File</label>
+                                                <div class="custom-file">
+                                                    <input type="file" class="custom-file-input" id="inputGroupFile01">
+                                                    <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="form-group">
+                                                <label>Priority</label>
+                                                <select class="form-control">
+                                                    <option>--Select Priorty--</option>
+                                                    <option>High</option>
+                                                    <option>Medium </option>
+                                                    <option>Low </option>
+                                                </select>
+                                            </div>
+
+                                            <div class="modal-footer">
+                                                <button class="btn btn-success" data-toggle="modal" data-target="#licenseDetails">Submit Ticket</button>
+                                                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                <hr />
+                <div class="card-content">
+                    <div class="card-body card-dashboard">
+                        <div class="table-responsive">
+                            <table class="table zero-configuration">
+                                <thead>
+                                    <tr>
+                                        <th>S/N</th>
+                                        <th>Ticket ID</th>
+                                        <th>SUbject</th>
+                                        <th>Priority</th>
+                                        <th>Updated</th>
+                                        <th>Status</th>
+                                        <th class="largeHead">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <tr>
+                                        <td>001</td>
+                                        <td>12E34#rt</td>
+                                        <td>Process Fee Inquiry</td>
+                                        <td><div class="badge badge-warning">Low</div></td>
+                                        <td>25 mins ago</td>
+                                        <td><button class="btn btn-sm btn-outline-success">Open</button></td>
+                                        <td><a class="btn btn-primary text-white" asp-action="ViewTicket" asp-controller="CompanyOperator">View Details</a></td>
+                                    </tr>
+
+
+                                    <tr>
+                                        <td>001</td>
+                                        <td>12E34#rt</td>
+                                        <td>Process Fee Inquiry</td>
+                                        <td><div class="badge badge-danger">High</div></td>
+                                        <td>25 mins ago</td>
+                                        <td><button class="btn btn-sm btn-light">Closed</button></td>
+                                        <td><a class="btn btn-primary text-white" asp-action="ViewTicket" asp-controller="CompanyOperator">View Details</a></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>001</td>
+                                        <td>12E34#rt</td>
+                                        <td>Process Fee Inquiry</td>
+                                        <td><div class="badge badge-warning">Low</div></td>
+                                        <td>25 mins ago</td>
+                                        <td><button class="btn btn-sm btn-outline-success">Open</button></td>
+                                        <td><a class="btn btn-primary text-white" asp-action="ViewTicket" asp-controller="CompanyOperator">View Details</a></td>
+                                    </tr>
+
+
+                                    <tr>
+                                        <td>001</td>
+                                        <td>12E34#rt</td>
+                                        <td>Process Fee Inquiry</td>
+                                        <td><div class="badge badge-danger">High</div></td>
+                                        <td>25 mins ago</td>
+                                        <td><button class="btn btn-sm btn-light">Closed</button></td>
+                                        <td><a class="btn btn-primary text-white" asp-action="ViewTicket" asp-controller="CompanyOperator">View Details</a></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>001</td>
+                                        <td>12E34#rt</td>
+                                        <td>Process Fee Inquiry</td>
+                                        <td><div class="badge badge-warning">Low</div></td>
+                                        <td>25 mins ago</td>
+                                        <td><button class="btn btn-sm btn-outline-success">Open</button></td>
+                                        <td><a class="btn btn-primary text-white" asp-action="ViewTicket" asp-controller="CompanyOperator">View Details</a></td>
+                                    </tr>
+
+
+                                    <tr>
+                                        <td>001</td>
+                                        <td>12E34#rt</td>
+                                        <td>Process Fee Inquiry</td>
+                                        <td><div class="badge badge-danger">High</div></td>
+                                        <td>25 mins ago</td>
+                                        <td><button class="btn btn-sm btn-light">Closed</button></td>
+                                        <td><a class="btn btn-primary text-white" asp-action="ViewTicket" asp-controller="CompanyOperator">View Details</a></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>001</td>
+                                        <td>12E34#rt</td>
+                                        <td>Process Fee Inquiry</td>
+                                        <td><div class="badge badge-warning">Low</div></td>
+                                        <td>25 mins ago</td>
+                                        <td><button class="btn btn-sm btn-outline-success">Open</button></td>
+                                        <td><a class="btn btn-primary text-white" asp-action="ViewTicket" asp-controller="CompanyOperator">View Details</a></td>
+                                    </tr>
+
+
+                                    <tr>
+                                        <td>001</td>
+                                        <td>12E34#rt</td>
+                                        <td>Process Fee Inquiry</td>
+                                        <td><div class="badge badge-danger">High</div></td>
+                                        <td>25 mins ago</td>
+                                        <td><button class="btn btn-sm btn-light">Closed</button></td>
+                                        <td><a class="btn btn-primary text-white" asp-action="ViewTicket" asp-controller="CompanyOperator">View Details</a></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>001</td>
+                                        <td>12E34#rt</td>
+                                        <td>Process Fee Inquiry</td>
+                                        <td><div class="badge badge-warning">Low</div></td>
+                                        <td>25 mins ago</td>
+                                        <td><button class="btn btn-sm btn-outline-success">Open</button></td>
+                                        <td><a class="btn btn-primary text-white" asp-action="ViewTicket" asp-controller="CompanyOperator">View Details</a></td>
+                                    </tr>
+
+
+                                    <tr>
+                                        <td>001</td>
+                                        <td>12E34#rt</td>
+                                        <td>Process Fee Inquiry</td>
+                                        <td><div class="badge badge-danger">High</div></td>
+                                        <td>25 mins ago</td>
+                                        <td><button class="btn btn-sm btn-light">Closed</button></td>
+                                        <td><a class="btn btn-primary text-white" asp-action="ViewTicket" asp-controller="CompanyOperator">View Details</a></td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--/ Zero configuration table -->
+
+
+
+
+

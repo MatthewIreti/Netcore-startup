@@ -1,0 +1,167 @@
+﻿
+@{
+    ViewData["Title"] = "Payment History";
+    Layout = "_LayoutDashboard";
+}
+
+<div class="content-header row">
+    <div class="content-header-left col-md-9 col-12 mb-2">
+        <div class="row breadcrumbs-top">
+            <div class="col-12">
+                <h4 class="content-header-title float-left mb-0">Dashboard</h4>
+                <div class="breadcrumb-wrapper col-12">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a>Home</a>
+                        </li>
+                        <li class="breadcrumb-item active">
+                            <a href="#">Payment History</a>
+                        </li>
+
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content-header-right text-md-right col-md-3 col-12 d-md-block d-none">
+        <div class="form-group breadcrum-right">
+            <div class="dropdown">
+                <button class="btn-icon btn btn-primary btn-round btn-sm dropdown-toggle waves-effect waves-light" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="feather icon-settings"></i></button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="content-body">
+    <section>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Payment History</h4>
+                    </div>
+                    <hr />
+                    <div class="card-content">
+                        <div class="card-body card-dashboard">
+                            <div class="table-responsive">
+                                <table class="table" id="paymentHistory">
+                                    <thead>
+                                        <tr>
+                                            <th>Application ID</th>
+                                            <th>Payment ID</th>
+                                            <th>Licence Type</th>
+                                            <th>Payment Date</th>
+                                            <th>Amount</th>
+                                            <th>RRR</th>
+                                            <th>Payment Purpose</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>001</td>
+                                            <td>421</td>
+                                            <td>Gas Transporter</td>
+                                            <td>Gas Shipper</td>
+                                            <td>22/10/2020</td>
+                                            <td>1234567890</td>
+                                            <td>Update Licence</td>
+                                        </tr>
+                                        <tr>
+                                            <td>001</td>
+                                            <td>421</td>
+                                            <td>Gas Transporter</td>
+                                            <td>Gas Shipper</td>
+                                            <td>22/10/2020</td>
+                                            <td>1234567890</td>
+                                            <td>Update Licence</td>
+                                        </tr>
+                                        <tr>
+                                            <td>001</td>
+                                            <td>421</td>
+                                            <td>Gas Transporter</td>
+                                            <td>Gas Shipper</td>
+                                            <td>22/10/2020</td>
+                                            <td>1234567890</td>
+                                            <td>Update Licence</td>
+                                        </tr>
+                                        <tr>
+                                            <td>001</td>
+                                            <td>421</td>
+                                            <td>Gas Transporter</td>
+                                            <td>Gas Shipper</td>
+                                            <td>22/10/2020</td>
+                                            <td>1234567890</td>
+                                            <td>Update Licence</td>
+                                        </tr>
+                                        <tr>
+                                            <td>001</td>
+                                            <td>421</td>
+                                            <td>Gas Transporter</td>
+                                            <td>Gas Shipper</td>
+                                            <td>22/10/2020</td>
+                                            <td>1234567890</td>
+                                            <td>Update Licence</td>
+                                        </tr>
+                                        <tr>
+                                            <td>001</td>
+                                            <td>421</td>
+                                            <td>Gas Transporter</td>
+                                            <td>Gas Shipper</td>
+                                            <td>22/10/2020</td>
+                                            <td>1234567890</td>
+                                            <td>Update Licence</td>
+                                        </tr>
+                                        <tr>
+                                            <td>001</td>
+                                            <td>421</td>
+                                            <td>Gas Transporter</td>
+                                            <td>Gas Shipper</td>
+                                            <td>22/10/2020</td>
+                                            <td>1234567890</td>
+                                            <td>Update Licence</td>
+                                        </tr>
+                                        <tr>
+                                            <td>001</td>
+                                            <td>421</td>
+                                            <td>Gas Transporter</td>
+                                            <td>Gas Shipper</td>
+                                            <td>22/10/2020</td>
+                                            <td>1234567890</td>
+                                            <td>Update Licence</td>
+                                        </tr>
+                                        <tr>
+                                            <td>001</td>
+                                            <td>421</td>
+                                            <td>Gas Transporter</td>
+                                            <td>Gas Shipper</td>
+                                            <td>22/10/2020</td>
+                                            <td>1234567890</td>
+                                            <td>Update Licence</td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+   
+  
+
+</div>
+
+@section scripts{
+
+    <script>
+    $(document).ready(function() {
+    $('#paymentHistory').DataTable();
+} );
+    </script>
+
+}
