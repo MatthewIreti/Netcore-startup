@@ -9,3 +9,17 @@ NOTE:
 ------
 PLACE HERE YOUR OWN SCSS CODES AND IF NEEDED, OVERRIDE THE STYLES FROM THE OTHER STYLESHEETS.
 WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BETTER LIKE THIS.  */
+.animate__animated.animate__fadeIn { 
+	--animate-duration: 3s;
+}
+
+.customFieldLabel {
+	font-size: 14px;
+	text-decoration: solid;
+	font-weight: bold
+}
+
+
+.rowPadding {
+	padding-top: 10px
+}

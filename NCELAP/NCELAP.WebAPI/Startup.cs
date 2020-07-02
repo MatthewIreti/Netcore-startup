@@ -32,9 +32,24 @@ namespace NCELAP.WebAPI
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
+        // readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsApiPolicy",
+                builder =>
+                {
+                    builder.WithOrigins("https://localhost:44374", "https://webapi.azurewebsites.net")
+                        .WithHeaders(new[] { "authorization", "content-type", "accept" })
+                        .WithMethods(new[] { "GET", "POST", "PUT", "DELETE", "OPTIONS" })
+                        ;
+                });
+            });
+
             services.AddControllers();
+            //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             services.AddSwaggerGen(swagger =>
             {
                 swagger.SwaggerDoc("v1", new OpenApiInfo {
@@ -54,7 +69,7 @@ namespace NCELAP.WebAPI
                 });
             });
             services.AddSwaggerGenNewtonsoftSupport();
-            services.AddApiVersioning();
+            //services.AddApiVersioning();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -71,8 +86,10 @@ namespace NCELAP.WebAPI
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "NCELAP Web API");
                 c.RoutePrefix = string.Empty;
             });
-            app.UseHttpsRedirection();
 
+            app.UseCors("CorsApiPolicy");
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
             app.UseRouting();
 
             app.UseAuthorization();

@@ -14,7 +14,7 @@ namespace NCELAP.WebAPI.Services
 {
     public class AuthService
     {
-        IConfiguration _configuration;
+        readonly IConfiguration _configuration;
         public AuthService(IConfiguration configuration)
         {
             _configuration = configuration;
@@ -22,9 +22,9 @@ namespace NCELAP.WebAPI.Services
 
         public string GetAuthToken()
         {
-            string environmentAuthConfig;
-            string currentEnv = _configuration.GetSection("Environments").GetSection("current").Value;
-
+            string environmentAuthConfig, currentEnv = string.Empty;
+            currentEnv = _configuration.GetSection("Environments").GetSection("current").Value;
+            
             if (currentEnv == "dev")
             {
                 environmentAuthConfig = "DevAuthConfig";
