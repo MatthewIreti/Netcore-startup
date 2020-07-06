@@ -18,7 +18,7 @@ namespace NCELAP.WebAPI.Services.Account
     public class UserAccountsService
     {
         readonly IConfiguration _configuration;
-        private readonly string businessaccount, businessaccountlegalstatus;
+        private readonly string businessaccount, businessaccountlegalstatus, businessaccountshareholder, businessaccountdirector, docupload;
         private readonly AuthService _authService;
 
         public UserAccountsService(IConfiguration configuration)
@@ -27,6 +27,9 @@ namespace NCELAP.WebAPI.Services.Account
             _authService = new AuthService(_configuration);
             businessaccount = _configuration.GetSection("Endpoints").GetSection("custprospect").Value;
             businessaccountlegalstatus = _configuration.GetSection("Endpoints").GetSection("custprospectlegalstatus").Value;
+            businessaccountshareholder  = _configuration.GetSection("Endpoints").GetSection("custprospectshareholder").Value;
+            businessaccountdirector = _configuration.GetSection("Endpoints").GetSection("custprospectsdirector").Value;
+            docupload = _configuration.GetSection("Endpoints").GetSection("custprospectupload").Value;
         }
 
         public async Task<bool> SaveBusinessInformation(RegisteredBusiness registeredBusiness)
@@ -42,9 +45,12 @@ namespace NCELAP.WebAPI.Services.Account
 
             var custProspectForSave = new RegisteredBusinessForSave()
             {
+                CustProspectId = "CUSTPROSP-" + Helper.GetYearMonthDayHourMinuteSeconds(),
                 Address = registeredBusiness.Address,
                 BusinessName = registeredBusiness.BusinessName,
                 Email = registeredBusiness.Email,
+                UniqueId = Helper.RandomAlhpaNumeric(15),
+                CompanyLegalStatus = "SoleProprietorship",
                 Mobile = registeredBusiness.Mobile,
                 PostalCode = registeredBusiness.PostalCode,
                 Telephone = registeredBusiness.Telephone,
@@ -67,7 +73,6 @@ namespace NCELAP.WebAPI.Services.Account
                     client.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/json");
 
                     var dateRegistered = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc);
-                    custProspectForSave.CustProspectId = Helper.GetYearMonthDayHourMinuteSeconds();
                     custProspectForSave.RegisteredOn = dateRegistered;
 
                     var responseMessage = await client.PostAsJsonAsync(businessaccount, custProspectForSave);
@@ -80,6 +85,15 @@ namespace NCELAP.WebAPI.Services.Account
                     if (responseMessage.IsSuccessStatusCode)
                     {
                         response = true;
+
+                        // save business shareholders
+                        var prospectShareholdersSaveResponse = await this.SaveCustProspectShareholders(registeredBusiness.Shareholders, custProspectResponse.RecordId, custProspectForSave.CustProspectId);
+
+                        // save business directors
+                        var prospectDirectorsSaveResponse = await this.SaveCustProspectDirectors(registeredBusiness.Directors, custProspectResponse.RecordId, custProspectForSave.CustProspectId);
+
+                        // upload supporting documents
+                        var supportingDocsUpload = await this.UploadCustProspectSupportingDocuments(registeredBusiness.SupportingDocuments, custProspectResponse.RecordId, custProspectForSave.BusinessName);
                     }
                 }
             }
@@ -91,7 +105,116 @@ namespace NCELAP.WebAPI.Services.Account
             return response;
         }
 
-        public async Task<bool> SaveLegalStatusInformation(CustProspectLegalStatus custProspectLegalStatus)
+        public async Task<bool> SaveCustProspectShareholders(CustProspectShareholder[] custProspectShareholders, long custProspectRecId, string custProspectId)
+        {
+            bool response = false;
+
+            var helper = new Helper(_configuration);
+            var authOperation = new AuthService(_configuration);
+            int count = 0;
+
+            string token = _authService.GetAuthToken();
+            string currentEnvironment = helper.GetEnvironmentUrl();
+
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri(currentEnvironment);
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+                    client.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/json");
+
+                    foreach (var custProspectShareholder in custProspectShareholders)
+                    {
+                        custProspectShareholder.CustProspectId = custProspectId;
+                        custProspectShareholder.CustProspectRecId = custProspectRecId;
+                        custProspectShareholder.UniqueId = Helper.RandomAlhpaNumeric(15);
+                        var dateRegistered = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc);
+
+                        var responseMessage = await client.PostAsJsonAsync(businessaccountshareholder, custProspectShareholder);
+                        var errorMessage = responseMessage.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+
+                        StreamReader sr = new StreamReader(await responseMessage.Content.ReadAsStreamAsync());
+                        var reportSaveResponse = sr.ReadToEnd();
+
+                        if (responseMessage.IsSuccessStatusCode)
+                        {
+                            count++;
+                        }
+                    }
+                    
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex.StackTrace);
+            }
+
+            if (count > 0)
+            {
+                response = true;
+            }
+
+            return response;
+        }
+
+
+        public async Task<bool> SaveCustProspectDirectors(CustProspectDirector[] custProspectDirectors, long custProspectRecId, string custProspectId)
+        {
+            bool response = false;
+
+            var helper = new Helper(_configuration);
+            var authOperation = new AuthService(_configuration);
+            int count = 0;
+
+            string token = _authService.GetAuthToken();
+            string currentEnvironment = helper.GetEnvironmentUrl();
+
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri(currentEnvironment);
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+                    client.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/json");
+
+                    foreach (var custProspectDirector in custProspectDirectors)
+                    {
+                        custProspectDirector.CustProspectId = custProspectId;
+                        custProspectDirector.CustProspectRecId = custProspectRecId;
+                        custProspectDirector.UniqueId = Helper.RandomAlhpaNumeric(15);
+                        var dateRegistered = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc);
+
+                        var responseMessage = await client.PostAsJsonAsync(businessaccountdirector, custProspectDirector);
+                        var errorMessage = responseMessage.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+
+                        StreamReader sr = new StreamReader(await responseMessage.Content.ReadAsStreamAsync());
+                        var reportSaveResponse = sr.ReadToEnd();
+
+                        if (responseMessage.IsSuccessStatusCode)
+                        {
+                            count++;
+                        }
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex.StackTrace);
+            }
+
+            if (count > 0)
+            {
+                response = true;
+            }
+
+            return response;
+        }
+
+        public async Task<bool> UploadCustProspectSupportingDocuments(CustProspectUploads custProspectUploads, long custProspectRecId, string businessName)
         {
             bool response = false;
 
@@ -110,19 +233,27 @@ namespace NCELAP.WebAPI.Services.Account
                     client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
                     client.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/json");
 
+                    custProspectUploads.CustProspectRecId = custProspectRecId;
+                    custProspectUploads.CertificateOfIncorporationFileName = businessName + "_Cert_of_Incorporation";
+                    custProspectUploads.CertificateOfRegistrationFileName = businessName + "_Cert_of_Registration";
+                    custProspectUploads.MemorandumArticlesOfAssociationFileName = businessName + "_Memo_Articles_of_Association";
+                    custProspectUploads.DeedOfPartnershipFileName = businessName + "_Deed_of_Partnership";
+                    custProspectUploads.DeedOfTrustFileName = businessName + "_Deed_of_Trust";
+
                     var dateRegistered = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc);
 
-                    var responseMessage = await client.PostAsJsonAsync(businessaccountlegalstatus, custProspectLegalStatus);
+                    var responseMessage = await client.PostAsJsonAsync(docupload, custProspectUploads);
                     var errorMessage = responseMessage.Content.ReadAsStringAsync().GetAwaiter().GetResult();
 
-                    StreamReader sr = new StreamReader(await responseMessage.Content.ReadAsStreamAsync());
-                    var reportSaveResponse = sr.ReadToEnd();
-                    //reportResponse = JsonConvert.DeserializeObject<ReportInfoResponse>(reportSaveResponse);
+                    //StreamReader sr = new StreamReader(await responseMessage.Content.ReadAsStreamAsync());
+                    //var reportSaveResponse = sr.ReadToEnd();
 
-                    if (responseMessage.IsSuccessStatusCode)
-                    {
-                        response = true;
-                    }
+                    response = true;
+                    //if (responseMessage.IsSuccessStatusCode)
+                    //{
+                    //    count++;
+                    //}
+
                 }
             }
             catch (Exception ex)
@@ -132,9 +263,5 @@ namespace NCELAP.WebAPI.Services.Account
 
             return response;
         }
-
-        // create super admin account
-        // send out email informing the super admin an account has been created
-
     }
 }

@@ -9,11 +9,35 @@ namespace NCELAP.WebAPI.Models.DTO
     {
     }
 
-   public class CustProspectLegalStatus
-   {
+    public class CustProspectLegalStatus
+    {
         public string Name { get; set; }
         public bool Checked { get; set; }
     }
+
+    public class CustProspectShareholder
+    {
+        public long CustProspectRecId { get; set; }
+        public string CustProspectId { get; set; }
+        public string Name { get; set; }
+        public string Address { get; set; }
+        public string Nationality { get; set; }
+        public string CountryOfUsualResidence { get; set; }
+        public string UniqueId { get; set; }
+    }
+
+    public class CustProspectDirector
+    {
+        public long CustProspectRecId { get; set; }
+        public string CustProspectId { get; set; }
+        public string Name { get; set; }
+        public string Address { get; set; }
+        public string Nationality { get; set; }
+        public string CountryOfUsualResidence { get; set; }
+        public string UniqueId { get; set; }
+        
+    }
+
 
     public class CustProspectLegalStatusForSave
     {

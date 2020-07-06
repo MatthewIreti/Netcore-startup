@@ -84,7 +84,7 @@ namespace NCELAP.WebAPI.Util
         public static string GetYearMonthDayHourMinuteSeconds()
         {
             // var yearMonthDay = DateTime.Now.Year.ToString() + "-" +  + "-" + DateTime.Now.Day.ToString();
-            var currentDateTime = new DateTime();
+            var currentDateTime = DateTime.Now;
 
             var year = currentDateTime.Year.ToString();
             var month = currentDateTime.Month.ToString();
@@ -103,7 +103,7 @@ namespace NCELAP.WebAPI.Util
                 month = "0" + month;
             }
 
-            var yearMonthDayHourMinuteSecond = String.Format("%1%2%3%4%5%6%7%8", year, month, day, hour, minute, second, "-", Helper.RandomNumbers(4)); 
+            string yearMonthDayHourMinuteSecond = year + month + day + hour + minute + second + "-" + Helper.RandomNumbers(4); 
 
             return yearMonthDayHourMinuteSecond;
         }

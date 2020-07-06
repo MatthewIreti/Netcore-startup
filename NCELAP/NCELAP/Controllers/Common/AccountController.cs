@@ -22,5 +22,10 @@ namespace NCELAP.Controllers.Account
         {
             return View();
         }
+
+        public IActionResult RegistrationComplete()
+        {
+            return View();
+        }
     }
 }
