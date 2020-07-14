@@ -4,391 +4,722 @@
     Layout = "_LayoutDashboard";
 }
 
+<main ng-controller="companyoperatorIndexCtrl">
+    <div class="content-header row">
+        <div class="content-header-left col-md-9 col-12 mb-2">
+            <div class="row breadcrumbs-top">
+                <div class="col-12">
+                    <h2 class="content-header-title float-left mb-0">Dashboard</h2>
+                    <div class="breadcrumb-wrapper col-12">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a>Home</a>
+                            </li>
+                            <li class="breadcrumb-item active">
+                                <a href="#">Dashboard</a>
+                            </li>
 
-
-<div class="content-header row">
-    <div class="content-header-left col-md-9 col-12 mb-2">
-        <div class="row breadcrumbs-top">
-            <div class="col-12">
-                <h2 class="content-header-title float-left mb-0">Dashboard</h2>
-                <div class="breadcrumb-wrapper col-12">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item">
-                            <a>Home</a>
-                        </li>
-                        <li class="breadcrumb-item active">
-                            <a href="#">Dashboard</a>
-                        </li>
-
-                    </ol>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="content-header-right text-md-right col-md-3 col-12 d-md-block d-none">
-        <div class="form-group breadcrum-right">
-            <div class="dropdown">
-                <button class="btn-icon btn btn-primary btn-round btn-sm dropdown-toggle waves-effect waves-light" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="feather icon-settings"></i></button>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-lg-3 col-sm-6 col-12">
-        <div class="card">
-            <div class="card-header d-flex align-items-start pb-0">
-                <div>
-                    <h2 class="text-bold-700 mb-0">8</h2>
-                    <p>New Application</p>
-                </div>
-                <div class="avatar bg-rgba-primary p-50 m-0">
-                    <div class="avatar-content">
-                        <i class="feather icon-edit-2 text-primary font-medium-5"></i>
+                        </ol>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="col-lg-3 col-sm-6 col-12">
-        <div class="card">
-            <div class="card-header d-flex align-items-start pb-0">
-                <div>
-                    <h2 class="text-bold-700 mb-0">1</h2>
-                    <p>Approved Application</p>
-                </div>
-                <div class="avatar bg-rgba-success p-50 m-0">
-                    <div class="avatar-content">
-                        <i class="feather icon-check text-success font-medium-5"></i>
-                    </div>
+        <div class="content-header-right text-md-right col-md-3 col-12 d-md-block d-none">
+            <div class="form-group breadcrum-right">
+                <div class="dropdown">
+                    <button class="btn-icon btn btn-primary btn-round btn-sm dropdown-toggle waves-effect waves-light" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="feather icon-settings"></i></button>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-lg-3 col-sm-6 col-12">
-        <div class="card">
-            <div class="card-header d-flex align-items-start pb-0">
-                <div>
-                    <h2 class="text-bold-700 mb-0">2</h2>
-                    <p>Declined Application</p>
-                </div>
-                <div class="avatar bg-rgba-danger p-50 m-0">
-                    <div class="avatar-content">
-                        <i class="feather icon-x text-danger font-medium-5"></i>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-lg-3 col-sm-6 col-12">
-        <div class="card">
-            <div class="card-header d-flex align-items-start pb-0">
-                <div>
-                    <h2 class="text-bold-700 mb-0">2</h2>
-                    <p>Payments</p>
-                </div>
-                <div class="avatar bg-rgba-info p-50 m-0">
-                    <div class="avatar-content">
-                        <i class="feather icon-heart text-info font-medium-5"></i>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-</div>
-
-
-<!-- Zero configuration table -->
-<section id="basic-datatable">
     <div class="row">
-        <div class="col-12">
+        <div class="col-lg-3 col-sm-6 col-12">
             <div class="card">
-                <div class="card-header">
-                    <h4 class="card-title">Applications</h4>
-                    <div class="float-right">
-                        <button class="btn btn-info" data-toggle="modal" data-target="#licenseInquiry">Licence Inquiry</button>
+                <div class="card-header d-flex align-items-start pb-0">
+                    <div>
+                        <h2 class="text-bold-700 mb-0">8</h2>
+                        <p>New Application</p>
+                    </div>
+                    <div class="avatar bg-rgba-primary p-50 m-0">
+                        <div class="avatar-content">
+                            <i class="feather icon-edit-2 text-primary font-medium-5"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-sm-6 col-12">
+            <div class="card">
+                <div class="card-header d-flex align-items-start pb-0">
+                    <div>
+                        <h2 class="text-bold-700 mb-0">1</h2>
+                        <p>Approved Applications</p>
+                    </div>
+                    <div class="avatar bg-rgba-success p-50 m-0">
+                        <div class="avatar-content">
+                            <i class="feather icon-check text-success font-medium-5"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-sm-6 col-12">
+            <div class="card">
+                <div class="card-header d-flex align-items-start pb-0">
+                    <div>
+                        <h2 class="text-bold-700 mb-0">2</h2>
+                        <p>Declined Applications</p>
+                    </div>
+                    <div class="avatar bg-rgba-danger p-50 m-0">
+                        <div class="avatar-content">
+                            <i class="feather icon-x text-danger font-medium-5"></i>
 
-                        <!-- Modal -->
-                        <div class="modal fade" id="licenseInquiry" tabindex="-1" role="dialog"
-                             aria-labelledby="licenseInquiryTitle" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered modal-dialog-centered modal-dialog-scrollable"
-                                 role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="licenseInquiryTitle">Licence Inquiry</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form>
-                                            <div class="form-group">
-                                                <label>License Type</label>
-                                                <select class="form-control">
-                                                    <option>Gas Shipper</option>
-                                                    <option>Gas Transporter</option>
-                                                    <option>Gas Shipper Agent</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>License Category</label>
-                                                <select class="form-control">
-                                                    <option>T1:</option>
-                                                    <option>T2: </option>
-                                                    <option>T3: </option>
-                                                </select>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Capacity</label>
-                                                <select class="form-control">
-                                                    <option> Systems with capacity < 1 BSCF/D</option>
-                                                    <option>Systems with capacity < 10 BSCF/D</option>
-                                                    <option>Systems with capacity < 100 BSCF/D</option>
-                                                </select>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button class="btn btn-success" data-toggle="modal" data-target="#licenseDetails">Submit Inquiry</button>
-                                                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                                            </div>
-                                        </form>
-                                    </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
+        <div class="col-lg-3 col-sm-6 col-12">
+            <div class="card">
+                <div class="card-header d-flex align-items-start pb-0">
+                    <div>
+                        <h2 class="text-bold-700 mb-0">2</h2>
+                        <p>Payments</p>
+                    </div>
+                    <div class="avatar bg-rgba-info p-50 m-0">
+                        <div class="avatar-content">
+                            <i class="feather icon-heart text-info font-medium-5"></i>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- Zero configuration table -->
+    <section id="basic-datatable">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Applications</h4>
+                        <div class="float-right">
+                            @*<button class="btn btn-success" data-toggle="modal" data-target="#licenseInquiry"><i class="fa fa-plus"></i> New Application</button>*@
+                            <a href="/companyoperator/newapplication" class="btn btn-success" target="_blank"><i class="fa fa-plus"></i> New Application</a>
+                            <!-- Modal -->
+                            <div class="modal fade" id="licenseInquiry" tabindex="-1" role="dialog"
+                                    aria-labelledby="licenseInquiryTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-lg"
+                                        role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="licenseInquiryTitle">License Inquiry</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form>
+                                                <div class="row">
+                                                    <div class="col col-xl-6 col-lg-6 col-12">
+                                                        <div class="form-group">
+                                                            <label>
+                                                                <strong>License Type applied for: </strong>
+                                                            </label>
+                                                            <select class="form-control" ng-model="selectedLicenseType">
+                                                                <option value="{{licensetype.Name}}" ng-repeat="licensetype in licensetypes">{{ licensetype.Name }}</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col col-xl-6 col-lg-6 col-12">
+                                                        <div class="form-group">
+                                                            <label>
+                                                                <strong>Select the License this application relates to: </strong>
+                                                            </label>
+                                                            <select class="form-control" ng-model="selectedLicenseType">
+                                                                <option value="{{licensetype.Name}}" ng-repeat="licensetype in licensetypes">{{ licensetype.Name }}</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col col-xl-6 col-lg-6 col-12">
+                                                        <label>
+                                                            <strong>Desired effective date of this application</strong>
+                                                        </label>
+                                                        @*<input type="date" class="form-control" />*@
+                                                        <input type="text" class="form-control pickadate picker__input picker__input--active" readonly="" id="P1713891391" aria-haspopup="true" aria-readonly="false" aria-owns="P1713891391_root">
+                                                    </div>
+                                                </div>
+
+                                                <section id="accordion-with-margin">
+                                                    <div class="row">
+                                                        <div class="col col-12" style="padding-left: 0px; padding-right: 0px">
+                                                            <div class="card collapse-icon accordion-icon-rotate">
+                                                                @*<div class="card-header">
+                                                                    <strong> Margin</strong>
+                                                                </div>*@
+                                                                <div class="card-body">
+                                                                    <p>
+                                                                        <strong>Details of previous applications made and licenses held</strong>
+                                                                    </p>
+                                                                    <hr />
+                                                                    <div class="accordion" id="accordionExample" data-toggle-hover="true">
+                                                                        <div class="collapse-margin">
+                                                                            <div class="card-header collapsed" id="headingOne" data-toggle="collapse" role="button" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                                                                <span class="lead collapse-title" style="font-size: 12px">
+                                                                                    Does the applicant or related person hold any related license?
+                                                                                </span>
+                                                                            </div>
+
+                                                                            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample" style="">
+                                                                                <div class="card-body">
+                                                                                    <div class="row">
+                                                                                        <div class="col col-lg-6 col-xl-6 col-12">
+                                                                                            <div class="form-group">
+                                                                                                <label>Response {{ holdRelatedLicense }}</label>
+                                                                                                <select class="form-control" ng-model="holdRelatedLicense">
+                                                                                                    <option value="">--Select Response--</option>
+                                                                                                    <option value="true">Yes</option>
+                                                                                                    <option value="false">No</option>
+                                                                                                </select>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col col-lg-6 col-xl-6 col-12">
+                                                                                            <div class="form-group">
+                                                                                                <label>Details of License(s)</label>
+                                                                                                <input type="text" class="form-control" />
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="row">
+                                                                                        <div class="col col-lg-6 col-xl-6 col-12">
+                                                                                            <div class="form-group">
+                                                                                                <label>Details of License(s) as attachment</label>
+                                                                                                <input type="file" class="form-control" ng-disabled="holdRelatedLicense === 'false' || holdRelatedLicense === ''" />
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="collapse-margin">
+                                                                            <div class="card-header" id="headingTwo" data-toggle="collapse" role="button" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                                                                <span class="lead collapse-title" style="font-size: 12px">
+                                                                                    Has the applicant or any related person applied for (successfully or not) or intent to apply for any other related licenses?
+                                                                                </span>
+                                                                            </div>
+                                                                            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                                                                                <div class="card-body">
+                                                                                    <div class="row">
+                                                                                        <div class="col col-lg-5 col-xl-5 col-12">
+                                                                                            <div class="form-group">
+                                                                                                <label>Response</label>
+                                                                                                <select class="form-control">
+                                                                                                    <option value="">--Select Response--</option>
+                                                                                                    <option value="true">Yes</option>
+                                                                                                    <option value="false">No</option>
+                                                                                                </select>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col col-lg-7 col-xl-7 col-12">
+                                                                                            <div class="form-group">
+                                                                                                <label>Type of license(s) applied for or intended to be applied for</label>
+                                                                                                <input type="text" class="form-control" />
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="row">
+                                                                                        <div class="col col-lg-6 col-xl-6 col-12">
+                                                                                            <div class="form-group">
+                                                                                                <label>Type of license(s) applied for or intended to be applied for as attachment</label>
+                                                                                                <input type="file" class="form-control" />
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="collapse-margin">
+                                                                            <div class="card-header" id="headingThree" data-toggle="collapse" role="button" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                                                                <span class="lead collapse-title" style="font-size: 12px">
+                                                                                    Has the applicant or any related person previously had any license revoked in the oil & gas value chain in the last 3 years?
+                                                                                </span>
+                                                                            </div>
+                                                                            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                                                                                <div class="card-body">
+                                                                                    <div class="row">
+                                                                                        <div class="col col-lg-6 col-xl-6 col-12">
+                                                                                            <div class="form-group">
+                                                                                                <label>Response</label>
+                                                                                                <select class="form-control">
+                                                                                                    <option value="">--Select Response--</option>
+                                                                                                    <option value="true">Yes</option>
+                                                                                                    <option value="false">No</option>
+                                                                                                </select>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col col-lg-6 col-xl-6 col-12">
+                                                                                            <div class="form-group">
+                                                                                                <label>Type of License revoked</label>
+                                                                                                <input type="text" class="form-control" />
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                    </div>
+                                                                                    <div class="row">
+                                                                                        <div class="col col-lg-6 col-xl-6 col-12">
+                                                                                            <div class="form-group">
+                                                                                                <label>Type of License revoked as attachment</label>
+                                                                                                <input type="file" class="form-control" />
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="collapse-margin">
+                                                                            <div class="card-header" id="headingFour" data-toggle="collapse" role="button" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                                                                <span class="lead collapse-title" style="font-size: 12px">
+                                                                                    Has the applicant or any related person previously had any gas application refused?
+                                                                                </span>
+                                                                            </div>
+                                                                            <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
+                                                                                <div class="card-body">
+                                                                                    <div class="row">
+                                                                                        <div class="col col-lg-6 col-xl-6 col-12">
+                                                                                            <div class="form-group">
+                                                                                                <label>Response</label>
+                                                                                                <select class="form-control">
+                                                                                                    <option value="">--Select Response--</option>
+                                                                                                    <option value="true">Yes</option>
+                                                                                                    <option value="false">No</option>
+                                                                                                </select>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col col-lg-6 col-xl-6 col-12">
+                                                                                            <div class="form-group">
+                                                                                                <label>Type of License(s) application(s) refused</label>
+                                                                                                <input type="text" class="form-control" />
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="row">
+                                                                                        <div class="col col-lg-6 col-xl-6 col-12">
+                                                                                            <div class="form-group">
+                                                                                                <label>Type of License(s) application(s) refused as attachment</label>
+                                                                                                <input type="file" class="form-control" />
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </section>
+                                                <div ng-show="selectedLicenseType === 'Gas Shipper Agent'">
+                                                    <div class="row">
+                                                        <div class="col col-12">
+                                                            <div class="form-group">
+                                                                <label><strong>Name of Shipper</strong></label>
+                                                                <input type="text" class="form-control" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col col-12">
+                                                            <div class="form-group">
+                                                                <label><strong>Location of Shipper</strong></label>
+                                                                <input type="text" class="form-control" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col col-12">
+                                                            <div class="form-group">
+                                                                <label><strong>On which Entry/Exit point will you book and nominate capacity for Shipper?</strong></label>
+                                                                <input type="text" class="form-control" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col col-12">
+                                                            <div class="form-group">
+                                                                <label><strong>What will be the maximum capacity you will book nominate for Shipper?</strong></label>
+                                                                <input type="text" class="form-control" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div ng-show="selectedLicenseType === 'Gas Shipper License'">
+                                                    <div class="row">
+                                                        <div class="col col-12">
+                                                            <div class="form-group">
+                                                                <label><strong>Name of PipeLine and Gas Transporter</strong></label>
+                                                                <input type="text" class="form-control" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col col-12">
+                                                            <div class="form-group">
+                                                                <label><strong>On which Entry/Exit point will you book and nominate capacity for Shipper?</strong></label>
+                                                                <input type="text" class="form-control" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col col-12">
+                                                            <div class="form-group">
+                                                                <label><strong>What will be the maximum capacity you will book nominate for Shipper?</strong></label>
+                                                                <input type="text" class="form-control" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col col-12">
+                                                            <div class="form-group">
+                                                                <label><strong>Which Party/Parties will be your customer/stakeholder(s)?</strong></label>
+                                                                <input type="text" class="form-control" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col col-12">
+                                                            <div class="form-group">
+                                                                <label><strong>State the location of the customer/stakeholder(s)?</strong></label>
+                                                                <input type="text" class="form-control" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div ng-show="selectedLicenseType === 'Gas Transporter License'">
+                                                    <div class="row">
+                                                        <div class="col col-12">
+                                                            <div class="form-group">
+                                                                <label><strong>Gas PipeLine/Gas PipeLine Network</strong></label>
+                                                                <input type="text" class="form-control" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col col-12">
+                                                            <div class="form-group">
+                                                                <label><strong>Installed capacity of the gas pipeline</strong></label>
+                                                                <input type="text" class="form-control" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col col-12">
+                                                            <div class="form-group">
+                                                                <label><strong>Which party/parties will be your customer/stakeholder(s)?</strong></label>
+                                                                <input type="text" class="form-control" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col col-12">
+                                                            <div class="form-group">
+                                                                <label><strong>State the present Entry/Exit points, its location and nominated capacity</strong></label>
+                                                                <input type="text" class="form-control" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col col-12">
+                                                            <div class="form-group">
+                                                                <label><strong>Details of proposed arrangements for compliance with the applicable requirements and the standard conditions</strong></label>
+                                                                <input type="text" class="form-control" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col col-12">
+                                                            <div class="form-group">
+                                                                <label><strong>Details of proposed arrangements for compliance with the applicable requirements and the standard conditions</strong></label>
+                                                                <input type="text" class="form-control" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <h5>PROPOSED ARRANGEMENTS FOR COMMENCING LICENSABLE ACTIVITIES</h5>
+                                                <hr />
+                                                <div class="row">
+                                                    <div class="col col-12">
+                                                        <div class="form-group">
+                                                            <label><strong>Please provide a summary of your proposed arrangements (including key dates), and any arrangements already in place, to commence the licensable activity to which your application relates</strong></label>
+                                                            <textarea rows="3" class="form-control"></textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <h5>PROPOSED ARRANGEMENTS FOR COMMENCING LICENSABLE ACTIVITIES</h5>
+                                                <hr />
+                                                <div class="row">
+                                                    <div class="col col-lg-7 col-xl-7 col-12">
+                                                        <div class="form-group">
+                                                            <label><strong>Do you wish to request any modification to any standard conditions for type of license applied for:</strong></label>
+                                                            <select class="form-control">
+                                                                <option value="">---Select response type---</option>
+                                                                <option value="true">Yes</option>
+                                                                <option value="false">No</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col col-lg-5 col-xl-5 col-12">
+                                                        <div class="form-group">
+                                                            <label><strong>Provide full details of the modification requested</strong></label>
+                                                            <input type="text" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col col-12">
+                                                        <div class="form-group">
+                                                            <label><strong>State the grounds on which the applicants believe that any such modification is requisite to meet the circumstance of the particular case</strong></label>
+                                                            <input type="text" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <h5>APPLICATION FEES</h5>
+                                                <hr />
+                                                <div class="row">
+                                                    <div class="col col-lg-6 col-xl-6 col-12">
+                                                        <div class="form-group">
+                                                            <label><strong>Descrption of application and fee payable ($)</strong></label>
+                                                            <select class="form-control">
+                                                                <option value="">---Select---</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <h5>DECLARATION</h5>
+                                                <hr />
+                                                <div class="row">
+                                                    <div class="col col-lg-4 col-xl-4 col-12">
+                                                        <div class="form-group">
+                                                            <label><strong>Signature</strong></label>
+                                                            <input type="file" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col col-lg-4 col-xl-4 col-12">
+                                                        <div class="form-group">
+                                                            <label><strong>Name in capital letters</strong></label>
+                                                            <input type="text" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col col-lg-4 col-xl-4 col-12">
+                                                        <div class="form-group">
+                                                            <label><strong>Capacity of Signatory</strong></label>
+                                                            <input type="text" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col col-12">
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input type="checkbox" class="custom-control-input" name="customCheck" id="customCheck1">
+                                                            <label class="custom-control-label" for="customCheck1">By checking this box, i declare that:</strong></label>
+                                                            <div style="font-size: 12px">
+                                                                (1) I have due authority over this application. <br />
+                                                                (2) I have read and understood this application form and the application guidance currently published on the DPR Website authority over this application. <br />
+                                                                (3) To the best of my knowledge and belief, all the details provided in this application form are true and complete and all the information or document(s) supplied with this application form are true and complete. <br />
+                                                                (4) I have read and understood the relevant standard conditions of the license that I am applying for; and .
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="modal-footer" ng-show="selectedLicenseType === 'Gas Shipper Agent'">
+                                                    <button class="btn btn-success" ng-click="submitGasShipperAgentApplication()" @*data-toggle="modal" data-target="#licenseDetails"*@>Submit Inquiry</button>
+                                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                                                </div>
+
+                                                <div class="modal-footer" ng-show="selectedLicenseType === 'Gas Shipper License'">
+                                                    <button class="btn btn-success" data-toggle="modal" data-target="#licenseDetails">Submit Inquiry</button>
+                                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                                                </div>
+
+                                                <div class="modal-footer" ng-show="selectedLicenseType === 'Gas Transporter License'">
+                                                    <button class="btn btn-success" data-toggle="modal" data-target="#licenseDetails">Submit Inquiry</button>
+                                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                                                </div>
+                                                @*<button type="button" > Pay </button>*@
+                                                <button class="btn btn-success" ng-click="makePayment()">Remitta Demo</button>
+                                            </form>
+                                        </div>
+
+                                    </div>
                                 </div>
                             </div>
+                            @*<a class="btn btn-success text-white"><i class="fa fa-plus"></i> &nbsp; Application</a>*@
+
                         </div>
-                        <a class="btn btn-success text-white"><i class="fa fa-plus"></i> &nbsp; Application</a>
-
                     </div>
-                </div>
-                <hr />
-                <div class="card-content">
-                    <div class="card-body card-dashboard">
-                        <div class="table-responsive">
-                            <table class="table zero-configuration">
-                                <thead>
-                                    <tr>
-                                        <th>Application ID</th>
-                                        <th>Application Date</th>
-                                        <th>Duration</th>
-                                        <th>Business Name</th>
-                                        <th>Authorized Representative</th>
-                                        <th>LIcense Type</th>
-                                        <th>Effective Date</th>
-                                        <th>Status</th>
-                                        <th class="largeHead">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
+                    <hr />
+                    <div class="card-content">
+                        <div class="card-body card-dashboard">
+                            <div class="table-responsive">
+                                <table class="table" id="applicationsTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Application ID</th>
+                                            <th>License Type</th>
+                                            <th>Declaration Date</th>
+                                            <th>Date of Application</th>
+                                            <th class="largeHead">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="application in applications">
+                                            <td>
+                                                <span><a target="_blank" href="/companyoperator/applicationdetails/{{ application.recordId }}">{{ application.applicationNum }}</a> </span>
+                                            </td>
+                                            <td>{{ application.custLicenseType }}</td>
+                                            <td>{{ application.declarationDate  | date : "MMM d, y"}}</td>
+                                            <td>{{ application.submittedOn  | date : "MMM d, y"}}</td>
+                                            <td>
+                                                <span><a class="btn btn-success btn-md" target="_blank" href="/companyoperator/applicationdetails/{{ application.recordId }}">View Details</a> </span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
 
-                                    <tr>
-                                        <td>001</td>
-                                        <td>22/10/2020</td>
-                                        <td>12 months</td>
-                                        <td>Wade and co</td>
-                                        <td>Giwa Adams</td>
-                                        <td>Gas transporter</td>
-                                        <td>22/10/2020</td>
-                                        <td><div class="badge badge-pill badge-warning">Pending</div></td>
-                                        <td><a class="btn btn-primary text-white" asp-action="ApplicationDetails" asp-controller="CompanyOperator">View Details</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td>001</td>
-                                        <td>22/10/2020</td>
-                                        <td>12 months</td>
-                                        <td>Wade and co</td>
-                                        <td>Giwa Adams</td>
-                                        <td>Gas transporter</td>
-                                        <td>22/10/2020</td>
-                                        <td><div class="badge badge-pill badge-warning">Pending</div></td>
-                                        <td><a class="btn btn-primary text-white" asp-action="ApplicationDetails" asp-controller="CompanyOperator">View Details</a></td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>001</td>
-                                        <td>22/10/2020</td>
-                                        <td>12 months</td>
-                                        <td>Wade and co</td>
-                                        <td>Giwa Adams</td>
-                                        <td>Gas transporter</td>
-                                        <td>22/10/2020</td>
-                                        <td><div class="badge badge-pill badge-warning">Pending</div></td>
-                                        <td><a class="btn btn-primary text-white" asp-action="ApplicationDetails" asp-controller="CompanyOperator">View Details</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td>001</td>
-                                        <td>22/10/2020</td>
-                                        <td>12 months</td>
-                                        <td>Wade and co</td>
-                                        <td>Giwa Adams</td>
-                                        <td>Gas transporter</td>
-                                        <td>22/10/2020</td>
-                                        <td><div class="badge badge-pill badge-warning">Pending</div></td>
-                                        <td><a class="btn btn-primary text-white" asp-action="ApplicationDetails" asp-controller="CompanyOperator">View Details</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td>001</td>
-                                        <td>22/10/2020</td>
-                                        <td>12 months</td>
-                                        <td>Wade and co</td>
-                                        <td>Giwa Adams</td>
-                                        <td>Gas transporter</td>
-                                        <td>22/10/2020</td>
-                                        <td><div class="badge badge-pill badge-warning">Pending</div></td>
-                                        <td><a class="btn btn-primary text-white" asp-action="ApplicationDetails" asp-controller="CompanyOperator">View Details</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td>001</td>
-                                        <td>22/10/2020</td>
-                                        <td>12 months</td>
-                                        <td>Wade and co</td>
-                                        <td>Giwa Adams</td>
-                                        <td>Gas transporter</td>
-                                        <td>22/10/2020</td>
-                                        <td><div class="badge badge-pill badge-warning">Pending</div></td>
-                                        <td><a class="btn btn-primary text-white" asp-action="ApplicationDetails" asp-controller="CompanyOperator">View Details</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td>001</td>
-                                        <td>22/10/2020</td>
-                                        <td>12 months</td>
-                                        <td>Wade and co</td>
-                                        <td>Giwa Adams</td>
-                                        <td>Gas transporter</td>
-                                        <td>22/10/2020</td>
-                                        <td><div class="badge badge-pill badge-warning">Pending</div></td>
-                                        <td><a class="btn btn-primary text-white" asp-action="ApplicationDetails" asp-controller="CompanyOperator">View Details</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td>001</td>
-                                        <td>22/10/2020</td>
-                                        <td>12 months</td>
-                                        <td>Wade and co</td>
-                                        <td>Giwa Adams</td>
-                                        <td>Gas transporter</td>
-                                        <td>22/10/2020</td>
-                                        <td><div class="badge badge-pill badge-warning">Pending</div></td>
-                                        <td><a class="btn btn-primary text-white" asp-action="ApplicationDetails" asp-controller="CompanyOperator">View Details</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td>001</td>
-                                        <td>22/10/2020</td>
-                                        <td>12 months</td>
-                                        <td>Wade and co</td>
-                                        <td>Giwa Adams</td>
-                                        <td>Gas transporter</td>
-                                        <td>22/10/2020</td>
-                                        <td><div class="badge badge-pill badge-warning">Pending</div></td>
-                                        <td><a class="btn btn-primary text-white" asp-action="ApplicationDetails" asp-controller="CompanyOperator">View Details</a></td>
-                                    </tr>
-                                </tbody>
-
-                            </table>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </section>
+    <!--/ Zero configuration table -->
+
+
+
+    <div class="modal-size-lg mr-1 mb-1 d-inline-block">
+
+        <!-- Modal -->
+        <div class="modal fade text-left" id="large" tabindex="-1" role="dialog"
+                aria-labelledby="myModalLabel17" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel17">Large Modal</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        I love tart cookie cupcake. I love chupa chups biscuit. I love marshmallow apple pie wafer
+                        liquorice. Marshmallow cotton candy chocolate. Apple pie muffin tart. Marshmallow halvah pie
+                        marzipan lemon drops jujubes. Macaroon sugar plum cake icing toffee.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Accept</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</section>
-<!--/ Zero configuration table -->
-
-
-
-<div class="modal-size-lg mr-1 mb-1 d-inline-block">
 
     <!-- Modal -->
-    <div class="modal fade text-left" id="large" tabindex="-1" role="dialog"
-         aria-labelledby="myModalLabel17" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal fade" id="licenseDetails" tabindex="-1" role="dialog"
+            aria-labelledby="licenseDetailsTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-centered modal-dialog-scrollable"
+                role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel17">Large Modal</h4>
+                    <h5 class="modal-title" id="licenseDetailsTitle">Licence Inquiry</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    I love tart cookie cupcake. I love chupa chups biscuit. I love marshmallow apple pie wafer
-                    liquorice. Marshmallow cotton candy chocolate. Apple pie muffin tart. Marshmallow halvah pie
-                    marzipan lemon drops jujubes. Macaroon sugar plum cake icing toffee.
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Accept</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-
-<!-- Modal -->
-<div class="modal fade" id="licenseDetails" tabindex="-1" role="dialog"
-     aria-labelledby="licenseDetailsTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-centered modal-dialog-scrollable"
-         role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="licenseDetailsTitle">Licence Inquiry</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <h6>Your Licence Inquiry Fee is detailed below</h6>
-                    <div class="form-group">
-                        <label>License Type</label>
-                        <select class="form-control">
-                            <option>Gas Shipper</option>
-                            <option>Gas Transporter</option>
-                            <option>Gas Shipper Agent</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>License Category</label>
-                        <select class="form-control">
-                            <option>T1:</option>
-                            <option>T2: </option>
-                            <option>T3: </option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Capacity</label>
-                        <select class="form-control">
-                            <option> Systems with capacity < 1 BSCF/D</option>
-                            <option>Systems with capacity < 10 BSCF/D</option>
-                            <option>Systems with capacity < 100 BSCF/D</option>
-                        </select>
-                    </div>
-                    <div>
-                        <p>
-                            Proposed License Fee includes:
-                        </p>
-                        <div class="row">
-                            <div class="col-lg-4 col-md-4 col-sm-12">
-                                <span>Statutory Fee:</span><span> 0.5</span>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-sm-12">
-                                <span>Processing Fee:</span><span> 1.0</span>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-sm-12">
-                                <span>Total:</span><span> 1.5</span>
+                    <form>
+                        <h6>Your Licence Inquiry Fee is detailed below</h6>
+                        <div class="form-group">
+                            <label><strong>License Type</strong></label>
+                            <select class="form-control">
+                                <option>Gas Shipper</option>
+                                <option>Gas Transporter</option>
+                                <option>Gas Shipper Agent</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label><strong>License Category</strong></label>
+                            <select class="form-control">
+                                <option>T1:</option>
+                                <option>T2: </option>
+                                <option>T3: </option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label><strong>Capacity</strong></label>
+                            <select class="form-control">
+                                <option> Systems with capacity < 1 BSCF/D</option>
+                                <option>Systems with capacity < 10 BSCF/D</option>
+                                <option>Systems with capacity < 100 BSCF/D</option>
+                            </select>
+                        </div>
+                        <div>
+                            <p>
+                                Proposed License Fee includes:
+                            </p>
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-sm-12">
+                                    <span>Statutory Fee:</span><span> 0.5</span>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-12">
+                                    <span>Processing Fee:</span><span> 1.0</span>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-12">
+                                    <span>Total:</span><span> 1.5</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <a class="btn btn-success text-white">Proceed to new Application</a>
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                    </div>
-                </form>
-            </div>
+                        <div class="modal-footer">
+                            <a class="btn btn-success text-white">Proceed to new Application</a>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                        </div>
+                    </form>
+                </div>
 
+            </div>
         </div>
     </div>
-</div>
+</main>
+
+@section  footerJS {
+    <script src="~/js/controllers/companyoperator/index.js"></script>
+    
+    <script>
+        function makePayment() {
+            
+        }
+    </script>
+}
+
 

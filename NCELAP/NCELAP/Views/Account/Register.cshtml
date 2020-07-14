@@ -106,7 +106,7 @@
                                                                                                 <div class="form-group">
                                                                                                     <input type="text" maxlength="15" ng-model="registrationInformationModel.PostalCode" id="inputPostalCode" class="form-control">
                                                                                                 </div>
-                                                                                                
+
                                                                                             </div>
 
                                                                                             <div class="col col-lg-6 col-xl-6 col-12">
@@ -146,364 +146,365 @@
 
                                                                                             <div class="row">
                                                                                                 <div class="col col-12">
-                                                                                                    
+
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
-                                                                                
+
                                                                             <div class="collapse-border-item card collapse-header">
-                                                                                    <div class="card-header" id="heading210" data-toggle="collapse" role="button" data-target="#listOfDirectors"
-                                                                                         aria-expanded="false" aria-controls="listOfDirectors">
-                                                                                        <span class="lead collapse-title">
-                                                                                            <strong>List & Particulars of Shareholders</strong>
-                                                                                        </span>
-                                                                                    </div>
-                                                                                    <div id="listOfDirectors" class="collapse" aria-labelledby="listOfDirectors" data-parent="#accordionExample0">
-                                                                                        <div class="card-body">
-                                                                                            <div class="row">
-                                                                                                <div class="col col-lg-6 col-xl-6 col-12">
-                                                                                                    <div class="form-group">
-                                                                                                        <label for="ShareHolderName">
-                                                                                                            <span>Name<span class="text-danger">*</span></span>
-                                                                                                        </label>
-                                                                                                        <input type="text" maxlength="50" ng-model="shareHolderModel.Name" id="ShareHolderName" class="form-control">
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                                <div class="col col-lg-6 col-xl-6 col-12">
-                                                                                                    <div class="form-group">
-                                                                                                        <label for="ShareHolderNationality">
-                                                                                                            <span>Nationality<span class="text-danger">*</span></span>
-                                                                                                        </label>
-                                                                                                        <input type="text" maxlength="50" ng-model="shareHolderModel.Nationality" id="ShareHolderNationality" class="form-control">
-                                                                                                    </div>
+                                                                                <div class="card-header" id="heading210" data-toggle="collapse" role="button" data-target="#listOfDirectors"
+                                                                                     aria-expanded="false" aria-controls="listOfDirectors">
+                                                                                    <span class="lead collapse-title">
+                                                                                        <strong>List & Particulars of Shareholders</strong>
+                                                                                    </span>
+                                                                                </div>
+                                                                                <div id="listOfDirectors" class="collapse" aria-labelledby="listOfDirectors" data-parent="#accordionExample0">
+                                                                                    <div class="card-body">
+                                                                                        <div class="row">
+                                                                                            <div class="col col-lg-6 col-xl-6 col-12">
+                                                                                                <div class="form-group">
+                                                                                                    <label for="ShareHolderName">
+                                                                                                        <span>Name<span class="text-danger">*</span></span>
+                                                                                                    </label>
+                                                                                                    <input type="text" maxlength="50" ng-model="shareHolderModel.Name" id="ShareHolderName" class="form-control">
                                                                                                 </div>
                                                                                             </div>
-
-                                                                                            <div class="row">
-                                                                                                <div class="col col-lg-6 col-xl-6 col-12">
-                                                                                                    <div class="form-group">
-                                                                                                        <label for="ShareHolderCountryOfUsualResidence">
-                                                                                                            <span>Country Of Usual Residence<span class="text-danger">*</span></span>
-                                                                                                        </label>
-                                                                                                        <select class="form-control" ng-model="shareHolderModel.CountryOfUsualResidence" id="ShareHolderCountryOfUsualResidence">
-                                                                                                            <option value="">-- Select --</option>
-                                                                                                            <option ng-repeat="country in countries"> {{ country.name }} </option>
-                                                                                                        </select>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                                <div class="col col-lg-6 col-xl-6 col-12">
-                                                                                                    <div class="form-group">
-                                                                                                        <label for="ShareHolderAddress">
-                                                                                                            <span>Address</span>
-                                                                                                        </label>
-                                                                                                        <textarea maxlength="100" rows="4" id="ShareHolderAddress" class="form-control" required></textarea>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
-
-                                                                                            <div class="row">
-                                                                                                <div class="col col-12">
-                                                                                                    <button ng-disabled="shareHolderModel.Name === '' || shareHolderModel.Nationality === '' || shareHolderModel.CountryOfUsualResidence ===''"
-                                                                                                            ng-click="addShareholder()" class="btn btn-success float-right">
-                                                                                                        <i class="fa fa-user-plus"></i> Add
-                                                                                                    </button>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <br />
-                                                                                            <div class="row" ng-show="shareholders.length > 0">
-                                                                                                <div class="col col-12">
-                                                                                                    <table class="table table-hover table-bordered" id="sampleTable" style="font-size: 14px">
-                                                                                                        <thead>
-                                                                                                            <tr>
-                                                                                                                <th>Name</th>
-                                                                                                                <th>Nationality</th>
-                                                                                                                <th>Country of Residence</th>
-                                                                                                                <th>Address</th>
-                                                                                                                <th>Actions</th>
-                                                                                                            </tr>
-                                                                                                        </thead>
-                                                                                                        <tr ng-repeat="shareholder in shareholders">
-                                                                                                            <td>{{ shareholder.Name }}</td>
-                                                                                                            <td>{{ shareholder.Nationality }}</td>
-                                                                                                            <td>{{ shareholder.CountryOfUsualResidence }}</td>
-                                                                                                            <td>{{ shareholder.Address }}</td>
-                                                                                                            <td>
-                                                                                                                <button ng-click="removeShareholder(shareholder)" class="btn btn-danger btn-md"><i class="fa fa-trash"></i></button>
-                                                                                                            </td>
-                                                                                                        </tr>
-                                                                                                    </table>
+                                                                                            <div class="col col-lg-6 col-xl-6 col-12">
+                                                                                                <div class="form-group">
+                                                                                                    <label for="ShareHolderNationality">
+                                                                                                        <span>Nationality<span class="text-danger">*</span></span>
+                                                                                                    </label>
+                                                                                                    <input type="text" maxlength="50" ng-model="shareHolderModel.Nationality" id="ShareHolderNationality" class="form-control">
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
+
+                                                                                        <div class="row">
+                                                                                            <div class="col col-lg-6 col-xl-6 col-12">
+                                                                                                <div class="form-group">
+                                                                                                    <label for="ShareHolderCountryOfUsualResidence">
+                                                                                                        <span>Country Of Usual Residence<span class="text-danger">*</span></span>
+                                                                                                    </label>
+                                                                                                    <select class="form-control" ng-model="shareHolderModel.CountryOfUsualResidence" id="ShareHolderCountryOfUsualResidence">
+                                                                                                        <option value="">-- Select --</option>
+                                                                                                        <option ng-repeat="country in countries"> {{ country.name }} </option>
+                                                                                                    </select>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="col col-lg-6 col-xl-6 col-12">
+                                                                                                <div class="form-group">
+                                                                                                    <label for="ShareHolderAddress">
+                                                                                                        <span>Address</span>
+                                                                                                    </label>
+                                                                                                    <textarea maxlength="100" rows="4" id="ShareHolderAddress" class="form-control" required></textarea>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                        <div class="row">
+                                                                                            <div class="col col-12">
+                                                                                                <button ng-disabled="shareHolderModel.Name === '' || shareHolderModel.Nationality === '' || shareHolderModel.CountryOfUsualResidence ===''"
+                                                                                                        ng-click="addShareholder()" class="btn btn-success float-right">
+                                                                                                    <i class="fa fa-user-plus"></i> Add
+                                                                                                </button>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <br />
+                                                                                        <div class="row" ng-show="shareholders.length > 0">
+                                                                                            <div class="col col-12">
+                                                                                                <table class="table table-hover table-bordered" id="sampleTable" style="font-size: 14px">
+                                                                                                    <thead>
+                                                                                                        <tr>
+                                                                                                            <th>Name</th>
+                                                                                                            <th>Nationality</th>
+                                                                                                            <th>Country of Residence</th>
+                                                                                                            <th>Address</th>
+                                                                                                            <th>Actions</th>
+                                                                                                        </tr>
+                                                                                                    </thead>
+                                                                                                    <tr ng-repeat="shareholder in shareholders">
+                                                                                                        <td>{{ shareholder.Name }}</td>
+                                                                                                        <td>{{ shareholder.Nationality }}</td>
+                                                                                                        <td>{{ shareholder.CountryOfUsualResidence }}</td>
+                                                                                                        <td>{{ shareholder.Address }}</td>
+                                                                                                        <td>
+                                                                                                            <button ng-click="removeShareholder(shareholder)" class="btn btn-danger btn-md"><i class="fa fa-trash"></i></button>
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                </table>
+                                                                                            </div>
+                                                                                        </div>
                                                                                     </div>
+                                                                                </div>
                                                                             </div>
-                                                                                
-                                                                                <div class="collapse-border-item card collapse-header">
-                                                                                    <div class="card-header" id="heading210" data-toggle="collapse" role="button" data-target="#collapse210"
-                                                                                         aria-expanded="false" aria-controls="collapse210">
-                                                                                        <span class="lead collapse-title">
-                                                                                            <strong> Authorized Representative</strong>
-                                                                                        </span>
-                                                                                    </div>
-                                                                                    <div id="collapse210" class="collapse" aria-labelledby="heading210" data-parent="#accordionExample0">
-                                                                                        <div class="card-body">
-                                                                                            <div class="row">
-                                                                                                <div class="col col-12">
-                                                                                                    <div class="alert alert-primary" role="alert">
-                                                                                                        <i class="feather icon-info mr-1 align-middle"></i>
-                                                                                                        <span>
-                                                                                                            Please Note: Upon Verification of the Business's identity, the details of the
-                                                                                                            authorized representative will be used to provision the administrator account for {{ registrationInformationModel.BusinessName }}.
-                                                                                                        </span>
-                                                                                                    </div>
+
+                                                                            <div class="collapse-border-item card collapse-header">
+                                                                                <div class="card-header" id="heading210" data-toggle="collapse" role="button" data-target="#collapse210"
+                                                                                     aria-expanded="false" aria-controls="collapse210">
+                                                                                    <span class="lead collapse-title">
+                                                                                        <strong> Authorized Representative</strong>
+                                                                                    </span>
+                                                                                </div>
+                                                                                <div id="collapse210" class="collapse" aria-labelledby="heading210" data-parent="#accordionExample0">
+                                                                                    <div class="card-body">
+                                                                                        <div class="row">
+                                                                                            <div class="col col-12">
+                                                                                                <div class="alert alert-primary" role="alert">
+                                                                                                    <i class="feather icon-info mr-1 align-middle"></i>
+                                                                                                    <span>
+                                                                                                        Please Note: Upon Verification of the Business's identity, the details of the
+                                                                                                        authorized representative will be used to provision the administrator account for {{ registrationInformationModel.BusinessName }}.
+                                                                                                    </span>
                                                                                                 </div>
                                                                                             </div>
+                                                                                        </div>
 
-                                                                                            <div class="row">
-                                                                                                <div class="col col-lg-6 col-xl-6 col-12">
-                                                                                                    <div class="form-group">
-                                                                                                        <label for="AuthorizedRepName">
-                                                                                                            <span>Name of Authorized Representative<span class="text-danger">*</span></span>
-                                                                                                        </label>
-                                                                                                        <input type="text" maxlength="50" ng-model="registrationInformationModel.AuthorizedRepName" id="AuthorizedRepName" class="form-control">
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                                <div class="col col-lg-6 col-xl-6 col-12">
-                                                                                                    <div class="form-group">
-                                                                                                        <label for="AuthorizedRepEmail">
-                                                                                                            <span>Email<span class="text-danger">*</span></span>
-                                                                                                        </label>
-                                                                                                        <input type="email" maxlength="50" ng-model="registrationInformationModel.AuthorizedRepEmail" id="AuthorizedRepEmail" class="form-control">
-                                                                                                    </div>
+                                                                                        <div class="row">
+                                                                                            <div class="col col-lg-6 col-xl-6 col-12">
+                                                                                                <div class="form-group">
+                                                                                                    <label for="AuthorizedRepName">
+                                                                                                        <span>Name of Authorized Representative<span class="text-danger">*</span></span>
+                                                                                                    </label>
+                                                                                                    <input type="text" maxlength="50" ng-model="registrationInformationModel.AuthorizedRepName" id="AuthorizedRepName" class="form-control">
                                                                                                 </div>
                                                                                             </div>
-
-                                                                                            <div class="row">
-                                                                                                <div class="col col-lg-6 col-xl-6 col-12">
-                                                                                                    <div class="form-group">
-                                                                                                        <label for="AuthorizedRepMobile">
-                                                                                                            <span>Mobile<span class="text-danger">*</span></span>
-                                                                                                        </label>
-                                                                                                        <input type="text" maxlength="40" ng-model="registrationInformationModel.AuthorizedRepMobile" id="AuthorizedRepMobile" class="form-control">
-                                                                                                    </div>
+                                                                                            <div class="col col-lg-6 col-xl-6 col-12">
+                                                                                                <div class="form-group">
+                                                                                                    <label for="AuthorizedRepEmail">
+                                                                                                        <span>Email<span class="text-danger">*</span></span>
+                                                                                                    </label>
+                                                                                                    <input type="email" maxlength="50" ng-model="registrationInformationModel.AuthorizedRepEmail" id="AuthorizedRepEmail" class="form-control">
                                                                                                 </div>
-                                                                                                <div class="col col-lg-6 col-xl-6 col-12">
-                                                                                                    <div class="form-group">
-                                                                                                        <label for="addressAuthorizedRepresentative">
-                                                                                                            <span>Address</span>
-                                                                                                        </label>
-                                                                                                        <textarea maxlength="100" rows="4" id="addressAuthorizedRepresentative" class="form-control" required></textarea>
-                                                                                                    </div>
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                        <div class="row">
+                                                                                            <div class="col col-lg-6 col-xl-6 col-12">
+                                                                                                <div class="form-group">
+                                                                                                    <label for="AuthorizedRepMobile">
+                                                                                                        <span>Mobile<span class="text-danger">*</span></span>
+                                                                                                    </label>
+                                                                                                    <input type="text" maxlength="40" ng-model="registrationInformationModel.AuthorizedRepMobile" id="AuthorizedRepMobile" class="form-control">
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="col col-lg-6 col-xl-6 col-12">
+                                                                                                <div class="form-group">
+                                                                                                    <label for="addressAuthorizedRepresentative">
+                                                                                                        <span>Address</span>
+                                                                                                    </label>
+                                                                                                    <textarea maxlength="100" rows="4" id="addressAuthorizedRepresentative" class="form-control" required></textarea>
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
+                                                                            </div>
 
-                                                                                <div class="collapse-border-item card collapse-header">
-                                                                                    <div class="card-header" id="heading250" data-toggle="collapse" role="button" data-target="#authorizedRepresentative"
-                                                                                         aria-expanded="false" aria-controls="authorizedRepresentative">
-                                                                                        <span class="lead collapse-title">
-                                                                                            <strong> List & Particular of Directors</strong>
-                                                                                        </span>
-                                                                                    </div>
-                                                                                    <div id="authorizedRepresentative" class="collapse" aria-labelledby="heading250" data-parent="#accordionExample0">
-                                                                                        <div class="card-body">
-                                                                                            <div class="row">
-                                                                                                <div class="col col-lg-6 col-xl-6 col-12">
-                                                                                                    <div class="form-group">
-                                                                                                        <label for="DirectorName">
-                                                                                                            <span>Name<span class="text-danger">*</span></span>
-                                                                                                        </label>
-                                                                                                        <input type="text" maxlength="50" ng-model="directorModel.Name" id="DirectorName" class="form-control">
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                                <div class="col col-lg-6 col-xl-6 col-12">
-                                                                                                    <div class="form-group">
-                                                                                                        <label for="DirectorNationality">
-                                                                                                            <span>Nationality<span class="text-danger">*</span></span>
-                                                                                                        </label>
-                                                                                                        <input type="text" maxlength="50" ng-model="directorModel.Nationality" id="DirectorNationality" class="form-control">
-                                                                                                    </div>
+                                                                            <div class="collapse-border-item card collapse-header">
+                                                                                <div class="card-header" id="heading250" data-toggle="collapse" role="button" data-target="#authorizedRepresentative"
+                                                                                     aria-expanded="false" aria-controls="authorizedRepresentative">
+                                                                                    <span class="lead collapse-title">
+                                                                                        <strong> List & Particular of Directors</strong>
+                                                                                    </span>
+                                                                                </div>
+                                                                                <div id="authorizedRepresentative" class="collapse" aria-labelledby="heading250" data-parent="#accordionExample0">
+                                                                                    <div class="card-body">
+                                                                                        <div class="row">
+                                                                                            <div class="col col-lg-6 col-xl-6 col-12">
+                                                                                                <div class="form-group">
+                                                                                                    <label for="DirectorName">
+                                                                                                        <span>Name<span class="text-danger">*</span></span>
+                                                                                                    </label>
+                                                                                                    <input type="text" maxlength="50" ng-model="directorModel.Name" id="DirectorName" class="form-control">
                                                                                                 </div>
                                                                                             </div>
+                                                                                            <div class="col col-lg-6 col-xl-6 col-12">
+                                                                                                <div class="form-group">
+                                                                                                    <label for="DirectorNationality">
+                                                                                                        <span>Nationality<span class="text-danger">*</span></span>
+                                                                                                    </label>
+                                                                                                    <input type="text" maxlength="50" ng-model="directorModel.Nationality" id="DirectorNationality" class="form-control">
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
 
-                                                                                            <div class="row">
-                                                                                                <div class="col col-lg-6 col-xl-6 col-12">
-                                                                                                    <div class="form-group">
-                                                                                                        <label for="DirectorCountryOfUsualResidence">
-                                                                                                            <span>Country Of Usual Residence<span class="text-danger">*</span></span>
-                                                                                                        </label>
-                                                                                                        <select class="form-control" ng-model="directorModel.CountryOfUsualResidence" id="DirectorCountryOfUsualResidence">
-                                                                                                            <option value="">-- Select --</option>
-                                                                                                            <option ng-repeat="country in countries"> {{ country.name }} </option>
-                                                                                                        </select>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                                <div class="col col-lg-6 col-xl-6 col-12">
-                                                                                                    <div class="form-group">
-                                                                                                        <label for="DirectorAddress">
-                                                                                                            <span>Address</span>
-                                                                                                        </label>
-                                                                                                        <textarea maxlength="100" rows="4" id="DirectorAddress" class="form-control" required></textarea>
-                                                                                                    </div>
+                                                                                        <div class="row">
+                                                                                            <div class="col col-lg-6 col-xl-6 col-12">
+                                                                                                <div class="form-group">
+                                                                                                    <label for="DirectorCountryOfUsualResidence">
+                                                                                                        <span>Country Of Usual Residence<span class="text-danger">*</span></span>
+                                                                                                    </label>
+                                                                                                    <select class="form-control" ng-model="directorModel.CountryOfUsualResidence" id="DirectorCountryOfUsualResidence">
+                                                                                                        <option value="">-- Select --</option>
+                                                                                                        <option ng-repeat="country in countries"> {{ country.name }} </option>
+                                                                                                    </select>
                                                                                                 </div>
                                                                                             </div>
+                                                                                            <div class="col col-lg-6 col-xl-6 col-12">
+                                                                                                <div class="form-group">
+                                                                                                    <label for="DirectorAddress">
+                                                                                                        <span>Address</span>
+                                                                                                    </label>
+                                                                                                    <textarea maxlength="100" rows="4" id="DirectorAddress" class="form-control" required></textarea>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
 
-                                                                                            <div class="row">
-                                                                                                <div class="col col-12">
-                                                                                                    <button ng-disabled="directorModel.Name === '' || directorModel.Nationality === '' || directorModel.CountryOfUsualResidence ===''"
-                                                                                                            ng-click="addDirector()" class="btn btn-success float-right"><i class="fa fa-user-plus"></i> Add</button>
+                                                                                        <div class="row">
+                                                                                            <div class="col col-12">
+                                                                                                <button ng-disabled="directorModel.Name === '' || directorModel.Nationality === '' || directorModel.CountryOfUsualResidence ===''"
+                                                                                                        ng-click="addDirector()" class="btn btn-success float-right">
+                                                                                                    <i class="fa fa-user-plus"></i> Add
+                                                                                                </button>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <hr />
+                                                                                        <h5>State if any Director has ever been convicted of any criminal offence in Nigeria or in any other country:</h5>
+                                                                                        <div class="row">
+                                                                                            <div class="col col-lg-6 col-xl-6 col-12">
+                                                                                                <div class="form-group">
+                                                                                                    <label for="DirectorCriminalAct">
+                                                                                                        <span>Convicted  of Criminal Act</span>
+                                                                                                    </label>
+                                                                                                    <select class="form-control" ng-model="registrationInformationModel.DirectorCriminalAct" id="DirectorCriminalAct">
+                                                                                                        <option value="">-- Select --</option>
+                                                                                                        <option ng-repeat="convictedAct in convictedActs"> {{ convictedAct.Name }} </option>
+                                                                                                    </select>
                                                                                                 </div>
                                                                                             </div>
-                                                                                            <hr />
-                                                                                            <h5>State if any Director has ever been convicted of any criminal offence in Nigeria or in any other country:</h5>
-                                                                                            <div class="row">
-                                                                                                <div class="col col-lg-6 col-xl-6 col-12">
-                                                                                                    <div class="form-group">
-                                                                                                        <label for="DirectorCriminalAct">
-                                                                                                            <span>Convicted  of Criminal Act</span>
-                                                                                                        </label>
-                                                                                                        <select class="form-control" ng-model="registrationInformationModel.DirectorCriminalAct" id="DirectorCriminalAct">
-                                                                                                            <option value="">-- Select --</option>
-                                                                                                            <option ng-repeat="convictedAct in convictedActs"> {{ convictedAct.Name }} </option>
-                                                                                                        </select>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                                <div class="col col-lg-6 col-xl-6 col-12">
-                                                                                                    <div class="form-group">
-                                                                                                        <label for="DirectorCriminalActDetailsfConviction">
-                                                                                                            <span>Details of Conviction</span>
-                                                                                                        </label>
-                                                                                                        <textarea maxlength="100" rows="4" id="DirectorCriminalActDetailsfConviction" class="form-control" required></textarea>
-                                                                                                    </div>
+                                                                                            <div class="col col-lg-6 col-xl-6 col-12">
+                                                                                                <div class="form-group">
+                                                                                                    <label for="DirectorCriminalActDetailsfConviction">
+                                                                                                        <span>Details of Conviction</span>
+                                                                                                    </label>
+                                                                                                    <textarea maxlength="100" rows="4" id="DirectorCriminalActDetailsfConviction" class="form-control" required></textarea>
                                                                                                 </div>
                                                                                             </div>
-                                                                                            <div class="row" ng-show="directors.length > 0">
-                                                                                                <div class="col col-12">
-                                                                                                    <table class="table table-hover table-bordered" id="sampleTable" style="font-size: 14px">
-                                                                                                        <thead>
-                                                                                                            <tr>
-                                                                                                                <th>Name</th>
-                                                                                                                <th>Nationality</th>
-                                                                                                                <th>Country of Residence</th>
-                                                                                                                <th>Address</th>
-                                                                                                                <th>Actions</th>
-                                                                                                            </tr>
-                                                                                                        </thead>
-                                                                                                        <tr ng-repeat="director in directors">
-                                                                                                            <td>{{ director.Name }}</td>
-                                                                                                            <td>{{ director.Nationality }}</td>
-                                                                                                            <td>{{ director.CountryOfUsualResidence }}</td>
-                                                                                                            <td>{{ director.Address }}</td>
-                                                                                                            <td>
-                                                                                                                <button ng-click="removeDirector(director)" class="btn btn-danger btn-md"><i class="fa fa-trash"></i></button>
-                                                                                                            </td>
+                                                                                        </div>
+                                                                                        <div class="row" ng-show="directors.length > 0">
+                                                                                            <div class="col col-12">
+                                                                                                <table class="table table-hover table-bordered" id="sampleTable" style="font-size: 14px">
+                                                                                                    <thead>
+                                                                                                        <tr>
+                                                                                                            <th>Name</th>
+                                                                                                            <th>Nationality</th>
+                                                                                                            <th>Country of Residence</th>
+                                                                                                            <th>Address</th>
+                                                                                                            <th>Actions</th>
                                                                                                         </tr>
-                                                                                                    </table>
-                                                                                                </div>
+                                                                                                    </thead>
+                                                                                                    <tr ng-repeat="director in directors">
+                                                                                                        <td>{{ director.Name }}</td>
+                                                                                                        <td>{{ director.Nationality }}</td>
+                                                                                                        <td>{{ director.CountryOfUsualResidence }}</td>
+                                                                                                        <td>{{ director.Address }}</td>
+                                                                                                        <td>
+                                                                                                            <button ng-click="removeDirector(director)" class="btn btn-danger btn-md"><i class="fa fa-trash"></i></button>
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                </table>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
+                                                                            </div>
 
-                                                                                <div class="card collapse-header collapse-border-item">
-                                                                                    <div class="card-header" id="heading220" data-toggle="collapse" role="button" data-target="#collapse220"
-                                                                                         aria-expanded="false" aria-controls="collapse220">
-                                                                                        <span class="lead collapse-title">
-                                                                                            <strong>Supporting Documents</strong>
-                                                                                        </span>
-                                                                                    </div>
-                                                                                    <div id="collapse220" class="collapse" aria-labelledby="heading220" data-parent="#accordionExample0">
-                                                                                        <div class="card-body">
-                                                                                            <div class="row">
-                                                                                                <div class="col col-lg-6 col-xl-6 col-12">
-                                                                                                    <fieldset class="form-group">
-                                                                                                        <label for="certificateOfRegistration">
-                                                                                                            Certificate Of Registration <span class="text-danger">*</span><span class="text-sm"> (pdf files only)</span>
-                                                                                                        </label>
-                                                                                                        <div class="custom-file">
-                                                                                                            <input type="file" class="form-control" onchange="angular.element(this).scope().certificateOfRegistrationFileHandler()" name="Attachment" id="certificateOfRegistration" ng-required="true" accept=".pdf">
-                                                                                                        </div>
-                                                                                                        <div class="text-danger text-sm" id="certificateOfRegistrationWarningIndicator"></div>
-                                                                                                    </fieldset>
-
-                                                                                                </div>
-                                                                                                <div class="col col-lg-6 col-xl-6 col-12">
-                                                                                                    <fieldset class="form-group">
-                                                                                                        <label for="certificateOfIncorporation">
-                                                                                                            Certificate of Incorporation <span class="text-danger">*</span><span class="text-sm"> (pdf files only)</span>
-                                                                                                        </label>
-                                                                                                        <div class="custom-file">
-                                                                                                            <input accept=".pdf" class="form-control" onchange="angular.element(this).scope().certificateOfIncorporationFileHandler()" type="file" id="certificateOfIncorporation">
-                                                                                                        </div>
-                                                                                                        <div class="text-danger text-sm" id="certificateOfIncorporationWarningIndicator"></div>
-                                                                                                    </fieldset>
-                                                                                                </div>
-                                                                                            </div>
-
-                                                                                            <div class="row">
-                                                                                                <div class="col col-lg-6 col-xl-6 col-12">
-                                                                                                    <fieldset class="form-group">
-                                                                                                        <label for="memorandumAndArticlesOfAssociation">
-                                                                                                            Memorandum & Articles Of Association <span class="text-danger">*</span><span class="text-sm"> (pdf files only)</span>
-                                                                                                        </label>
-                                                                                                        <div class="custom-file">
-                                                                                                            <input accept=".pdf" class="form-control" onchange="angular.element(this).scope().memorandumOfAssociationFileHandler()" type="file" id="memorandumOfAssociation">
-                                                                                                        </div>
-                                                                                                        <div class="text-danger text-sm" id="memorandumOfAssociationIndicator"></div>
-                                                                                                    </fieldset>
-                                                                                                </div>
-                                                                                                <div class="col col-lg-6 col-xl-6 col-12">
-                                                                                                    <fieldset class="form-group">
-                                                                                                        <label for="deedOfPartnership">
-                                                                                                            Deed Of Partnership<span class="text-danger">*</span><span class="text-sm"> (pdf files only)</span>
-                                                                                                        </label>
-                                                                                                        <div class="custom-file">
-                                                                                                            <input accept=".pdf" class="form-control" onchange="angular.element(this).scope().deedOfPartnershipFileHandler()" type="file" id="deedOfPartnership">
-                                                                                                            <div class="text-danger text-sm" id="deedOfPartnershipIndicator"></div>
-                                                                                                        </div>
-                                                                                                    </fieldset>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="row">
-                                                                                                <div class="col col-lg-6 col-xl-6 col-12">
-                                                                                                    <fieldset class="form-group">
-                                                                                                        <label for="deedOfTrust">
-                                                                                                            Deed Of Trust<span class="text-danger">*</span><span class="text-sm"> (pdf files only)</span>
-                                                                                                        </label>
-                                                                                                        <div class="custom-file">
-                                                                                                            <input accept=".pdf" class="form-control" onchange="angular.element(this).scope().deedOfTrustFileHandler()" type="file" id="deedOfTrust">
-                                                                                                            <div class="text-danger text-sm" id="deedOfTrustIndicator"></div>
-                                                                                                        </div>
-                                                                                                    </fieldset>
-                                                                                                </div>
+                                                                            <div class="card collapse-header collapse-border-item">
+                                                                                <div class="card-header" id="heading220" data-toggle="collapse" role="button" data-target="#collapse220"
+                                                                                     aria-expanded="false" aria-controls="collapse220">
+                                                                                    <span class="lead collapse-title">
+                                                                                        <strong>Supporting Documents</strong>
+                                                                                    </span>
+                                                                                </div>
+                                                                                <div id="collapse220" class="collapse" aria-labelledby="heading220" data-parent="#accordionExample0">
+                                                                                    <div class="card-body">
+                                                                                        <div class="row">
+                                                                                            <div class="col col-lg-6 col-xl-6 col-12">
+                                                                                                <fieldset class="form-group">
+                                                                                                    <label for="certificateOfRegistration">
+                                                                                                        Certificate Of Registration <span class="text-danger">*</span><span class="text-sm"> (pdf files only)</span>
+                                                                                                    </label>
+                                                                                                    <div class="custom-file">
+                                                                                                        <input type="file" class="form-control" onchange="angular.element(this).scope().certificateOfRegistrationFileHandler()" name="Attachment" id="certificateOfRegistration" ng-required="true" accept=".pdf">
+                                                                                                    </div>
+                                                                                                    <div class="text-danger text-sm" id="certificateOfRegistrationWarningIndicator"></div>
+                                                                                                </fieldset>
 
                                                                                             </div>
-                                                                                            <hr />
-                                                                                            <div class="row">
-                                                                                                <div class="col col-12 text-center">
-                                                                                                    <button ng-show="processing === false" ng-click="saveBusinessAccountInformation()" 
+                                                                                            <div class="col col-lg-6 col-xl-6 col-12">
+                                                                                                <fieldset class="form-group">
+                                                                                                    <label for="certificateOfIncorporation">
+                                                                                                        Certificate of Incorporation <span class="text-danger">*</span><span class="text-sm"> (pdf files only)</span>
+                                                                                                    </label>
+                                                                                                    <div class="custom-file">
+                                                                                                        <input accept=".pdf" class="form-control" onchange="angular.element(this).scope().certificateOfIncorporationFileHandler()" type="file" id="certificateOfIncorporation">
+                                                                                                    </div>
+                                                                                                    <div class="text-danger text-sm" id="certificateOfIncorporationWarningIndicator"></div>
+                                                                                                </fieldset>
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                        <div class="row">
+                                                                                            <div class="col col-lg-6 col-xl-6 col-12">
+                                                                                                <fieldset class="form-group">
+                                                                                                    <label for="memorandumAndArticlesOfAssociation">
+                                                                                                        Memorandum & Articles Of Association <span class="text-danger">*</span><span class="text-sm"> (pdf files only)</span>
+                                                                                                    </label>
+                                                                                                    <div class="custom-file">
+                                                                                                        <input accept=".pdf" class="form-control" onchange="angular.element(this).scope().memorandumOfAssociationFileHandler()" type="file" id="memorandumOfAssociation">
+                                                                                                    </div>
+                                                                                                    <div class="text-danger text-sm" id="memorandumOfAssociationIndicator"></div>
+                                                                                                </fieldset>
+                                                                                            </div>
+                                                                                            <div class="col col-lg-6 col-xl-6 col-12">
+                                                                                                <fieldset class="form-group">
+                                                                                                    <label for="deedOfPartnership">
+                                                                                                        Deed Of Partnership<span class="text-danger">*</span><span class="text-sm"> (pdf files only)</span>
+                                                                                                    </label>
+                                                                                                    <div class="custom-file">
+                                                                                                        <input accept=".pdf" class="form-control" onchange="angular.element(this).scope().deedOfPartnershipFileHandler()" type="file" id="deedOfPartnership">
+                                                                                                        <div class="text-danger text-sm" id="deedOfPartnershipIndicator"></div>
+                                                                                                    </div>
+                                                                                                </fieldset>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="row">
+                                                                                            <div class="col col-lg-6 col-xl-6 col-12">
+                                                                                                <fieldset class="form-group">
+                                                                                                    <label for="deedOfTrust">
+                                                                                                        Deed Of Trust<span class="text-danger">*</span><span class="text-sm"> (pdf files only)</span>
+                                                                                                    </label>
+                                                                                                    <div class="custom-file">
+                                                                                                        <input accept=".pdf" class="form-control" onchange="angular.element(this).scope().deedOfTrustFileHandler()" type="file" id="deedOfTrust">
+                                                                                                        <div class="text-danger text-sm" id="deedOfTrustIndicator"></div>
+                                                                                                    </div>
+                                                                                                </fieldset>
+                                                                                            </div>
+
+                                                                                        </div>
+                                                                                        <hr />
+                                                                                        <div class="row">
+                                                                                            <div class="col col-12 text-center">
+                                                                                                <button ng-show="processing === false" ng-click="saveBusinessAccountInformation()"
                                                                                                         class="btn btn-success"
                                                                                                         ng-disabled="registrationInformationModel.BusinessName === '' || registrationInformationModel.Email === '' || registrationInformationModel.Telephone === '' ||
                                                                                                             registrationInformationModel.Mobile === '' || registrationInformationModel.CompanyLegalStatus === '' ||
-                                                                                                            registrationInformationModel.AuthorizedRepName ==='' || registrationInformationModel.AuthorizedRepEmail === '' || registrationInformationModel.AuthorizedRepMobile === ''"
-                                                                                                            >
-                                                                                                       <i class="fa fa-pencil"></i> Register
-                                                                                                    </button>
-                                                                                                    <button ng-show="processing" class="btn btn-success"><div class="spinner-border"></div> Processing...</button>
-                                                                                                    <a href="/" class="btn btn-primary"><i class="fa fa-home"></i> Back to Homepage</a>
+                                                                                                            registrationInformationModel.AuthorizedRepName ==='' || registrationInformationModel.AuthorizedRepEmail === '' || registrationInformationModel.AuthorizedRepMobile === ''">
+                                                                                                    <i class="fa fa-pencil"></i> Register
+                                                                                                </button>
+                                                                                                <button ng-show="processing" class="btn btn-success"><div class="spinner-border"></div> Processing...</button>
+                                                                                                <a href="/" class="btn btn-primary"><i class="fa fa-home"></i> Back to Homepage</a>
 
-                                                                                                </div>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
-
                                                                             </div>
+
+                                                                        </div>
                                                                     </form>
                                                                 </div>
                                                             </div>
@@ -526,7 +527,7 @@
 </div>
 
 @section footerJS{
-    
+
     <script src="~/js/controllers/account/registration.js"></script>
     <script src="~/Template/app-assets/vendors/js/vendors.min.js"></script>
     <script src="~/Template/app-assets/js/core/app-menu.min.js"></script>

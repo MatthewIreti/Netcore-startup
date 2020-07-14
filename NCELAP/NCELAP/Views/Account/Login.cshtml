@@ -33,16 +33,16 @@
                                             <div class="card-body pt-1">
                                                 <form name="loginForm">
                                                     <fieldset class="form-label-group form-group position-relative has-icon-left">
-                                                        <input type="text" ng-model="loginModel.Email" class="form-control" id="user-name" placeholder="Email Address" required />
+                                                        <input type="text" ng-model="loginModel.Email" class="form-control" id="user-name" placeholder="Email Address" />
                                                         <div class="form-control-position">
                                                             <i class="feather icon-mail"></i>
                                                         </div>
                                                         <label for="user-name">Email Address</label>
-                                                        
+
                                                     </fieldset>
 
                                                     <fieldset class="form-label-group position-relative has-icon-left">
-                                                        <input type="password" ng-model="loginModel.Password" class="form-control" id="user-password" placeholder="Password" required />
+                                                        <input type="password" ng-model="loginModel.Password" class="form-control" id="user-password" placeholder="Password" />
                                                         <div class="form-control-position">
                                                             <i class="feather icon-lock"></i>
                                                         </div>
@@ -69,19 +69,34 @@
                                                     </div>
                                                     <div class="row">
                                                         <div class="col col-12">
-                                                            <button ng-disabled="loginModel.Email === '' || loginModel.Password === ''" class="btn btn-primary btn-block">Login</button>
+                                                            <button ng-click="login()" ng-disabled="loginModel.Email === '' || loginModel.Password === ''" class="btn btn-primary btn-block">
+                                                                <span class="spinner-grow text-muted" ng-show="loggingIn === true"></span>
+                                                                <span ng-show="loggingIn === false"><strong>Login</strong></span>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row" ng-show="accountdoesnotexist === true">
+                                                        <div class="col col-12 text-center text-danger">
+                                                            Invalid user credentials
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row" ng-show="accountnotactivated === true">
+                                                        <div class="col col-12 text-center text-danger">
+                                                            This account is yet to be activated!
                                                         </div>
                                                     </div>
 
 
-                                                    <div class="row" style="padding-top: 10px">
+                                                    @*<div class="row" style="padding-top: 10px">
                                                         <div class="col col-12">
                                                             <div class="text-center">
                                                                 <a href="/account/register" target="_blank" class="card-link">Don't have an account?</a>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    @*<a href="auth-register.html"
+                                                    <a href="auth-register.html"
                                                        class="btn btn-outline-primary float-left btn-inline">Register</a>
                                                     <button type="submit"
                                                             class="btn btn-primary float-right btn-inline">

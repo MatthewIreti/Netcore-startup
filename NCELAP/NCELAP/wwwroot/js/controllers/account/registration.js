@@ -88,6 +88,10 @@
         $scope.initShareHolderModel();
     };
 
+    
+
+    
+
     $scope.removeShareholder = function (objectToRemove) {
         var objectToRemovePosition = $scope.shareholders.indexOf(objectToRemove);
         $scope.shareholders.splice(objectToRemovePosition, 1);
@@ -422,7 +426,6 @@
             showSessionTimedOutDialog();
         }
     };
-
     $scope.initShareHolderModel();
     $scope.initDirectorModel();
     $scope.getCountries();

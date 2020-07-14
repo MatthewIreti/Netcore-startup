@@ -26,11 +26,20 @@ namespace NCELAP.WebAPI.Controllers.Account
 
         [HttpPost]
         [Route("registeredbusiness")]
-        //[Authorize]
         public async Task<IActionResult> SaveRegisteredBusinessInformation(RegisteredBusiness registeredBusiness)
         {
             var response = await _userAccountService.SaveBusinessInformation(registeredBusiness);
             return Ok(response);
         }
+
+        [HttpPost]
+        [Route("userlogin")]
+        public async Task<IActionResult> SaveRegisteredBusinessInformation(NcelasUserLogin ncelasUserLogin)
+        {
+            var response = await _userAccountService.GetNcelasUserAsync(ncelasUserLogin);
+            return Ok(response);
+        }
+
+        
     }
 }

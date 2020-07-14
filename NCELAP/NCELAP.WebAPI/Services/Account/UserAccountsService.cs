@@ -12,6 +12,8 @@ using System.IO;
 using Serilog;
 using NCELAP.WebAPI.Models.DTO;
 using NCELAP.WebAPI.Models.ODataResponse.Account;
+using System.Net;
+using NCELAP.WebAPI.Models.ODataResponse;
 
 namespace NCELAP.WebAPI.Services.Account
 {
@@ -19,17 +21,23 @@ namespace NCELAP.WebAPI.Services.Account
     {
         readonly IConfiguration _configuration;
         private readonly string businessaccount, businessaccountlegalstatus, businessaccountshareholder, businessaccountdirector, docupload;
+        private readonly string ncelasloginendpoint, companynamebycustrecid;
+        private string jsonResponse;
         private readonly AuthService _authService;
+        private readonly Helper _helper;
 
         public UserAccountsService(IConfiguration configuration)
         {
             _configuration = configuration;
             _authService = new AuthService(_configuration);
+            _helper = new Helper(_configuration);
             businessaccount = _configuration.GetSection("Endpoints").GetSection("custprospect").Value;
             businessaccountlegalstatus = _configuration.GetSection("Endpoints").GetSection("custprospectlegalstatus").Value;
             businessaccountshareholder  = _configuration.GetSection("Endpoints").GetSection("custprospectshareholder").Value;
             businessaccountdirector = _configuration.GetSection("Endpoints").GetSection("custprospectsdirector").Value;
             docupload = _configuration.GetSection("Endpoints").GetSection("custprospectupload").Value;
+            ncelasloginendpoint = _configuration.GetSection("Endpoints").GetSection("ncelasuserlogin").Value;
+            companynamebycustrecid = _configuration.GetSection("Endpoints").GetSection("companynamebycustrecid").Value;
         }
 
         public async Task<bool> SaveBusinessInformation(RegisteredBusiness registeredBusiness)
@@ -159,7 +167,6 @@ namespace NCELAP.WebAPI.Services.Account
             return response;
         }
 
-
         public async Task<bool> SaveCustProspectDirectors(CustProspectDirector[] custProspectDirectors, long custProspectRecId, string custProspectId)
         {
             bool response = false;
@@ -262,6 +269,97 @@ namespace NCELAP.WebAPI.Services.Account
             }
 
             return response;
+        }
+    
+        public async Task<NcelasUserResponse> GetNcelasUserAsync(NcelasUserLogin ncelasUserLogin)
+        {
+            string token = _authService.GetAuthToken();
+            string currentEnvironment = _helper.GetEnvironmentUrl();
+            string url = currentEnvironment + ncelasloginendpoint;
+            string formattedUrl = String.Format(url, ncelasUserLogin.Email, Helper.ComputeSha256Hash(ncelasUserLogin.Password));
+            var userAccount = new NcelasUserResponse();
+
+            try
+            {
+                var webRequest = WebRequest.Create(formattedUrl);
+                if (webRequest != null)
+                {
+                    webRequest.Method = "GET";
+                    webRequest.Timeout = 120000;
+                    webRequest.Headers.Add("Authorization", "Bearer " + token);
+
+                    WebResponse response = await webRequest.GetResponseAsync();
+                    Stream dataStream = response.GetResponseStream();
+                    StreamReader reader = new StreamReader(dataStream);
+
+                    var webResponse = new NcelasUsersResponse();
+                    jsonResponse = reader.ReadToEnd();
+
+                    webResponse = JsonConvert.DeserializeObject<NcelasUsersResponse>(jsonResponse);
+                    userAccount = webResponse.value[0];
+
+                    if (userAccount.CustTableRecId > 0)
+                    {
+                        userAccount.CompanyName = await this.GetCustomerNameByRecId(userAccount.CustTableRecId);
+                    }
+
+                    response.Dispose();
+                    dataStream.Close();
+                    dataStream.Dispose();
+                    reader.Close();
+                    reader.Dispose();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex.StackTrace);
+            }
+
+
+            return userAccount;
+        }
+
+        public async Task<string> GetCustomerNameByRecId(long custRecId)
+        {
+            string token = _authService.GetAuthToken();
+            string currentEnvironment = _helper.GetEnvironmentUrl();
+            string url = currentEnvironment + companynamebycustrecid;
+            string formattedUrl = String.Format(url, custRecId);
+            string companyName = string.Empty;
+
+            try
+            {
+                var webRequest = WebRequest.Create(formattedUrl);
+                if (webRequest != null)
+                {
+                    webRequest.Method = "GET";
+                    webRequest.Timeout = 120000;
+                    webRequest.Headers.Add("Authorization", "Bearer " + token);
+
+                    WebResponse response = await webRequest.GetResponseAsync();
+                    Stream dataStream = response.GetResponseStream();
+                    StreamReader reader = new StreamReader(dataStream);
+
+                    var webResponse = new CommonResponse();
+                    jsonResponse = reader.ReadToEnd();
+
+                    webResponse = JsonConvert.DeserializeObject<CommonResponse>(jsonResponse);
+                    companyName = webResponse.value[0].OrganizationName;
+
+                    response.Dispose();
+                    dataStream.Close();
+                    dataStream.Dispose();
+                    reader.Close();
+                    reader.Dispose();
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex.StackTrace);
+            }
+
+            return companyName;
         }
     }
 }
