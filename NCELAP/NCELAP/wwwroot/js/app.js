@@ -2,6 +2,25 @@
 var userAccessModule = angular.module('ncLasPortalAppRegistrationPageModule', []);
 
 
+appModule.directive('ngUploadChange', function () {
+    return {
+        scope: {
+            ngUploadChange: "=",
+            tag: "="
+        },
+        link: function ($scope, $element, $attrs) {
+            $element.on("change", function (event) {
+                var maxFileSize = 2500000;
+                var file = event.target.files[0];
+                $scope.ngUploadChange(event, $attrs.tag);
+            })
+            $scope.$on("$destroy", function () {
+                $element.off();
+            });
+        }
+    }
+});
+
 // add floating-number-only as an attribute e.g <input type="text" floating-number-only />
 appModule.directive("floatingNumberOnly", function () {
     return {

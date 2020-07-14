@@ -538,10 +538,29 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col col-12">
+                                        <div class="col col-lg-4 col-xl-4 col-12">
                                             <div class="form-group">
                                                 <label><strong>Details of proposed arrangements for compliance with the applicable requirements and the standard conditions as attachment</strong></label>
-                                                <input type="file" class="form-control" />
+                                                <input type="file" ng-upload-change="setFileRecord" tag="james">
+                                                <div class="text-danger text-sm" id="pwarn"></div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label><strong>Details of proposed arrangements for compliance with the applicable requirements and the standard conditions as attachment</strong></label>
+                                                <input type="file" class="form-control" id="proposedArrangementsModification" 
+                                                        onchange="angular.element(this).scope().fileHandler('proposedArrangementsModification', 'proposedArrangementsModificationWarning', licenseApplicationUpload.ProposedArrangementAttachmentFileName, this.licenseApplicationUpload.ProposedArrangementAttachmentFileExtension, this.licenseApplicationUpload.ProposedArrangementAttachmentBase64)" accept=".pdf" />
+                                                <div class="text-danger text-sm" id="proposedArrangementsModificationWarning"></div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Copy OPL License issued by DPR<span class="text-danger">*</span></label>
+                                                <input type="file" class="form-control" id="OplLicense" 
+                                                       onchange="angular.element(this).scope().fileHandler('OplLicenseWarning', 'OplLicenseWarning', licenseApplicationModel.OPLFileName, licenseApplicationModel.OPLFileExtension, licenseApplicationModel.OPLBase64)" accept=".pdf" />
+                                                <div class="text-danger text-sm" id="OplLicenseWarning"></div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Safety Case Approved<span class="text-danger">*</span></label>
+                                                <input type="file" class="form-control" id="SafetyCase" 
+                                                        onchange="angular.element(this).scope().fileHandler('SafetyCase', 'SAfetyCaseWarning', licenseApplicationModel.SafetyCaseFileName, licenseApplicationModel.SafetyCaseFileExtension, licenseApplicationModel.SafetyCaseBase64)"  accept=".pdf" />
+                                                <div class="text-danger text-sm" id="SAfetyCaseWarning"></div>
                                             </div>
                                         </div>
                                     </div>

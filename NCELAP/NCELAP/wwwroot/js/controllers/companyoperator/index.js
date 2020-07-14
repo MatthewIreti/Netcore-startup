@@ -7,7 +7,7 @@
     $scope.licensetypes = [
         { "Name": "Network Agent", "Value": "NetworkAgent", "Selected": true },
         { "Name": "Gas Shipper License", "Value": "GasShipperLicense", "Selected": false },
-        { "Name": "Gas Transporter License", "Value":"GasTransporterLicense", "Selected": false }
+        { "Name": "Gas Transporter License", "Value": "GasTransporterLicense", "Selected": false }
     ];
     //$scope.selectedLicenseType = 'NetworkAgent';
 
@@ -17,7 +17,9 @@
         HasLicenseRevokedFileName: '', HasLicenseRevokedFileExtension: '', HasLicenseRevokedLicenseBase64: '',
         HasLicenseRefusedFileName: '', HasLicenseRefusedFileExtension: '', HasLicenseRefusedLicenseBase64: '',
         ProposedArrangementAttachmentFileName: '', ProposedArrangementAttachmentFileExtension: '', ProposedArrangementAttachmentBase64: '',
-        DeclarationSignatureFileName: '', DeclarationSignatureFileExtension: '', DeclarationSignatureBase64: ''
+        DeclarationSignatureFileName: '', DeclarationSignatureFileExtension: '', DeclarationSignatureBase64: '',
+        OPLFileName: '', OPLFileExtension: '', OPLBase64: '',
+        SafetyCaseFileName: '', SafetyCaseFileExtension: '', SafetyCaseBase64: ''
     };
 
     $scope.setCustomerRecId = function () {
@@ -41,12 +43,12 @@
         CompanyName: '', Customer: 0, CustomerTier: '', SubmittedBy: 0, CustApplicationNum: '', CustLicenseType: '', EffectiveDate: '', HoldRelatedLicense: '', RelatedLicenseDetail: '',
         HasRelatedLicense: '', RelatedLicenseType: '', HasLicenseRevoked: '', RevokedLicenseType: '', HasGasApplicationRefused: '',
         RefusedLicenseType: '', AgentShipperName: '', AgentLocationOfShipper: '', EntryExitPoint: '', Location: '',
-        MaximumNominatedCapacity: 0.0, PipelineAndGasTransporterName: '', GasPipelineNetwork: '', InstalledCapacity: '', DeclarationName: '', DeclarationCapacity: '', 
+        MaximumNominatedCapacity: 0.0, PipelineAndGasTransporterName: '', GasPipelineNetwork: '', InstalledCapacity: '', DeclarationName: '', DeclarationCapacity: '',
         DeclarationDate: '', ProposedArrangementLicensingActivity: '', HasStandardModificationRequest: '', ModificationRequestDetails: '',
         ModificationRequestReason: '', CustLicenseApplicationStatus: '',
         FileUploads: $scope.licenseApplicationUpload, StakeholderLocations: $scope.stakeholdersLocations
     };
-    
+
     $scope.licenseApplicationUploadsFileSizeCheckModel = {
         HoldRelatedLicenseFileSizeValid: '', HasRelatedLicenseFileSizeValid: '', HasLicenseRevokedFileSizeValid: '', HasLicenseRefusedFileSizeValid: '', DeclarationSignatureValid: ''
     };
@@ -261,7 +263,7 @@
                             }
 
 
-                            console.log('Hold related license?: ' +$scope.licenseApplicationUploadsFileSizeCheckModel.HoldRelatedLicenseFileSizeValid);
+                            console.log('Hold related license?: ' + $scope.licenseApplicationUploadsFileSizeCheckModel.HoldRelatedLicenseFileSizeValid);
                         };
                     })(selectedFile);
                 }
@@ -314,7 +316,7 @@
                             }
 
 
-                            console.log('Related license valid?: ' +$scope.licenseApplicationUploadsFileSizeCheckModel.HasRelatedLicenseFileSizeValid);
+                            console.log('Related license valid?: ' + $scope.licenseApplicationUploadsFileSizeCheckModel.HasRelatedLicenseFileSizeValid);
                         };
                     })(selectedFile);
                 }
@@ -367,7 +369,7 @@
                             }
 
 
-                            console.log('License revoked valid?: ' +$scope.licenseApplicationUploadsFileSizeCheckModel.HasLicenseRevokedFileSizeValid);
+                            console.log('License revoked valid?: ' + $scope.licenseApplicationUploadsFileSizeCheckModel.HasLicenseRevokedFileSizeValid);
                         };
                     })(selectedFile);
                 }
@@ -471,7 +473,73 @@
                                 }
                             }
 
-                            console.log('Declaration signature valid?: '+ $scope.licenseApplicationUploadsFileSizeCheckModel.DeclarationSignatureValid);
+                            console.log('Declaration signature valid?: ' + $scope.licenseApplicationUploadsFileSizeCheckModel.DeclarationSignatureValid);
+                        };
+                    })(selectedFile);
+                }
+                console.log($scope.licenseApplicationUpload);
+            }
+        }
+    };
+    $scope.setFileRecord = function ($event, $id) {
+        console.log("From Controller", $id);
+        //if (tag == "proposedDetail") {
+        //    $scope.licenseFileUpload.ProposedArrangementAttachmentFileName = "";
+        //    $scope.licenseFileUpload.ProposedArrangementAttachmentFileExtension = "";
+        //    $scope.licenseFileUpload.ProposedArrangementAttachmentBase64 = window.btoa($event.target.result);
+        //}
+        //else if (tag == "OplLicense")
+        //{
+        //    $scope.licenseFileUpload.OPLFileName = "";
+        //    $scope.licenseFileUpload.OPLFileExtension = "";
+        //    $scope.licenseFileUpload.OPLBase64 = window.btoa($event.target.result);
+        //}
+    }
+
+    $scope.fileHandler = function (inputId, messageId, fileName, fileExtension, base64Str) {
+        var fi = document.getElementById(inputId);
+        var selectedFile;
+
+        if (fi.files.length > 0) {
+            for (var i = 0; i <= fi.files.length - 1; i++) {
+                var reader = new FileReader();
+                selectedFile = fi.files.item(0);
+
+                reader.readAsBinaryString(selectedFile);
+                if (selectedFile !== undefined) {
+                    const lastDot = selectedFile.name.lastIndexOf('.');
+
+                    reader.onload = (function (theFile) {
+                        return function (e) {
+                            var binaryData = e.target.result;
+                            var base64String = window.btoa(binaryData);
+                            const fileNameFormatted = selectedFile.name.substring(0, lastDot);
+                            const extension = extractExtensionFromFileName(selectedFile.name);
+
+                            fileName = fileNameFormatted;
+                            fileExtension = extension;
+                            base64Str = base64String;
+
+                            if (selectedFile.size > maxFileSize) {
+                                // $scope.licenseApplicationUploadsFileSizeCheckModel.DeclarationSignatureValid = false;
+                                document.getElementById(messageId).innerHTML = "File size cannot be more than 2MB!";
+
+                            } else {
+                                // $scope.licenseApplicationUploadsFileSizeCheckModel.DeclarationSignatureValid = true;
+                                document.getElementById(messageId).innerHTML = "";
+                            }
+
+                            // if ($scope.licenseApplicationUploadsFileSizeCheckModel.DeclarationSignatureValid === true) {
+                            if (extension === 'pdf') {
+                                //  $scope.licenseApplicationUploadsFileSizeCheckModel.DeclarationSignatureValid = true;
+                                document.getElementById(messageId).innerHTML = "";
+                            } else {
+                                //  $scope.licenseApplicationUploadsFileSizeCheckModel.DeclarationSignatureValid = false;
+                                document.getElementById(messageId).innerHTML = "Only PDF files are allowed!";
+                            }
+                            // }
+
+                            // console.log('Declaration signature valid?: ' + $scope.licenseApplicationUploadsFileSizeCheckModel.DeclarationSignatureValid);
                         };
                     })(selectedFile);
                 }
@@ -480,29 +548,29 @@
         }
     };
 
-    $scope.makePayment = function () {
-        var paymentEngine = RmPaymentEngine.init({
-            key: 'b2x1ZmVtaW95ZWRlcG9AZ21haWwuY29tfDQyNjIwMjMzfDIxZDM2YjdkYWJlYjZmNjJmMDRiZTY0OTU0NmJiYWMxNTg0MjQyZWM4ZmQ2NWEzMmY1NjgyNWJmYzQyZDRiMmNlNmYyNTI0YWM5NjgwZGEwZGJkNGI4Zjg1MmFiY2YwZThiZWE2YTE4ZjE2NzUyOTU0NjliYzM4YjMyM2Y5YzQ2',
-            customerId: "4216551965",
-            firstName: "Yetunde",
-            lastName: "Salau",
-            email: "ysalau@wragbysolutions.com",
-            narration: "Remitta DPR Demo",
-            amount: 15000,
-            onSuccess: function (response) {
-                console.log('callback Successful Response', response);
-            },
-            onError: function (response) {
-                console.log('callback Error Response', response);
-            },
-            onClose: function () {
-                console.log("closed");
-            }
-        });
-        paymentEngine.showPaymentWidget();
-    };
+    //$scope.makePayment = function () {
+    //    var paymentEngine = RmPaymentEngine.init({
+    //        key: 'b2x1ZmVtaW95ZWRlcG9AZ21haWwuY29tfDQyNjIwMjMzfDIxZDM2YjdkYWJlYjZmNjJmMDRiZTY0OTU0NmJiYWMxNTg0MjQyZWM4ZmQ2NWEzMmY1NjgyNWJmYzQyZDRiMmNlNmYyNTI0YWM5NjgwZGEwZGJkNGI4Zjg1MmFiY2YwZThiZWE2YTE4ZjE2NzUyOTU0NjliYzM4YjMyM2Y5YzQ2',
+    //        customerId: "4216551965",
+    //        firstName: "Yetunde",
+    //        lastName: "Salau",
+    //        email: "ysalau@wragbysolutions.com",
+    //        narration: "Remitta DPR Demo",
+    //        amount: 15000,
+    //        onSuccess: function (response) {
+    //            console.log('callback Successful Response', response);
+    //        },
+    //        onError: function (response) {
+    //            console.log('callback Error Response', response);
+    //        },
+    //        onClose: function () {
+    //            console.log("closed");
+    //        }
+    //    });
+    //    paymentEngine.showPaymentWidget();
+    //};
 
-    
+
 
     $scope.setCustomerRecId();
     $scope.getLicenseFees();

@@ -5,6 +5,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="EmailTemplates\**" />
+    <Compile Remove="Utils\**" />
+    <Content Remove="EmailTemplates\**" />
+    <Content Remove="Utils\**" />
+    <EmbeddedResource Remove="EmailTemplates\**" />
+    <EmbeddedResource Remove="Utils\**" />
+    <None Remove="EmailTemplates\**" />
+    <None Remove="Utils\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AspNetCore.Http.Extensions" Version="1.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Extensions" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="4.1.1" />
@@ -23,9 +34,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="EmailTemplates\" />
     <Folder Include="Services\Common\" />
-    <Folder Include="Utils\" />
   </ItemGroup>
 
 
