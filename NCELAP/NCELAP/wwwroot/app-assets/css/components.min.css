@@ -29,7 +29,7 @@ html body.navbar-static .navbar-container,html body.navbar-sticky .navbar-contai
 html body.fixed-footer .content.app-content{margin-bottom:3rem}
 html body p{line-height:1.5rem}
     html body.bg-full-screen-image {
-        background: url(../images/oil-refinery-twilight1.jpg) center center no-repeat;
+        background: url(~/images/oil-refinery-twilight1.jpg) center center no-repeat !important;
         
         background-size: cover
     }
