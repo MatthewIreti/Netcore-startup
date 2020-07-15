@@ -2,6 +2,37 @@
 var userAccessModule = angular.module('ncLasPortalAppRegistrationPageModule', []);
 
 
+appModule.directive('ngUploadChange', function () {
+    return {
+        scope: {
+            ngUploadChange: "=",
+            tag: "="
+        },
+        link: function ($scope, $element, $attrs) {
+            $element.on("change", function (event) {
+                var maxFileSize = 2500000;
+                var file = event.target.files[0];
+                var errorElement = $($element).next('.text-danger');
+                var extension = extractExtensionFromFileName(file.name);
+                if (file.size > maxFileSize) {
+                    errorElement.html("File size cannot be more than 2MB!");
+                }
+                else if (extension != "pdf") {
+                    errorElement.html("Only PDF files are allowed!");
+                }
+                else {
+                    errorElement.html("");
+                    $scope.ngUploadChange(event, $attrs.tag);
+                }
+               
+            })
+            $scope.$on("$destroy", function () {
+                $element.off();
+            });
+        }
+    }
+});
+
 // add floating-number-only as an attribute e.g <input type="text" floating-number-only />
 appModule.directive("floatingNumberOnly", function () {
     return {

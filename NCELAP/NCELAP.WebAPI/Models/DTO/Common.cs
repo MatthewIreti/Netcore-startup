@@ -13,4 +13,11 @@ namespace NCELAP.WebAPI.Models.DTO
     {
         public string OrganizationName { get; set; }
     }
+
+    public static class ConstantHelper
+    {
+        public const string NetworkAgent = "Network Agent";
+        public const string GasTransporterLicense = "Gas Transporter License";
+        public const string GasShipperLicense = "Gas Shipper License";
+    }
 }

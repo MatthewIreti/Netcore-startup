@@ -10,6 +10,9 @@ namespace NCELAP.WebAPI.Models.DTO.Applications
     {
         public LicenseApplicationUpload FileUploads { get; set; }
         public StakeholderLocation[] StakeholderLocations { get; set; }
+        public GasShipperTakeOffPoint[] TakeOffPoints { get; set; }
+        public GasShipperCustomer[] GasShipperCustomers { get; set; }
+
     }
 
     public class LicenseApplicationUpload
@@ -33,6 +36,41 @@ namespace NCELAP.WebAPI.Models.DTO.Applications
         public string DeclarationSignatureFileName { get; set; }
         public string DeclarationSignatureFileExtension { get; set; }
         public string DeclarationSignatureBase64 { get; set; }
+        public string OPLFileName { get; set; }
+        public string OPLFileExtension { get; set; }
+        public string OPLBase64 { get; set; }
+        public string SafetyCaseFileName { get; set; }
+        public string SafetyCaseFileExtension { get; set; }
+        public string SafetyCaseBase64 { get; set; }
+        public string SCADAFileName { get; set; }
+        public string SCADAFileExtension { get; set; }
+        public string SCADABase64 { get; set; }
+        public string GTSFileName { get; set; }
+        public string GTSFileExtension { get; set; }
+        public string GTSBase64 { get; set; }
+        public string TechnicalAttributeFileName { get; set; }
+        public string TechnicalAttributeFileExtension { get; set; }
+        public string TechnicalAttributeBase64 { get; set; }
+        public string AuxiliarySystemFileName { get; set; }
+        public string AuxiliarySystemFileExtension { get; set; }
+        public string AuxiliarySystemBase64 { get; set; }
+        public string TariffAndPricingFileName { get; set; }
+        public string TariffAndPricingFileExtension { get; set; }
+        public string TariffAndPricingBase64 { get; set; }
+        public string RiskManagmentFileName { get; set; }
+        public string RiskManagmentFileExtension { get; set; }
+        public string RiskManagmentBase64 { get; set; }
+        public string CommunityMOUFileName { get; set; }
+        public string CommunityMOUFileExtension { get; set; }
+        public string CommunityMOUBase64 { get; set; }
+        public string NetworkAgentOPLFileName { get; set; }
+        public string NetworkAgentOPLFileExtension { get; set; }
+        public string NetworkAgentOPLBase64 { get; set; }
+        public string GasShipperOPLFileName { get; set; }
+        public string GasShipperOPLFileExtension { get; set; }
+        public string GasShipperOPLBase64 { get; set; }
+
+
     }
 
     public class StakeholderLocation
@@ -40,6 +78,25 @@ namespace NCELAP.WebAPI.Models.DTO.Applications
         public long CustApplication { get; set; }
         public string Customer { get; set; }
         public string Location { get; set; }
+        public string UniqueId { get; set; }
+    }
+    public class GasShipperTakeOffPoint
+    {
+        public long CustApplication { get; set; }
+        public string Name { get; set; }
+        public string Location { get; set; }
+        public string GasShipperPointType { get; set; }
+        public string UniqueId { get; set; }
+    }
+
+    public class GasShipperCustomer
+    {
+        public long CustApplication { get; set; }
+        public string BusinessName { get; set; }
+        public string Location { get; set; }
+        public string GasShipperCustCategory { get; set; }
+        public string Email { get; set; }
+        public string PhoneNumber { get; set; }
         public string UniqueId { get; set; }
     }
 

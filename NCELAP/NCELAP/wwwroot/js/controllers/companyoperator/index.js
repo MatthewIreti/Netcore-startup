@@ -1,24 +1,33 @@
 ﻿appModule.controller('companyoperatorIndexCtrl', function ($scope, $http) {
     $scope.stakeholdersLocations = [];
+    $scope.takeOffPoints = [];
+    $scope.gasShipperCustomers = [];
     $scope.licenseFees = [];
+    $scope.gasShipperCustomer = {};
+    $scope.takeOffPoint = {};
     var maxFileSize = 2500000; // 2 Megabytes
     $scope.submittingInformation === 'false';
     $scope.submitButtonText = 'Submit Application';
     $scope.licensetypes = [
         { "Name": "Network Agent", "Value": "NetworkAgent", "Selected": true },
         { "Name": "Gas Shipper License", "Value": "GasShipperLicense", "Selected": false },
-        { "Name": "Gas Transporter License", "Value":"GasTransporterLicense", "Selected": false }
+        { "Name": "Gas Transporter License", "Value": "GasTransporterLicense", "Selected": false }
+    ];
+
+    $scope.GasShipperPointType = [
+        { "Name": "Delivery", "Value": "Delivery" },
+        { "Name": "Take Off", "Value": "TakeOff" }
+
+    ];
+
+    $scope.GasShipperCustCategory = [
+        { "Name": "Buyer", "Value": "Buyer" },
+        { "Name": "Seller", "Value": "Seller" }
+
     ];
     //$scope.selectedLicenseType = 'NetworkAgent';
 
-    $scope.licenseApplicationUpload = {
-        HoldRelatedLicenseFileName: '', HoldRelatedLicenseFileExtension: '', HoldRelatedLicenseBase64: '',
-        HasRelatedLicenseFileName: '', HasRelatedLicenseFileExtension: '', HasRelatedLicenseBase64: '',
-        HasLicenseRevokedFileName: '', HasLicenseRevokedFileExtension: '', HasLicenseRevokedLicenseBase64: '',
-        HasLicenseRefusedFileName: '', HasLicenseRefusedFileExtension: '', HasLicenseRefusedLicenseBase64: '',
-        ProposedArrangementAttachmentFileName: '', ProposedArrangementAttachmentFileExtension: '', ProposedArrangementAttachmentBase64: '',
-        DeclarationSignatureFileName: '', DeclarationSignatureFileExtension: '', DeclarationSignatureBase64: ''
-    };
+    
 
     $scope.setCustomerRecId = function () {
         var loggedInUser = localStorage.getItem('loggedInUser');
@@ -36,17 +45,35 @@
         }
         // alert($scope.licenseApplicationModel.Customer);
     };
-
+    $scope.licenseApplicationUpload = {
+        HoldRelatedLicenseFileName: '', HoldRelatedLicenseFileExtension: '', HoldRelatedLicenseBase64: '',
+        HasRelatedLicenseFileName: '', HasRelatedLicenseFileExtension: '', HasRelatedLicenseBase64: '',
+        HasLicenseRevokedFileName: '', HasLicenseRevokedFileExtension: '', HasLicenseRevokedLicenseBase64: '',
+        HasLicenseRefusedFileName: '', HasLicenseRefusedFileExtension: '', HasLicenseRefusedLicenseBase64: '',
+        ProposedArrangementAttachmentFileName: '', ProposedArrangementAttachmentFileExtension: '', ProposedArrangementAttachmentBase64: '',
+        DeclarationSignatureFileName: '', DeclarationSignatureFileExtension: '', DeclarationSignatureBase64: '',
+        OPLFileName: '', OPLFileExtension: '', OPLBase64: '',
+        SafetyCaseFileName: '', SafetyCaseFileExtension: '', SafetyCaseBase64: '',
+        SCADAFileName: '', SCADAFileExtension: '', SCADABase64: '',
+        GTSFileName: '', GTSFileExtension: '', GTSBase64: '',
+        TechnicalAttributeFileName: '', TechnicalAttributeFileExtension: '', TechnicalAttributeBase64: '',
+        AuxiliarySystemFileName: '', AuxiliarySystemFileExtension: '', AuxiliarySystemBase64: '',
+        TariffAndPricingFileName: '', TariffAndPricingFileExtension: '', TariffAndPricingBase64: '',
+        RiskManagmentFileName: '', RiskManagmentFileExtension: '', RiskManagmentBase64: '',
+        CommunityMOUFileName: '', CommunityMOUFileExtension: '', CommunityMOUBase64: '',
+        NetworkAgentOPLFileName: '', NetworkAgentOPLFileExtension: '', NetworkAgentOPLBase64: '',
+        GasShipperOPLFileName: '', GasShipperOPLFileExtension: '', GasShipperOPLBase64: ''
+    };
     $scope.licenseApplicationModel = {
         CompanyName: '', Customer: 0, CustomerTier: '', SubmittedBy: 0, CustApplicationNum: '', CustLicenseType: '', EffectiveDate: '', HoldRelatedLicense: '', RelatedLicenseDetail: '',
         HasRelatedLicense: '', RelatedLicenseType: '', HasLicenseRevoked: '', RevokedLicenseType: '', HasGasApplicationRefused: '',
         RefusedLicenseType: '', AgentShipperName: '', AgentLocationOfShipper: '', EntryExitPoint: '', Location: '',
-        MaximumNominatedCapacity: 0.0, PipelineAndGasTransporterName: '', GasPipelineNetwork: '', InstalledCapacity: '', DeclarationName: '', DeclarationCapacity: '', 
+        MaximumNominatedCapacity: 0.0, PipelineAndGasTransporterName: '', GasPipelineNetwork: '', InstalledCapacity: '', DeclarationName: '', DeclarationCapacity: '',
         DeclarationDate: '', ProposedArrangementLicensingActivity: '', HasStandardModificationRequest: '', ModificationRequestDetails: '',
         ModificationRequestReason: '', CustLicenseApplicationStatus: '',
-        FileUploads: $scope.licenseApplicationUpload, StakeholderLocations: $scope.stakeholdersLocations
+        FileUploads: $scope.licenseApplicationUpload, StakeholderLocations: $scope.stakeholdersLocations, TakeOffPoints: $scope.TakeOffPoints, GasShipperCustomers: $scope.gasShipperCustomers
     };
-    
+
     $scope.licenseApplicationUploadsFileSizeCheckModel = {
         HoldRelatedLicenseFileSizeValid: '', HasRelatedLicenseFileSizeValid: '', HasLicenseRevokedFileSizeValid: '', HasLicenseRefusedFileSizeValid: '', DeclarationSignatureValid: ''
     };
@@ -212,9 +239,24 @@
         console.log($scope.stakeholdersLocations);
     };
 
-    $scope.removeCustomerStakeholder = function (objectToRemove) {
-        var objectToRemovePosition = $scope.stakeholdersLocations.indexOf(objectToRemove);
-        $scope.stakeholdersLocations.splice(objectToRemovePosition, 1);
+    $scope.addGasShipperCustomer = function (item) {
+        $scope.gasShipperCustomers.push(item);
+        $scope.gasShipperCustomer = {};
+    };
+
+    $scope.removeGasShipperCustomer = function (objectToRemove) {
+        var objectToRemovePosition = $scope.gasShipperCustomers.indexOf(objectToRemove);
+        $scope.gasShipperCustomers.splice(objectToRemovePosition, 1);
+    };
+
+    $scope.addTakeOffPoint = function (item) {
+        $scope.takeOffPoints.push(item);
+        $scope.takeOffPoint = {};
+    };
+
+    $scope.removeTakeOffPoint = function (objectToRemove) {
+        var objectToRemovePosition = $scope.takeOffPoints.indexOf(objectToRemove);
+        $scope.takeOffPoints.splice(objectToRemovePosition, 1);
     };
 
     $scope.holdRelatedLicenseFileHandler = function () {
@@ -261,7 +303,7 @@
                             }
 
 
-                            console.log('Hold related license?: ' +$scope.licenseApplicationUploadsFileSizeCheckModel.HoldRelatedLicenseFileSizeValid);
+                            console.log('Hold related license?: ' + $scope.licenseApplicationUploadsFileSizeCheckModel.HoldRelatedLicenseFileSizeValid);
                         };
                     })(selectedFile);
                 }
@@ -314,7 +356,7 @@
                             }
 
 
-                            console.log('Related license valid?: ' +$scope.licenseApplicationUploadsFileSizeCheckModel.HasRelatedLicenseFileSizeValid);
+                            console.log('Related license valid?: ' + $scope.licenseApplicationUploadsFileSizeCheckModel.HasRelatedLicenseFileSizeValid);
                         };
                     })(selectedFile);
                 }
@@ -367,7 +409,7 @@
                             }
 
 
-                            console.log('License revoked valid?: ' +$scope.licenseApplicationUploadsFileSizeCheckModel.HasLicenseRevokedFileSizeValid);
+                            console.log('License revoked valid?: ' + $scope.licenseApplicationUploadsFileSizeCheckModel.HasLicenseRevokedFileSizeValid);
                         };
                     })(selectedFile);
                 }
@@ -471,7 +513,7 @@
                                 }
                             }
 
-                            console.log('Declaration signature valid?: '+ $scope.licenseApplicationUploadsFileSizeCheckModel.DeclarationSignatureValid);
+                            console.log('Declaration signature valid?: ' + $scope.licenseApplicationUploadsFileSizeCheckModel.DeclarationSignatureValid);
                         };
                     })(selectedFile);
                 }
@@ -480,29 +522,107 @@
         }
     };
 
-    $scope.makePayment = function () {
-        var paymentEngine = RmPaymentEngine.init({
-            key: 'b2x1ZmVtaW95ZWRlcG9AZ21haWwuY29tfDQyNjIwMjMzfDIxZDM2YjdkYWJlYjZmNjJmMDRiZTY0OTU0NmJiYWMxNTg0MjQyZWM4ZmQ2NWEzMmY1NjgyNWJmYzQyZDRiMmNlNmYyNTI0YWM5NjgwZGEwZGJkNGI4Zjg1MmFiY2YwZThiZWE2YTE4ZjE2NzUyOTU0NjliYzM4YjMyM2Y5YzQ2',
-            customerId: "4216551965",
-            firstName: "Yetunde",
-            lastName: "Salau",
-            email: "ysalau@wragbysolutions.com",
-            narration: "Remitta DPR Demo",
-            amount: 15000,
-            onSuccess: function (response) {
-                console.log('callback Successful Response', response);
-            },
-            onError: function (response) {
-                console.log('callback Error Response', response);
-            },
-            onClose: function () {
-                console.log("closed");
-            }
-        });
-        paymentEngine.showPaymentWidget();
-    };
+  
+
+    $scope.setFileRecord = function ($event, tag) {
+        var file = $event.target.files[0];
+        var filename = file.name;
+        var extension = extractExtensionFromFileName(filename);
+        var reader = new FileReader();
+
+        reader.readAsBinaryString(file);
+        reader.onload = (function () {
+            return function (e) {
+                var base64Str = window.btoa(e.target.result);
+                if (tag === "proposedDetail") {
+                    $scope.licenseApplicationUpload.ProposedArrangementAttachmentFileName = filename;
+                    $scope.licenseApplicationUpload.ProposedArrangementAttachmentFileExtension = extension;
+                    $scope.licenseApplicationUpload.ProposedArrangementAttachmentBase64 = base64Str;
+                }
+                else if (tag === "OPLLicense") {
+                    $scope.licenseApplicationUpload.OPLFileName = filename;
+                    $scope.licenseApplicationUpload.OPLFileExtension = extension;
+                    $scope.licenseApplicationUpload.OPLBase64 = base64Str;
+                }
+                else if (tag === "SafetyCase") {
+                    $scope.licenseApplicationUpload.SafetyCaseFileName = filename;
+                    $scope.licenseApplicationUpload.SafetyCaseFileExtension = extension;
+                    $scope.licenseApplicationUpload.SafetyCaseBase64 = base64Str;
+                }
+                else if (tag === "SCADA") {
+                    $scope.licenseApplicationUpload.SCADAFileName = filename;
+                    $scope.licenseApplicationUpload.SCADAFileExtension = extension;
+                    $scope.licenseApplicationUpload.SCADABase64 = base64Str;
+                }
+                else if (tag === "GTS") {
+                    $scope.licenseApplicationUpload.GTSFileName = filename;
+                    $scope.licenseApplicationUpload.GTSFileExtension = extension;
+                    $scope.licenseApplicationUpload.GTSBase64 = base64Str;
+                }
+                else if (tag === "technicalAttr") {
+                    $scope.licenseApplicationUpload.TechnicalAttributeFileName = filename;
+                    $scope.licenseApplicationUpload.TechnicalAttributeFileExtension = extension;
+                    $scope.licenseApplicationUpload.TechnicalAttributeBase64 = base64Str;
+                }
+                else if (tag === "auxSystems") {
+                    $scope.licenseApplicationUpload.AuxiliarySystemFileName = filename;
+                    $scope.licenseApplicationUpload.AuxiliarySystemFileExtension = extension;
+                    $scope.licenseApplicationUpload.AuxiliarySystemBase64 = base64Str;
+                }
+                else if (tag === "tariff") {
+                    $scope.licenseApplicationUpload.TariffAndPricingFileName = filename;
+                    $scope.licenseApplicationUpload.TariffAndPricingFileExtension = extension;
+                    $scope.licenseApplicationUpload.TariffAndPricingBase64 = base64Str;
+                }
+                else if (tag === "riskManagement") {
+                    $scope.licenseApplicationUpload.RiskManagmentFileName = filename;
+                    $scope.licenseApplicationUpload.RiskManagmentFileExtension = extension;
+                    $scope.licenseApplicationUpload.RiskManagmentBase64 = base64Str;
+                }
+                else if (tag === "MOU") {
+                    $scope.licenseApplicationUpload.CommunityMOUFileName = filename;
+                    $scope.licenseApplicationUpload.CommunityMOUFileExtension = extension;
+                    $scope.licenseApplicationUpload.CommunityMOUBase64 = base64Str;
+                }
+                else if (tag === "NetworkAgentOPL") {
+                    $scope.licenseApplicationUpload.NetworkAgentOPLFileName = filename;
+                    $scope.licenseApplicationUpload.NetworkAgentOPLFileExtension = extension;
+                    $scope.licenseApplicationUpload.NetworkAgentOPLBase64 = base64Str;
+                }
+                else if (tag === "GasShipperOPL") {
+                    $scope.licenseApplicationUpload.GasShipperOPLFileName = filename;
+                    $scope.licenseApplicationUpload.GasShipperOPLFileExtension = extension;
+                    $scope.licenseApplicationUpload.GasShipperOPLBase64 = base64Str;
+                }
+            };
+        })(file);
+        console.log($scope.licenseApplicationModel);
+    }
 
     
+    //$scope.makePayment = function () {
+    //    var paymentEngine = RmPaymentEngine.init({
+    //        key: 'b2x1ZmVtaW95ZWRlcG9AZ21haWwuY29tfDQyNjIwMjMzfDIxZDM2YjdkYWJlYjZmNjJmMDRiZTY0OTU0NmJiYWMxNTg0MjQyZWM4ZmQ2NWEzMmY1NjgyNWJmYzQyZDRiMmNlNmYyNTI0YWM5NjgwZGEwZGJkNGI4Zjg1MmFiY2YwZThiZWE2YTE4ZjE2NzUyOTU0NjliYzM4YjMyM2Y5YzQ2',
+    //        customerId: "4216551965",
+    //        firstName: "Yetunde",
+    //        lastName: "Salau",
+    //        email: "ysalau@wragbysolutions.com",
+    //        narration: "Remitta DPR Demo",
+    //        amount: 15000,
+    //        onSuccess: function (response) {
+    //            console.log('callback Successful Response', response);
+    //        },
+    //        onError: function (response) {
+    //            console.log('callback Error Response', response);
+    //        },
+    //        onClose: function () {
+    //            console.log("closed");
+    //        }
+    //    });
+    //    paymentEngine.showPaymentWidget();
+    //};
+
+
 
     $scope.setCustomerRecId();
     $scope.getLicenseFees();
