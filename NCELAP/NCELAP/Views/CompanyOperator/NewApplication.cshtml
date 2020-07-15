@@ -274,75 +274,62 @@
                             <article class="step-wizard-content m-0">
                                 <div ng-show="licenseApplicationModel.CustLicenseType === 'NetworkAgent'">
                                     <div class="row">
-                                        <div class="col col-12">
+                                        <div class="col col-lg-6 col-sm-12 col-12">
                                             <div class="form-group">
                                                 <label><strong>Name of Shipper</strong></label>
-                                                <input type="text" class="form-control" ng-model="licenseApplicationModel.AgentShipperName"/>
+                                                <input type="text" class="form-control" ng-model="licenseApplicationModel.AgentShipperName" />
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col col-12">
+                                        <div class="col col-lg-6 col-sm-12 col-12">
                                             <div class="form-group">
                                                 <label><strong>Location of Shipper</strong></label>
                                                 <input type="text" class="form-control" ng-model="licenseApplicationModel.AgentLocationOfShipper" />
                                             </div>
                                         </div>
                                     </div>
-                                    @*<div class="row">
-                                        <div class="col col-12">
-                                            <div class="form-group">
-                                                <label><strong>On which Entry/Exit point will you book and nominate capacity for Shipper?</strong></label>
-                                                <input type="text" class="form-control" ng-model="licenseApplicationModel.MaximumNominatedCapacity" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col col-12">
-                                            <div class="form-group">
-                                                <label><strong>What will be the maximum capacity you will book nominate for Shipper?</strong></label>
-                                                <input type="text" class="form-control"  ng-model="licenseApplicationModel.MaximumNominatedCapacity" />
-                                            </div>
-                                        </div>
-                                    </div>*@
+                                     
+                                     
                                     <div class="row">
                                         <div class="col col-lg-5 col-xl-5 col-12">
                                             <div class="form-group">
-                                                <label><strong>Present Entry/Exit point</strong></label>
+                                                <label><strong>Entry/Exit point</strong></label>
                                                 <input type="text" class="form-control" ng-model="licenseApplicationModel.EntryExitPoint" />
                                             </div>
                                         </div>
-                                        <div class="col col-lg-4 col-xl-4 col-12">
-                                            <div class="form-group">
-                                                <label><strong>Location </strong></label>
-                                                <input type="text" class="form-control" ng-model="licenseApplicationModel.Location" />
-                                            </div>
-                                        </div>
+
                                         <div class="col col-lg-3 col-xl-3 col-12">
                                             <div class="form-group">
                                                 <label><strong>Nominated capacity</strong></label>
-                                                <input type="text" floating-number-only class="form-control" ng-model="licenseApplicationModel.MaximumNominatedCapacity"/>
+                                                <input type="text" floating-number-only class="form-control" ng-model="licenseApplicationModel.MaximumNominatedCapacity" />
                                             </div>
                                         </div>
+                                        <div class="col-lg-4 col-xl-4 col-12">
+                                            <div class="form-group">
+                                                <label>Copy of applicable Operation License or Permit<span class="text-danger">*</span></label>
+                                                <input class="form-control" type="file" ng-upload-change="setFileRecord" tag="NetworkAgentOPL">
+                                                <div class="text-danger text-sm"></div>
+                                            </div>
+                                        </div>
+                                        
                                     </div>
                                 </div>
 
                                 <div ng-show="licenseApplicationModel.CustLicenseType === 'GasShipperLicense'">
                                     <div class="row">
-                                        <div class="col col-12">
+                                        <div class="col col-12 col-lg-6 col-xl-6">
                                             <div class="form-group">
                                                 <label><strong>Name of PipeLine and Gas Transporter</strong></label>
                                                 <input type="text" class="form-control" ng-model="licenseApplicationModel.PipelineAndGasTransporterName" />
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col col-lg-5 col-xl-5 col-12">
+                                        <div class="col col-lg-6 col-xl-5 col-12">
                                             <div class="form-group">
                                                 <label><strong>Present Entry/Exit point</strong></label>
                                                 <input type="text" class="form-control" ng-model="licenseApplicationModel.EntryExitPoint" />
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="row">
                                         <div class="col col-lg-4 col-xl-4 col-12">
                                             <div class="form-group">
                                                 <label><strong>Location </strong></label>
@@ -355,15 +342,22 @@
                                                 <input type="text" floating-number-only class="form-control" ng-model="licenseApplicationModel.MaximumNominatedCapacity" ng-change="evaluateGasShipperNominalCapacity(licenseApplicationModel.MaximumNominatedCapacity)" />
                                             </div>
                                         </div>
+                                        <div class="col-lg-5 col-xl-5 col-12">
+                                            <div class="form-group">
+                                                <label>Copy of applicable Operation License or Permit (Issued by Approved Government entity e.g DPR)<span class="text-danger">*</span></label>
+                                                <input class="form-control" type="file" ng-upload-change="setFileRecord" tag="GasShipperOPL">
+                                                <div class="text-danger text-sm"></div>
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <div class="row">
                                         @*<div class="col col-xl-6 col-lg-6 col-12">
-                                            <div class="form-group">
-                                                <label><strong>What will be the maximum capacity you will book nominate for Shipper?</strong></label>
-                                                <input type="text" floating-number-only maxlength="5" size="10" class="form-control" ng-model="licenseApplicationModel.MaximumNominatedCapacity" ng-change="evaluateGasShipperNominalCapacity(licenseApplicationModel.MaximumNominatedCapacity)" />
-                                            </div>
-                                        </div>*@
+                <div class="form-group">
+                    <label><strong>What will be the maximum capacity you will book nominate for Shipper?</strong></label>
+                    <input type="text" floating-number-only maxlength="5" size="10" class="form-control" ng-model="licenseApplicationModel.MaximumNominatedCapacity" ng-change="evaluateGasShipperNominalCapacity(licenseApplicationModel.MaximumNominatedCapacity)" />
+                </div>
+            </div>*@
                                         <div class="col col-xl-6 col-lg-6 col-12" ng-show="licenseFeeEvaluated">
                                             <div class="form-group">
                                                 <label><strong>Fees</strong></label>
@@ -374,8 +368,8 @@
                                         </div>
                                     </div>
 
-                                    <div class="row">
-                                        <div class="col col-xl-7 col-lg-7 col-12">
+                                    @*<div class="row">
+                                        <div class="col col-xl-9 col-lg-9 col-12">
                                             <div class="form-group">
                                                 <label><strong>Party/parties & State of customers/shareholders?</strong></label>
                                                 <div>
@@ -389,7 +383,7 @@
                                                         <tbody>
                                                             <tr>
                                                                 <td style="padding-right: 15px">
-                                                                    <input type="text" maxlength="50"  class="form-control" ng-model="stakeholderName" />
+                                                                    <input type="text" maxlength="50" class="form-control" ng-model="stakeholderName" />
                                                                 </td>
                                                                 <td>
                                                                     <input type="text" maxlength="50" class="form-control" ng-model="stakeholderLocation" />
@@ -423,6 +417,155 @@
                                                         <td>{{ stakeholdersLocation.Location }}</td>
                                                         <td>
                                                             <button class="btn btn-danger btn-md" ng-click="removeCustomerStakeholder(stakeholdersLocation)">
+                                                                <i class="fa fa-trash"></i> Remove
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>*@
+
+                                    <div class="row">
+                                        <div class="col col-xl-9 col-lg-9 col-12">
+                                            <div class="form-group">
+                                                <label><strong>Details of intended gas take off and delivery points</strong></label>
+                                                <div>
+                                                    <table style="">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="font-size: 12px; font-weight:400"><span>Name</span></th>
+                                                                <th style="font-size: 12px; font-weight:400">Location </th>
+                                                                <th style="font-size: 12px; font-weight:400">Point type</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td style="padding-right: 15px">
+                                                                    <input type="text" maxlength="50" class="form-control" ng-model="takeOffPoint.Name" />
+                                                                </td>
+                                                                <td>
+                                                                    <input type="text" maxlength="50" class="form-control" ng-model="takeOffPoint.Location" />
+                                                                </td>
+                                                                <td>
+                                                                    <select class="form-control" ng-model="takeOffPoint.GasShipperPointType">
+                                                                        <option value="">--Select--</option>
+                                                                        <option value="{{pointType.Value}}" ng-repeat="pointType in GasShipperPointType">{{ pointType.Name }}</option>
+                                                                    </select>
+                                                                </td>
+                                                                <td>
+                                                                    <button class="btn btn-success btn-md ml-2"
+                                                                            ng-disabled="takeOffPoint.Name === '' || takeOffPoint.Location ==='' || takeOffPoint.GasShipperPointType===''"
+                                                                            ng-click="addTakeOffPoint(takeOffPoint)">
+                                                                        <i class="fa fa-plus mr-1"> </i> Add
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col col-lg-8 col-xl-8 col-12">
+                                            <table id="takeOffPoint" class="table table-hover table-striped table-bordered" ng-show="takeOffPoints.length > 0">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Name</th>
+                                                        <th>Location</th>
+                                                        <th>Point Type</th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="takeoffPoint in takeOffPoints">
+                                                        <td>{{ takeoffPoint.Name }}</td>
+                                                        <td>{{ takeoffPoint.Location }}</td>
+                                                        <td>{{ takeoffPoint.GasShipperPointType }}</td>
+                                                        <td>
+                                                            <button class="btn btn-danger btn-md" ng-click="removeTakeOffPoint(takeoffPoint)">
+                                                                <i class="fa fa-trash"></i> Remove
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col col-xl-9 col-lg-9 col-12">
+                                            <div class="form-group">
+                                                <label><strong>Details of intended gas take off and delivery points</strong></label>
+                                                <div>
+                                                    <table style="">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="font-size: 12px; font-weight:400"><span>Name</span></th>
+                                                                <th style="font-size: 12px; font-weight:400">Location </th>
+                                                                <th style="font-size: 12px; font-weight:400">Phone Number</th>
+                                                                <th style="font-size: 12px; font-weight:400">Customer Type</th>
+                                                                <th style="font-size: 12px; font-weight:400">Email</th>
+                                                                <th></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td style="padding-right: 15px">
+                                                                    <input type="text" maxlength="50" class="form-control" ng-model="gasShipperCustomer.BusinessName" />
+                                                                </td>
+                                                                <td>
+                                                                    <input type="text" maxlength="50" class="form-control" ng-model="gasShipperCustomer.Location" />
+                                                                </td>
+                                                                <td>
+                                                                    <input type="number" maxlength="50" class="form-control" ng-model="gasShipperCustomer.PhoneNumber" />
+                                                                </td>
+
+                                                                <td>
+                                                                    <select class="form-control" ng-model="gasShipperCustomer.GasShipperCustCategory">
+                                                                        <option value="">--Select--</option>
+                                                                        <option value="{{category.Value}}" ng-repeat="category in GasShipperCustCategory">{{ category.Name }}</option>
+                                                                    </select>
+                                                                </td>
+                                                                <td>
+                                                                    <input type="email" maxlength="50" class="form-control" ng-model="gasShipperCustomer.Email" />
+                                                                </td>
+                                                                <td>
+                                                                    <button class="btn btn-success btn-md ml-2"
+                                                                            ng-disabled="gasShipperCustomer.BusinessName === '' || gasShipperCustomer.Location ==='' || gasShipperCustomer.GasShipperCustCategory===''"
+                                                                            ng-click="addGasShipperCustomer(gasShipperCustomer)">
+                                                                        <i class="fa fa-plus mr-1"> </i> Add
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col col-lg-8 col-xl-8 col-12">
+                                            <table id="takeOffPoint" class="table table-hover table-striped table-bordered" ng-show="gasShipperCustomers.length > 0">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Business Name</th>
+                                                        <th>Location </th>
+                                                        <th>Phone Number</th>
+                                                        <th>Customer Type</th>
+                                                        <th>Email</th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="gasShipperCustomer in gasShipperCustomers">
+                                                        <td>{{ gasShipperCustomer.BusinessName }}</td>
+                                                        <td>{{ gasShipperCustomer.Location }}</td>
+                                                        <td>{{ gasShipperCustomer.PhoneNumber }}</td>
+                                                        <td>{{ gasShipperCustomer.GasShipperCustCategory }}</td>
+                                                        <td>{{ gasShipperCustomer.Email }}</td>
+                                                        <td>
+                                                            <button class="btn btn-danger btn-md" ng-click="removeGasShipperCustomer(gasShipperCustomer)">
                                                                 <i class="fa fa-trash"></i> Remove
                                                             </button>
                                                         </td>
@@ -530,37 +673,65 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col col-12">
-                                            <div class="form-group">
-                                                <label><strong>Details of proposed arrangements for compliance with the applicable requirements and the standard conditions</strong></label>
-                                                <input type="text" class="form-control" ng-model="licenseApplicationModel.ProposedArrangementLicensingActivity" />
+                                        <div class="form-row">
+                                            <p><strong>Details of proposed arrangements for compliance with the applicable requirements and the standard conditions</strong></p>
+                                            <div class="form-group col-md-7">
+                                                <input placeholder="Enter text" type="text" class="form-control" ng-model="licenseApplicationModel.ProposedArrangementLicensingActivity" />
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <div>
+                                                    <input class="form-control" type="file" ng-upload-change="setFileRecord" tag="proposedDetail">
+                                                    <div class="text-danger text-sm"></div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col col-lg-4 col-xl-4 col-12">
-                                            <div class="form-group">
-                                                <label><strong>Details of proposed arrangements for compliance with the applicable requirements and the standard conditions as attachment</strong></label>
-                                                <input type="file" ng-upload-change="setFileRecord" tag="james">
-                                                <div class="text-danger text-sm" id="pwarn"></div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label><strong>Details of proposed arrangements for compliance with the applicable requirements and the standard conditions as attachment</strong></label>
-                                                <input type="file" class="form-control" id="proposedArrangementsModification" 
-                                                        onchange="angular.element(this).scope().fileHandler('proposedArrangementsModification', 'proposedArrangementsModificationWarning', licenseApplicationUpload.ProposedArrangementAttachmentFileName, this.licenseApplicationUpload.ProposedArrangementAttachmentFileExtension, this.licenseApplicationUpload.ProposedArrangementAttachmentBase64)" accept=".pdf" />
-                                                <div class="text-danger text-sm" id="proposedArrangementsModificationWarning"></div>
-                                            </div>
-                                            <div class="form-group">
+                                        <div class="form-row">
+                                            <div class="form-group col-md-4">
                                                 <label>Copy OPL License issued by DPR<span class="text-danger">*</span></label>
-                                                <input type="file" class="form-control" id="OplLicense" 
-                                                       onchange="angular.element(this).scope().fileHandler('OplLicenseWarning', 'OplLicenseWarning', licenseApplicationModel.OPLFileName, licenseApplicationModel.OPLFileExtension, licenseApplicationModel.OPLBase64)" accept=".pdf" />
-                                                <div class="text-danger text-sm" id="OplLicenseWarning"></div>
+                                                <input class="form-control" type="file" ng-upload-change="setFileRecord" tag="OPLLicense">
+                                                <div class="text-danger text-sm"></div>
                                             </div>
-                                            <div class="form-group">
+                                            <div class="form-group col-md-4">
                                                 <label>Safety Case Approved<span class="text-danger">*</span></label>
-                                                <input type="file" class="form-control" id="SafetyCase" 
-                                                        onchange="angular.element(this).scope().fileHandler('SafetyCase', 'SAfetyCaseWarning', licenseApplicationModel.SafetyCaseFileName, licenseApplicationModel.SafetyCaseFileExtension, licenseApplicationModel.SafetyCaseBase64)"  accept=".pdf" />
-                                                <div class="text-danger text-sm" id="SAfetyCaseWarning"></div>
+                                                <input class="form-control" type="file" ng-upload-change="setFileRecord" tag="SafetyCase">
+                                                <div class="text-danger text-sm"></div>
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label>Details of Gas transmission SCADA System<span class="text-danger">*</span></label>
+                                                <input class="form-control" type="file" ng-upload-change="setFileRecord" tag="SCADA">
+                                                <div class="text-danger text-sm"></div>
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label>Details of the Gas Transmission System (GTS) GIS Coordinates <span class="text-danger">*</span></label>
+                                                <input class="form-control" type="file" ng-upload-change="setFileRecord" tag="GTS">
+                                                <div class="text-danger text-sm"></div>
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label>Technical Attributes of all systems Entry/Exit Points<span class="text-danger">*</span></label>
+                                                <input class="form-control" type="file" ng-upload-change="setFileRecord" tag="technicalAttr">
+                                                <div class="text-danger text-sm"></div>
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label>Auxiliary systems on the Gas Transmission System (GTS)<span class="text-danger">*</span></label>
+                                                <input class="form-control" type="file" ng-upload-change="setFileRecord" tag="auxSystems">
+                                                <div class="text-danger text-sm"></div>
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label>Tariff/Pricing Methodology (including basis &Aacute; Source of Input Parameter) <span class="text-danger">*</span></label>
+                                                <input class="form-control" type="file" ng-upload-change="setFileRecord" tag="tariff">
+                                                <div class="text-danger text-sm"></div>
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label>Risk management strategy in terms of market volatility and system availability<span class="text-danger">*</span></label>
+                                                <input class="form-control" type="file" ng-upload-change="setFileRecord" tag="riskManagement">
+                                                <div class="text-danger text-sm"></div>
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label>Community Signed MOU for Gas Transmission System<span class="text-danger">*</span></label>
+                                                <input class="form-control" type="file" ng-upload-change="setFileRecord" tag="MOU">
+                                                <div class="text-danger text-sm"></div>
                                             </div>
                                         </div>
                                     </div>
