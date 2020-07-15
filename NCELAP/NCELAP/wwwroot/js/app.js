@@ -17,7 +17,7 @@ appModule.directive('ngUploadChange', function () {
                 if (file.size > maxFileSize) {
                     errorElement.html("File size cannot be more than 2MB!");
                 }
-                else if (extension != "pdf") {
+                else if (extension !== "pdf") {
                     errorElement.html("Only PDF files are allowed!");
                 }
                 else {

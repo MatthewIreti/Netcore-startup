@@ -4,6 +4,7 @@
     var maxFileSize = 2500000; // 2 Megabytes
     $scope.shareholders = [];
     $scope.directors = [];
+    $scope.yearsOfExperience = [];
     $scope.staffs = []; //name,yearsofexperience,role,careersummary,custpropectre ==> CustProspectStaffList
     $scope.reportAttachment = '';
 
@@ -24,6 +25,7 @@
         { Name: "Others", Value: "Others" }
     ];
 
+    
     $scope.businessInfoDocumentsForUpload = {
         CertificateOfRegistrationFileName: '', CertificateOfRegistrationFileExtension: '', CertificateOfRegistrationBase64: '',
         CertificateOfIncorporationFileName: '', CertificateOfIncorporationFileExtension: '', CertificateOfIncorporationBase64: '',
@@ -51,7 +53,7 @@
     $scope.registrationInformationModel = {
         BusinessName: '', Email: '', Password: '', RepeatPassword: '', Telephone: '+234', Mobile: '+234', PostalCode: '', WebAddress: 'https://www.', Address: '',
         AuthorizedRepName: '', AuthorizedRepEmail: '', AuthorizedRepMobile: '', AuthorizedRepPhysicalAddress: '', OtherLegalStatus: '', DirectorCriminalAct: '', DetailsOfConviction: '',
-        SupportingDocuments: $scope.businessInfoDocumentsForUpload, CompanyLegalStatus: '', Shareholders: $scope.shareholders, Directors: $scope.directors
+        SupportingDocuments: $scope.businessInfoDocumentsForUpload, CompanyLegalStatus: '', Shareholders: $scope.shareholders, Directors: $scope.directors, Staffs: $scope.staffs
     };
 
     $scope.initDirectorModel = function(){
@@ -104,6 +106,7 @@
         $scope.staffModel.CareerSummary = careerSummary;
 
         $scope.staffs.push($scope.staffModel);
+        console.log($scope.staffModel);
         $scope.initStaffModel();
     };
 
@@ -432,6 +435,12 @@
         });
     };
 
+    $scope.loadYearsofExperience = function () {
+        for (var i = 1; i < 50; i++) {
+            $scope.yearsOfExperience.push(parseInt(i));
+        }
+    };
+
     $scope.tokenValidityHandler = function () {
         var token = extractToken();
         var tokenExpired = jwtHelper.isTokenExpired(token);
@@ -441,6 +450,8 @@
             showSessionTimedOutDialog();
         }
     };
+
+    $scope.loadYearsofExperience();
     $scope.initShareHolderModel();
     $scope.initDirectorModel();
     $scope.getCountries();

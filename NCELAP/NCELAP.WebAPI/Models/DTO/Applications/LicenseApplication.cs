@@ -1,4 +1,5 @@
-﻿using NCELAP.WebAPI.Models.Entities.Applications;
+﻿using NCELAP.WebAPI.Models.Entities.Accounts;
+using NCELAP.WebAPI.Models.Entities.Applications;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,9 +11,9 @@ namespace NCELAP.WebAPI.Models.DTO.Applications
     {
         public LicenseApplicationUpload FileUploads { get; set; }
         public StakeholderLocation[] StakeholderLocations { get; set; }
+        public Staff[] Staffs { get; set; }
         public GasShipperTakeOffPoint[] TakeOffPoints { get; set; }
         public GasShipperCustomer[] GasShipperCustomers { get; set; }
-
     }
 
     public class LicenseApplicationUpload

@@ -12,7 +12,19 @@ namespace NCELAP.WebAPI.Models.Entities.Accounts
         //public CustProspectLegalStatus[] LegalStatus { get; set; }
         public CustProspectShareholder[] Shareholders { get; set; }
         public CustProspectDirector[] Directors { get; set; }
+        public Staff[] Staffs { get; set; }
         public CustProspectUploads SupportingDocuments { get; set; }
+    }
+
+    public class Staff
+    {
+        public long CustProspect { get; set; }
+        public string CustProspectId { get; set; }
+        public string Name { get; set; }
+        public string YearsOfExperience { get; set; }
+        public string Role { get; set; }
+        public string CareerSummary { get; set; }
+        public string UniqueId { get; set; }
     }
 
     public class RegisteredBusinessForSave

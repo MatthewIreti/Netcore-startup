@@ -1,4 +1,5 @@
 ﻿using NCELAP.WebAPI.Models.DTO;
+using NCELAP.WebAPI.Models.Entities.Accounts;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -14,4 +15,12 @@ namespace NCELAP.WebAPI.Models.ODataResponse
         [JsonProperty("value")]
         public List<Organization> value { get; set; }
     }
+
+    //public class NcelasUserResponse
+    //{
+    //    [JsonProperty("@odata.context")]
+    //    public string odatacontext { get; set; }
+    //    [JsonProperty("value")]
+    //    public List<NcelasUser> value { get; set; }
+    //}
 }

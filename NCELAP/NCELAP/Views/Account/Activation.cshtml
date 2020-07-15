@@ -1,5 +1,107 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    Layout = "_LayoutRegister";
+    ViewData["Title"] = "Account Activation";
+}
+<div ng-controller="activationPageCtrl">
+    <!-- BEGIN: Content-->
+    <div class="app-content content">
+
+        <section class="row flexbox-container">
+            <div class="col-xl-4 col-11 justify-content-center">
+                <div class="card bg-authentication rounded-0 mb-0">
+                    <div class="row m-0">
+
+                        <div class="col-lg-12 col-12 p-0">
+                            <div class="card rounded-0 mb-0 px-2">
+                                <div class="card-header pb-1">
+                                    <div class="card-title">
+                                        <h4 class="mb-0">Account Activation</h4>
+                                    </div>
+                                </div>
+                                <p class="px-2" ng-show="userinfoloaded === true">
+                                    Hi {{usernfo.name}}, kindly setup password.
+                                </p>
+                                
+                                <div class="card-content mb-3">
+                                    <div class="card-body pt-1">
+                                        <form name="loginForm">
+                                            <div class="row text-center" ng-show="userinfoloaded === false" style="padding-bottom: 20px">
+                                                <div class="col col-12">
+                                                    <div class="spinner-border"></div>
+                                                </div>
+                                            </div>
+
+                                            <fieldset class="form-label-group position-relative has-icon-left">
+                                                <input type="password" ng-model="activationModel.Password" class="form-control" id="user-password" placeholder="Password" />
+                                                <div class="form-control-position">
+                                                    <i class="feather icon-lock"></i>
+                                                </div>
+                                                <label for="user-password">Password</label>
+                                            </fieldset>
+
+                                            <fieldset class="form-label-group position-relative has-icon-left">
+                                                <input type="password" ng-model="activationModel.RepeatPassword" class="form-control" id="user-password" placeholder="Repeat Password" />
+                                                <div class="form-control-position">
+                                                    <i class="feather icon-lock"></i>
+                                                </div>
+                                                <label for="user-password">Repeat Password</label>
+                                            </fieldset>
+
+                                            <div class="row">
+                                                <div class="col col-12">
+                                                    <button ng-click="activateAccount()" ng-disabled="userinfoloaded === 'false' || activationModel.Password !== activationModel.RepeatPassword || activationModel.Password === '' || activationModel.RepeatPassword === ''" class="btn btn-primary btn-block">
+                                                        @*<span class="spinner-grow text-muted" ng-show="activatingaccount === true"></span>*@
+                                                        <span ng-show="settingUpAccount === false"><strong>Complete Account Setup</strong></span>
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            <div class="row text-center" ng-show="activatingaccount === true" style="padding-top: 20px">
+                                                <div class="col col-12">
+                                                    <div class="spinner-border"></div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row" ng-show="activationModel.Password.length > 0 && activationModel.RepeatPassword.length > 0">
+                                                <div class="col col-12 text-center text-danger">
+                                                    <span ng-show="activationModel.Password !== activationModel.RepeatPassword">
+                                                        Password do no match!
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            @*<div class="row" style="padding-top: 10px">
+            <div class="col col-12">
+                <div class="text-center">
+                    <a href="/account/register" target="_blank" class="card-link">Don't have an account?</a>
+                </div>
+            </div>
+        </div>
+        <a href="auth-register.html"
+           class="btn btn-outline-primary float-left btn-inline">Register</a>
+        <button type="submit"
+                class="btn btn-primary float-right btn-inline">
+            Login
+        </button>*@
+                                        </form>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+    <!-- END: Content-->
+</div>
+
+@section footerJS{
+    <script src="~/js/controllers/account/activation.js"></script>
+    <script src="~/Template/app-assets/vendors/js/vendors.min.js"></script>
+    <script src="~/Template/app-assets/js/core/app-menu.min.js"></script>
+    <script src="~/Template/app-assets/js/core/app.min.js"></script>
+    <script src="~/Template/app-assets/js/scripts/components.min.js"></script>
 }

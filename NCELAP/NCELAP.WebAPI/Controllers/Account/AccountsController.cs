@@ -40,6 +40,20 @@ namespace NCELAP.WebAPI.Controllers.Account
             return Ok(response);
         }
 
-        
+        [HttpPost]
+        [Route("activate")]
+        public async Task<IActionResult> ActivateAccount(NcelasUserLogin userInfoPayload)
+        {
+            var response = await _userAccountService.ChangeNcelasUserPassword(userInfoPayload);
+            return Ok(response);
+        }
+
+        [HttpGet]
+        [Route("useraccount/{recid}")]
+        public async Task<IActionResult> GetUserInfo(long recid = 5637144576)
+        {
+            var response = await _userAccountService.GetNcelasUserByRecId(recid);
+            return Ok(response);
+        }
     }
 }

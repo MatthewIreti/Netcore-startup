@@ -38,6 +38,17 @@ namespace NCELAP.WebAPI.Models.DTO
         
     }
 
+    public class StaffForSave
+    {
+        public long CustProspect { get; set; }
+        public string CustProspectId { get; set; }
+        public string Name { get; set; }
+        public int YearsOfExperience { get; set; }
+        public string Role { get; set; }
+        public string CareerSummary { get; set; }
+        public string UniqueId { get; set; }
+    }
+
 
     public class CustProspectLegalStatusForSave
     {
