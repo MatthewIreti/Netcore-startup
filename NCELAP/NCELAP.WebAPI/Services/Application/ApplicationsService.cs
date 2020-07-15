@@ -287,7 +287,7 @@ namespace NCELAP.WebAPI.Services.Application
                     licenseApplicationUpload.TechnicalAttributeFileName = $"{companyName}_technical_attributes";
                     licenseApplicationUpload.AuxiliarySystemFileName = $"{companyName}_Auxiliary_systems";
                     licenseApplicationUpload.TariffAndPricingFileName = $"{companyName}_Tarrif_and_pricing";
-                    licenseApplicationUpload.RiskManagmentFileName = $"{companyName}_Risk_management";
+                    licenseApplicationUpload.RiskManagementFileName = $"{companyName}_Risk_management";
                     licenseApplicationUpload.CommunityMOUFileName = $"{companyName}_CommunityMOU";
                     licenseApplicationUpload.NetworkAgentOPLFileName = $"{companyName}_OPL_License";
                     licenseApplicationUpload.GasShipperOPLFileName = $"{companyName}_OPL_License";
