@@ -57,9 +57,9 @@ namespace NCELAP.WebAPI.Models.DTO.Applications
         public string TariffAndPricingFileName { get; set; }
         public string TariffAndPricingFileExtension { get; set; }
         public string TariffAndPricingBase64 { get; set; }
-        public string RiskManagmentFileName { get; set; }
-        public string RiskManagmentFileExtension { get; set; }
-        public string RiskManagmentBase64 { get; set; }
+        public string RiskManagementFileName { get; set; }
+        public string RiskManagementFileExtension { get; set; }
+        public string RiskManagementBase64 { get; set; }
         public string CommunityMOUFileName { get; set; }
         public string CommunityMOUFileExtension { get; set; }
         public string CommunityMOUBase64 { get; set; }
