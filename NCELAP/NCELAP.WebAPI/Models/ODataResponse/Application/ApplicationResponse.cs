@@ -20,6 +20,14 @@ namespace NCELAP.WebAPI.Models.ODataResponse.Application
         public List<ApplicationInfoRecordId> value { get; set; }
     }
 
+    public class ApplicationInfoResponse
+    {
+
+        [JsonProperty("@odata.context")]
+        public string odatacontext { get; set; }
+        [JsonProperty("value")]
+        public List<ApplicationInfo> value { get; set; }
+    }
     public class ShortApplicationInfo
     {
 

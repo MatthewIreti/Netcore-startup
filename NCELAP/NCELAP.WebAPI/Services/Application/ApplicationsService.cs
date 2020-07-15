@@ -19,7 +19,7 @@ namespace NCELAP.WebAPI.Services.Application
     public class ApplicationsService
     {
         readonly IConfiguration _configuration;
-        private readonly string licenseapplication, custapplicationshareholder, docupload, licensefees, custlicensebycustomerrecid;
+        private readonly string licenseapplication, custapplicationshareholder, docupload, licensefees, custlicensebycustomerrecid, custlicenseapplicationdetails;
         private string jsonResponse;
         private readonly AuthService _authService;
 
@@ -32,6 +32,7 @@ namespace NCELAP.WebAPI.Services.Application
             docupload = _configuration.GetSection("Endpoints").GetSection("licenseapplicationuploads").Value;
             licensefees = _configuration.GetSection("Endpoints").GetSection("licensefee").Value;
             custlicensebycustomerrecid = _configuration.GetSection("Endpoints").GetSection("custlicensebycustomerrecid").Value;
+            custlicenseapplicationdetails = _configuration.GetSection("Endpoints").GetSection("custlicenseapplicationdetails").Value;
         }
 
         public async Task<bool> SaveApplication(LicenseApplication licenseApplication)
@@ -335,6 +336,51 @@ namespace NCELAP.WebAPI.Services.Application
             };
 
             return licenseApplicationForSave;
+        }
+        
+        public async Task<ApplicationInfo> GetLicenseApplicationDetails(long licenseApplicationRecId)
+        {
+            string token = _authService.GetAuthToken();
+            var helper = new Helper(_configuration);
+            string currentEnvironment = helper.GetEnvironmentUrl();
+            string url = currentEnvironment + custlicenseapplicationdetails;
+            string formattedUrl = String.Format(url, licenseApplicationRecId);
+            var applicationInfo = new ApplicationInfo();
+
+            try
+            {
+                var webRequest = WebRequest.Create(formattedUrl);
+                if (webRequest != null)
+                {
+                    webRequest.Method = "GET";
+                    webRequest.Timeout = 120000;
+                    webRequest.Headers.Add("Authorization", "Bearer " + token);
+
+                    WebResponse response = await webRequest.GetResponseAsync();
+                    Stream dataStream = response.GetResponseStream();
+
+                    StreamReader reader = new StreamReader(dataStream);
+
+                    var webResponse = new ApplicationInfoResponse();
+                    jsonResponse = reader.ReadToEnd();
+
+                    webResponse = JsonConvert.DeserializeObject<ApplicationInfoResponse>(jsonResponse);
+                    applicationInfo = webResponse.value[0];
+
+
+                    response.Dispose();
+                    dataStream.Close();
+                    dataStream.Dispose();
+                    reader.Close();
+                    reader.Dispose();
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex.StackTrace);
+            }
+
+            return applicationInfo;
         }
     }
 }

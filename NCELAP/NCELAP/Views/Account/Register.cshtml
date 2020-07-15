@@ -307,10 +307,94 @@
                                                                                 <div class="card-header" id="heading250" data-toggle="collapse" role="button" data-target="#authorizedRepresentative"
                                                                                      aria-expanded="false" aria-controls="authorizedRepresentative">
                                                                                     <span class="lead collapse-title">
-                                                                                        <strong> List & Particular of Directors</strong>
+                                                                                        <strong>Staff List</strong>
                                                                                     </span>
                                                                                 </div>
                                                                                 <div id="authorizedRepresentative" class="collapse" aria-labelledby="heading250" data-parent="#accordionExample0">
+                                                                                    <div class="card-body">
+                                                                                        <div class="row">
+                                                                                            <div class="col col-lg-6 col-xl-6 col-12">
+                                                                                                <div class="form-group">
+                                                                                                    <label for="StaffName">
+                                                                                                        <span>Name<span class="text-danger">*</span></span>
+                                                                                                    </label>
+                                                                                                    <input type="text" maxlength="50" ng-model="staffModel.Name" id="StaffName" class="form-control">
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="col col-lg-6 col-xl-6 col-12">
+                                                                                                <div class="form-group">
+                                                                                                    <label for="Role">
+                                                                                                        <span>Role<span class="text-danger">*</span></span>
+                                                                                                    </label>
+                                                                                                    <input type="text" maxlength="50" ng-model="staffModel.Role" id="Role" class="form-control">
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        
+                                                                                        <div class="row">
+                                                                                            <div class="col col-lg-6 col-xl-6 col-12">
+                                                                                                <div class="form-group">
+                                                                                                    <label for="YearsOfExperience">
+                                                                                                        <span>Years of Experience<span class="text-danger">*</span></span>
+                                                                                                    </label>
+                                                                                                    <input type="text" maxlength="50" ng-model="staffModel.YearsOfExperience" id="YearsOfExperience" class="form-control">
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="col col-lg-6 col-xl-6 col-12">
+                                                                                                <div class="form-group">
+                                                                                                    <label for="CareerSummary">
+                                                                                                        <span>Career Summary</span>
+                                                                                                    </label>
+                                                                                                    <textarea maxlength="100" rows="4" id="staffCareerSummary" class="form-control" required></textarea>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                        <div class="row">
+                                                                                            <div class="col col-12">
+                                                                                                <button ng-disabled="staffModel.Name === '' || staffModel.YearsOfExperience === '' || staffModel.Role === '' || 
+                                                                                                        staffModel."
+                                                                                                        ng-click="addStaff()" class="btn btn-success float-right">
+                                                                                                    <i class="fa fa-user-plus"></i> Add
+                                                                                                </button>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="row" ng-show="staffs.length > 0">
+                                                                                            <div class="col col-12">
+                                                                                                <table class="table table-hover table-bordered" id="sampleTable" style="font-size: 14px">
+                                                                                                    <thead>
+                                                                                                        <tr>
+                                                                                                            <th>Name</th>
+                                                                                                            <th>Years Of Experience</th>
+                                                                                                            <th>Role</th>
+                                                                                                            <th>Career Summary</th>
+                                                                                                            <th>Actions</th>
+                                                                                                        </tr>
+                                                                                                    </thead>
+                                                                                                    <tr ng-repeat="staff in staffs">
+                                                                                                        <td>{{ staff.Name }}</td>
+                                                                                                        <td>{{ staff.YearsOfExperience }}</td>
+                                                                                                        <td>{{ staff.Role }}</td>
+                                                                                                        <td>{{ staff.CareerSummary }}</td>
+                                                                                                        <td>
+                                                                                                            <button ng-click="removeStaff(staff)" class="btn btn-danger btn-md"><i class="fa fa-trash"></i></button>
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                </table>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="collapse-border-item card collapse-header">
+                                                                                <div class="card-header" id="heading260" data-toggle="collapse" role="button" data-target="#authorizedRepresentative"
+                                                                                     aria-expanded="false" aria-controls="authorizedRepresentative">
+                                                                                    <span class="lead collapse-title">
+                                                                                        <strong> List & Particular of Directors</strong>
+                                                                                    </span>
+                                                                                </div>
+                                                                                <div id="authorizedRepresentative" class="collapse" aria-labelledby="heading260" data-parent="#accordionExample0">
                                                                                     <div class="card-body">
                                                                                         <div class="row">
                                                                                             <div class="col col-lg-6 col-xl-6 col-12">
@@ -361,29 +445,6 @@
                                                                                                 </button>
                                                                                             </div>
                                                                                         </div>
-                                                                                        <hr />
-                                                                                        <h5>State if any Director has ever been convicted of any criminal offence in Nigeria or in any other country:</h5>
-                                                                                        <div class="row">
-                                                                                            <div class="col col-lg-6 col-xl-6 col-12">
-                                                                                                <div class="form-group">
-                                                                                                    <label for="DirectorCriminalAct">
-                                                                                                        <span>Convicted  of Criminal Act</span>
-                                                                                                    </label>
-                                                                                                    <select class="form-control" ng-model="registrationInformationModel.DirectorCriminalAct" id="DirectorCriminalAct">
-                                                                                                        <option value="">-- Select --</option>
-                                                                                                        <option ng-repeat="convictedAct in convictedActs"> {{ convictedAct.Name }} </option>
-                                                                                                    </select>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="col col-lg-6 col-xl-6 col-12">
-                                                                                                <div class="form-group">
-                                                                                                    <label for="DirectorCriminalActDetailsfConviction">
-                                                                                                        <span>Details of Conviction</span>
-                                                                                                    </label>
-                                                                                                    <textarea maxlength="100" rows="4" id="DirectorCriminalActDetailsfConviction" class="form-control" required></textarea>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
                                                                                         <div class="row" ng-show="directors.length > 0">
                                                                                             <div class="col col-12">
                                                                                                 <table class="table table-hover table-bordered" id="sampleTable" style="font-size: 14px">
@@ -408,6 +469,30 @@
                                                                                                 </table>
                                                                                             </div>
                                                                                         </div>
+                                                                                        <hr />
+                                                                                        <h5>State if any Director has ever been convicted of any criminal offence in Nigeria or in any other country:</h5>
+                                                                                        <div class="row">
+                                                                                            <div class="col col-lg-6 col-xl-6 col-12">
+                                                                                                <div class="form-group">
+                                                                                                    <label for="DirectorCriminalAct">
+                                                                                                        <span>Convicted  of Criminal Act</span>
+                                                                                                    </label>
+                                                                                                    <select class="form-control" ng-model="registrationInformationModel.DirectorCriminalAct" id="DirectorCriminalAct">
+                                                                                                        <option value="">-- Select --</option>
+                                                                                                        <option ng-repeat="convictedAct in convictedActs"> {{ convictedAct.Name }} </option>
+                                                                                                    </select>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="col col-lg-6 col-xl-6 col-12">
+                                                                                                <div class="form-group">
+                                                                                                    <label for="DirectorCriminalActDetailsfConviction">
+                                                                                                        <span>Details of Conviction</span>
+                                                                                                    </label>
+                                                                                                    <textarea maxlength="100" rows="4" id="DirectorCriminalActDetailsfConviction" class="form-control" required></textarea>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
