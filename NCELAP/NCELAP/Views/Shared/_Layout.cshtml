@@ -17,13 +17,12 @@
     <link href="~/assets/plugins/sal/sal.min.css" rel="stylesheet">
     <link href="~/assets/css/main.css" rel="stylesheet">
     <!-- Fonts/Icons -->
-    <link href="~/assets/plugins/font-awesome/css/all.css" rel="stylesheet">
+   @* <link href="~/assets/plugins/font-awesome/css/all.css" rel="stylesheet">*@
     <link href="~/assets/plugins/themify/themify-icons.min.css" rel="stylesheet">
-    <link href="~/assets/plugins/simple-line-icons/css/simple-line-icons.css" rel="stylesheet">
+    @*<link href="~/assets/plugins/simple-line-icons/css/simple-line-icons.css" rel="stylesheet">*@
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
     <script src="https://cdn.rawgit.com/auth0/angular-jwt/master/dist/angular-jwt.min.js"></script>
-    @*<script src="https://github.com/mistralworks/ng-file-model/blob/master/ng-file-model.min.js"></script>*@
 
     <script src="~/js/app.js"></script>
     <script src="~/js/jwt-decode.js"></script>
@@ -35,7 +34,7 @@
 </head>
 
 
-<body data-preloader="4" ng-app="ncLasPortalApp" ng-controller="layoutCtrl" ng-cloak>
+<body data-preloader="4">
     <div class="wrapper">
 
         <!-- Header -->
@@ -132,29 +131,9 @@
     <!-- ***** JAVASCRIPTS ***** -->
 
     <script src="~/assets/plugins/jquery.min.js"></script>
-    <script src="~/assets/plugins/bootstrap/popper.min.js"></script>
     <!-- Plugins -->
-    <script src="~/assets/plugins/bootstrap/bootstrap.min.js"></script>
-    <script src="~/assets/plugins/appear.min.js"></script>
-    <script src="~/assets/plugins/easing.min.js"></script>
-    <script src="~/assets/plugins/retina.min.js"></script>
-    <script src="~/assets/plugins/countdown.min.js"></script>
-    <script src="~/assets/plugins/imagesloaded.pkgd.min.js"></script>
-    <script src="~/assets/plugins/isotope.pkgd.min.js"></script>
-    <script src="~/assets/plugins/jarallax/jarallax.min.js"></script>
-    <script src="~/assets/plugins/jarallax/jarallax-video.min.js"></script>
-    <script src="~/assets/plugins/owl-carousel/owl.carousel.min.js"></script>
-
-    <script src="~/assets/plugins/magnific-popup/magnific-popup.min.js"></script>
-
-
     <script src="~/assets/plugins/plugins.js"></script>
     <script src="~/assets/js/functions.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBUma4oJ7_6VbfGNdUYdv6VQ0Ph07Fz0k8"></script>
-
-    <!-- Scripts -->
-    <script src="~/assets/js/functions.min.js"></script>
-    <!-- END: Page JS-->
     @RenderSection("Scripts", required: false)
 </body>
 </html>

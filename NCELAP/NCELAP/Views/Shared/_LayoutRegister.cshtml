@@ -33,17 +33,15 @@
     <link href="~/Template/assets/css/style.css" rel="stylesheet" />
     <!-- END: Custom CSS-->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-
-    <script src="~/app-assets/vendors/js/forms/validation/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
-
-    <script src="~/js/app.js"></script>
-    @*<script src="~/js/controllers/account/registration.js"></script>*@
+    <script src="~/js/account.js"></script>
     <script src="~/js/util.js"></script>
 </head>
 
 
-<body  ng-app="ncLasPortalAppRegistrationPageModule" ng-cloak class="
+<body ng-app="ncLasPortalAppRegistrationPageModule" ng-cloak class="
       animate__animated animate__fadeIn
       vertical-layout vertical-menu-modern 1-column  navbar-floating
       footer-static bg-full-screen-image  blank-page blank-page" data-open="click" data-menu="vertical-menu-modern" data-col="1-column">
@@ -57,9 +55,6 @@
             </div>
             <div class="content-body">
                 @RenderBody()
-
-
-
             </div>
         </div>
 
@@ -68,7 +63,6 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/popper/popper.min.js"></script>
     <script src="~/Template/app-assets/vendors/js/vendors.min.js"></script>
-    <script src="~/Template/app-assets/vendors/js/forms/validation/jquery.validate.min.js"></script>
     <script src="~/Template/app-assets/js/core/app-menu.min.js"></script>
     <script src="~/Template/app-assets/js/core/app.min.js"></script>
     <script src="~/Template/app-assets/js/scripts/components.min.js"></script>
