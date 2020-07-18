@@ -16,16 +16,16 @@
     <div class="main-menu-content">
         <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
             <li class=" nav-item">
-                <a href="index.html"><i class="feather icon-home"></i><span class="menu-title" data-i18n="Dashboard">Dashboard</span><span class="badge badge badge-warning badge-pill float-right mr-2">2</span></a>
+                <a href="#"><i class="feather icon-home"></i><span class="menu-title" data-i18n="Dashboard">Dashboard</span><span class="badge badge badge-warning badge-pill float-right mr-2">2</span></a>
 
             </li>
 
 
             <li class=" nav-item">
-                <a href="#"><i class="fa fa-cash-register"></i><span class="menu-title" data-i18n="Menu Levels">Payments</span></a>
+                <a href="#"><i class="fa fa-money"></i><span class="menu-title" data-i18n="Menu Levels">Payments</span></a>
                 <ul class="menu-content">
                     <li>
-                        <a href="#"><i class="fa fa-history"></i><span class="menu-item" data-i18n="Second Level">Payment History</span></a>
+                        <a ui-sref="site.payment.list"><i class="fa fa-history"></i><span class="menu-item" data-i18n="Second Level">Payment History</span></a>
                     </li>
                 </ul>
             </li>
@@ -34,16 +34,15 @@
                 <a href="#"><i class="feather icon-menu"></i><span class="menu-title" data-i18n="Menu Levels">License Management</span></a>
                 <ul class="menu-content">
                     <li>
-                        <a href="#"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="Second Level">All Licences</span></a>
+                        <a  ui-sref="site.application.list"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="Second Level">Applications</span></a>
                     </li>
                     <li>
-                        <a href="#"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="Second Level">Expired Licenses</span></a>
+                        <a><i class="feather icon-circle"></i><span class="menu-item" data-i18n="Second Level">Expired Licenses</span></a>
 
                     </li>
                 </ul>
             </li>
 
-           
             <li class=" nav-item">
                 <a><i class="feather icon-life-buoy"></i><span class="menu-title" data-i18n="Raise Support">Raise Support</span></a>
             </li>

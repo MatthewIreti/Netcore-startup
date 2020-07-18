@@ -1,0 +1,825 @@
+﻿<section id="icon-tabs">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">License Aplication</h4>
+                </div>
+                <hr />
+                <div class="card-content">
+                    <div class="card-body">
+                        <div  ng-show="errors.length>0" class="alert alert-danger mt-1 alert-validation-msg" role="alert">
+                            <p><strong>Please fix the follow errors</strong></p>
+                            <p ng-repeat="error in errors">
+                                <i class="feather icon-info mr-1 align-middle"></i>
+                                <span ng-bind="error"></span>
+                            </p>
+                        </div>
+                        <section class="wizard-container" custom-wizard waiting="{{waiting}}">
+                            <header class="px-3">
+                                <div class="progress progress-step">
+                                    <div class="progress-bar progress-bar-step"></div>
+                                </div>
+                                <ul class="step-wizard-container">
+                                    <li class="step-wizard active">
+                                        <span class="step-circle">
+                                            <i class="fa fa-check"></i>
+                                        </span>
+                                        <span class="step-title">License Details</span>
+                                    </li>
+                                    <li class="step-wizard">
+                                        <span class="step-circle">
+                                            <i class="fa fa-check"></i>
+                                        </span>
+                                        <span class="step-title">Details of Application</span>
+                                    </li>
+                                    <li class="step-wizard">
+                                        <span class="step-circle">
+                                            <i class="fa fa-check"></i>
+                                        </span>
+                                        <span class="step-title">Proposed Arrangements</span>
+                                    </li>
+                                </ul>
+                            </header>
+                            <form name="applicationForm">
+
+                                <article class="step-wizard-content active">
+                                    <div class="row">
+                                        <div class="col col-xl-4 col-lg-4 col-12">
+                                            <div class="form-group">
+                                                <label>
+                                                    <strong>License Type applied for: <span class="text-danger">*</span></strong>
+                                                </label>
+                                                <select name="custLicenseType" class="form-control required" 
+                                                        ng-model="licenseApplicationModel.CustLicenseType">
+                                                    <option value="">--Select--</option>
+                                                    <option value="{{licensetype.Value}}" ng-repeat="licensetype in licensetypes">{{ licensetype.Name }}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col col-xl-4 col-lg-4 col-12">
+                                            <label>
+                                                <strong>Desired effective date of this application:<span class="text-danger">*</span> </strong>
+                                            </label>
+                                            <input name="effectiveDate" type="date" id="effectiveDate" class="form-control" ng-model="licenseApplicationModel.EffectiveDate" />
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col col-12">
+                                            <section id="accordion-with-margin">
+                                                <div class="row">
+                                                    <div class="col col-12" style="padding-left: 0px; padding-right: 0px">
+                                                        <div class="card collapse-icon accordion-icon-rotate">
+                                                            <div class="card-body">
+                                                                <p>
+                                                                    <strong>Details of previous applications made and licenses held</strong>
+                                                                </p>
+                                                                <hr />
+                                                                <div class="accordion" id="accordionExample" data-toggle-hover="true">
+                                                                    <div class="collapse-margin">
+                                                                        <div class="card-header collapsed" id="headingOne" data-toggle="collapse" role="button" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                                                            <span class="lead collapse-title" style="font-size: 12px">
+                                                                                Does the applicant or related person hold any related license?<span class="text-danger">*</span>
+                                                                            </span>
+                                                                        </div>
+
+                                                                        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample" style="">
+                                                                            <div class="card-body">
+                                                                                <div class="row">
+                                                                                    <div class="col col-lg-6 col-xl-6 col-12">
+                                                                                        <div class="form-group">
+                                                                                            <label>Response<span class="text-danger">*</span></label>
+                                                                                            <select name="holdRelatedLicense" class="form-control" ng-model="licenseApplicationModel.HoldRelatedLicense" ng-change="holdRelatedLicenseSelectionHandler()">
+                                                                                                <option value="">--Select Response--</option>
+                                                                                                <option value=true>Yes</option>
+                                                                                                <option value=false>No</option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col col-lg-6 col-xl-6 col-12">
+                                                                                        <div class="form-group">
+                                                                                            <label>Details of License(s)</label>
+                                                                                            <input ng-model="licenseApplicationModel.RelatedLicenseDetail" type="text" class="form-control" ng-disabled="licenseApplicationModel.HoldRelatedLicense === 'false' || licenseApplicationModel.HoldRelatedLicense === ''" />
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="row">
+                                                                                    <div class="col col-lg-6 col-xl-6 col-12">
+                                                                                        <div class="form-group">
+                                                                                            <label>Details of License(s) as attachment</label>
+                                                                                            <input type="file" class="form-control" id="holdRelatedLicense" onchange="angular.element(this).scope().holdRelatedLicenseFileHandler()" accept=".pdf" ng-disabled="licenseApplicationModel.HoldRelatedLicense === 'false' || licenseApplicationModel.HoldRelatedLicense === ''" />
+                                                                                            <div class="text-danger text-sm" id="holdRelatedLicenseWarningIndicator"></div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="collapse-margin">
+                                                                        <div class="card-header" id="headingTwo" data-toggle="collapse" role="button" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                                                            <span class="lead collapse-title" style="font-size: 12px">
+                                                                                Has the applicant or any related person applied for (successfully or not) or intent to apply for any other related licenses?<span class="text-danger">*</span>
+                                                                            </span>
+                                                                        </div>
+                                                                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                                                                            <div class="card-body">
+                                                                                <div class="row">
+                                                                                    <div class="col col-lg-5 col-xl-5 col-12">
+                                                                                        <div class="form-group">
+                                                                                            <label>Response<span class="text-danger">*</span></label>
+                                                                                            <select name="hasRelatedLicense" class="form-control" ng-model="licenseApplicationModel.HasRelatedLicense" ng-change="hasRelatedLicenseSelectionHandler()">
+                                                                                                <option value="">--Select Response--</option>
+                                                                                                <option value=true>Yes</option>
+                                                                                                <option value=false>No</option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col col-lg-7 col-xl-7 col-12">
+                                                                                        <div class="form-group">
+                                                                                            <label>Type of license(s) applied for or intended to be applied for</label>
+                                                                                            <input type="text" class="form-control" ng-model="licenseApplicationModel.RelatedLicenseType" ng-disabled="licenseApplicationModel.HasRelatedLicense === 'false' || licenseApplicationModel.HasRelatedLicense === ''" />
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="row">
+                                                                                    <div class="col col-lg-6 col-xl-6 col-12">
+                                                                                        <div class="form-group">
+                                                                                            <label>Type of license(s) applied for or intended to be applied for as attachment</label>
+                                                                                            <input type="file" class="form-control" id="hasRelatedLicense" onchange="angular.element(this).scope().hasRelatedLicenseFileHandler()" accept=".pdf" ng-disabled="licenseApplicationModel.HasRelatedLicense === 'false' || licenseApplicationModel.HasRelatedLicense === ''" />
+                                                                                            <div class="text-danger text-sm" id="hasRelatedLicenseWarningIndicator"></div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="collapse-margin">
+                                                                        <div class="card-header" id="headingThree" data-toggle="collapse" role="button" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                                                            <span class="lead collapse-title" style="font-size: 12px">
+                                                                                Has the applicant or any related person previously had any license revoked in the oil & gas value chain in the last 3 years?<span class="text-danger">*</span>
+                                                                            </span>
+                                                                        </div>
+                                                                        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                                                                            <div class="card-body">
+                                                                                <div class="row">
+                                                                                    <div class="col col-lg-6 col-xl-6 col-12">
+                                                                                        <div class="form-group">
+                                                                                            <label>Response<span class="text-danger">*</span></label>
+                                                                                            <select name="hasLicensedRevoked" class="form-control" ng-model="licenseApplicationModel.HasLicenseRevoked" ng-change="hasLicenseRevokedHandler()">
+                                                                                                <option value="">--Select Response--</option>
+                                                                                                <option value=true>Yes</option>
+                                                                                                <option value=false>No</option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col col-lg-6 col-xl-6 col-12">
+                                                                                        <div class="form-group">
+                                                                                            <label>Type of License revoked</label>
+                                                                                            <input type="text" class="form-control" ng-model="licenseApplicationModel.RevokedLicenseType" 
+                                                                                                   ng-disabled="licenseApplicationModel.HasLicenseRevoked === 'false' || licenseApplicationModel.HasLicenseRevoked === ''" />
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                </div>
+                                                                                <div class="row">
+                                                                                    <div class="col col-lg-6 col-xl-6 col-12">
+                                                                                        <div class="form-group">
+                                                                                            <label>Type of License revoked as attachment</label>
+                                                                                            <input type="file" class="form-control" id="hasLicenseRevoked" onchange="angular.element(this).scope().hasLicenseRevokedFileHandler()" accept=".pdf" ng-disabled="licenseApplicationModel.HasLicenseRevoked === 'false' || licenseApplicationModel.HasLicenseRevoked === ''" />
+                                                                                            <div class="text-danger text-sm" id="hasLicenseRevokedWarningIndicator"></div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="collapse-margin">
+                                                                        <div class="card-header" id="headingFour" data-toggle="collapse" role="button" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                                                            <span class="lead collapse-title" style="font-size: 12px">
+                                                                                Has the applicant or any related person previously had any gas application refused?<span class="text-danger">*</span>
+                                                                            </span>
+                                                                        </div>
+                                                                        <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
+                                                                            <div class="card-body">
+                                                                                <div class="row">
+                                                                                    <div class="col col-lg-6 col-xl-6 col-12">
+                                                                                        <div class="form-group">
+                                                                                            <label>Response<span class="text-danger">*</span></label>
+                                                                                            <select name="hasGasApplicationRefused" class="form-control" ng-model="licenseApplicationModel.HasGasApplicationRefused" ng-change="hasLicenseRefusedHandler()">
+                                                                                                <option value="">--Select Response--</option>
+                                                                                                <option value=true>Yes</option>
+                                                                                                <option value=false>No</option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col col-lg-6 col-xl-6 col-12">
+                                                                                        <div class="form-group">
+                                                                                            <label>Type of License(s) application(s) refused</label>
+                                                                                            <input name="refusedApplcationType" type="text" class="form-control" ng-model="licenseApplicationModel.RefusedLicenseType" ng-disabled="licenseApplicationModel.HasGasApplicationRefused === 'false' || licenseApplicationModel.HasGasApplicationRefused === ''" />
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                <div class="row">
+                                                                                    <div class="col col-lg-6 col-xl-6 col-12">
+                                                                                        <div class="form-group">
+                                                                                            <label>Type of License(s) application(s) refused as attachment</label>
+                                                                                            <input type="file" class="form-control" id="hasRefusedLicense" onchange="angular.element(this).scope().hasLicenseRefusedFileHandler()" accept=".pdf" ng-disabled="licenseApplicationModel.HasGasApplicationRefused === 'false' || licenseApplicationModel.HasGasApplicationRefused === ''" />
+                                                                                            <div class="text-danger text-sm" id="hasLicenseRefusedWarningIndicator"></div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </section>
+                                        </div>
+                                    </div>
+                                </article>
+
+                                <article class="step-wizard-content m-0">
+                                    <div ng-show="licenseApplicationModel.CustLicenseType === 'NetworkAgent'">
+                                        <div class="row">
+                                            <div class="col col-lg-6 col-sm-12 col-12">
+                                                <div class="form-group">
+                                                    <label><strong>Name of Shipper</strong><span class="text-danger">*</span></label>
+                                                    <input name="agentShipperName" type="text" class="form-control required" ng-model="licenseApplicationModel.AgentShipperName" 
+                                                           data-msg="Please provide the shipper name" />
+                                                </div>
+                                            </div>
+                                            <div class="col col-lg-6 col-sm-12 col-12">
+                                                <div class="form-group">
+                                                    <label><strong>Location of Shipper</strong><span class="text-danger">*</span></label>
+                                                    <input name="agentShipperLocation" type="text" class="form-control required" ng-model="licenseApplicationModel.AgentLocationOfShipper" 
+                                                           data-msg="Please provide the location of shipper" />
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row">
+                                            <div class="col col-lg-5 col-xl-5 col-12">
+                                                <div class="form-group">
+                                                    <label><strong>Entry/Exit point</strong><span class="text-danger">*</span></label>
+                                                    <input name="entryExitPoint" type="text" class="form-control required" ng-model="licenseApplicationModel.EntryExitPoint"
+                                                           data-msg="Please provide the Entry point"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="col col-lg-3 col-xl-3 col-12">
+                                                <div class="form-group">
+                                                    <label><strong>Nominated capacity</strong><span class="text-danger">*</span></label>
+                                                    <input name="maximumNominalCapacity" type="number" class="form-control required"
+                                                           data-msg="Please provide the nominal capacity"
+                                                           ng-model="licenseApplicationModel.MaximumNominatedCapacity" />
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 col-xl-4 col-12">
+                                                <div class="form-group">
+                                                    <label>Copy of applicable Operation License or Permit<span class="text-danger">*</span></label>
+                                                    <input class="form-control required" type="file" 
+                                                            data-msg="OPL License is required"
+                                                           ng-upload-change="setFileRecord" tag="NetworkAgentOPL">
+                                                    <div class="text-danger text-sm"></div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div ng-show="licenseApplicationModel.CustLicenseType === 'GasShipperLicense'">
+                                        <div class="row">
+                                            <div class="col col-12 col-lg-6 col-xl-6">
+                                                <div class="form-group">
+                                                    <label><strong>Name of Pipeline and Gas Transporter</strong><span class="text-danger">*</span></label>
+                                                    <input type="text" class="form-control required" 
+                                                           data-msg="Please provide the name of pipeline and Gas transporter"
+                                                           ng-model="licenseApplicationModel.PipelineAndGasTransporterName" />
+                                                </div>
+                                            </div>
+                                            <div class="col col-lg-6 col-xl-5 col-12">
+                                                <div class="form-group">
+                                                    <label><strong>Present Entry/Exit point</strong><span class="text-danger">*</span></label>
+                                                    <input name="EntryPoint" type="text" class="form-control required" 
+                                                           data-msg="Please provide the present entry and exit point"
+                                                           ng-model="licenseApplicationModel.EntryExitPoint" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col col-lg-4 col-xl-4 col-12">
+                                                <div class="form-group">
+                                                    <label><strong>Location </strong><span class="text-danger">*</span></label>
+                                                    <input type="text" class="form-control required" name="location"
+                                                           data-msg="Please provide the location of Pipeline"
+                                                           ng-model="licenseApplicationModel.Location" />
+                                                </div>
+                                            </div>
+                                            <div class="col col-lg-3 col-xl-3 col-12">
+                                                <div class="form-group">
+                                                    <label><strong>Nominated capacity</strong><span class="text-danger">*</span></label>
+                                                    <input type="number" class="form-control required" name="NomincatedCapacity2"
+                                                           data-msg="Nominal capacity is required"
+                                                           ng-model="licenseApplicationModel.MaximumNominatedCapacity" 
+                                                           ng-change="evaluateGasShipperNominalCapacity(licenseApplicationModel.MaximumNominatedCapacity)" />
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-5 col-xl-5 col-12">
+                                                <div class="form-group">
+                                                    <label>Copy of applicable Operation License or Permit (Issued by Approved Government entity e.g DPR)<span class="text-danger">*</span></label>
+                                                    <input class="form-control required" type="file" 
+                                                           data-msg="OPL License is required" name="GasShipperOPL"
+                                                           ng-upload-change="setFileRecord" tag="GasShipperOPL">
+                                                    <div class="text-danger text-sm"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col col-xl-6 col-lg-6 col-12" ng-show="licenseFeeEvaluated">
+                                                <div class="form-group">
+                                                    <label><strong>Fees</strong></label>
+                                                    <div>
+                                                        Statutory Fees: <span class="text-success"><b> {{ statutoryFee | currency : "₦"}},</b></span> Processing Fee: <span class="text-success"><b> {{ processingFee | currency : "₦" }},</b></span> Total: <span class="text-success"><b> {{ totalFee | currency : "₦" }}</b></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col col-xl-9 col-lg-9 col-12">
+                                                <div class="form-group">
+                                                    <label><strong>Details of intended gas take off and delivery points</strong></label>
+                                                    <div>
+                                                        <table class="table table-borderless">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Name</th>
+                                                                    <th>Location </th>
+                                                                    <th>Point type</th>
+                                                                    <th></th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr ng-repeat="takeOffPoint in takeOffPoints">
+                                                                    <td>
+                                                                        <input name="takeOffName{{$index+1}}" type="text" class="form-control required" 
+                                                                                data-msg="Take off point name {{$index+1}} is required"
+                                                                               ng-model="takeOffPoint.Name" />
+                                                                    </td>
+                                                                    <td>
+                                                                        <input name="takeOffLocation{{$index+1}}" type="text" class="form-control required" 
+                                                                                data-msg="Take off location {{$index+1}} is required"
+                                                                               ng-model="takeOffPoint.Location" />
+                                                                    </td>
+                                                                    <td>
+                                                                        <select name="takeOffType" class="form-control required" 
+                                                                                 data-msg="Take off point type {{$index+1}} is required"
+                                                                                ng-model="takeOffPoint.GasShipperPointType">
+                                                                            <option value="">--Select--</option>
+                                                                            <option value="{{pointType.Value}}" ng-repeat="pointType in GasShipperPointType">{{ pointType.Name }}</option>
+                                                                        </select>
+                                                                    </td>
+                                                                    <td>
+                                                                        <a ng-show="$index>0" class="btn btn-danger btn-md text-white" ng-click="removeTakeOffPoint(takeoffPoint)">
+                                                                            <i class="fa fa-trash"></i>
+                                                                        </a>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                            <tfoot>
+                                                                <tr>
+                                                                    <td colspan="4">
+                                                                        <a class="btn btn-icon btn-success text-white"
+                                                                           ng-click="addTakeOffPoint()">
+                                                                            <i class="fa fa-plus"> </i> Add more
+                                                                        </a>
+
+                                                                    </td>
+                                                                </tr>
+                                                            </tfoot>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col col-xl-9 col-lg-9 col-12">
+                                                <div class="form-group">
+                                                    <label><strong>Details of confirmed or prospective gas sellers and buyers </strong></label>
+                                                    <div>
+                                                        <table class="table table-bordered">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Name</th>
+                                                                    <th>Location </th>
+                                                                    <th>Phone Number</th>
+                                                                    <th>Customer Type</th>
+                                                                    <th>Email</th>
+                                                                    <th></th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr ng-repeat="gasShipperCustomer in gasShipperCustomers">
+                                                                    <td>
+                                                                        <input type="text" maxlength="50" class="form-control required" name="{{$index+1}}BusinessName" 
+                                                                                data-msg="Business name {{$index+1}} is required"
+                                                                               ng-model="gasShipperCustomer.BusinessName" />
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" maxlength="50" class="form-control required" name="{{$index+1}}CustomerLocation"
+                                                                                data-msg="Customer location {{$index+1}} is required"
+                                                                               ng-model="gasShipperCustomer.Location" />
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" maxlength="50" class="form-control required" name="{{$index+1}}PhoneNo"
+                                                                                data-msg="Customer PhoneNumber {{$index+1}} is required"
+                                                                               ng-model="gasShipperCustomer.PhoneNumber" />
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <select class="form-control required" 
+                                                                                name="CustomerCategory{{$index+1}}"
+                                                                                  data-msg="Customer category {{$index+1}} is required"
+                                                                                ng-model="gasShipperCustomer.GasShipperCustCategory">
+                                                                            <option value="">--Select--</option>
+                                                                            <option value="{{category.Value}}" ng-repeat="category in GasShipperCustCategory">{{ category.Name }}</option>
+                                                                        </select>
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="email"  class="form-control required email" name="CustomerEmail{{$index+1}}"
+                                                                                data-msg="Customer email {{$index+1}} is required"
+                                                                               ng-model="gasShipperCustomer.Email" />
+                                                                    </td>
+                                                                    <td>
+                                                                        <a ng-show="$index>0" class="btn btn-icon btn-danger"
+                                                                           ng-click="removeGasShipperCustomer(gasShipperCustomer)">
+                                                                            <i class="fa fa-trash"> </i>
+                                                                        </a>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                            <tfoot>
+                                                                <tr>
+                                                                    <td colspan="6">
+                                                                        <a class="btn btn-icon btn-success text-white"
+                                                                           ng-click="addGasShipperCustomer()">
+                                                                            <i class="fa fa-plus"> </i> Add More
+                                                                        </a>
+
+                                                                    </td>
+                                                                </tr>
+                                                            </tfoot>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div ng-show="licenseApplicationModel.CustLicenseType === 'GasTransporterLicense'">
+                                        <div class="row">
+                                            <div class="col col-12">
+                                                <div class="form-group">
+                                                    <label><strong>Gas PipeLine/Gas PipeLine Network</strong><span class="text-danger">*</span></label>
+                                                    <input type="text" class="form-control required"
+                                                           data-msg="Gas Pipeline is required"
+                                                           ng-model="licenseApplicationModel.GasPipelineNetwork" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col col-12">
+                                                <div class="form-group">
+                                                    <label><strong>Installed capacity of the gas pipeline</strong><span class="text-danger">*</span></label>
+                                                    <input type="text" class="form-control"
+                                                           data-msg="Installed capacity is required"
+                                                           ng-model="licenseApplicationModel.InstalledCapacity" />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col col-12">
+                                                <div class="form-group">
+                                                    <label><strong>Party/parties & State of customers/shareholders?</strong></label>
+                                                    <div>
+                                                        <table class="table table-borderless">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Name of customer/stakeholder</th>
+                                                                    <th>Location of customer/stakeholder?</th>
+                                                                    <th></th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr ng-repeat="stakeholdersLocation in stakeholdersLocations">
+                                                                    <td>
+                                                                        <input type="text" name="customer{{$index+1}}" class="form-control"
+                                                                               ng-model="stakeholdersLocations.Customer" />
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" class="form-control"
+                                                                               ng-model="stakeholdersLocations.Location" />
+                                                                    </td>
+                                                                    <td>
+                                                                        <a ng-show="$index>0" class="btn btn-icon btn-danger text-white"
+                                                                           ng-click="removeCustomerStakeholder(stakeholdersLocation)">
+                                                                            <i class="fa fa-trash"> </i>
+                                                                        </a>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                            <tfoot>
+                                                                <tr>
+                                                                    <td colspan="3">
+                                                                        <a class="btn btn-icon btn-success text-white"
+                                                                           ng-click="addCustomerStakeholder()">
+                                                                            <i class="fa fa-plus"> </i> Add
+                                                                        </a>
+
+                                                                    </td>
+                                                                </tr>
+                                                            </tfoot>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col col-lg-5 col-xl-5 col-12">
+                                                <div class="form-group">
+                                                    <label><strong>Present Entry point</strong></label>
+                                                    <input type="text" class="form-control"
+                                                           data-msg="Entry point is required"
+                                                           ng-model="licenseApplicationModel.EntryExitPoint" />
+                                                </div>
+                                            </div>
+                                            <div class="col col-lg-5 col-xl-5 col-12">
+                                                <div class="form-group">
+                                                    <label><strong>Present Exit point</strong><span class="text-danger">*</span></label>
+                                                    <input type="text" class="form-control required"
+                                                           data-msg="Exit point is required"
+                                                           ng-model="licenseApplicationModel.ExitPoint" />
+                                                </div>
+                                            </div>
+                                            <div class="col col-lg-4 col-xl-4 col-12">
+                                                <div class="form-group">
+                                                    <label><strong>Location </strong><span class="text-danger">*</span></label>
+                                                    <input type="text" class="form-control required"
+                                                           data-msg="Location is required"
+                                                           ng-model="licenseApplicationModel.Location" />
+                                                </div>
+                                            </div>
+                                            <div class="col col-lg-3 col-xl-3 col-12">
+                                                <div class="form-group">
+                                                    <label><strong>Nominated capacity</strong><span class="text-danger">*</span></label>
+                                                    <input type="number" class="form-control required"
+                                                           data-msg="Nominated capacity is required"
+                                                           ng-model="licenseApplicationModel.MaximumNominatedCapacity"
+                                                           ng-change="evaluateGasTransporterNominalCapacity(licenseApplicationModel.MaximumNominatedCapacity)" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col col-xl-6 col-lg-6 col-12" ng-show="licenseFeeEvaluated">
+                                                <div class="form-group">
+                                                    <label><strong>Fees</strong></label>
+                                                    <div>
+                                                        Statutory Fees: <span class="text-success"><b> {{ statutoryFee | currency : "₦"}},</b></span> Processing Fee: <span class="text-success"><b> {{ processingFee | currency : "₦" }},</b></span> Total: <span class="text-success"><b> {{ totalFee | currency : "₦" }}</b></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-row">
+                                                <p><strong>Details of proposed arrangements for compliance with the applicable requirements and the standard conditions</strong><span class="text-danger">*</span></p>
+                                                <div class="form-group col-md-7">
+                                                    <input placeholder="Enter text" type="text" class="form-control"
+                                                           ng-model="licenseApplicationModel.ProposedArrangementLicensingActivity" />
+                                                </div>
+                                                <div class="form-group col-md-4">
+                                                    <div>
+                                                        <input class="form-control"
+                                                               name="proposedDetail"
+                                                               type="file" ng-upload-change="setFileRecord" tag="proposedDetail">
+                                                        <div class="text-danger text-sm"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-row">
+                                                <div class="form-group col-md-4">
+                                                    <label>Copy OPL License issued by DPR<span class="text-danger">*</span></label>
+                                                    <input class="form-control required" name="OPLLicense" type="file"
+                                                           data-msg="Please upload your OPL License"
+                                                           ng-upload-change="setFileRecord" tag="OPLLicense">
+                                                    <div class="text-danger text-sm"></div>
+                                                </div>
+                                                <div class="form-group col-md-4">
+                                                    <label>Safety Case Approved<span class="text-danger">*</span></label>
+                                                    <input class="form-control" type="file" ng-upload-change="setFileRecord" tag="SafetyCase">
+                                                    <div class="text-danger text-sm"></div>
+                                                </div>
+                                                <div class="form-group col-md-4">
+                                                    <label>Details of Gas transmission SCADA System<span class="text-danger">*</span></label>
+                                                    <input class="form-control" type="file" ng-upload-change="setFileRecord" tag="SCADA">
+                                                    <div class="text-danger text-sm"></div>
+                                                </div>
+                                                <div class="form-group col-md-4">
+                                                    <label>Details of the Gas Transmission System (GTS) GIS Coordinates <span class="text-danger">*</span></label>
+                                                    <input class="form-control" type="file" ng-upload-change="setFileRecord" tag="GTS">
+                                                    <div class="text-danger text-sm"></div>
+                                                </div>
+                                                <div class="form-group col-md-4">
+                                                    <label>Technical Attributes of all systems Entry/Exit Points<span class="text-danger">*</span></label>
+                                                    <input class="form-control" type="file" ng-upload-change="setFileRecord" tag="technicalAttr">
+                                                    <div class="text-danger text-sm"></div>
+                                                </div>
+                                                <div class="form-group col-md-4">
+                                                    <label>Auxiliary systems on the Gas Transmission System (GTS)<span class="text-danger">*</span></label>
+                                                    <input class="form-control" type="file" ng-upload-change="setFileRecord" tag="auxSystems">
+                                                    <div class="text-danger text-sm"></div>
+                                                </div>
+                                                <div class="form-group col-md-4">
+                                                    <label>Tariff/Pricing Methodology (including basis &Aacute; Source of Input Parameter) <span class="text-danger">*</span></label>
+                                                    <input class="form-control" type="file" ng-upload-change="setFileRecord" tag="tariff">
+                                                    <div class="text-danger text-sm"></div>
+                                                </div>
+                                                <div class="form-group col-md-4">
+                                                    <label>Risk management strategy in terms of market volatility and system availability<span class="text-danger">*</span></label>
+                                                    <input class="form-control" type="file" ng-upload-change="setFileRecord" tag="riskManagement">
+                                                    <div class="text-danger text-sm"></div>
+                                                </div>
+                                                <div class="form-group col-md-4">
+                                                    <label>Community Signed MOU for Gas Transmission System<span class="text-danger">*</span></label>
+                                                    <input class="form-control" type="file" ng-upload-change="setFileRecord" tag="MOU">
+                                                    <div class="text-danger text-sm"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </article>
+
+                                <article class="step-wizard-content m-0">
+                                    <h6>PROPOSED ARRANGEMENTS FOR COMMENCING LICENSABLE ACTIVITIES</h6>
+                                    <hr />
+                                    <div class="row">
+                                        <div class="col col-12">
+                                            <div class="form-group">
+                                                <label>Please provide a summary of your proposed arrangements (including key dates), and any arrangements already in place, to commence the licensable activity to which your application relates<span class="text-danger">*</span></label>
+                                                <textarea rows="3" class="form-control" id="proposedArrangementDetails"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <h6>PROPOSED ARRANGEMENTS FOR COMMENCING LICENSABLE ACTIVITIES</h6>
+                                    <hr />
+                                    <div class="row">
+                                        <div class="col col-lg-7 col-xl-7 col-12">
+                                            <div class="form-group">
+                                                <label>Do you wish to request any modification to any standard conditions for type of license applied for:<span class="text-danger">*</span></label>
+                                                <select class="form-control" ng-model="licenseApplicationModel.HasStandardModificationRequest">
+                                                    <option value="">---Select response type---</option>
+                                                    <option value=true>Yes</option>
+                                                    <option value=false>No</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col col-lg-5 col-xl-5 col-12">
+                                            <div class="form-group">
+                                                <label>Provide full details of the modification requested</label>
+                                                <input type="text" class="form-control" ng-model="licenseApplicationModel.ModificationRequestDetails" ng-disabled="licenseApplicationModel.HasStandardModificationRequest !== 'true'" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col col-12">
+                                            <div class="form-group">
+                                                <label>State the grounds on which the applicants believe that any such modification is requisite to meet the circumstance of the particular case</label>
+                                                <input type="text" class="form-control" ng-model="licenseApplicationModel.ModificationRequestReason" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <h6>DECLARATION</h6>
+                                    <hr />
+                                    <div class="row">
+                                        <div class="col col-lg-4 col-xl-4 col-12">
+                                            <div class="form-group">
+                                                <label>Signature<span class="text-danger">*</span></label>
+                                                <input type="file" class="form-control required" 
+                                                       data-msg="You must upload your signature"
+                                                       id="declarationSignature" onchange="angular.element(this).scope().declarationSignatureFileHandler()" accept=".pdf" />
+                                                <div class="text-danger text-sm" id="declarationSignatureWarningIndicator"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col col-lg-4 col-xl-4 col-12">
+                                            <div class="form-group">
+                                                <label>Name in capital letters<span class="text-danger">*</span></label>
+                                                <input name="declarationName" type="text" 
+                                                       data-msg="Declaration Name is required"
+                                                       class="form-control required" ng-model="licenseApplicationModel.DeclarationName" />
+                                            </div>
+                                        </div>
+                                        <div class="col col-lg-4 col-xl-4 col-12">
+                                            <div class="form-group">
+                                                <label>Capacity of Signatory<span class="text-danger">*</span></label>
+                                                <input name="declarationCapacity" type="text" class="form-control required" 
+                                                       data-msg="Declaration capacity is required"
+                                                       ng-model="licenseApplicationModel.DeclarationCapacity" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col col-lg-4 col-xl-4 col-12">
+                                            <div class="form-group">
+                                                <label>Declaration Date<span class="text-danger">*</span></label>
+                                                <input name="declarationDate" type="date" id="declarationDate" 
+                                                        data-msg="Declaration date is required"
+                                                       class="form-control required" ng-model="licenseApplicationModel.DeclarationDate" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="row">
+                                        <div class="col col-xs-12 col-lg-11 col-xl-11 col-10">
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input required" 
+                                                       data-msg="You must accept the conditions stated below to continue."
+                                                       name="customCheck" ng-model="agreementCheck" id="customCheck1">
+                                                <label class="custom-control-label" for="customCheck1">By checking this box, i declare that</label>
+                                                <div style="font-size: 12px;">
+                                                    (1) I have due authority over this application. <br />
+                                                    (2) I have read and understood this application form and the application guidance currently published on the DPR Website authority over this application. <br />
+                                                    (3) To the best of my knowledge and belief, all the details provided in this application form are true and complete and <br />
+                                                    all the information or document(s) supplied with this application form are true and complete. <br />
+                                                    (4) I have read and understood the relevant standard conditions of the license that I am applying for
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col col-12">
+                                            <button id="submitApplication" class="btn btn-success" type="submit"
+                                                    ng-disabled="!agreementCheck">
+                                                {{ submitButtonText }}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </article>
+                            </form>
+                            <footer class="row justify-content-between mt-3">
+                                <button type="button" class="btn btn-primary disabled" id="previous">Previous</button>
+                                <button type="button" class="btn btn-primary" ng-disabled="licenseApplicationModel.CustLicenseType === ''" id="next">Next</button>
+                            </footer>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Form wizard with icon tabs section end -->
+<script>
+    $(document).ready(function () {
+
+
+        var inputMyDate = document.querySelector('input#effectiveDate');
+
+        inputMyDate.addEventListener('input', function () {
+            var current = this.value;
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1;
+            var yyyy = today.getFullYear();
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+            today = yyyy + '-' + mm + '-' + dd;
+            if (current < today) {
+                document.getElementById('effectiveDate').value = today;
+            }
+        });
+
+    });
+
+</script>
+
+

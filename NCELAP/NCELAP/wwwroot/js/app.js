@@ -1,5 +1,46 @@
-﻿var appModule = angular.module('ncLasPortalApp', [/*'angular-jwt'*/]);
-var userAccessModule = angular.module('ncLasPortalAppRegistrationPageModule', []);
+﻿var appModule = angular.module('ncLasPortalApp', ['ui.router', 'ui.router.stateHelper', 'ui.bootstrap']);
+appModule.config([
+    'stateHelperProvider', '$urlRouterProvider',
+    '$httpProvider', '$locationProvider', function (stateHelperProvider, $urlRouterProvider, $httpProvider, $locationProvider) {
+        $urlRouterProvider.rule(function ($injector, $location) {
+            var path = $location.path(), normalized = path.toLowerCase();
+            if (path != normalized) {
+                $location.replace().path(normalized);
+            }
+        });
+        stateHelperProvider
+            .state({
+                name: 'site',
+                abstract: true,
+                template: '<div ui-view></div>',
+            });
+        //$locationProvider.html5Mode(true);
+        //$httpProvider.interceptors.push('ResponseInterceptorSvc');
+        //$httpProvider.interceptors.push('AuthInterceptorSvc');
+    }
+]);
+
+appModule.run(['$rootScope', '$state', '$stateParams', function ($rootScope, $state, $stateParams) {
+    $rootScope.waiting = 0;
+
+    $rootScope.applicationStatus = [
+        {"Name":"", "Value":""}
+    ];
+    $rootScope.applicationCategory = [
+        { Name: "NewApplication", Value: "New" },
+        { Name: "Renewal", Value: "Renewal" }
+    ];
+
+    $rootScope.breadcrumb = [{ title: 'Home' }];
+    $rootScope.loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+    $rootScope.goToState = function (index) {
+        if (index + 1 != $rootScope.breadcrumb.length) {
+            var link = $rootScope.breadcrumb[index];
+            $state.go(link.link, (link.config || $stateParams));
+        }
+    };
+}]);
+
 
 
 appModule.directive('ngUploadChange', function () {
@@ -24,7 +65,7 @@ appModule.directive('ngUploadChange', function () {
                     errorElement.html("");
                     $scope.ngUploadChange(event, $attrs.tag);
                 }
-               
+
             })
             $scope.$on("$destroy", function () {
                 $element.off();
