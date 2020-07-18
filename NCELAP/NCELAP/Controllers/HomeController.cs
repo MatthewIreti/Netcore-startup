@@ -23,6 +23,16 @@ namespace NCELAP.Controllers
             return View();
         }
 
+        public IActionResult LicenceAgent()
+        {
+            return View();
+        }
+
+        public IActionResult GasShipperLicence()
+        {
+            return View();
+        }
+
         public IActionResult Login()
         {
             return View();
