@@ -24,4 +24,15 @@ namespace NCELAP.WebAPI.Models.Entities.Accounts
         public string Email { get; set; }
         public string Password { get; set; }
     }
+
+    public class UserToCreate
+    {
+        public string Name { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
+        public string Department { get; set; }
+        public long CreatedByRecId { get; set; }
+        public long CustTableRecId { get; set; }
+        public string Activated { get; set; }
+    }
 }

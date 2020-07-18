@@ -14,6 +14,11 @@ namespace NCELAP.WebAPI.Models.DTO
         public string OrganizationName { get; set; }
     }
 
+    public class UserEmail
+    {
+        public string Value { get; set; }
+    }
+
     public static class ConstantHelper
     {
         public const string NetworkAgent = "Network Agent";
