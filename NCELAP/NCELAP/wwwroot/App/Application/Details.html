@@ -1,0 +1,83 @@
+﻿<div class="content-header row">
+    <div class="content-header-left col-md-9 col-12 mb-2">
+        <div class="row breadcrumbs-top">
+            <div class="col-12">
+                <h2 class="content-header-title float-left mb-0">NCLEAS</h2>
+                <div class="breadcrumb-wrapper col-12">
+                    <ol class="breadcrumb">
+                        <li ng-repeat="record in breadcrumb" class="breadcrumb-item" ng-class="{'active':$index+1 ==breadcrumb.length}">
+                            <a ui-sref="{{record.link}}" ng-bind="record.title"></a>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="content-body" waiting="{{waiting}}">
+    <!--native-font-stack -->
+    <section class="card">
+        <div class="card-header">
+            <h2 class="card-title">{{item.applicationNum}}</h2>
+            <div class="chip chip-info">
+                <div class="chip-body">
+                    <div class="chip-text">{{item.custLicenseApplicationStatus}}</div>
+                </div>
+            </div>
+        </div>
+        <div class="card-content">
+            <div class="card-body">
+                <h3>Application Overview</h3>
+                <div class="table-responsive">
+                    <table class="table table-bordered mb-0">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    License Type
+                                </td>
+                                <td ng-bind="item.custLicenseType"></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Application Type
+                                </td>
+                                <td ng-bind="item.custLicenseCategory"></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Application Date
+                                </td>
+                                <td>{{item.submittedOn|date:"EEE, MMMM d, y"}}</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Desired Effective Date
+                                </td>
+                                <td>{{item.effectiveDate|date:"EEE, MMMM d, y"}}</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Authorised Signatory
+                                </td>
+                                <td ng-bind="item.declarationName"></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Authorised Signatory Capacity
+                                </td>
+                                <td ng-bind="item.declarationCapacity"></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Declaration Date
+                                </td>
+                                <td>{{item.declarationDate|date:"EEE, MMMM d, y"}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </section>
+</div>

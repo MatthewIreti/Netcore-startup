@@ -9,7 +9,7 @@
                             <a>Home</a>
                         </li>
                         <li class="breadcrumb-item active">
-                            <a href="#">License Application</a>
+                            <a ui-sref="#">License Application</a>
                         </li>
 
                     </ol>
@@ -18,8 +18,6 @@
         </div>
     </div>
 </div>
-
-
 
 <!-- Zero configuration table -->
 <section id="basic-datatable" waiting="{{waiting}}">
@@ -38,13 +36,15 @@
                 <div class="card-content">
                     <div class="card-body card-dashboard">
                         <div class="table-responsive">
-                            <table class="table" id="applicationsTable">
+                            <table class="table table-hover table-bordered" id="applicationsTable">
                                 <thead>
                                     <tr>
                                         <th>Application ID</th>
                                         <th>License Type</th>
+                                        <th>Application Category</th>
                                         <th>Declaration Date</th>
                                         <th>Date of Application</th>
+                                        <th>Status</th>
                                         <th class="largeHead">Action</th>
                                     </tr>
                                 </thead>
@@ -54,10 +54,26 @@
                                             <span><a target="_blank" href="/companyoperator/applicationdetails/{{ application.recordId }}">{{ application.applicationNum }}</a> </span>
                                         </td>
                                         <td>{{ application.custLicenseType }}</td>
+                                        <td ng-bind="application.custLicenseCategory"></td>
                                         <td>{{ application.declarationDate  | date : "MMM d, y"}}</td>
                                         <td>{{ application.submittedOn  | date : "MMM d, y"}}</td>
+                                        <td><label ng-class="{'badge-primary':application.custLicenseApplicationStatus == 'AwaitingProcessingFee',
+                                                   'badge-success':application.custLicenseApplicationStatus == 'Approved',
+                                                   'badge-info':application.custLicenseApplicationStatus == 'NotSubmitted'}" class="badge" 
+                                                   ng-bind="application.custLicenseApplicationStatus"></label></td>
                                         <td>
-                                            <span><a class="btn btn-success btn-md" target="_blank" href="/companyoperator/applicationdetails/{{ application.recordId }}">View Details</a> </span>
+                                            <div uib-dropdown>
+                                                <button id="split-button{{$index}}" type="button" class="btn btn-flat-primary dropdown-toggle" uib-dropdown-toggle>Actions</button>
+                                                <div class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="split-button{{$index}}">
+                                                    <a ui-sref="site.application.details({recordId:application.recordId})" class="dropdown-item">View Details</a>
+                                                    <a ui-sref="#" class="dropdown-item">Update application</a>
+                                                    <div class="dropdown-divider"></div>
+                                                    <a ui-sref="site.application.invoice({recordId:application.recordId})" ng-show="application.custLicenseApplicationStatus == 'AwaitingProcessingFee'"  class="dropdown-item">Generate Invoice</a>
+                                                    <a href="#" class="dropdown-item">Download License</a>
+                                                    <a href="#" class="dropdown-item">Renew License</a>
+                                                </div>
+                                            </div>
+                                            <!--<span><a class="btn btn-success btn-md" target="_blank" href="/companyoperator/applicationdetails/{{ application.recordId }}">View Details</a> </span>-->
                                         </td>
                                     </tr>
                                 </tbody>

@@ -36,6 +36,8 @@ namespace NCELAP.WebAPI.Models.ODataResponse.Application
         public DateTime DeclarationDate { get; set; }
         public string CustLicenseType { get; set; }
         public DateTime SubmittedOn { get; set; }
+        public string CustLicenseApplicationStatus { get; set;}
+        public string CustLicenseCategory { get; set; }
     }
 
     public class ShortApplicationInfoResponse

@@ -1,4 +1,4 @@
-﻿var appModule = angular.module('ncLasPortalApp', ['ui.router', 'ui.router.stateHelper']);
+﻿var appModule = angular.module('ncLasPortalApp', ['ui.router', 'ui.router.stateHelper', 'ui.bootstrap']);
 appModule.config([
     'stateHelperProvider', '$urlRouterProvider',
     '$httpProvider', '$locationProvider', function (stateHelperProvider, $urlRouterProvider, $httpProvider, $locationProvider) {
@@ -22,6 +22,15 @@ appModule.config([
 
 appModule.run(['$rootScope', '$state', '$stateParams', function ($rootScope, $state, $stateParams) {
     $rootScope.waiting = 0;
+
+    $rootScope.applicationStatus = [
+        {"Name":"", "Value":""}
+    ];
+    $rootScope.applicationCategory = [
+        { Name: "NewApplication", Value: "New" },
+        { Name: "Renewal", Value: "Renewal" }
+    ];
+
     $rootScope.breadcrumb = [{ title: 'Home' }];
     $rootScope.loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
     $rootScope.goToState = function (index) {

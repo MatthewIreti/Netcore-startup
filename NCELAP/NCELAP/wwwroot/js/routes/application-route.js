@@ -18,18 +18,18 @@
                     url: '/create',
                     controller: 'ApplicationCreate',
                     templateUrl: '/App/Application/CreateEdit.html'
-                }
-            ]
-        }).state({
-            name: 'site.payment',
-            template: '<div ui-view>',
-            abstract: true,
-            url: '/payment',
-            children: [
+                },
                 {
-                    name: 'list',
-                    url: '/list',
-                    templateUrl: '/App/Payment/List.html'
+                    name: 'invoice',
+                    url: '/invoice/:recordId',
+                    controller: 'ApplicationGetDetails',
+                    templateUrl: '/App/Application/Invoice.html'
+                },
+                {
+                    name: 'details',
+                    url: '/details/:recordId',
+                    controller: 'ApplicationGetDetails',
+                    templateUrl: '/App/Application/Details.html'
                 }
             ]
         });

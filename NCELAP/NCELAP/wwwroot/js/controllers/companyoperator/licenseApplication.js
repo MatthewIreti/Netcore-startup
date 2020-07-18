@@ -563,7 +563,7 @@
                 $scope.waiting--;
             }
         }, function (error) {
-                $scope.waiting--;
+            $scope.waiting--;
             console.log(error);
         });
     };
@@ -590,6 +590,8 @@ appModule.controller('ApplicationList', function ($scope, $http, $state) {
             url: baseUrl + 'applications/customer/' + custrecid
         }).then(function (response) {
             $scope.applications = response.data;
+
+
             // if the datatable instance already exist, destroy before recreating, otherwise, just create
             if ($.fn.DataTable.isDataTable('#applicationsTable')) {
                 $('#applicationsTable').DataTable().destroy();
@@ -608,25 +610,26 @@ appModule.controller('ApplicationList', function ($scope, $http, $state) {
 });
 
 
-appModule.controller('ApplicationController', function ($scope, $http) {
-    $scope.stakeholdersLocations = [];
-    $scope.takeOffPoints = [];
-    $scope.gasShipperCustomers = [];
-    $scope.licenseFees = [];
-    $scope.gasShipperCustomer = {};
-    $scope.takeOffPoint = {};
-    var maxFileSize = 2500000; // 2 Megabytes
-    $scope.submittingInformation === 'false';
-    $scope.submitButtonText = 'Submit Application';
-
-    //$scope.selectedLicenseType = 'NetworkAgent';
-
-
-
-    
-
-
-    $scope.setCustomerRecId();
-    $scope.getLicenseFees();
-
+appModule.controller('ApplicationGetDetails', function ($scope, $http, $state) {
+    $scope.title = "Details";
+    $scope.breadcrumb.splice(0, $scope.breadcrumb.length);
+    $scope.breadcrumb.push(
+        {
+            title: 'License Applications',
+            link: 'site.application.list'
+        },
+        {
+            title: $scope.title
+        }
+    );
+    $scope.waiting++;
+    $http({
+        method: 'GET',
+        url: baseUrl + 'applications/licenseapplicationdetails/' + $state.params.recordId
+    }).then(function (response) {
+        $scope.item = response.data;
+        $scope.waiting--;
+    }, function (error) {
+        $scope.waiting--;
+    });
 });
