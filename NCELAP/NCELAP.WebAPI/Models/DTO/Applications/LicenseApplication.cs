@@ -1,4 +1,5 @@
-﻿using NCELAP.WebAPI.Models.Entities.Applications;
+﻿using NCELAP.WebAPI.Models.Entities.Accounts;
+using NCELAP.WebAPI.Models.Entities.Applications;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,9 +11,9 @@ namespace NCELAP.WebAPI.Models.DTO.Applications
     {
         public LicenseApplicationUpload FileUploads { get; set; }
         public StakeholderLocation[] StakeholderLocations { get; set; }
+        public Staff[] Staffs { get; set; }
         public GasShipperTakeOffPoint[] TakeOffPoints { get; set; }
         public GasShipperCustomer[] GasShipperCustomers { get; set; }
-
     }
 
     public class LicenseApplicationUpload
@@ -57,9 +58,9 @@ namespace NCELAP.WebAPI.Models.DTO.Applications
         public string TariffAndPricingFileName { get; set; }
         public string TariffAndPricingFileExtension { get; set; }
         public string TariffAndPricingBase64 { get; set; }
-        public string RiskManagmentFileName { get; set; }
-        public string RiskManagmentFileExtension { get; set; }
-        public string RiskManagmentBase64 { get; set; }
+        public string RiskManagementFileName { get; set; }
+        public string RiskManagementFileExtension { get; set; }
+        public string RiskManagementBase64 { get; set; }
         public string CommunityMOUFileName { get; set; }
         public string CommunityMOUFileExtension { get; set; }
         public string CommunityMOUBase64 { get; set; }

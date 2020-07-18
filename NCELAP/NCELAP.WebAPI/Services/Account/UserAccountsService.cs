@@ -21,7 +21,7 @@ namespace NCELAP.WebAPI.Services.Account
     {
         readonly IConfiguration _configuration;
         private readonly string businessaccount, businessaccountlegalstatus, businessaccountshareholder, businessaccountdirector, docupload;
-        private readonly string ncelasloginendpoint, companynamebycustrecid;
+        private readonly string ncelasloginendpoint, companynamebycustrecid, accountdetails, ncelasinfoupdate, ncelasusers, ncelasuserbyemail;
         private string jsonResponse;
         private readonly AuthService _authService;
         private readonly Helper _helper;
@@ -33,11 +33,15 @@ namespace NCELAP.WebAPI.Services.Account
             _helper = new Helper(_configuration);
             businessaccount = _configuration.GetSection("Endpoints").GetSection("custprospect").Value;
             businessaccountlegalstatus = _configuration.GetSection("Endpoints").GetSection("custprospectlegalstatus").Value;
-            businessaccountshareholder  = _configuration.GetSection("Endpoints").GetSection("custprospectshareholder").Value;
+            businessaccountshareholder = _configuration.GetSection("Endpoints").GetSection("custprospectshareholder").Value;
             businessaccountdirector = _configuration.GetSection("Endpoints").GetSection("custprospectsdirector").Value;
             docupload = _configuration.GetSection("Endpoints").GetSection("custprospectupload").Value;
             ncelasloginendpoint = _configuration.GetSection("Endpoints").GetSection("ncelasuserlogin").Value;
             companynamebycustrecid = _configuration.GetSection("Endpoints").GetSection("companynamebycustrecid").Value;
+            accountdetails = _configuration.GetSection("Endpoints").GetSection("accountdetails").Value;
+            ncelasinfoupdate = _configuration.GetSection("Endpoints").GetSection("ncelasinfoupdate").Value;
+            ncelasusers = _configuration.GetSection("Endpoints").GetSection("ncelasusers").Value;
+            ncelasuserbyemail = _configuration.GetSection("Endpoints").GetSection("ncelasuserbyemail").Value;
         }
 
         public async Task<bool> SaveBusinessInformation(RegisteredBusiness registeredBusiness)
@@ -151,7 +155,7 @@ namespace NCELAP.WebAPI.Services.Account
                             count++;
                         }
                     }
-                    
+
                 }
             }
             catch (Exception ex)
@@ -270,13 +274,101 @@ namespace NCELAP.WebAPI.Services.Account
 
             return response;
         }
-    
+
         public async Task<NcelasUserResponse> GetNcelasUserAsync(NcelasUserLogin ncelasUserLogin)
         {
             string token = _authService.GetAuthToken();
             string currentEnvironment = _helper.GetEnvironmentUrl();
             string url = currentEnvironment + ncelasloginendpoint;
             string formattedUrl = String.Format(url, ncelasUserLogin.Email, Helper.ComputeSha256Hash(ncelasUserLogin.Password));
+            var userAccount = new NcelasUserResponse();
+
+            try
+            {
+                var webRequest = WebRequest.Create(formattedUrl);
+                if (webRequest != null)
+                {
+                    webRequest.Method = "GET";
+                    webRequest.Timeout = 120000;
+                    webRequest.Headers.Add("Authorization", "Bearer " + token);
+
+                    WebResponse response = await webRequest.GetResponseAsync();
+                    Stream dataStream = response.GetResponseStream();
+                    StreamReader reader = new StreamReader(dataStream);
+
+                    var webResponse = new NcelasUsersResponse();
+                    jsonResponse = reader.ReadToEnd();
+
+                    webResponse = JsonConvert.DeserializeObject<NcelasUsersResponse>(jsonResponse);
+                    userAccount = webResponse.value[0];
+
+                    if (userAccount.CustTableRecId > 0)
+                    {
+                        userAccount.CompanyName = await this.GetCustomerNameByRecId(userAccount.CustTableRecId);
+                    }
+
+                    response.Dispose();
+                    dataStream.Close();
+                    dataStream.Dispose();
+                    reader.Close();
+                    reader.Dispose();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex.StackTrace);
+            }
+
+
+            return userAccount;
+        }
+
+        public async Task<bool> ChangeNcelasUserPassword(NcelasUserLogin ncelasUserInfoPayload)
+        {
+            bool response = false;
+            string token = _authService.GetAuthToken();
+            string currentEnvironment = _helper.GetEnvironmentUrl();
+            string url = currentEnvironment + ncelasinfoupdate;
+            ncelasUserInfoPayload.Password = Helper.ComputeSha256Hash(ncelasUserInfoPayload.Password);
+            //string formattedUrl = String.Format(url, ncelasUserLogin.Email, Helper.ComputeSha256Hash(ncelasUserLogin.Password));
+            var userAccount = new NcelasUserResponse();
+
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri(currentEnvironment);
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+                    client.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/json");
+
+                    var responseMessage = await client.PostAsJsonAsync(url, ncelasUserInfoPayload);
+                    var errorMessage = responseMessage.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+
+                    //StreamReader sr = new StreamReader(await responseMessage.Content.ReadAsStreamAsync());
+                    //var reportSaveResponse = sr.ReadToEnd();
+                    
+                    if (responseMessage.IsSuccessStatusCode)
+                    {
+                        response = true;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex.StackTrace);
+            }
+
+            return response;
+        }
+
+        public async Task<NcelasUserResponse> GetNcelasUserByRecId(long userRecId)
+        {
+            string token = _authService.GetAuthToken();
+            string currentEnvironment = _helper.GetEnvironmentUrl();
+            string url = currentEnvironment + accountdetails;
+            string formattedUrl = String.Format(url, userRecId);
             var userAccount = new NcelasUserResponse();
 
             try
@@ -361,5 +453,96 @@ namespace NCELAP.WebAPI.Services.Account
 
             return companyName;
         }
+
+
+        public async Task<bool> CreateUser(UserToCreate userToCreate)
+        {
+            bool response = false;
+
+            var helper = new Helper(_configuration);
+            string token = _authService.GetAuthToken();
+            string currentEnvironment = helper.GetEnvironmentUrl();
+            string url = currentEnvironment + ncelasusers;
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri(url);
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+                    client.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/json");
+
+                    var responseMessage = await client.PostAsJsonAsync(ncelasusers, userToCreate);
+                    var errorMessage = responseMessage.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+
+                    StreamReader sr = new StreamReader(await responseMessage.Content.ReadAsStreamAsync());
+                    var reportSaveResponse = sr.ReadToEnd();
+
+                    if (responseMessage.IsSuccessStatusCode)
+                    {
+                        response = true;
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex.StackTrace);
+            }
+
+            return response;
+        }
+
+        public async Task<bool> GetNcelasUserEmailExist(string email)
+        {
+            string token = _authService.GetAuthToken();
+            string currentEnvironment = _helper.GetEnvironmentUrl();
+            string url = currentEnvironment + ncelasuserbyemail;
+            string formattedUrl = String.Format(url, email);
+            var userAccount = new NcelasUserResponse();
+            bool emailexist = false;
+
+            try
+            {
+                var webRequest = WebRequest.Create(formattedUrl);
+                if (webRequest != null)
+                {
+                    webRequest.Method = "GET";
+                    webRequest.Timeout = 120000;
+                    webRequest.Headers.Add("Authorization", "Bearer " + token);
+
+                    WebResponse response = await webRequest.GetResponseAsync();
+                    Stream dataStream = response.GetResponseStream();
+                    StreamReader reader = new StreamReader(dataStream);
+
+                    var webResponse = new NcelasUsersResponse();
+                    jsonResponse = reader.ReadToEnd();
+
+                    webResponse = JsonConvert.DeserializeObject<NcelasUsersResponse>(jsonResponse);
+                    userAccount = webResponse.value[0];
+
+                    if (userAccount.RecordId > 0)
+                    {
+                        // user account exists, so email exist
+                        emailexist = true;
+                    }
+
+                    response.Dispose();
+                    dataStream.Close();
+                    dataStream.Dispose();
+                    reader.Close();
+                    reader.Dispose();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex.StackTrace);
+            }
+
+
+            return emailexist;
+        }
+
     }
 }

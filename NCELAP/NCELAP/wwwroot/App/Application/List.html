@@ -1,0 +1,89 @@
+﻿<div class="content-header row">
+    <div class="content-header-left col-md-9 col-12 mb-2">
+        <div class="row breadcrumbs-top">
+            <div class="col-12">
+                <h2 class="content-header-title float-left mb-0">Dashboard</h2>
+                <div class="breadcrumb-wrapper col-12">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a>Home</a>
+                        </li>
+                        <li class="breadcrumb-item active">
+                            <a ui-sref="#">License Application</a>
+                        </li>
+
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Zero configuration table -->
+<section id="basic-datatable" waiting="{{waiting}}">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">License Applications</h4>
+                    <div class="float-right">
+                        <!-- Modal -->
+                        <a class="btn btn-success text-white" ui-sref="site.application.create"><i class="fa fa-plus"></i>&nbsp; New Application</a>
+
+                    </div>
+                </div>
+                <hr />
+                <div class="card-content">
+                    <div class="card-body card-dashboard">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-bordered" id="applicationsTable">
+                                <thead>
+                                    <tr>
+                                        <th>Application ID</th>
+                                        <th>License Type</th>
+                                        <th>Application Category</th>
+                                        <th>Declaration Date</th>
+                                        <th>Date of Application</th>
+                                        <th>Status</th>
+                                        <th class="largeHead">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="application in applications">
+                                        <td>
+                                            <span><a target="_blank" href="/companyoperator/applicationdetails/{{ application.recordId }}">{{ application.applicationNum }}</a> </span>
+                                        </td>
+                                        <td>{{ application.custLicenseType }}</td>
+                                        <td ng-bind="application.custLicenseCategory"></td>
+                                        <td>{{ application.declarationDate  | date : "MMM d, y"}}</td>
+                                        <td>{{ application.submittedOn  | date : "MMM d, y"}}</td>
+                                        <td><label ng-class="{'badge-primary':application.custLicenseApplicationStatus == 'AwaitingProcessingFee',
+                                                   'badge-success':application.custLicenseApplicationStatus == 'Approved',
+                                                   'badge-info':application.custLicenseApplicationStatus == 'NotSubmitted'}" class="badge" 
+                                                   ng-bind="application.custLicenseApplicationStatus"></label></td>
+                                        <td>
+                                            <div uib-dropdown>
+                                                <button id="split-button{{$index}}" type="button" class="btn btn-flat-primary dropdown-toggle" uib-dropdown-toggle>Actions</button>
+                                                <div class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="split-button{{$index}}">
+                                                    <a ui-sref="site.application.details({recordId:application.recordId})" class="dropdown-item">View Details</a>
+                                                    <a ui-sref="#" class="dropdown-item">Update application</a>
+                                                    <div class="dropdown-divider"></div>
+                                                    <a ui-sref="site.application.invoice({recordId:application.recordId})" ng-show="application.custLicenseApplicationStatus == 'AwaitingProcessingFee'"  class="dropdown-item">Generate Invoice</a>
+                                                    <a href="#" class="dropdown-item">Download License</a>
+                                                    <a href="#" class="dropdown-item">Renew License</a>
+                                                </div>
+                                            </div>
+                                            <!--<span><a class="btn btn-success btn-md" target="_blank" href="/companyoperator/applicationdetails/{{ application.recordId }}">View Details</a> </span>-->
+                                        </td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--/ Zero configuration table -->

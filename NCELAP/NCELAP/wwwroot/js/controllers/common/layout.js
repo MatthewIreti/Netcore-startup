@@ -14,13 +14,19 @@
 
         if ($scope.loggedInUser.name !== '') {
             //alert($scope.loggedInUser.name);
-            $scope.name = 'sdsdsdds';// $scope.loggedInUser.name;
+            $scope.name = $scope.loggedInUser.name;
         }
 
         if ($scope.loggedInUser.email !== '') {
             $scope.email = $scope.loggedInUser.email;
         }
         // alert($scope.licenseApplicationModel.Customer);
+    };
+
+    $scope.logoutAction = function () {
+        //alert('yass');
+        localStorage.clear();
+        window.location.href = '/';
     };
 
     //$scope.tokenValidityHandler = function () {

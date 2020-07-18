@@ -4,6 +4,8 @@
     var maxFileSize = 2500000; // 2 Megabytes
     $scope.shareholders = [];
     $scope.directors = [];
+    $scope.yearsOfExperience = [];
+    $scope.staffs = []; //name,yearsofexperience,role,careersummary,custpropectre ==> CustProspectStaffList
     $scope.reportAttachment = '';
 
     $scope.legalStatuses = [
@@ -23,6 +25,7 @@
         { Name: "Others", Value: "Others" }
     ];
 
+    
     $scope.businessInfoDocumentsForUpload = {
         CertificateOfRegistrationFileName: '', CertificateOfRegistrationFileExtension: '', CertificateOfRegistrationBase64: '',
         CertificateOfIncorporationFileName: '', CertificateOfIncorporationFileExtension: '', CertificateOfIncorporationBase64: '',
@@ -50,7 +53,7 @@
     $scope.registrationInformationModel = {
         BusinessName: '', Email: '', Password: '', RepeatPassword: '', Telephone: '+234', Mobile: '+234', PostalCode: '', WebAddress: 'https://www.', Address: '',
         AuthorizedRepName: '', AuthorizedRepEmail: '', AuthorizedRepMobile: '', AuthorizedRepPhysicalAddress: '', OtherLegalStatus: '', DirectorCriminalAct: '', DetailsOfConviction: '',
-        SupportingDocuments: $scope.businessInfoDocumentsForUpload, CompanyLegalStatus: '', Shareholders: $scope.shareholders, Directors: $scope.directors
+        SupportingDocuments: $scope.businessInfoDocumentsForUpload, CompanyLegalStatus: '', Shareholders: $scope.shareholders, Directors: $scope.directors, Staffs: $scope.staffs
     };
 
     $scope.initDirectorModel = function(){
@@ -60,15 +63,20 @@
         document.getElementById("DirectorAddress").value = '';
     };
     
-
     $scope.initShareHolderModel = function () {
         $scope.shareHolderModel = {
             Name: '', Address: '', Nationality: '', CountryOfUsualResidence: ''
         };
         document.getElementById("ShareHolderAddress").value = '';
     };
-    
 
+    $scope.initStaffModel = function () {
+        $scope.staffModel = {
+            Name: '', Role: '', YearsOfExperience: null, CareerSummary: '', CustProspect: 0
+        };
+        document.getElementById("staffCareerSummary").value = '';
+    };
+    
     $scope.checkSelectedLegalStatus = function () {
         console.log($scope.legalStatuses);
     };
@@ -88,13 +96,23 @@
         $scope.initShareHolderModel();
     };
 
-    
-
-    
-
     $scope.removeShareholder = function (objectToRemove) {
         var objectToRemovePosition = $scope.shareholders.indexOf(objectToRemove);
         $scope.shareholders.splice(objectToRemovePosition, 1);
+    };
+
+    $scope.addStaff = function () {
+        var careerSummary = document.getElementById("staffCareerSummary").value;
+        $scope.staffModel.CareerSummary = careerSummary;
+
+        $scope.staffs.push($scope.staffModel);
+        console.log($scope.staffModel);
+        $scope.initStaffModel();
+    };
+
+    $scope.removeStaff = function (objectToRemove) {
+        var objectToRemovePosition = $scope.staffs.indexOf(objectToRemove);
+        $scope.staffs.splice(objectToRemovePosition, 1);
     };
 
     $scope.addDirector = function () {
@@ -417,6 +435,12 @@
         });
     };
 
+    $scope.loadYearsofExperience = function () {
+        for (var i = 1; i < 50; i++) {
+            $scope.yearsOfExperience.push(parseInt(i));
+        }
+    };
+
     $scope.tokenValidityHandler = function () {
         var token = extractToken();
         var tokenExpired = jwtHelper.isTokenExpired(token);
@@ -426,6 +450,8 @@
             showSessionTimedOutDialog();
         }
     };
+
+    $scope.loadYearsofExperience();
     $scope.initShareHolderModel();
     $scope.initDirectorModel();
     $scope.getCountries();

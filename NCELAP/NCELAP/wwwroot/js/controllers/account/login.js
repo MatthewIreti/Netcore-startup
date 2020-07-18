@@ -12,7 +12,7 @@
         $scope.accountnotactivated = false;
     };
 
-    $scope.login = function () {
+    $scope.submitForm = function () {
         console.log($scope.loginModel);
         $scope.accountdoesnotexist = false;
         $scope.loggingIn = true;

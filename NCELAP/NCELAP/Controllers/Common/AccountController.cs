@@ -27,5 +27,10 @@ namespace NCELAP.Controllers.Account
         {
             return View();
         }
+
+        public IActionResult Activation()
+        {
+            return View();
+        }
     }
 }

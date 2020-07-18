@@ -20,7 +20,7 @@ namespace NCELAP.WebAPI.Services.Application
     public class ApplicationsService
     {
         readonly IConfiguration _configuration;
-        private readonly string licenseapplication, custapplicationshareholder, gasShipperTakeOffLink, gasShipperCustomerLink, docupload, licensefees, custlicensebycustomerrecid;
+        private readonly string licenseapplication, custapplicationshareholder, gasShipperTakeOffLink, gasShipperCustomerLink, docupload, licensefees, custlicensebycustomerrecid, custlicenseapplicationdetails;
         private string jsonResponse;
         private readonly AuthService _authService;
 
@@ -35,6 +35,8 @@ namespace NCELAP.WebAPI.Services.Application
             docupload = _configuration.GetSection("Endpoints").GetSection("licenseapplicationuploads").Value;
             licensefees = _configuration.GetSection("Endpoints").GetSection("licensefee").Value;
             custlicensebycustomerrecid = _configuration.GetSection("Endpoints").GetSection("custlicensebycustomerrecid").Value;
+            custlicenseapplicationdetails = _configuration.GetSection("Endpoints").GetSection("custlicenseapplicationdetails").Value;
+            
         }
 
         public async Task<bool> SaveApplication(LicenseApplication licenseApplication)
@@ -81,7 +83,6 @@ namespace NCELAP.WebAPI.Services.Application
                         else
                         {
                             var prospectShareholdersSaveResponse = await this.SaveLicenseApplicationShareholders(licenseApplication.StakeholderLocations, applicationRecId);
-
                         }
                         // do file uploads
                         var licenseApplicationUploadsResponse = await this.UploadLicenseApplicationDocuments(licenseApplication.FileUploads, applicationRecId, licenseApplication.CompanyName);
@@ -148,6 +149,9 @@ namespace NCELAP.WebAPI.Services.Application
 
             return response;
         }
+
+        
+
         public async Task<bool> SaveGasShipperCustomers(GasShipperCustomer[] customers, long applicationRecId)
         {
             bool response = false;
@@ -283,7 +287,7 @@ namespace NCELAP.WebAPI.Services.Application
                     licenseApplicationUpload.TechnicalAttributeFileName = $"{companyName}_technical_attributes";
                     licenseApplicationUpload.AuxiliarySystemFileName = $"{companyName}_Auxiliary_systems";
                     licenseApplicationUpload.TariffAndPricingFileName = $"{companyName}_Tarrif_and_pricing";
-                    licenseApplicationUpload.RiskManagmentFileName = $"{companyName}_Risk_management";
+                    licenseApplicationUpload.RiskManagementFileName = $"{companyName}_Risk_management";
                     licenseApplicationUpload.CommunityMOUFileName = $"{companyName}_CommunityMOU";
                     licenseApplicationUpload.NetworkAgentOPLFileName = $"{companyName}_OPL_License";
                     licenseApplicationUpload.GasShipperOPLFileName = $"{companyName}_OPL_License";
@@ -457,6 +461,51 @@ namespace NCELAP.WebAPI.Services.Application
             };
 
             return licenseApplicationForSave;
+        }
+
+        public async Task<ApplicationInfo> GetLicenseApplicationDetails(long licenseApplicationRecId)
+        {
+            string token = _authService.GetAuthToken();
+            var helper = new Helper(_configuration);
+            string currentEnvironment = helper.GetEnvironmentUrl();
+            string url = currentEnvironment + custlicenseapplicationdetails;
+            string formattedUrl = String.Format(url, licenseApplicationRecId);
+            var applicationInfo = new ApplicationInfo();
+
+            try
+            {
+                var webRequest = WebRequest.Create(formattedUrl);
+                if (webRequest != null)
+                {
+                    webRequest.Method = "GET";
+                    webRequest.Timeout = 120000;
+                    webRequest.Headers.Add("Authorization", "Bearer " + token);
+
+                    WebResponse response = await webRequest.GetResponseAsync();
+                    Stream dataStream = response.GetResponseStream();
+
+                    StreamReader reader = new StreamReader(dataStream);
+
+                    var webResponse = new ApplicationInfoResponse();
+                    jsonResponse = reader.ReadToEnd();
+
+                    webResponse = JsonConvert.DeserializeObject<ApplicationInfoResponse>(jsonResponse);
+                    applicationInfo = webResponse.value[0];
+
+
+                    response.Dispose();
+                    dataStream.Close();
+                    dataStream.Dispose();
+                    reader.Close();
+                    reader.Dispose();
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex.StackTrace);
+            }
+
+            return applicationInfo;
         }
     }
 }
