@@ -2,7 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.ApplicationInsights.DependencyCollector;
+using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -12,7 +16,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-
+using NCELAP.WebAPI.Services;
+using NCELAP.WebAPI.Services.Application;
+using NCELAP.WebAPI.Util;
 
 namespace NCELAP.WebAPI
 {
@@ -47,12 +53,12 @@ namespace NCELAP.WebAPI
                         ;
                 });
             });
-
             services.AddControllers();
             //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             services.AddSwaggerGen(swagger =>
             {
-                swagger.SwaggerDoc("v1", new OpenApiInfo {
+                swagger.SwaggerDoc("v1", new OpenApiInfo
+                {
                     Title = "NCELAP Web API",
                     Description = "This is the official documentation website for the NCELAP Web API",
                     Contact = new OpenApiContact
@@ -68,13 +74,35 @@ namespace NCELAP.WebAPI
                     }
                 });
             });
+            services.AddHttpClient("remita", config =>
+            {
+                config.DefaultRequestHeaders.Clear();
+                config.BaseAddress = new Uri(Configuration.GetSection("Remita").GetSection("baseUrl").Value);
+            }).ConfigurePrimaryHttpMessageHandler(() =>
+            {
+                //use Fiddler 
+                var httpClientHandler = new HttpClientHandler()
+                {
+                    AllowAutoRedirect = false
+                };
+                return new DisableActivityHandler(httpClientHandler);
+            });
             services.AddSwaggerGenNewtonsoftSupport();
-            //services.AddApiVersioning();
+            services.AddSingleton(Configuration.GetSection("Remita").Get<RemitaAppSetting>());
+            services.AddTransient<IRemitaService, RemitaService>();
+            services.AddTransient<IPaymentService, PaymentService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            var builder = new ConfigurationBuilder()
+               .SetBasePath(env.ContentRootPath)
+               .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+               .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+               .AddEnvironmentVariables();
+
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -98,7 +126,10 @@ namespace NCELAP.WebAPI
             {
                 endpoints.MapControllers();
             });
+            //Disable Correlation for Remita
+
 
         }
+
     }
 }
