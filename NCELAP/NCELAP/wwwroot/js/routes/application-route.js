@@ -32,5 +32,25 @@
                     templateUrl: '/App/Application/Details.html'
                 }
             ]
+        })
+        .state({
+            name: 'site.users',
+            template: '<div ui-view>',
+            url: '/users',
+            abstract: true,
+            children: [
+                {
+                    name: 'index',
+                    url: '/',
+                    templateUrl: '/App/Users/Index.html',
+                    controller: 'UsersList'
+                },
+                {
+                    name: 'create',
+                    url: '/create',
+                    controller: 'UsersCreate',
+                    templateUrl: '/App/Users/Create.html'
+                }
+            ]
         });
 }]);

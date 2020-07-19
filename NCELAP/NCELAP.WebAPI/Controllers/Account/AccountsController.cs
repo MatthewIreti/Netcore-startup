@@ -57,6 +57,14 @@ namespace NCELAP.WebAPI.Controllers.Account
             return Ok(response);
         }
 
+        [HttpGet]
+        [Route("usersbycreatorrecid/{recid}")]
+        public async Task<IActionResult> GetNcelasUsersByCreatorRecId(long recid)
+        {
+            var response = await _userAccountService.GetNcelasUsersByCreatorRecId(recid);
+            return Ok(response);
+        }
+
         [HttpPost]
         [Route("createuser")]
         public async Task<IActionResult> CreateUser(UserToCreate userToCreate)
