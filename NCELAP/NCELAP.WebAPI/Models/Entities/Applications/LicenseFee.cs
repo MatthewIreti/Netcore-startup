@@ -10,8 +10,10 @@ namespace NCELAP.WebAPI.Models.Entities.Applications
         public string LicenseType { get; set; }
         public string CategoryDescription { get; set; }
         public double Maximum { get; set; }
-        public double Minimum { get; set; }
+        public double Minimum { get; set; } 
         public double ProcessingFee { get; set; }
         public double Statutory { get; set; }
+        public string StatutoryFeeServiceTypeId { get; set; }
+        public string ProcessingFeeServiceTypeId { get; set; }
     }
 }

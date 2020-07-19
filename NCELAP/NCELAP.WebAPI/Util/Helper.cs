@@ -1,9 +1,12 @@
 ﻿using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace NCELAP.WebAPI.Util
@@ -103,7 +106,7 @@ namespace NCELAP.WebAPI.Util
                 month = "0" + month;
             }
 
-            string yearMonthDayHourMinuteSecond = year + month + day + hour + minute + second + "-" + Helper.RandomNumbers(4); 
+            string yearMonthDayHourMinuteSecond = year + month + day + hour + minute + second + "-" + Helper.RandomNumbers(4);
 
             return yearMonthDayHourMinuteSecond;
         }
@@ -202,6 +205,39 @@ namespace NCELAP.WebAPI.Util
                 }
                 return builder.ToString();
             }
+        }
+
+        public static string ComputeSHA512(string rawData)
+        {
+            // Create a SHA256   
+            var sha512 = new SHA512Managed();
+            var encryptedSha512 = sha512.ComputeHash(Encoding.UTF8.GetBytes(rawData));
+            sha512.Clear();
+            var hashed = BitConverter.ToString(encryptedSha512).Replace("-", "").ToLower();
+            return hashed;
+        }
+    }
+
+    public class RemitaAppSetting
+    {
+        public  string merchantId { get; set; }
+        public  string APIKey { get; set; }
+        public  string baseUrl { get; set; }
+        public string domain { get; set; }
+
+    }
+    public class DisableActivityHandler : DelegatingHandler
+    {
+        public DisableActivityHandler(HttpMessageHandler innerHandler) : base(innerHandler)
+        {
+
+        }
+
+        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+        {
+            Activity.Current = null;
+
+            return await base.SendAsync(request, cancellationToken);
         }
     }
 }
