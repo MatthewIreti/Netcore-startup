@@ -11,13 +11,16 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using NCELAP.WebAPI.Data;
 using NCELAP.WebAPI.Services;
 using NCELAP.WebAPI.Services.Application;
+using NCELAP.WebAPI.Services.Support;
 using NCELAP.WebAPI.Util;
 
 namespace NCELAP.WebAPI
@@ -42,17 +45,18 @@ namespace NCELAP.WebAPI
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsApiPolicy",
-                builder =>
-                {
-                    builder.WithOrigins("https://localhost:44374", "https://ncelap-demo.azurewebsites.net")
-                        .WithHeaders(new[] { "authorization", "content-type", "accept" })
-                        .WithMethods(new[] { "GET", "POST", "PUT", "DELETE", "OPTIONS" })
-                        ;
-                });
+                    builder =>
+                    {
+                        builder.WithOrigins("https://localhost:44374", "https://ncelap-demo.azurewebsites.net")
+                            .WithHeaders(new[] { "authorization", "content-type", "accept" })
+                            .WithMethods(new[] { "GET", "POST", "PUT", "DELETE", "OPTIONS" });
+                    });
             });
+            services.AddTransient<ISupportTicket, SupportTicketsService>();
             services.AddControllers();
             //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             services.AddSwaggerGen(swagger =>
@@ -97,11 +101,10 @@ namespace NCELAP.WebAPI
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             var builder = new ConfigurationBuilder()
-               .SetBasePath(env.ContentRootPath)
-               .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-               .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
-               .AddEnvironmentVariables();
-
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+                .AddEnvironmentVariables();
 
             if (env.IsDevelopment())
             {
@@ -127,7 +130,6 @@ namespace NCELAP.WebAPI
                 endpoints.MapControllers();
             });
             //Disable Correlation for Remita
-
 
         }
 

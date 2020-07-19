@@ -1,8 +1,12 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+
 namespace NCELAP.WebAPI.Models.Entities.Support
 {
-    public class SupportTicketsInput
+    public class SupportTickets
     {
+        [Key]
+        public int Id { get; set; }
         public string Department { get; set; }
         public int Priority { get; set; }
         public string Subject { get; set; }
