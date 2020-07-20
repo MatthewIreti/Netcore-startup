@@ -36,17 +36,18 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="form-label-group">
-                                            <input type="text" ng-model="userCreateFormModel.Name" id="full-name-floating" class="form-control" placeholder="Full Name" name="fname-floating">
-                                            <label for="full-name-floating">Full Name</label>
+                                            <input type="text" ng-model="userCreateFormModel.Name" id="full-name-floating" class="form-control" placeholder="Enter Department" name="fname-floating">
+                                            <label for="full-name-floating">Department</label>
                                         </div>
                                     </div>
                                     <div class="col-12" style="margin-bottom: 8px">
                                         <div class="form-label-group">
-                                            <input type="email" ng-blur="emailCheck()" ng-model="userCreateFormModel.Email" id="email-floating" class="form-control" name="email-floating" placeholder="Email">
+                                            <select class="form-control" ng-model="userCreateFormModel.Priority">
+                                                <option value="">-- Select --</option>
+                                                <option ng-repeat="caseseverity in caseseverities" value="{{ caseseverity.Value }}"> {{ caseseverity.Name }} </option>
+                                            </select>
                                             <label for="email-floating">Email</label>
                                         </div>
-                                        <div ng-show="verifyingEmail" class="spinner-border text-success" style="height: 1.4rem; width: 1.4rem"> </div> <span ng-show="verifyingEmail"> Verifying email addess...</span>
-                                        <span ng-show="emailCheckResponse" style="color:red" class="text-sm">This email address already belongs to another user!</span>
                                     </div>
                                     <div class="col-12">
                                         <div class="form-label-group">

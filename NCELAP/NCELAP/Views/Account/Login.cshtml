@@ -52,18 +52,18 @@
                                                         </div>
                                                     </fieldset>
                                                 </div>
-                                                <div class="text-right">
+                                                @*<div class="text-right">
                                                     <a href="auth-forgot-password.html"
                                                        class="card-link">Forgot Password?</a>
+                                                </div>*@
+                                            </div>
+                                            <div class="form-group d-flex justify-content-between align-items-center">
+                                                <div class="text-right">
+                                                    <a href="/account/register"
+                                                       class="card-link">Don't have an account? Sign up</a>
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                @*<div class="col col-12">
-                                                        <button ng-click="login()" ng-disabled="loginModel.Email === '' || loginModel.Password === ''" class="btn btn-primary btn-block">
-                                                            <span class="spinner-grow text-muted" ng-show="loggingIn === true"></span>
-                                                            <span ng-show="loggingIn === false"><strong>Login</strong></span>
-                                                        </button>
-                                                    </div>*@
                                                 <div class="col col-12">
                                                     <button type="submit" class="btn btn-primary btn-block">
                                                         <span class="spinner-grow text-muted" ng-show="loggingIn === true"></span>
