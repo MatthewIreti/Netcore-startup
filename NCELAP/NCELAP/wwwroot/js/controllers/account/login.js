@@ -32,7 +32,7 @@
                     $scope.loggingIn = false;
                     $scope.hideAccountActivationError();
 
-                    window.location.href = '/companyoperator';
+                    window.location.href = '/companyoperator#!/application/list';
                 } else {
                     // display account not activated response
                     $scope.showAccountActivationError();

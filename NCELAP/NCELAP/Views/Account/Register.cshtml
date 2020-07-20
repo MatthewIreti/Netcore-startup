@@ -88,9 +88,9 @@
                                                                                             <div class="col col-lg-6 col-xl-6 col-12">
                                                                                                 <div class="form-group">
                                                                                                     <label for="inputMobile">
-                                                                                                        <span>Mobile<span class="text-danger">*</span></span>
+                                                                                                        <span>Mobile</span>
                                                                                                     </label>
-                                                                                                    <input type="text" maxlength="15" ng-model="registrationInformationModel.Mobile" value="+234" id="inputMobile" name="Mobile" class="form-control" required>
+                                                                                                    <input type="text" maxlength="15" ng-model="registrationInformationModel.Mobile" value="+234" id="inputMobile" name="Mobile" class="form-control">
                                                                                                     <span class="text-danger text-small" ng-show="businessRegistrationForm.Mobile.$touched && businessRegistrationForm.Mobile.$invalid">
                                                                                                         <span ng-show="businessRegistrationForm.Mobile.$error.required">Mobile is required.</span>
                                                                                                     </span>
@@ -347,9 +347,9 @@
                                                                                             <div class="col col-lg-6 col-xl-6 col-12">
                                                                                                 <div class="form-group">
                                                                                                     <label for="CareerSummary">
-                                                                                                        <span>Career Summary</span>
+                                                                                                        <span>Resource Profile<span class="text-danger">*</span></span>
                                                                                                     </label>
-                                                                                                    <textarea maxlength="1000" rows="4" id="staffCareerSummary" class="form-control" required></textarea>
+                                                                                                    <textarea maxlength="250" rows="4" id="staffCareerSummary" class="form-control" placeholder="Resource profile ( kindly type in details of your technical resources )" required></textarea>
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
@@ -577,7 +577,7 @@
                                                                                                 <button ng-show="processing === false" ng-click="saveBusinessAccountInformation()"
                                                                                                         class="btn btn-success"
                                                                                                         ng-disabled="registrationInformationModel.BusinessName === '' || registrationInformationModel.Email === '' || registrationInformationModel.Telephone === '' ||
-                                                                                                            registrationInformationModel.Mobile === '' || registrationInformationModel.CompanyLegalStatus === '' ||
+                                                                                                             registrationInformationModel.CompanyLegalStatus === '' ||
                                                                                                             registrationInformationModel.AuthorizedRepName ==='' || registrationInformationModel.AuthorizedRepEmail === '' || registrationInformationModel.AuthorizedRepMobile === ''">
                                                                                                     <i class="fa fa-pencil"></i> Register
                                                                                                 </button>
