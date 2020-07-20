@@ -404,6 +404,8 @@
                 console.log($scope.businessInfoDocumentsForUpload);
             }
         }
+
+        $scope.registrationInformationModel.CompanyLegalStatus = $scope.registrationInformationModel.CompanyLegalStatus;
     };
 
     $scope.saveBusinessAccountInformation = function () {

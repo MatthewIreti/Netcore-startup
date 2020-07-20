@@ -142,6 +142,7 @@
                                                                                                 <div class="form-group" ng-show="registrationInformationModel.CompanyLegalStatus === 'Others'">
                                                                                                     <input ng-model="OtherLegalStatus" type="text" placeholder="Enter Legal Status" class="form-control" />
                                                                                                 </div>
+                                                                                                
                                                                                             </div>
 
                                                                                             <div class="row">
@@ -577,8 +578,8 @@
                                                                                                 <button ng-show="processing === false" ng-click="saveBusinessAccountInformation()"
                                                                                                         class="btn btn-success"
                                                                                                         ng-disabled="registrationInformationModel.BusinessName === '' || registrationInformationModel.Email === '' || registrationInformationModel.Telephone === '' ||
-                                                                                                             registrationInformationModel.CompanyLegalStatus === '' ||
-                                                                                                            registrationInformationModel.AuthorizedRepName ==='' || registrationInformationModel.AuthorizedRepEmail === '' || registrationInformationModel.AuthorizedRepMobile === ''">
+                                                                                                            registrationInformationModel.AuthorizedRepName ==='' || registrationInformationModel.AuthorizedRepEmail === '' || registrationInformationModel.AuthorizedRepMobile === '' || 
+                                                                                                            businessInfoDocumentsForUpload.CertificateOfRegistrationBase64 === '' || businessInfoDocumentsForUpload.CertificateOfIncorporationBase64 === '' || businessInfoDocumentsForUpload.MemorandumArticlesOfAssociationBase64 === '' || businessInfoDocumentsForUpload.DeedOfTrustBase64 === ''">
                                                                                                     <i class="fa fa-pencil"></i> Register
                                                                                                 </button>
                                                                                                 <button ng-show="processing" class="btn btn-success"><div class="spinner-border"></div> Processing...</button>
