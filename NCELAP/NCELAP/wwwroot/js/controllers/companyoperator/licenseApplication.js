@@ -39,12 +39,13 @@
     $scope.licenseApplicationModel = {
         CompanyName: '', Customer: 0, CustomerTier: '', SubmittedBy: 0, CustApplicationNum: '', CustLicenseType: '', EffectiveDate: '', HoldRelatedLicense: '', RelatedLicenseDetail: '',
         HasRelatedLicense: '', RelatedLicenseType: '', HasLicenseRevoked: '', RevokedLicenseType: '', HasGasApplicationRefused: '',
-        RefusedLicenseType: '', AgentShipperName: '', AgentLocationOfShipper: '', EntryExitPoint: '', Location: '',
+        RefusedLicenseType: '', AgentShipperName: '', AgentLocationOfShipper: '', EntryPoint: '', ExitPoint: '', Location: '',
         MaximumNominatedCapacity: 0.0, PipelineAndGasTransporterName: '', GasPipelineNetwork: '', InstalledCapacity: '', DeclarationName: '', DeclarationCapacity: '',
         DeclarationDate: '', ProposedArrangementLicensingActivity: '', HasStandardModificationRequest: '', ModificationRequestDetails: '',
         ModificationRequestReason: '', CustLicenseApplicationStatus: '',
-        FileUploads: $scope.licenseApplicationUpload, StakeholderLocations: $scope.stakeholdersLocations, TakeOffPoints: $scope.TakeOffPoints, GasShipperCustomers: $scope.gasShipperCustomers
+        FileUploads: $scope.licenseApplicationUpload, StakeholderLocations: $scope.stakeholdersLocations, TakeOffPoints: $scope.takeOffPoints, GasShipperCustomers: $scope.gasShipperCustomers
     };
+    $scope.licenseApplicationModel.EffectiveDate = new Date();
     $scope.licensetypes = [
         { "Name": "Network Agent", "Value": "NetworkAgent", "Selected": true },
         { "Name": "Gas Shipper License", "Value": "GasShipperLicense", "Selected": false },
@@ -169,6 +170,31 @@
                     $scope.licenseApplicationUpload.GasShipperOPLFileExtension = extension;
                     $scope.licenseApplicationUpload.GasShipperOPLBase64 = base64Str;
                 }
+                else if (tag === "Signature") {
+                    $scope.licenseApplicationUpload.DeclarationSignatureFileName = filename;
+                    $scope.licenseApplicationUpload.DeclarationSignatureFileExtension = extension;
+                    $scope.licenseApplicationUpload.DeclarationSignatureBase64 = base64Str;
+                }
+                else if (tag == "holdRelatedLicense") {
+                    $scope.licenseApplicationUpload.HoldRelatedLicenseFileName = filename;
+                    $scope.licenseApplicationUpload.HoldRelatedLicenseFileExtension = extension;
+                    $scope.licenseApplicationUpload.HoldRelatedLicenseBase64 = base64Str;
+                }
+                else if ("hasRelatedLicense") {
+                    $scope.licenseApplicationUpload.HasRelatedLicenseFileName = filename;
+                    $scope.licenseApplicationUpload.HasRelatedLicenseFileExtension = extension;
+                    $scope.licenseApplicationUpload.HasRelatedLicenseBase64 = base64Str;
+                }
+                else if ("hasLicenseRevoked") {
+                    $scope.licenseApplicationUpload.HasLicenseRevokedFileName = filename;
+                    $scope.licenseApplicationUpload.HasLicenseRevokedFileExtension = extension;
+                    $scope.licenseApplicationUpload.HasLicenseRevokedLicenseBase64 = base64Str;
+                }
+                else if ("hasRefusedLicense") {
+                    $scope.licenseApplicationUpload.HasLicenseRefusedFileName = filename;
+                    $scope.licenseApplicationUpload.HasLicenseRefusedFileExtension = extension;
+                    $scope.licenseApplicationUpload.HasLicenseRefusedLicenseBase64 = base64Str;
+                }
             };
         })(file);
     };
@@ -183,9 +209,7 @@
             $scope.licenseApplicationUpload.HoldRelatedLicenseFileName = '';
             $scope.licenseApplicationUpload.HoldRelatedLicenseFileExtension = '';
             $scope.licenseApplicationUpload.HoldRelatedLicenseBase64 = '';
-            document.getElementById("holdRelatedLicense").value = "";
         }
-        console.log($scope.licenseApplicationModel);
     };
 
     $scope.hasRelatedLicenseSelectionHandler = function () {
@@ -194,7 +218,6 @@
             $scope.licenseApplicationUpload.HasRelatedLicenseFileName = '';
             $scope.licenseApplicationUpload.HasRelatedLicenseFileExtension = '';
             $scope.licenseApplicationUpload.HasRelatedLicenseBase64 = '';
-            document.getElementById("hasRelatedLicense").value = "";
         }
     };
 
@@ -204,7 +227,6 @@
             $scope.licenseApplicationUpload.HasLicenseRevokedFileName = '';
             $scope.licenseApplicationUpload.HasLicenseRevokedFileExtension = '';
             $scope.licenseApplicationUpload.HasLicenseRevokedLicenseBase64 = '';
-            document.getElementById("hasLicenseRevoked").value = "";
         }
     };
 
@@ -248,269 +270,7 @@
             }
         }
     };
-
-    $scope.holdRelatedLicenseFileHandler = function () {
-        var fi = document.getElementById('holdRelatedLicense');
-        var selectedFile;
-
-        if (fi.files.length > 0) {
-            for (var i = 0; i <= fi.files.length - 1; i++) {
-                var reader = new FileReader();
-                selectedFile = fi.files.item(0);
-
-                reader.readAsBinaryString(selectedFile);
-                if (selectedFile !== undefined) {
-                    const lastDot = selectedFile.name.lastIndexOf('.');
-
-                    reader.onload = (function (theFile) {
-                        return function (e) {
-                            var binaryData = e.target.result;
-                            var base64String = window.btoa(binaryData);
-                            const fileNameFormatted = selectedFile.name.substring(0, lastDot);
-                            const extension = extractExtensionFromFileName(selectedFile.name);
-
-                            $scope.licenseApplicationUpload.HoldRelatedLicenseFileName = fileNameFormatted;
-                            $scope.licenseApplicationUpload.HoldRelatedLicenseFileExtension = extension;
-                            $scope.licenseApplicationUpload.HoldRelatedLicenseBase64 = base64String;
-
-                            if (selectedFile.size > maxFileSize) {
-                                $scope.licenseApplicationUploadsFileSizeCheckModel.HoldRelatedLicenseFileSizeValid = false;
-                                document.getElementById('holdRelatedLicenseWarningIndicator').innerHTML = "File size cannot be more than 2MB!";
-
-                            } else {
-                                $scope.licenseApplicationUploadsFileSizeCheckModel.HoldRelatedLicenseFileSizeValid = true;
-                                document.getElementById('holdRelatedLicenseWarningIndicator').innerHTML = "";
-                            }
-
-                            if ($scope.licenseApplicationUploadsFileSizeCheckModel.HoldRelatedLicenseFileSizeValid === true) {
-                                if (extension === 'pdf') {
-                                    $scope.licenseApplicationUploadsFileSizeCheckModel.HoldRelatedLicenseFileSizeValid = true;
-                                    document.getElementById('holdRelatedLicenseWarningIndicator').innerHTML = "";
-                                } else {
-                                    $scope.licenseApplicationUploadsFileSizeCheckModel.HoldRelatedLicenseFileSizeValid = false;
-                                    document.getElementById('holdRelatedLicenseWarningIndicator').innerHTML = "Only PDF files are allowed!";
-                                }
-                            }
-
-
-                            console.log('Hold related license?: ' + $scope.licenseApplicationUploadsFileSizeCheckModel.HoldRelatedLicenseFileSizeValid);
-                        };
-                    })(selectedFile);
-                }
-                console.log($scope.licenseApplicationUpload);
-            }
-        }
-    };
-
-    $scope.hasRelatedLicenseFileHandler = function () {
-        var fi = document.getElementById('hasRelatedLicense');
-        var selectedFile;
-
-        if (fi.files.length > 0) {
-            for (var i = 0; i <= fi.files.length - 1; i++) {
-                var reader = new FileReader();
-                selectedFile = fi.files.item(0);
-
-                reader.readAsBinaryString(selectedFile);
-                if (selectedFile !== undefined) {
-                    const lastDot = selectedFile.name.lastIndexOf('.');
-
-                    reader.onload = (function (theFile) {
-                        return function (e) {
-                            var binaryData = e.target.result;
-                            var base64String = window.btoa(binaryData);
-                            const fileNameFormatted = selectedFile.name.substring(0, lastDot);
-                            const extension = extractExtensionFromFileName(selectedFile.name);
-
-                            $scope.licenseApplicationUpload.HasRelatedLicenseFileName = fileNameFormatted;
-                            $scope.licenseApplicationUpload.HasRelatedLicenseFileExtension = extension;
-                            $scope.licenseApplicationUpload.HasRelatedLicenseBase64 = base64String;
-
-                            if (selectedFile.size > maxFileSize) {
-                                $scope.licenseApplicationUploadsFileSizeCheckModel.HasRelatedLicenseFileSizeValid = false;
-                                document.getElementById('hasRelatedLicenseWarningIndicator').innerHTML = "File size cannot be more than 2MB!";
-
-                            } else {
-                                $scope.licenseApplicationUploadsFileSizeCheckModel.HasRelatedLicenseFileSizeValid = true;
-                                document.getElementById('hasRelatedLicenseWarningIndicator').innerHTML = "";
-                            }
-
-                            if ($scope.licenseApplicationUploadsFileSizeCheckModel.HasRelatedLicenseFileSizeValid === true) {
-                                if (extension === 'pdf') {
-                                    $scope.licenseApplicationUploadsFileSizeCheckModel.HasRelatedLicenseFileSizeValid = true;
-                                    document.getElementById('hasRelatedLicenseWarningIndicator').innerHTML = "";
-                                } else {
-                                    $scope.licenseApplicationUploadsFileSizeCheckModel.HasRelatedLicenseFileSizeValid = false;
-                                    document.getElementById('hasRelatedLicenseWarningIndicator').innerHTML = "Only PDF files are allowed!";
-                                }
-                            }
-
-
-                            console.log('Related license valid?: ' + $scope.licenseApplicationUploadsFileSizeCheckModel.HasRelatedLicenseFileSizeValid);
-                        };
-                    })(selectedFile);
-                }
-                console.log($scope.licenseApplicationUpload);
-            }
-        }
-    };
-
-    $scope.hasLicenseRevokedFileHandler = function () {
-        var fi = document.getElementById('hasLicenseRevoked');
-        var selectedFile;
-
-        if (fi.files.length > 0) {
-            for (var i = 0; i <= fi.files.length - 1; i++) {
-                var reader = new FileReader();
-                selectedFile = fi.files.item(0);
-
-                reader.readAsBinaryString(selectedFile);
-                if (selectedFile !== undefined) {
-                    const lastDot = selectedFile.name.lastIndexOf('.');
-
-                    reader.onload = (function (theFile) {
-                        return function (e) {
-                            var binaryData = e.target.result;
-                            var base64String = window.btoa(binaryData);
-                            const fileNameFormatted = selectedFile.name.substring(0, lastDot);
-                            const extension = extractExtensionFromFileName(selectedFile.name);
-
-                            $scope.licenseApplicationUpload.HasLicenseRevokedFileName = fileNameFormatted;
-                            $scope.licenseApplicationUpload.HasLicenseRevokedFileExtension = extension;
-                            $scope.licenseApplicationUpload.HasLicenseRevokedLicenseBase64 = base64String;
-
-                            if (selectedFile.size > maxFileSize) {
-                                $scope.licenseApplicationUploadsFileSizeCheckModel.HasLicenseRevokedFileSizeValid = false;
-                                document.getElementById('hasLicenseRevokedWarningIndicator').innerHTML = "File size cannot be more than 2MB!";
-
-                            } else {
-                                $scope.licenseApplicationUploadsFileSizeCheckModel.HasLicenseRevokedFileSizeValid = true;
-                                document.getElementById('hasLicenseRevokedWarningIndicator').innerHTML = "";
-                            }
-
-                            if ($scope.licenseApplicationUploadsFileSizeCheckModel.HasLicenseRevokedFileSizeValid === true) {
-                                if (extension === 'pdf') {
-                                    $scope.licenseApplicationUploadsFileSizeCheckModel.HasLicenseRevokedFileSizeValid = true;
-                                    document.getElementById('hasLicenseRevokedWarningIndicator').innerHTML = "";
-                                } else {
-                                    $scope.licenseApplicationUploadsFileSizeCheckModel.HasLicenseRevokedFileSizeValid = false;
-                                    document.getElementById('hasLicenseRevokedWarningIndicator').innerHTML = "Only PDF files are allowed!";
-                                }
-                            }
-
-
-                            console.log('License revoked valid?: ' + $scope.licenseApplicationUploadsFileSizeCheckModel.HasLicenseRevokedFileSizeValid);
-                        };
-                    })(selectedFile);
-                }
-                console.log($scope.licenseApplicationUpload);
-            }
-        }
-    };
-
-    $scope.hasLicenseRefusedFileHandler = function () {
-        var fi = document.getElementById('hasRefusedLicense');
-        var selectedFile;
-
-        if (fi.files.length > 0) {
-            for (var i = 0; i <= fi.files.length - 1; i++) {
-                var reader = new FileReader();
-                selectedFile = fi.files.item(0);
-
-                reader.readAsBinaryString(selectedFile);
-                if (selectedFile !== undefined) {
-                    const lastDot = selectedFile.name.lastIndexOf('.');
-
-                    reader.onload = (function (theFile) {
-                        return function (e) {
-                            var binaryData = e.target.result;
-                            var base64String = window.btoa(binaryData);
-                            const fileNameFormatted = selectedFile.name.substring(0, lastDot);
-                            const extension = extractExtensionFromFileName(selectedFile.name);
-
-                            $scope.licenseApplicationUpload.HasLicenseRefusedFileName = fileNameFormatted;
-                            $scope.licenseApplicationUpload.HasLicenseRefusedFileExtension = extension;
-                            $scope.licenseApplicationUpload.HasLicenseRefusedLicenseBase64 = base64String;
-
-                            if (selectedFile.size > maxFileSize) {
-                                $scope.licenseApplicationUploadsFileSizeCheckModel.HasLicenseRefusedFileSizeValid = false;
-                                document.getElementById('hasLicenseRefusedWarningIndicator').innerHTML = "File size cannot be more than 2MB!";
-
-                            } else {
-                                $scope.licenseApplicationUploadsFileSizeCheckModel.HasLicenseRefusedFileSizeValid = true;
-                                document.getElementById('hasLicenseRefusedWarningIndicator').innerHTML = "";
-                            }
-
-                            if ($scope.licenseApplicationUploadsFileSizeCheckModel.HasLicenseRefusedFileSizeValid === true) {
-                                if (extension === 'pdf') {
-                                    $scope.licenseApplicationUploadsFileSizeCheckModel.HasLicenseRefusedFileSizeValid = true;
-                                    document.getElementById('hasLicenseRefusedWarningIndicator').innerHTML = "";
-                                } else {
-                                    $scope.licenseApplicationUploadsFileSizeCheckModel.HasLicenseRefusedFileSizeValid = false;
-                                    document.getElementById('hasLicenseRefusedWarningIndicator').innerHTML = "Only PDF files are allowed!";
-                                }
-                            }
-
-                            console.log('Refused License valid?: ' + $scope.licenseApplicationUploadsFileSizeCheckModel.HasLicenseRefusedFileSizeValid);
-                        };
-                    })(selectedFile);
-                }
-                console.log($scope.licenseApplicationUpload);
-            }
-        }
-    };
-
-    $scope.declarationSignatureFileHandler = function () {
-        var fi = document.getElementById('declarationSignature');
-        var selectedFile;
-
-        if (fi.files.length > 0) {
-            for (var i = 0; i <= fi.files.length - 1; i++) {
-                var reader = new FileReader();
-                selectedFile = fi.files.item(0);
-
-                reader.readAsBinaryString(selectedFile);
-                if (selectedFile !== undefined) {
-                    const lastDot = selectedFile.name.lastIndexOf('.');
-
-                    reader.onload = (function (theFile) {
-                        return function (e) {
-                            var binaryData = e.target.result;
-                            var base64String = window.btoa(binaryData);
-                            const fileNameFormatted = selectedFile.name.substring(0, lastDot);
-                            const extension = extractExtensionFromFileName(selectedFile.name);
-
-                            $scope.licenseApplicationUpload.DeclarationSignatureFileName = fileNameFormatted;
-                            $scope.licenseApplicationUpload.DeclarationSignatureFileExtension = extension;
-                            $scope.licenseApplicationUpload.DeclarationSignatureBase64 = base64String;
-
-                            if (selectedFile.size > maxFileSize) {
-                                $scope.licenseApplicationUploadsFileSizeCheckModel.DeclarationSignatureValid = false;
-                                document.getElementById('declarationSignatureWarningIndicator').innerHTML = "File size cannot be more than 2MB!";
-
-                            } else {
-                                $scope.licenseApplicationUploadsFileSizeCheckModel.DeclarationSignatureValid = true;
-                                document.getElementById('declarationSignatureWarningIndicator').innerHTML = "";
-                            }
-
-                            if ($scope.licenseApplicationUploadsFileSizeCheckModel.DeclarationSignatureValid === true) {
-                                if (extension === 'pdf') {
-                                    $scope.licenseApplicationUploadsFileSizeCheckModel.DeclarationSignatureValid = true;
-                                    document.getElementById('declarationSignatureWarningIndicator').innerHTML = "";
-                                } else {
-                                    $scope.licenseApplicationUploadsFileSizeCheckModel.DeclarationSignatureValid = false;
-                                    document.getElementById('declarationSignatureWarningIndicator').innerHTML = "Only PDF files are allowed!";
-                                }
-                            }
-
-                            console.log('Declaration signature valid?: ' + $scope.licenseApplicationUploadsFileSizeCheckModel.DeclarationSignatureValid);
-                        };
-                    })(selectedFile);
-                }
-                console.log($scope.licenseApplicationUpload);
-            }
-        }
-    };
+   
     $scope.getLicenseFees = function () {
         $http({
             method: 'GET',
@@ -532,7 +292,6 @@
         if ($scope.loggedInUser.recordId) {
             $scope.licenseApplicationModel.SubmittedBy = $scope.loggedInUser.recordId;
         }
-        // alert($scope.licenseApplicationModel.Customer);
     };
     $scope.setCustomerRecId();
     //set errors from the validation directive;
@@ -542,6 +301,7 @@
     };
 
     $scope.submitForm = function () {
+        $scope.errors = [];
         var proposedArrangementDetails = document.getElementById("proposedArrangementDetails").value;
         var effectiveDate = document.getElementById("effectiveDate").value;
         var declarationDate = document.getElementById("declarationDate").value;
@@ -551,7 +311,7 @@
         $scope.licenseApplicationModel.DeclarationDate = declarationDate;
         $scope.licenseApplicationModel.MaximumNominatedCapacity = parseFloat($scope.licenseApplicationModel.MaximumNominatedCapacity);
         $scope.submittingInformation = 'true';
-        console.log($scope.licenseApplicationModel);
+        console.log(JSON.stringify($scope.licenseApplicationModel));
         $scope.waiting++;
         $http({
             method: 'POST',
@@ -585,14 +345,13 @@ appModule.controller('ApplicationList', function ($scope, $http, $state) {
         $scope.waiting--;
     }
 
+
     function getCustomerApplications(custrecid) {
         $http({
             method: 'GET',
             url: baseUrl + 'applications/customer/' + custrecid
         }).then(function (response) {
             $scope.applications = response.data;
-
-
             // if the datatable instance already exist, destroy before recreating, otherwise, just create
             if ($.fn.DataTable.isDataTable('#applicationsTable')) {
                 $('#applicationsTable').DataTable().destroy();
@@ -620,7 +379,8 @@ appModule.controller('ApplicationGetDetails', function ($scope, $http, $state) {
             link: 'site.application.list'
         },
         {
-            title: $scope.title
+            title: $scope.title,
+            link: '#'
         }
     );
     $scope.waiting++;
@@ -633,4 +393,87 @@ appModule.controller('ApplicationGetDetails', function ($scope, $http, $state) {
     }, function (error) {
         $scope.waiting--;
     });
+});
+
+appModule.controller('ApplicationInvoice', function ($scope, $http, $state) {
+
+    $scope.waiting++;
+    $http({
+        method: 'GET',
+        url: baseUrl + 'applications/licenseapplicationdetails/' + $state.params.recordId
+
+    }).then(function (response) {
+        $scope.item = response.data;
+
+        $http({
+            method: 'GET',
+            url: baseUrl + 'applications/licensefees/'
+        }).then(function (response) {
+            $scope.waiting--;
+            $scope.licenseFees = response.data;
+            initPaymentData($scope.item)
+        }, function (error) {
+            console.log(error);
+        });
+    }, function (error) {
+        $scope.waiting--;
+    });
+
+
+
+    var initPaymentData = function (application) {
+
+        if ($scope.licenseFees.length > 0) {
+            for (var i = 0; i < $scope.licenseFees.length - 1; i++) {
+                var currentLicenseFee = $scope.licenseFees[i];
+
+                if (currentLicenseFee.licenseType === application.custLicenseType && application.maximumNominatedCapacity >= currentLicenseFee.minimum && application.maximumNominatedCapacity <= currentLicenseFee.maximum) {
+                    $scope.statutoryFee = currentLicenseFee.statutory;
+                    $scope.serviceTypeId = currentLicenseFee.StatutoryFeeServiceTypeId;
+                    $scope.processingFee = currentLicenseFee.processingFee;
+                }
+            }
+        }
+
+        var req = {
+            method: 'POST',
+            url: baseUrl + 'Payment/getRRRPayload',
+            data: {
+                serviceTypeId: "40816498",
+                amount: $scope.processingFee,
+                orderId: application.applicationNum,
+                payerName: application.declarationName,
+                payerEmail: "dflont@gmail.com",
+                description: 'Payment for A' + application.custLicenseType
+            }
+        }
+        console.log(req);
+        $http(req).then(function (response) {
+            $scope.remita = response.data;
+            $scope.remita.responseUrl = "";
+            $scope.remita.action = "http://remitademo.net/remita/ecomm/finalize.reg";
+            $scope.remita.rrr = "330007846039";
+            console.log($scope.remita);
+            var rrrReq = {
+                method: 'POST',
+                headers: {
+                    'Authorization': 'remitaConsumerKey=' + response.data.merchantId + ',remitaConsumerToken=' + response.data.hash
+                },
+                url: response.data.url,
+                data: req.data
+            }
+            //$http(rrrReq).then(function (response) {
+            //    console.log(response);
+            //      var rrrResponse = response.replace("jsonp (", "").replace(")", "");
+            //     var jsonResponse = JSON.parse(rrrResponse);
+            //     console.log(jsonResponse);
+            //    console.log(rrrResponse);
+            //}, function (error) {
+            //    console.log(error);
+            //});
+
+        }, function (error) {
+            console.log(error);
+        });
+    }
 });

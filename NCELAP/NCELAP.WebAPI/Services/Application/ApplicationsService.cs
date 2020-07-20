@@ -1,4 +1,6 @@
 ﻿using AspNetCore.Http.Extensions;
+using Flurl;
+using Flurl.Http;
 using Microsoft.Extensions.Configuration;
 using NCELAP.WebAPI.Models.DTO;
 using NCELAP.WebAPI.Models.DTO.Applications;
@@ -30,8 +32,8 @@ namespace NCELAP.WebAPI.Services.Application
             _authService = new AuthService(_configuration);
             licenseapplication = _configuration.GetSection("Endpoints").GetSection("custlicenseapplication").Value;
             custapplicationshareholder = _configuration.GetSection("Endpoints").GetSection("custapplicationshareholder").Value;
-            gasShipperTakeOffLink = _configuration.GetSection("Endpoints").GetSection("GasShipperDeliveryTakeOffPoint").Value;
-            gasShipperCustomerLink = _configuration.GetSection("Endpoints").GetSection("GasShipperCustomer").Value;
+            gasShipperTakeOffLink = _configuration.GetSection("Endpoints").GetSection("gasShipperTakeOffPoints").Value;
+            gasShipperCustomerLink = _configuration.GetSection("Endpoints").GetSection("gasShipperCustomers").Value;
             docupload = _configuration.GetSection("Endpoints").GetSection("licenseapplicationuploads").Value;
             licensefees = _configuration.GetSection("Endpoints").GetSection("licensefee").Value;
             custlicensebycustomerrecid = _configuration.GetSection("Endpoints").GetSection("custlicensebycustomerrecid").Value;
@@ -75,7 +77,7 @@ namespace NCELAP.WebAPI.Services.Application
                         applicationRecId = applicationResponse.RecordId;
 
                         // save  shareholders and locations
-                        if (licenseApplication.CustLicenseType == ConstantHelper.GasShipperLicense)
+                        if (licenseApplication.CustLicenseType == BaseConstantHelper.gasShipperLicenseType)
                         {
                             var customerSaveResponse = await SaveGasShipperCustomers(licenseApplication.GasShipperCustomers, applicationRecId);
                             var takeoffPointSaveResponse = await SaveGasShipperTakeOffPoints(licenseApplication.TakeOffPoints, applicationRecId);
@@ -100,7 +102,6 @@ namespace NCELAP.WebAPI.Services.Application
 
         public async Task<bool> SaveLicenseApplicationShareholders(StakeholderLocation[] stakeholderLocations, long applicationRecId)
         {
-            bool response = false;
 
             var helper = new Helper(_configuration);
             var authOperation = new AuthService(_configuration);
@@ -136,25 +137,19 @@ namespace NCELAP.WebAPI.Services.Application
                     }
 
                 }
+                return count > 0;
             }
             catch (Exception ex)
             {
                 Log.Error(ex.StackTrace);
+                throw;
             }
-
-            if (count > 0)
-            {
-                response = true;
-            }
-
-            return response;
+            
         }
 
         
         public async Task<bool> SaveGasShipperCustomers(GasShipperCustomer[] customers, long applicationRecId)
         {
-            bool response = false;
-
             var helper = new Helper(_configuration);
             var authOperation = new AuthService(_configuration);
             int count = 0;
@@ -174,7 +169,6 @@ namespace NCELAP.WebAPI.Services.Application
                     foreach (var item in customers)
                     {
                         item.CustApplication = applicationRecId;
-                        item.UniqueId = Helper.RandomAlhpaNumeric(10);
 
                         var responseMessage = await client.PostAsJsonAsync(gasShipperCustomerLink, item);
                         var errorMessage = responseMessage.Content.ReadAsStringAsync().GetAwaiter().GetResult();
@@ -189,22 +183,16 @@ namespace NCELAP.WebAPI.Services.Application
                     }
 
                 }
+                return count > 0;
             }
             catch (Exception ex)
             {
                 Log.Error(ex.StackTrace);
+                throw;
             }
-
-            if (count > 0)
-            {
-                response = true;
-            }
-
-            return response;
         }
         public async Task<bool> SaveGasShipperTakeOffPoints(GasShipperTakeOffPoint[] model, long applicationRecId)
         {
-            bool response = false;
 
             var helper = new Helper(_configuration);
             var authOperation = new AuthService(_configuration);
@@ -225,7 +213,6 @@ namespace NCELAP.WebAPI.Services.Application
                     foreach (var item in model)
                     {
                         item.CustApplication = applicationRecId;
-                        item.UniqueId = Helper.RandomAlhpaNumeric(10);
 
                         var responseMessage = await client.PostAsJsonAsync(gasShipperTakeOffLink, item);
                         var errorMessage = responseMessage.Content.ReadAsStringAsync().GetAwaiter().GetResult();
@@ -240,18 +227,14 @@ namespace NCELAP.WebAPI.Services.Application
                     }
 
                 }
+                return count > 0;
             }
             catch (Exception ex)
             {
                 Log.Error(ex.StackTrace);
+                throw;
             }
 
-            if (count > 0)
-            {
-                response = true;
-            }
-
-            return response;
         }
         public async Task<bool> UploadLicenseApplicationDocuments(LicenseApplicationUpload licenseApplicationUpload, long applicationRecId, string companyName)
         {
@@ -313,14 +296,14 @@ namespace NCELAP.WebAPI.Services.Application
             return response;
         }
 
-        public async Task<List<ShortApplicationInfo>> GetCustomerApplications(long custrecid)
+        public async Task<List<CustApplicationExtension>> GetCustomerApplications(long custrecid)
         {
             string token = _authService.GetAuthToken();
             var helper = new Helper(_configuration);
             string currentEnvironment = helper.GetEnvironmentUrl();
             string url = currentEnvironment + custlicensebycustomerrecid;
             string formattedUrl = String.Format(url, custrecid);
-            var applications = new List<ShortApplicationInfo>();
+            var applications = new List<CustApplicationExtension>();
 
             try
             {
@@ -341,7 +324,73 @@ namespace NCELAP.WebAPI.Services.Application
 
                     webResponse = JsonConvert.DeserializeObject<ShortApplicationInfoResponse>(jsonResponse);
                     applications = webResponse.value;
-
+                    foreach (var item in applications)
+                    {
+                        switch (item.CustLicenseType)
+                        {
+                            case "NetworkAgent":
+                                item.CustLicenseName = "Network Agent";
+                                break;
+                            case "GasShipperLicense":
+                                item.CustLicenseName = "Gas Shipper License";
+                                break;
+                            case "GasTransporterLicense":
+                                item.CustLicenseName = "Gas Transporter License";
+                                break;
+                            default:
+                                break;
+                        }
+                        switch(item.CustLicenseCategory)
+                        {
+                            case BaseConstantHelper.NewApplication:
+                                item.CustLicenseCategoryName = "New";
+                                break;
+                            case BaseConstantHelper.Renewal:
+                                item.CustLicenseCategoryName = "Renewal";
+                                break;
+                            default:
+                                break;
+                        }
+                        switch (item.CustLicenseApplicationStatus)
+                        {
+                            case BaseConstantHelper.Submitted:
+                                item.CustLicenseApplicationStatusName = "In review";
+                                break;
+                            case BaseConstantHelper.ChangeRequested:
+                                item.CustLicenseApplicationStatusName = "In review";
+                                break;
+                            case BaseConstantHelper.Approved:
+                                item.CustLicenseApplicationStatusName = "Approved";
+                                break;
+                            case BaseConstantHelper.Rejected:
+                                item.CustLicenseApplicationStatusName = "Rejected";
+                                break;
+                            case BaseConstantHelper.Returned:
+                                item.CustLicenseApplicationStatusName = "Change requested";
+                                break;
+                            case BaseConstantHelper.Cancelled:
+                                item.CustLicenseApplicationStatusName = "Rejected";
+                                break;
+                            case BaseConstantHelper.AwaitingProcessingFee:
+                                item.CustLicenseApplicationStatusName = "Awaiting processing fee";
+                                break;
+                            case BaseConstantHelper.AwaitingLicenseFee:
+                                item.CustLicenseApplicationStatusName = "Awaiting License Fee";
+                                break;
+                            case BaseConstantHelper.Active:
+                                item.CustLicenseApplicationStatusName = "Active";
+                                break;
+                            case BaseConstantHelper.Expired:
+                                item.CustLicenseApplicationStatusName = "Expired";
+                                break;
+                            case BaseConstantHelper.DueForRenewal:
+                                item.CustLicenseApplicationStatusName = "Due For Renewal";
+                                break;
+                            default:
+                                break;
+                        }
+                        
+                    }
 
                     response.Dispose();
                     dataStream.Close();
@@ -349,32 +398,13 @@ namespace NCELAP.WebAPI.Services.Application
                     reader.Close();
                     reader.Dispose();
                 }
-
+                return applications;
             }
             catch (Exception ex)
             {
                 Log.Error(ex.StackTrace);
+                throw;
             }
-
-            foreach (var item in applications)
-            {
-                switch (item.CustLicenseType)
-                {
-                    case "NetworkAgent":
-                        item.CustLicenseType = "Network Agent";
-                        break;
-                    case "GasShipperLicense":
-                        item.CustLicenseType = "Gas Shipper License";
-                        break;
-                    case "GasTransporterLicense":
-                        item.CustLicenseType = "Gas Transporter License";
-                        break;
-                    default:
-                        break;
-                }
-            }
-
-            return applications;
         }
 
         public async Task<List<LicenseFee>> GetLicenseFees()
@@ -469,7 +499,7 @@ namespace NCELAP.WebAPI.Services.Application
             string currentEnvironment = helper.GetEnvironmentUrl();
             string url = currentEnvironment + custlicenseapplicationdetails;
             string formattedUrl = String.Format(url, licenseApplicationRecId);
-            var applicationInfo = new ApplicationInfo();
+            var applicationInfo = new APPlicationInfoDetails();
 
             try
             {
@@ -485,13 +515,40 @@ namespace NCELAP.WebAPI.Services.Application
 
                     StreamReader reader = new StreamReader(dataStream);
 
-                    var webResponse = new ApplicationInfoResponse();
                     jsonResponse = reader.ReadToEnd();
 
-                    webResponse = JsonConvert.DeserializeObject<ApplicationInfoResponse>(jsonResponse);
+                   var  webResponse = JsonConvert.DeserializeObject<BaseApplicationInfoResponse<APPlicationInfoDetails>>(jsonResponse);
                     applicationInfo = webResponse.value[0];
 
+                    var proposedShareholders = await currentEnvironment.AppendPathSegment("AppCustShareholders")
+                        .SetQueryParam("$filter", $"CustApplication eq {licenseApplicationRecId}")
+                        .WithOAuthBearerToken(token)
+                        .GetJsonAsync<BaseApplicationResponse<StakeholderLocation>>();
 
+                    applicationInfo.StakeholderLocations = proposedShareholders.value;
+
+                    var applicationComment = await currentEnvironment.AppendPathSegment("LicenseApplicationComment")
+                        .SetQueryParam("$filter", $"LicenseApplication eq {licenseApplicationRecId}")
+                        .WithOAuthBearerToken(token)
+                        .GetJsonAsync<BaseApplicationResponse<LicenseApplicationCommentModel>>();
+
+                    applicationInfo.LicenseApplicationComments = applicationComment.value;
+
+                    if (applicationInfo.CustLicenseType == BaseConstantHelper.gasShipperLicenseType)
+                    {
+                        var gasShipperCustomers = await currentEnvironment.AppendPathSegment($"GasShipperCustomer")
+                             .SetQueryParam("$filter", $"CustApplication eq {licenseApplicationRecId}")
+                            .WithOAuthBearerToken(token)
+                            .GetJsonAsync<BaseApplicationResponse<GasShipperCustomer>>();
+                        applicationInfo.GasShipperCustomers = gasShipperCustomers.value;
+
+                        var gasShipperTakeOffPoints = await currentEnvironment.AppendPathSegment($"GasShipperDeliveryTakeOffPoint")
+                            .SetQueryParam("$filter", $"CustApplication eq {licenseApplicationRecId}")
+                           .WithOAuthBearerToken(token)
+                           .GetJsonAsync<BaseApplicationResponse<GasShipperTakeOffPoint>>();
+                        applicationInfo.GasShipperTakeOffPoints = gasShipperTakeOffPoints.value;
+
+                    }
                     response.Dispose();
                     dataStream.Close();
                     dataStream.Dispose();

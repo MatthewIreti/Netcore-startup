@@ -34,6 +34,9 @@ namespace NCELAP.WebAPI.Models.DTO
         public string payerEmail { get; set; }
         public string payerPhone { get; set; }
         public string description { get; set; }
+        public string hash { get; set; }
+        public string merchantId { get; internal set; }
+        public string url { get; internal set; }
     }
 
 

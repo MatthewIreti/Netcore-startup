@@ -2,7 +2,7 @@
     <div class="content-header-left col-md-9 col-12 mb-2">
         <div class="row breadcrumbs-top">
             <div class="col-12">
-                <h2 class="content-header-title float-left mb-0">Dashboard</h2>
+                <!--<h2 class="content-header-title float-left mb-0">License Applications</h2>-->
                 <div class="breadcrumb-wrapper col-12">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
@@ -27,7 +27,6 @@
                 <div class="card-header">
                     <h4 class="card-title">License Applications</h4>
                     <div class="float-right">
-                        <!-- Modal -->
                         <a class="btn btn-success text-white" ui-sref="site.application.create"><i class="fa fa-plus"></i>&nbsp; New Application</a>
 
                     </div>
@@ -51,26 +50,44 @@
                                 <tbody>
                                     <tr ng-repeat="application in applications">
                                         <td>
-                                            <span><a target="_blank" href="/companyoperator/applicationdetails/{{ application.recordId }}">{{ application.applicationNum }}</a> </span>
+                                            {{ application.applicationNum }}
                                         </td>
-                                        <td>{{ application.custLicenseType }}</td>
-                                        <td ng-bind="application.custLicenseCategory"></td>
+                                        <td>{{ application.custLicenseName }}</td>
+                                        <td ng-bind="application.custLicenseCategoryName"></td>
                                         <td>{{ application.declarationDate  | date : "MMM d, y"}}</td>
                                         <td>{{ application.submittedOn  | date : "MMM d, y"}}</td>
-                                        <td><label ng-class="{'badge-primary':application.custLicenseApplicationStatus == 'AwaitingProcessingFee',
-                                                   'badge-success':application.custLicenseApplicationStatus == 'Approved',
-                                                   'badge-info':application.custLicenseApplicationStatus == 'NotSubmitted'}" class="badge" 
-                                                   ng-bind="application.custLicenseApplicationStatus"></label></td>
+                                        <td>
+                                            <label ng-class="{'badge-warning':application.custLicenseApplicationStatus === 'DueForRenewal',
+                                                   'badge-success':application.custLicenseApplicationStatus === 'Active',
+                                                   'badge-success':application.custLicenseApplicationStatus === 'Approved',
+                                                   'badge-info':application.custLicenseApplicationStatus === 'Submitted',
+                                                   'badge-danger':application.custLicenseApplicationStatus === 'Expired',
+                                                   'badge-default':application.custLicenseApplicationStatus === 'NotSubmitted'}" class="badge"
+                                                   ng-bind="application.custLicenseApplicationStatusName"></label>
+                                        </td>
                                         <td>
                                             <div uib-dropdown>
                                                 <button id="split-button{{$index}}" type="button" class="btn btn-flat-primary dropdown-toggle" uib-dropdown-toggle>Actions</button>
                                                 <div class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="split-button{{$index}}">
                                                     <a ui-sref="site.application.details({recordId:application.recordId})" class="dropdown-item">View Details</a>
-                                                    <a ui-sref="#" class="dropdown-item">Update application</a>
+                                                    <a ng-show="application.custLicenseApplicationStatus == 'Submitted'" ui-sref="#" class="dropdown-item">Update application</a>
+                                                    <a ng-show="application.custLicenseApplicationStatus == 'AwaitingProcessingFee'" ui-sref="#ProcessingFee" class="dropdown-item">
+                                                        Update Payment Evidence
+                                                    </a>
+                                                    <a ng-show="application.custLicenseApplicationStatus == 'AwaitingLicenseFee'" ui-sref="#LicenseFee" class="dropdown-item">
+                                                        Update Payment Evidence
+                                                    </a>
                                                     <div class="dropdown-divider"></div>
-                                                    <a ui-sref="site.application.invoice({recordId:application.recordId})" ng-show="application.custLicenseApplicationStatus == 'AwaitingProcessingFee'"  class="dropdown-item">Generate Invoice</a>
-                                                    <a href="#" class="dropdown-item">Download License</a>
-                                                    <a href="#" class="dropdown-item">Renew License</a>
+                                                    <!--<a ui-sref="site.application.invoice({recordId:application.recordId})"
+                                                       ng-show="application.custLicenseApplicationStatus == 'AwaitingProcessingFee'" class="dropdown-item">Generate Invoice</a>-->
+                                                    <a ng-show="application.custLicenseApplicationStatus == 'DueForRenewal'
+                                                       || application.custLicenseApplicationStatus == 'Active'
+                                                       || application.custLicenseApplicationStatus == 'Expired'
+                                                       || application.custLicenseApplicationStatus == 'Approved'" href="#" class="dropdown-item">
+                                                        Download License
+                                                    </a>
+                                                    <a ng-show="application.custLicenseApplicationStatus == 'DueForRenewal'|| application.custLicenseApplicationStatus == 'Expired'"
+                                                       href="#" class="dropdown-item">Renew License</a>
                                                 </div>
                                             </div>
                                             <!--<span><a class="btn btn-success btn-md" target="_blank" href="/companyoperator/applicationdetails/{{ application.recordId }}">View Details</a> </span>-->
