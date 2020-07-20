@@ -22,7 +22,7 @@
                 {
                     name: 'invoice',
                     url: '/invoice/:recordId',
-                    controller: 'ApplicationGetDetails',
+                    controller: 'ApplicationInvoice',
                     templateUrl: '/App/Application/Invoice.html'
                 },
                 {

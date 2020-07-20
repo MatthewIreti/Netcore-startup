@@ -109,7 +109,8 @@
                                                                                     <div class="col col-lg-6 col-xl-6 col-12">
                                                                                         <div class="form-group">
                                                                                             <label>Details of License(s) as attachment</label>
-                                                                                            <input type="file" class="form-control" id="holdRelatedLicense" onchange="angular.element(this).scope().holdRelatedLicenseFileHandler()" accept=".pdf" ng-disabled="licenseApplicationModel.HoldRelatedLicense === 'false' || licenseApplicationModel.HoldRelatedLicense === ''" />
+                                                                                            <input type="file" class="form-control"  ng-upload-change="setFileRecord" tag="holdRelatedLicense"
+                                                                                                   ng-disabled="licenseApplicationModel.HoldRelatedLicense === 'false' || licenseApplicationModel.HoldRelatedLicense === ''" />
                                                                                             <div class="text-danger text-sm" id="holdRelatedLicenseWarningIndicator"></div>
                                                                                         </div>
                                                                                     </div>
@@ -147,7 +148,7 @@
                                                                                     <div class="col col-lg-6 col-xl-6 col-12">
                                                                                         <div class="form-group">
                                                                                             <label>Type of license(s) applied for or intended to be applied for as attachment</label>
-                                                                                            <input type="file" class="form-control" id="hasRelatedLicense" onchange="angular.element(this).scope().hasRelatedLicenseFileHandler()" accept=".pdf" ng-disabled="licenseApplicationModel.HasRelatedLicense === 'false' || licenseApplicationModel.HasRelatedLicense === ''" />
+                                                                                            <input type="file" class="form-control" tag="hasRelatedLicense" ng-upload-change="setFileRecord" ng-disabled="licenseApplicationModel.HasRelatedLicense === 'false' || licenseApplicationModel.HasRelatedLicense === ''" />
                                                                                             <div class="text-danger text-sm" id="hasRelatedLicenseWarningIndicator"></div>
                                                                                         </div>
                                                                                     </div>
@@ -187,7 +188,7 @@
                                                                                     <div class="col col-lg-6 col-xl-6 col-12">
                                                                                         <div class="form-group">
                                                                                             <label>Type of License revoked as attachment</label>
-                                                                                            <input type="file" class="form-control" id="hasLicenseRevoked" onchange="angular.element(this).scope().hasLicenseRevokedFileHandler()" accept=".pdf" ng-disabled="licenseApplicationModel.HasLicenseRevoked === 'false' || licenseApplicationModel.HasLicenseRevoked === ''" />
+                                                                                            <input type="file" class="form-control" tag="hasLicenseRevoked" ng-upload-change="setFileRecord" accept=".pdf" ng-disabled="licenseApplicationModel.HasLicenseRevoked === 'false' || licenseApplicationModel.HasLicenseRevoked === ''" />
                                                                                             <div class="text-danger text-sm" id="hasLicenseRevokedWarningIndicator"></div>
                                                                                         </div>
                                                                                     </div>
@@ -226,7 +227,7 @@
                                                                                     <div class="col col-lg-6 col-xl-6 col-12">
                                                                                         <div class="form-group">
                                                                                             <label>Type of License(s) application(s) refused as attachment</label>
-                                                                                            <input type="file" class="form-control" id="hasRefusedLicense" onchange="angular.element(this).scope().hasLicenseRefusedFileHandler()" accept=".pdf" ng-disabled="licenseApplicationModel.HasGasApplicationRefused === 'false' || licenseApplicationModel.HasGasApplicationRefused === ''" />
+                                                                                            <input type="file" class="form-control" tag="hasRefusedLicense" ng-upload-change="setFileRecord" ng-disabled="licenseApplicationModel.HasGasApplicationRefused === 'false' || licenseApplicationModel.HasGasApplicationRefused === ''" />
                                                                                             <div class="text-danger text-sm" id="hasLicenseRefusedWarningIndicator"></div>
                                                                                         </div>
                                                                                     </div>
@@ -265,11 +266,18 @@
 
 
                                         <div class="row">
-                                            <div class="col col-lg-5 col-xl-5 col-12">
+                                            <div class="col col-lg-6 col-xl-6 col-12">
                                                 <div class="form-group">
-                                                    <label><strong>Entry/Exit point</strong><span class="text-danger">*</span></label>
-                                                    <input name="entryExitPoint" type="text" class="form-control required" ng-model="licenseApplicationModel.EntryExitPoint"
-                                                           data-msg="Please provide the Entry point"/>
+                                                    <label><strong>Entry point</strong><span class="text-danger">*</span></label>
+                                                    <input name="entryPoint" type="text" class="form-control required" ng-model="licenseApplicationModel.EntryPoint"
+                                                           data-msg="Please provide the Entry point" />
+                                                </div>
+                                            </div>
+                                            <div class="col col-lg-6 col-xl-6 col-12">
+                                                <div class="form-group">
+                                                    <label><strong>Exit point</strong><span class="text-danger">*</span></label>
+                                                    <input name="exitPoint" type="text" class="form-control required" ng-model="licenseApplicationModel.ExitPoint"
+                                                           data-msg="Please provide the Exit point" />
                                                 </div>
                                             </div>
 
@@ -284,8 +292,8 @@
                                             <div class="col-lg-4 col-xl-4 col-12">
                                                 <div class="form-group">
                                                     <label>Copy of applicable Operation License or Permit<span class="text-danger">*</span></label>
-                                                    <input class="form-control required" type="file" 
-                                                            data-msg="OPL License is required"
+                                                    <input class="form-control required" type="file"
+                                                           data-msg="OPL License is required" name="OPlLIcenseUpload"
                                                            ng-upload-change="setFileRecord" tag="NetworkAgentOPL">
                                                     <div class="text-danger text-sm"></div>
                                                 </div>
@@ -299,17 +307,25 @@
                                             <div class="col col-12 col-lg-6 col-xl-6">
                                                 <div class="form-group">
                                                     <label><strong>Name of Pipeline and Gas Transporter</strong><span class="text-danger">*</span></label>
-                                                    <input type="text" class="form-control required" 
+                                                    <input type="text" class="form-control required"
                                                            data-msg="Please provide the name of pipeline and Gas transporter"
                                                            ng-model="licenseApplicationModel.PipelineAndGasTransporterName" />
                                                 </div>
                                             </div>
                                             <div class="col col-lg-6 col-xl-5 col-12">
                                                 <div class="form-group">
-                                                    <label><strong>Present Entry/Exit point</strong><span class="text-danger">*</span></label>
-                                                    <input name="EntryPoint" type="text" class="form-control required" 
-                                                           data-msg="Please provide the present entry and exit point"
-                                                           ng-model="licenseApplicationModel.EntryExitPoint" />
+                                                    <label><strong>Present Entry point</strong><span class="text-danger">*</span></label>
+                                                    <input name="EntryPoint" type="text" class="form-control required"
+                                                           data-msg="Please provide the present entry point"
+                                                           ng-model="licenseApplicationModel.EntryPoint" />
+                                                </div>
+                                            </div>
+                                            <div class="col col-lg-6 col-xl-5 col-12">
+                                                <div class="form-group">
+                                                    <label><strong>Present Exit point</strong><span class="text-danger">*</span></label>
+                                                    <input name="ExitPoint" type="text" class="form-control required"
+                                                           data-msg="Please provide the present exit point"
+                                                           ng-model="licenseApplicationModel.ExitPoint" />
                                                 </div>
                                             </div>
                                         </div>
@@ -460,7 +476,7 @@
                                                                                ng-model="gasShipperCustomer.Email" />
                                                                     </td>
                                                                     <td>
-                                                                        <a ng-show="$index>0" class="btn btn-icon btn-danger"
+                                                                        <a ng-show="$index>0" class="btn btn-icon btn-danger text-white"
                                                                            ng-click="removeGasShipperCustomer(gasShipperCustomer)">
                                                                             <i class="fa fa-trash"> </i>
                                                                         </a>
@@ -556,16 +572,16 @@
                                         <div class="row">
                                             <div class="col col-lg-5 col-xl-5 col-12">
                                                 <div class="form-group">
-                                                    <label><strong>Present Entry point</strong></label>
-                                                    <input type="text" class="form-control"
+                                                    <label><strong>Present Entry point</strong><span class="text-danger">*</span></label>
+                                                    <input type="text" class="form-control" name="entryPointPresent"
                                                            data-msg="Entry point is required"
-                                                           ng-model="licenseApplicationModel.EntryExitPoint" />
+                                                           ng-model="licenseApplicationModel.EntryPoint" />
                                                 </div>
                                             </div>
                                             <div class="col col-lg-5 col-xl-5 col-12">
                                                 <div class="form-group">
                                                     <label><strong>Present Exit point</strong><span class="text-danger">*</span></label>
-                                                    <input type="text" class="form-control required"
+                                                    <input type="text" class="form-control" name="exitPointPresent"
                                                            data-msg="Exit point is required"
                                                            ng-model="licenseApplicationModel.ExitPoint" />
                                                 </div>
@@ -719,7 +735,7 @@
                                                 <label>Signature<span class="text-danger">*</span></label>
                                                 <input type="file" class="form-control required" 
                                                        data-msg="You must upload your signature"
-                                                       id="declarationSignature" onchange="angular.element(this).scope().declarationSignatureFileHandler()" accept=".pdf" />
+                                                         ng-upload-change="setFileRecord" tag="Signature" />
                                                 <div class="text-danger text-sm" id="declarationSignatureWarningIndicator"></div>
                                             </div>
                                         </div>
@@ -794,32 +810,5 @@
     </div>
 </section>
 <!-- Form wizard with icon tabs section end -->
-<script>
-    $(document).ready(function () {
-
-
-        var inputMyDate = document.querySelector('input#effectiveDate');
-
-        inputMyDate.addEventListener('input', function () {
-            var current = this.value;
-            var today = new Date();
-            var dd = today.getDate();
-            var mm = today.getMonth() + 1;
-            var yyyy = today.getFullYear();
-            if (dd < 10) {
-                dd = '0' + dd;
-            }
-            if (mm < 10) {
-                mm = '0' + mm;
-            }
-            today = yyyy + '-' + mm + '-' + dd;
-            if (current < today) {
-                document.getElementById('effectiveDate').value = today;
-            }
-        });
-
-    });
-
-</script>
 
 

@@ -2,6 +2,13 @@
     <div class="row">
         <div class="col-12 col-md-7 d-flex flex-column flex-md-row justify-content-end">
             <button class="btn btn-primary btn-print mb-1 mb-md-0 pull-right"> <i class="feather icon-file-text"></i> Print</button>
+            <form action="http://remitademo.net/remita/ecomm/finalize.reg" method="POST">
+                <input type="hidden" name="merchantId" value="{{remita.merchantId}}" />
+                <input type="hidden" name="hash" value="884B73B56F3C65B1502A99DB0FB5973371981688ACDD74FE876639E7EF259CB371D70A24AD8DDE807DE4ADAA4104F043CA68614AFD16F7707827494CF66D4A19" />
+                <input type="hidden" name="rrr" value="{{remita.rrr}}" />
+                <input type="hidden" name="responseUrl" value="{{remita.responseUrl}}" />
+                <input class="btn btn-warning mb-1  mb-md-0 ml-1 pull-right" type="submit" name="submit_btn" value="Pay Via Remita" />
+            </form>
         </div>
     </div>
 </section>
