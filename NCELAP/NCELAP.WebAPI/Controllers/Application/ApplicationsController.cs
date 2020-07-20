@@ -27,8 +27,17 @@ namespace NCELAP.WebAPI.Controllers.Application
         [Route("savelicenseapplication")]
         public async Task<IActionResult> SaveLicenseApplicationInformation(LicenseApplication licenseApplication)
         {
-            var response = await _applicationsService.SaveApplication(licenseApplication);
-            return Ok(response);
+            try
+            {
+                var response = await _applicationsService.SaveApplication(licenseApplication);
+                return Ok(response);
+            }
+            catch (Exception exception)
+            {
+
+                return BadRequest(exception.Message);
+            }
+
         }
 
         [HttpGet]
@@ -43,8 +52,16 @@ namespace NCELAP.WebAPI.Controllers.Application
         [Route("customer/{custrecid}")]
         public async Task<IActionResult> CustomerApplications(long custrecid)
         {
-            var response = await _applicationsService.GetCustomerApplications(custrecid);
-            return Ok(response);
+            try
+            {
+                var response = await _applicationsService.GetCustomerApplications(custrecid);
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpGet]

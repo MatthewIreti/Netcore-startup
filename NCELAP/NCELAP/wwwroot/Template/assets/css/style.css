@@ -283,3 +283,98 @@ ul.step-wizard-container {
 		opacity: 1;
 	}
 }
+
+.str-box {
+	position: relative;
+	width: 56px;
+	height: 12px;
+	float: left;
+}
+
+	.str-box div {
+		position: absolute;
+		width: 0%;
+		height: 100%;
+		-moz-transition: 1s;
+		-o-transition: 1s;
+		-webkit-transition: 1s;
+		transition: 1s;
+	}
+
+.short {
+	color: #FF0000;
+}
+
+	.short .str-box.box1 div {
+		background: #f6dfc9;
+		width: 100%;
+	}
+
+.weak {
+	color: #E66C2C;
+}
+
+	.weak .str-box.box1 div {
+		background: #f4c9a0;
+		width: 100%;
+	}
+
+	.weak .str-box.box2 div {
+		background: #f4c9a0;
+		width: 100%;
+	}
+
+.good {
+	color: #2D98F3;
+}
+
+	.good .str-box.box1 div {
+		background: #f6b578;
+		width: 100%;
+	}
+
+	.good .str-box.box2 div {
+		background: #f6b578;
+		width: 100%;
+	}
+
+	.good .str-box.box3 div {
+		background: #f6b578;
+		width: 100%;
+	}
+
+.strong {
+	color: #006400;
+}
+
+	.strong .str-box.box1 div {
+		background: #f29d4b;
+		width: 100%;
+	}
+
+	.strong .str-box.box2 div {
+		background: #f29d4b;
+		width: 100%;
+	}
+
+	.strong .str-box.box3 div {
+		background: #f29d4b;
+		width: 100%;
+	}
+
+	.strong .str-box.box4 div {
+		background: #f29d4b;
+		width: 100%;
+	}
+
+.result {
+	font-size: 14px;
+	font-family: arial;
+	width: auto;
+	display: block;
+	-moz-transition: 0.5s;
+	-o-transition: 0.5s;
+	-webkit-transition: 0.5s;
+	transition: 0.5s;
+	font-variant: small-caps;
+}

@@ -37,19 +37,31 @@
                                                     <i class="feather icon-lock"></i>
                                                 </div>
                                                 <label for="user-password">Password</label>
+                                                <span style="font-size:11px" class="text-center">At least 8 characters (At least an alphabet, a number and a special character)</span>
+                                                <div id="strength" ng-show="activationModel.Password !== ''">
+                                                    <span class="result"></span>
+                                                </div>
                                             </fieldset>
 
                                             <fieldset class="form-label-group position-relative has-icon-left">
-                                                <input type="password" ng-model="activationModel.RepeatPassword" class="form-control" id="user-password" placeholder="Repeat Password" />
+                                                <input type="password" ng-model="activationModel.RepeatPassword" class="form-control" id="repeat-password" placeholder="Repeat Password" />
                                                 <div class="form-control-position">
                                                     <i class="feather icon-lock"></i>
                                                 </div>
-                                                <label for="user-password">Repeat Password</label>
+                                                <label for="repeat-password">Repeat Password</label>
+
                                             </fieldset>
+                                            <div class="row" ng-show="activationModel.Password.length > 0 && activationModel.RepeatPassword.length > 0">
+                                                <div class="col col-12 text-center text-danger">
+                                                    <span ng-show="activationModel.Password !== activationModel.RepeatPassword">
+                                                        Password do no match!
+                                                    </span>
+                                                </div>
+                                            </div>
 
                                             <div class="row">
                                                 <div class="col col-12">
-                                                    <button ng-click="activateAccount()" ng-disabled="userinfoloaded === 'false' || activationModel.Password !== activationModel.RepeatPassword || activationModel.Password === '' || activationModel.RepeatPassword === ''" class="btn btn-primary btn-block">
+                                                    <button ng-click="activateAccount()" ng-disabled="passwordok === 'false' || userinfoloaded === 'false' || activationModel.Password !== activationModel.RepeatPassword || activationModel.Password === '' || activationModel.RepeatPassword === ''" class="btn btn-primary btn-block">
                                                         @*<span class="spinner-grow text-muted" ng-show="activatingaccount === true"></span>*@
                                                         <span ng-show="settingUpAccount === false"><strong>Complete Account Setup</strong></span>
                                                     </button>
@@ -62,13 +74,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="row" ng-show="activationModel.Password.length > 0 && activationModel.RepeatPassword.length > 0">
-                                                <div class="col col-12 text-center text-danger">
-                                                    <span ng-show="activationModel.Password !== activationModel.RepeatPassword">
-                                                        Password do no match!
-                                                    </span>
-                                                </div>
-                                            </div>
+
 
                                             @*<div class="row" style="padding-top: 10px">
             <div class="col col-12">

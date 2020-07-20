@@ -9,9 +9,9 @@
     $scope.reportAttachment = '';
 
     $scope.legalStatuses = [
-        { Name: "Sole Proprietorship", Value: "SoleProprietorship", },
+        { Name: "Sole Proprietorship", Value: "SoleProprietorship" },
         { Name: "Partnership", Value: "Partnership"},
-        { Name: "Public Limited Liability", Value: "PublicLimitedLiability", },
+        { Name: "Public Limited Liability", Value: "PublicLimitedLiability" },
         { Name: "Private Limited Liability", Value: "PrivateLimitedLiability"},
         { Name: "Cooperative Society", Value: "CooperativeSociety"},
         { Name: "Others (please sepcify)", Value: "Others"}
@@ -404,6 +404,8 @@
                 console.log($scope.businessInfoDocumentsForUpload);
             }
         }
+
+        $scope.registrationInformationModel.CompanyLegalStatus = $scope.registrationInformationModel.CompanyLegalStatus;
     };
 
     $scope.saveBusinessAccountInformation = function () {

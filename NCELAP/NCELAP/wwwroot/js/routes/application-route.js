@@ -22,7 +22,7 @@
                 {
                     name: 'invoice',
                     url: '/invoice/:recordId',
-                    controller: 'ApplicationGetDetails',
+                    controller: 'ApplicationInvoice',
                     templateUrl: '/App/Application/Invoice.html'
                 },
                 {
@@ -30,6 +30,46 @@
                     url: '/details/:recordId',
                     controller: 'ApplicationGetDetails',
                     templateUrl: '/App/Application/Details.html'
+                }
+            ]
+        })
+        .state({
+            name: 'site.users',
+            template: '<div ui-view>',
+            url: '/users',
+            abstract: true,
+            children: [
+                {
+                    name: 'index',
+                    url: '/',
+                    templateUrl: '/App/Users/Index.html',
+                    controller: 'UsersList'
+                },
+                {
+                    name: 'create',
+                    url: '/create',
+                    controller: 'UsersCreate',
+                    templateUrl: '/App/Users/Create.html'
+                }
+            ]
+        })
+        .state({
+            name: 'site.tickets',
+            template: '<div ui-view>',
+            url: '/tickets',
+            abstract: true,
+            children: [
+                {
+                    name: 'index',
+                    url: '/',
+                    templateUrl: '/App/Support/Index.html',
+                    controller: 'TicketsList'
+                },
+                {
+                    name: 'create',
+                    url: '/create',
+                    controller: 'TicketCreate',
+                    templateUrl: '/App/Support/Create.html'
                 }
             ]
         });

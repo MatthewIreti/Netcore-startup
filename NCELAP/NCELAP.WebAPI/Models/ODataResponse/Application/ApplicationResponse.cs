@@ -28,6 +28,14 @@ namespace NCELAP.WebAPI.Models.ODataResponse.Application
         [JsonProperty("value")]
         public List<ApplicationInfo> value { get; set; }
     }
+    public class BaseApplicationInfoResponse<T>
+    {
+
+        [JsonProperty("@odata.context")]
+        public string odatacontext { get; set; }
+        [JsonProperty("value")]
+        public List<T> value { get; set; }
+    }
     public class ShortApplicationInfo
     {
 
@@ -40,12 +48,27 @@ namespace NCELAP.WebAPI.Models.ODataResponse.Application
         public string CustLicenseCategory { get; set; }
     }
 
+    public class CustApplicationExtension: ShortApplicationInfo
+    {
+        public string CustLicenseName { get; set; }
+        public string CustLicenseApplicationStatusName   { get; set; }
+        public string CustLicenseCategoryName { get; internal set; }
+    }
+
     public class ShortApplicationInfoResponse
     {
 
         [JsonProperty("@odata.context")]
         public string odatacontext { get; set; }
         [JsonProperty("value")]
-        public List<ShortApplicationInfo> value { get; set; }
+        public List<CustApplicationExtension> value { get; set; }
+    }
+
+    public class BaseApplicationResponse<T>
+    {
+        [JsonProperty("@odata.context")]
+        public string odatacontext { get; set; }
+        [JsonProperty("value")]
+        public List<T> value { get; set; }
     }
 }

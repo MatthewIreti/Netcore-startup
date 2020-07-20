@@ -21,7 +21,7 @@ namespace NCELAP.WebAPI.Services.Account
     {
         readonly IConfiguration _configuration;
         private readonly string businessaccount, businessaccountlegalstatus, businessaccountshareholder, businessaccountdirector, docupload;
-        private readonly string ncelasloginendpoint, companynamebycustrecid, accountdetails, ncelasinfoupdate, ncelasusers, ncelasuserbyemail;
+        private readonly string ncelasloginendpoint, companynamebycustrecid, accountdetails, ncelasinfoupdate, ncelasusers, ncelasuserbyemail, ncelasusersbycreatorrecid;
         private string jsonResponse;
         private readonly AuthService _authService;
         private readonly Helper _helper;
@@ -42,6 +42,7 @@ namespace NCELAP.WebAPI.Services.Account
             ncelasinfoupdate = _configuration.GetSection("Endpoints").GetSection("ncelasinfoupdate").Value;
             ncelasusers = _configuration.GetSection("Endpoints").GetSection("ncelasusers").Value;
             ncelasuserbyemail = _configuration.GetSection("Endpoints").GetSection("ncelasuserbyemail").Value;
+            ncelasusersbycreatorrecid = _configuration.GetSection("Endpoints").GetSection("ncelasusersbycreatorrecid").Value;
         }
 
         public async Task<bool> SaveBusinessInformation(RegisteredBusiness registeredBusiness)
@@ -463,6 +464,11 @@ namespace NCELAP.WebAPI.Services.Account
             string token = _authService.GetAuthToken();
             string currentEnvironment = helper.GetEnvironmentUrl();
             string url = currentEnvironment + ncelasusers;
+
+            if (userToCreate != null)
+            {
+                userToCreate.Activated = "No";
+            }
             try
             {
                 using (var client = new HttpClient())
@@ -544,5 +550,48 @@ namespace NCELAP.WebAPI.Services.Account
             return emailexist;
         }
 
+        public async Task<List<NcelasUserResponse>> GetNcelasUsersByCreatorRecId(long creatorRecId)
+        {
+            string token = _authService.GetAuthToken();
+            string currentEnvironment = _helper.GetEnvironmentUrl();
+            string url = currentEnvironment + ncelasusersbycreatorrecid;
+            string formattedUrl = String.Format(url, creatorRecId);
+            var userAccounts = new List<NcelasUserResponse>();
+
+            try
+            {
+                var webRequest = WebRequest.Create(formattedUrl);
+                if (webRequest != null)
+                {
+                    webRequest.Method = "GET";
+                    webRequest.Timeout = 120000;
+                    webRequest.Headers.Add("Authorization", "Bearer " + token);
+
+                    WebResponse response = await webRequest.GetResponseAsync();
+                    Stream dataStream = response.GetResponseStream();
+                    StreamReader reader = new StreamReader(dataStream);
+
+                    var webResponse = new NcelasUsersResponse();
+                    jsonResponse = reader.ReadToEnd();
+
+                    webResponse = JsonConvert.DeserializeObject<NcelasUsersResponse>(jsonResponse);
+                    userAccounts = webResponse.value;
+
+                    response.Dispose();
+                    dataStream.Close();
+                    dataStream.Dispose();
+                    reader.Close();
+                    reader.Dispose();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex.StackTrace);
+            }
+
+
+            return userAccounts;
+        }
     }
 }

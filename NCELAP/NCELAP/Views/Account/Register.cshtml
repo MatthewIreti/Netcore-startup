@@ -88,9 +88,9 @@
                                                                                             <div class="col col-lg-6 col-xl-6 col-12">
                                                                                                 <div class="form-group">
                                                                                                     <label for="inputMobile">
-                                                                                                        <span>Mobile<span class="text-danger">*</span></span>
+                                                                                                        <span>Mobile</span>
                                                                                                     </label>
-                                                                                                    <input type="text" maxlength="15" ng-model="registrationInformationModel.Mobile" value="+234" id="inputMobile" name="Mobile" class="form-control" required>
+                                                                                                    <input type="text" maxlength="15" ng-model="registrationInformationModel.Mobile" value="+234" id="inputMobile" name="Mobile" class="form-control">
                                                                                                     <span class="text-danger text-small" ng-show="businessRegistrationForm.Mobile.$touched && businessRegistrationForm.Mobile.$invalid">
                                                                                                         <span ng-show="businessRegistrationForm.Mobile.$error.required">Mobile is required.</span>
                                                                                                     </span>
@@ -142,6 +142,7 @@
                                                                                                 <div class="form-group" ng-show="registrationInformationModel.CompanyLegalStatus === 'Others'">
                                                                                                     <input ng-model="OtherLegalStatus" type="text" placeholder="Enter Legal Status" class="form-control" />
                                                                                                 </div>
+
                                                                                             </div>
 
                                                                                             <div class="row">
@@ -232,155 +233,6 @@
                                                                                                         <td>{{ shareholder.Address }}</td>
                                                                                                         <td>
                                                                                                             <button ng-click="removeShareholder(shareholder)" class="btn btn-danger btn-md"><i class="fa fa-trash"></i></button>
-                                                                                                        </td>
-                                                                                                    </tr>
-                                                                                                </table>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-
-                                                                            <div class="collapse-border-item card collapse-header">
-                                                                                <div class="card-header" id="heading210" data-toggle="collapse" role="button" data-target="#collapse210"
-                                                                                     aria-expanded="false" aria-controls="collapse210">
-                                                                                    <span class="lead collapse-title">
-                                                                                        <strong> Authorized Representative</strong>
-                                                                                    </span>
-                                                                                </div>
-                                                                                <div id="collapse210" class="collapse" aria-labelledby="heading210" data-parent="#accordionExample0">
-                                                                                    <div class="card-body">
-                                                                                        <div class="row">
-                                                                                            <div class="col col-12">
-                                                                                                <div class="alert alert-primary" role="alert">
-                                                                                                    <i class="feather icon-info mr-1 align-middle"></i>
-                                                                                                    <span>
-                                                                                                        Please Note: Upon Verification of the Business's identity, the details of the
-                                                                                                        authorized representative will be used to provision the administrator account for {{ registrationInformationModel.BusinessName }}.
-                                                                                                    </span>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-
-                                                                                        <div class="row">
-                                                                                            <div class="col col-lg-6 col-xl-6 col-12">
-                                                                                                <div class="form-group">
-                                                                                                    <label for="AuthorizedRepName">
-                                                                                                        <span>Name of Authorized Representative<span class="text-danger">*</span></span>
-                                                                                                    </label>
-                                                                                                    <input type="text" maxlength="50" ng-model="registrationInformationModel.AuthorizedRepName" id="AuthorizedRepName" class="form-control">
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="col col-lg-6 col-xl-6 col-12">
-                                                                                                <div class="form-group">
-                                                                                                    <label for="AuthorizedRepEmail">
-                                                                                                        <span>Email<span class="text-danger">*</span></span>
-                                                                                                    </label>
-                                                                                                    <input type="email" maxlength="50" ng-model="registrationInformationModel.AuthorizedRepEmail" id="AuthorizedRepEmail" class="form-control">
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-
-                                                                                        <div class="row">
-                                                                                            <div class="col col-lg-6 col-xl-6 col-12">
-                                                                                                <div class="form-group">
-                                                                                                    <label for="AuthorizedRepMobile">
-                                                                                                        <span>Mobile<span class="text-danger">*</span></span>
-                                                                                                    </label>
-                                                                                                    <input type="text" maxlength="40" ng-model="registrationInformationModel.AuthorizedRepMobile" id="AuthorizedRepMobile" class="form-control">
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="col col-lg-6 col-xl-6 col-12">
-                                                                                                <div class="form-group">
-                                                                                                    <label for="addressAuthorizedRepresentative">
-                                                                                                        <span>Address</span>
-                                                                                                    </label>
-                                                                                                    <textarea maxlength="100" rows="4" id="addressAuthorizedRepresentative" class="form-control" required></textarea>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-
-                                                                            <div class="collapse-border-item card collapse-header">
-                                                                                <div class="card-header" id="heading250" data-toggle="collapse" role="button" data-target="#staffList"
-                                                                                     aria-expanded="false" aria-controls="staffList">
-                                                                                    <span class="lead collapse-title">
-                                                                                        <strong>Staff List</strong>
-                                                                                    </span>
-                                                                                </div>
-                                                                                <div id="staffList" class="collapse" aria-labelledby="heading250" data-parent="#accordionExample0">
-                                                                                    <div class="card-body">
-                                                                                        <div class="row">
-                                                                                            <div class="col col-lg-6 col-xl-6 col-12">
-                                                                                                <div class="form-group">
-                                                                                                    <label for="StaffName">
-                                                                                                        <span>Name<span class="text-danger">*</span></span>
-                                                                                                    </label>
-                                                                                                    <input type="text" maxlength="50" ng-model="staffModel.Name" id="StaffName" class="form-control">
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="col col-lg-6 col-xl-6 col-12">
-                                                                                                <div class="form-group">
-                                                                                                    <label for="Role">
-                                                                                                        <span>Role<span class="text-danger">*</span></span>
-                                                                                                    </label>
-                                                                                                    <input type="text" maxlength="50" ng-model="staffModel.Role" id="Role" class="form-control">
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        
-                                                                                        <div class="row">
-                                                                                            <div class="col col-lg-6 col-xl-6 col-12">
-                                                                                                <div class="form-group">
-                                                                                                    <label for="YearsOfExperience">
-                                                                                                        <span>Years of Experience<span class="text-danger">*</span></span>
-                                                                                                    </label>
-                                                                                                    @*<input type="text" maxlength="50" ng-model="staffModel.YearsOfExperience" id="YearsOfExperience" class="form-control">*@
-                                                                                                    <select type="text" ng-model="staffModel.YearsOfExperience" class="form-control" name="yearsOfExperience" id="yearsOfExperience">
-                                                                                                        <option value="">--Select--</option>
-                                                                                                        <option ng-repeat="year in yearsOfExperience" value={{year}}>{{ year }}</option>
-                                                                                                    </select>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="col col-lg-6 col-xl-6 col-12">
-                                                                                                <div class="form-group">
-                                                                                                    <label for="CareerSummary">
-                                                                                                        <span>Career Summary</span>
-                                                                                                    </label>
-                                                                                                    <textarea maxlength="1000" rows="4" id="staffCareerSummary" class="form-control" required></textarea>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-
-                                                                                        <div class="row">
-                                                                                            <div class="col col-12">
-                                                                                                <button ng-disabled="staffModel.Name === '' || staffModel.YearsOfExperience === '' || staffModel.Role === ''"
-                                                                                                        ng-click="addStaff()" class="btn btn-success float-right">
-                                                                                                    <i class="fa fa-user-plus"></i> Add
-                                                                                                </button>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div class="row" ng-show="staffs.length > 0">
-                                                                                            <div class="col col-12">
-                                                                                                <table class="table table-hover table-bordered" id="sampleTable" style="font-size: 14px">
-                                                                                                    <thead>
-                                                                                                        <tr>
-                                                                                                            <th>Name</th>
-                                                                                                            <th>Years Of Experience</th>
-                                                                                                            <th>Role</th>
-                                                                                                            <th>Career Summary</th>
-                                                                                                            <th>Actions</th>
-                                                                                                        </tr>
-                                                                                                    </thead>
-                                                                                                    <tr ng-repeat="staff in staffs">
-                                                                                                        <td>{{ staff.Name }}</td>
-                                                                                                        <td>{{ staff.YearsOfExperience }}</td>
-                                                                                                        <td>{{ staff.Role }}</td>
-                                                                                                        <td>{{ staff.CareerSummary }}</td>
-                                                                                                        <td>
-                                                                                                            <button ng-click="removeStaff(staff)" class="btn btn-danger btn-md"><i class="fa fa-trash"></i></button>
                                                                                                         </td>
                                                                                                     </tr>
                                                                                                 </table>
@@ -500,6 +352,157 @@
                                                                                 </div>
                                                                             </div>
 
+                                                                            <div class="collapse-border-item card collapse-header">
+                                                                                <div class="card-header" id="heading210" data-toggle="collapse" role="button" data-target="#collapse210"
+                                                                                     aria-expanded="false" aria-controls="collapse210">
+                                                                                    <span class="lead collapse-title">
+                                                                                        <strong> Authorized Representative</strong>
+                                                                                    </span>
+                                                                                </div>
+                                                                                <div id="collapse210" class="collapse" aria-labelledby="heading210" data-parent="#accordionExample0">
+                                                                                    <div class="card-body">
+                                                                                        <div class="row">
+                                                                                            <div class="col col-12">
+                                                                                                <div class="alert alert-primary" role="alert">
+                                                                                                    <i class="feather icon-info mr-1 align-middle"></i>
+                                                                                                    <span>
+                                                                                                        Please Note: Upon Verification of the Business's identity, the details of the
+                                                                                                        authorized representative will be used to provision the administrator account for {{ registrationInformationModel.BusinessName }}.
+                                                                                                    </span>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                        <div class="row">
+                                                                                            <div class="col col-lg-6 col-xl-6 col-12">
+                                                                                                <div class="form-group">
+                                                                                                    <label for="AuthorizedRepName">
+                                                                                                        <span>Name of Authorized Representative<span class="text-danger">*</span></span>
+                                                                                                    </label>
+                                                                                                    <input type="text" maxlength="50" ng-model="registrationInformationModel.AuthorizedRepName" id="AuthorizedRepName" class="form-control">
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="col col-lg-6 col-xl-6 col-12">
+                                                                                                <div class="form-group">
+                                                                                                    <label for="AuthorizedRepEmail">
+                                                                                                        <span>Email<span class="text-danger">*</span></span>
+                                                                                                    </label>
+                                                                                                    <input type="email" maxlength="50" ng-model="registrationInformationModel.AuthorizedRepEmail" id="AuthorizedRepEmail" class="form-control">
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                        <div class="row">
+                                                                                            <div class="col col-lg-6 col-xl-6 col-12">
+                                                                                                <div class="form-group">
+                                                                                                    <label for="AuthorizedRepMobile">
+                                                                                                        <span>Mobile<span class="text-danger">*</span></span>
+                                                                                                    </label>
+                                                                                                    <input type="text" maxlength="40" ng-model="registrationInformationModel.AuthorizedRepMobile" id="AuthorizedRepMobile" class="form-control">
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="col col-lg-6 col-xl-6 col-12">
+                                                                                                <div class="form-group">
+                                                                                                    <label for="addressAuthorizedRepresentative">
+                                                                                                        <span>Address</span>
+                                                                                                    </label>
+                                                                                                    <textarea maxlength="100" rows="4" id="addressAuthorizedRepresentative" class="form-control" required></textarea>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="collapse-border-item card collapse-header">
+                                                                                <div class="card-header" id="heading250" data-toggle="collapse" role="button" data-target="#staffList"
+                                                                                     aria-expanded="false" aria-controls="staffList">
+                                                                                    <span class="lead collapse-title">
+                                                                                        <strong>Staff List</strong>
+                                                                                    </span>
+                                                                                </div>
+                                                                                <div id="staffList" class="collapse" aria-labelledby="heading250" data-parent="#accordionExample0">
+                                                                                    <div class="card-body">
+                                                                                        <div class="row">
+                                                                                            <div class="col col-lg-6 col-xl-6 col-12">
+                                                                                                <div class="form-group">
+                                                                                                    <label for="StaffName">
+                                                                                                        <span>Name<span class="text-danger">*</span></span>
+                                                                                                    </label>
+                                                                                                    <input type="text" maxlength="50" ng-model="staffModel.Name" id="StaffName" class="form-control">
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="col col-lg-6 col-xl-6 col-12">
+                                                                                                <div class="form-group">
+                                                                                                    <label for="Role">
+                                                                                                        <span>Role<span class="text-danger">*</span></span>
+                                                                                                    </label>
+                                                                                                    <input type="text" maxlength="50" ng-model="staffModel.Role" id="Role" class="form-control">
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                        <div class="row">
+                                                                                            <div class="col col-lg-6 col-xl-6 col-12">
+                                                                                                <div class="form-group">
+                                                                                                    <label for="YearsOfExperience">
+                                                                                                        <span>Years of Experience<span class="text-danger">*</span></span>
+                                                                                                    </label>
+                                                                                                    @*<input type="text" maxlength="50" ng-model="staffModel.YearsOfExperience" id="YearsOfExperience" class="form-control">*@
+                                                                                                    <select type="text" ng-model="staffModel.YearsOfExperience" class="form-control" name="yearsOfExperience" id="yearsOfExperience">
+                                                                                                        <option value="">--Select--</option>
+                                                                                                        <option ng-repeat="year in yearsOfExperience" value={{year}}>{{ year }}</option>
+                                                                                                    </select>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="col col-lg-6 col-xl-6 col-12">
+                                                                                                <div class="form-group">
+                                                                                                    <label for="CareerSummary">
+                                                                                                        <span>Resource Profile<span class="text-danger">*</span></span>
+                                                                                                    </label>
+                                                                                                    <textarea maxlength="250" rows="4" id="staffCareerSummary" class="form-control" placeholder="Resource profile (kindly type in the career summary and experience of your technical resources)" required></textarea>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                        <div class="row">
+                                                                                            <div class="col col-12">
+                                                                                                <button ng-disabled="staffModel.Name === '' || staffModel.YearsOfExperience === '' || staffModel.Role === ''"
+                                                                                                        ng-click="addStaff()" class="btn btn-success float-right">
+                                                                                                    <i class="fa fa-user-plus"></i> Add
+                                                                                                </button>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="row" ng-show="staffs.length > 0">
+                                                                                            <div class="col col-12">
+                                                                                                <table class="table table-hover table-bordered" id="sampleTable" style="font-size: 14px">
+                                                                                                    <thead>
+                                                                                                        <tr>
+                                                                                                            <th>Name</th>
+                                                                                                            <th>Years Of Experience</th>
+                                                                                                            <th>Role</th>
+                                                                                                            <th>Career Summary</th>
+                                                                                                            <th>Actions</th>
+                                                                                                        </tr>
+                                                                                                    </thead>
+                                                                                                    <tr ng-repeat="staff in staffs">
+                                                                                                        <td>{{ staff.Name }}</td>
+                                                                                                        <td>{{ staff.YearsOfExperience }}</td>
+                                                                                                        <td>{{ staff.Role }}</td>
+                                                                                                        <td>{{ staff.CareerSummary }}</td>
+                                                                                                        <td>
+                                                                                                            <button ng-click="removeStaff(staff)" class="btn btn-danger btn-md"><i class="fa fa-trash"></i></button>
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                </table>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+
+
                                                                             <div class="card collapse-header collapse-border-item">
                                                                                 <div class="card-header" id="heading220" data-toggle="collapse" role="button" data-target="#collapse220"
                                                                                      aria-expanded="false" aria-controls="collapse220">
@@ -559,26 +562,26 @@
                                                                                                 </fieldset>
                                                                                             </div>
                                                                                             @*<div class="col col-lg-6 col-xl-6 col-12">
-                                                                                                <fieldset class="form-group">
-                                                                                                    <label for="deedOfPartnership">
-                                                                                                        Deed Of Partnership<span class="text-danger">*</span><span class="text-sm"> (pdf files only)</span>
-                                                                                                    </label>
-                                                                                                    <div class="custom-file">
-                                                                                                        <input accept=".pdf" class="form-control" onchange="angular.element(this).scope().deedOfPartnershipFileHandler()" type="file" id="deedOfPartnership">
-                                                                                                        <div class="text-danger text-sm" id="deedOfPartnershipIndicator"></div>
-                                                                                                    </div>
-                                                                                                </fieldset>
-                                                                                            </div>*@
+                            <fieldset class="form-group">
+                                <label for="deedOfPartnership">
+                                    Deed Of Partnership<span class="text-danger">*</span><span class="text-sm"> (pdf files only)</span>
+                                </label>
+                                <div class="custom-file">
+                                    <input accept=".pdf" class="form-control" onchange="angular.element(this).scope().deedOfPartnershipFileHandler()" type="file" id="deedOfPartnership">
+                                    <div class="text-danger text-sm" id="deedOfPartnershipIndicator"></div>
+                                </div>
+                            </fieldset>
+                        </div>*@
                                                                                         </div>
-                                                                                        
+
                                                                                         <hr />
                                                                                         <div class="row">
                                                                                             <div class="col col-12 text-center">
                                                                                                 <button ng-show="processing === false" ng-click="saveBusinessAccountInformation()"
                                                                                                         class="btn btn-success"
                                                                                                         ng-disabled="registrationInformationModel.BusinessName === '' || registrationInformationModel.Email === '' || registrationInformationModel.Telephone === '' ||
-                                                                                                            registrationInformationModel.Mobile === '' || registrationInformationModel.CompanyLegalStatus === '' ||
-                                                                                                            registrationInformationModel.AuthorizedRepName ==='' || registrationInformationModel.AuthorizedRepEmail === '' || registrationInformationModel.AuthorizedRepMobile === ''">
+                                                                                                            registrationInformationModel.AuthorizedRepName ==='' || registrationInformationModel.AuthorizedRepEmail === '' || registrationInformationModel.AuthorizedRepMobile === '' ||
+                                                                                                            businessInfoDocumentsForUpload.CertificateOfRegistrationBase64 === '' || businessInfoDocumentsForUpload.CertificateOfIncorporationBase64 === '' || businessInfoDocumentsForUpload.MemorandumArticlesOfAssociationBase64 === '' || businessInfoDocumentsForUpload.DeedOfTrustBase64 === ''">
                                                                                                     <i class="fa fa-pencil"></i> Register
                                                                                                 </button>
                                                                                                 <button ng-show="processing" class="btn btn-success"><div class="spinner-border"></div> Processing...</button>

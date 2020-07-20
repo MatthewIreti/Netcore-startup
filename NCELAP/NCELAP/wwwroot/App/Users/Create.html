@@ -1,0 +1,74 @@
+﻿<div class="content-header row">
+    <div class="content-header-left col-md-9 col-12 mb-2">
+        <div class="row breadcrumbs-top">
+            <div class="col-12">
+                <h2 class="content-header-title float-left mb-0">Dashboard</h2>
+                <div class="breadcrumb-wrapper col-12">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a>Home</a>
+                        </li>
+                        <li class="breadcrumb-item active">
+                            <a ui-sref="site.users.index">User Accounts</a>
+                        </li>
+
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Zero configuration table -->
+<section id="basic-datatable" waiting="{{waiting}}">
+    <div class="row">
+        <div class="col col-lg-6 col-xl-6 col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Create User Account</h4>
+                    
+                </div>
+                <hr />
+                <div class="card-content">
+                    <div class="card-body card-dashboard">
+                        <form class="form" name="createUserForm" novalidate>
+                            <div class="form-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-label-group">
+                                            <input type="text" ng-model="userCreateFormModel.Name" id="full-name-floating" class="form-control" placeholder="Full Name" name="fname-floating">
+                                            <label for="full-name-floating">Full Name</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12" style="margin-bottom: 8px">
+                                        <div class="form-label-group">
+                                            <input type="email" ng-blur="emailCheck()" ng-model="userCreateFormModel.Email" id="email-floating" class="form-control" name="email-floating" placeholder="Email">
+                                            <label for="email-floating">Email</label>
+                                        </div>
+                                        <div ng-show="verifyingEmail" class="spinner-border text-success" style="height: 1.4rem; width: 1.4rem"> </div> <span ng-show="verifyingEmail"> Verifying email addess...</span>
+                                        <span ng-show="emailCheckResponse" style="color:red" class="text-sm">This email address already belongs to another user!</span>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-label-group">
+                                            <input type="text" ng-model="userCreateFormModel.Department" id="department-floating" class="form-control" name="department-floating" placeholder="Department">
+                                            <label for="department-floating">Department</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <button ng-disabled="userCreateFormModel.Name === '' || userCreateFormModel.Email === '' || userCreateFormModel.Department === '' || emailCheckResponse || verifyingEmail"
+                                                class="btn btn-primary mr-1 mb-1 waves-effect waves-light" ng-click="createUserAccount()">
+                                            Create Account
+                                        </button>
+                                        <button type="reset" class="btn btn-outline-warning mr-1 mb-1 waves-effect waves-light">Reset</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--/ Zero configuration table -->
