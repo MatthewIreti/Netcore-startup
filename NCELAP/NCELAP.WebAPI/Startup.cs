@@ -5,8 +5,6 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Microsoft.ApplicationInsights.DependencyCollector;
-using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -26,12 +24,6 @@ namespace NCELAP.WebAPI
     {
         public Startup(IConfiguration configuration)
         {
-            //var appBasePath = System.IO.Directory.GetCurrentDirectory();
-            //NLog.GlobalDiagnosticsContext.Set("appbasepath", appBasePath);
-            //var logger = LogManager.LoadConfiguration("nlog.config").GetCurrentClassLogger();
-            //var logger = LogManager.LoadConfiguration("nlog.config").GetCurrentClassLogger();
-
-            //LogManager.LoadConfiguration(System.String.Concat(Directory.GetCurrentDirectory(), "/nlog.config"));
             Configuration = configuration;
         }
 
@@ -74,19 +66,19 @@ namespace NCELAP.WebAPI
                     }
                 });
             });
-            services.AddHttpClient("remita", config =>
-            {
-                config.DefaultRequestHeaders.Clear();
-                config.BaseAddress = new Uri(Configuration.GetSection("Remita").GetSection("baseUrl").Value);
-            }).ConfigurePrimaryHttpMessageHandler(() =>
-            {
-                //use Fiddler 
-                var httpClientHandler = new HttpClientHandler()
-                {
-                    AllowAutoRedirect = false
-                };
-                return new DisableActivityHandler(httpClientHandler);
-            });
+            //services.AddHttpClient("remita", config =>
+            //{
+            //    config.DefaultRequestHeaders.Clear();
+            //    config.BaseAddress = new Uri(Configuration.GetSection("Remita").GetSection("baseUrl").Value);
+            //}).ConfigurePrimaryHttpMessageHandler(() =>
+            //{
+            //    //use Fiddler 
+            //    var httpClientHandler = new HttpClientHandler()
+            //    {
+            //        AllowAutoRedirect = false
+            //    };
+            //    return new DisableActivityHandler(httpClientHandler);
+            //});
             services.AddSwaggerGenNewtonsoftSupport();
             services.AddSingleton(Configuration.GetSection("Remita").Get<RemitaAppSetting>());
             services.AddTransient<IRemitaService, RemitaService>();

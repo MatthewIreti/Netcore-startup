@@ -19,8 +19,9 @@ namespace NCELAP.WebAPI.Services.Application
     public interface IPaymentService
     {
         Task<ReferenceResponseModel> GetRemitaRetrivalReference(RemitaReferenceRetrievalModel model);
-        Task<LicenseApplicationPayment> SavePaymentInformation(LicenseApplicationPayment model);
-        Task<List<LicenseApplicationPayment>> GetAllCustomerPaymentInformation(long custRecId);
+        Task<LicenseApplicationPaymentModel> SavePaymentInformation(LicenseApplicationPaymentModel model);
+        Task<List<LicenseApplicationPaymentModel>> GetAllCustomerPaymentInformation(long custRecId);
+        RemitaReferenceRetrievalModel GetRemitaRRModel(RemitaReferenceRetrievalModel model);
     }
     public class PaymentService: IPaymentService
     {
@@ -50,7 +51,7 @@ namespace NCELAP.WebAPI.Services.Application
             }
         }
 
-        public async Task<LicenseApplicationPayment> SavePaymentInformation(LicenseApplicationPayment model)
+        public async Task<LicenseApplicationPaymentModel> SavePaymentInformation(LicenseApplicationPaymentModel model)
         {
             try
             {
@@ -63,7 +64,7 @@ namespace NCELAP.WebAPI.Services.Application
                 var response = await env.AppendPathSegment(licensePaymentLink)
                     .WithOAuthBearerToken(token)
                     .PostJsonAsync(model)
-                    .ReceiveJson<LicenseApplicationPayment>();
+                    .ReceiveJson<LicenseApplicationPaymentModel>();
                 if (response == null) throw new Exception("No response");
                 return response;
             }
@@ -73,7 +74,7 @@ namespace NCELAP.WebAPI.Services.Application
             }
         }
 
-        public async Task<List<LicenseApplicationPayment>> GetAllCustomerPaymentInformation(long custRecId)
+        public async Task<List<LicenseApplicationPaymentModel>> GetAllCustomerPaymentInformation(long custRecId)
         {
             try
             {
@@ -83,7 +84,7 @@ namespace NCELAP.WebAPI.Services.Application
 
                 var response = await env.AppendPathSegment(string.Format(licensePaymentLink, custRecId))
                     .WithOAuthBearerToken(token)
-                    .GetJsonAsync<BaseApplicationResponse<LicenseApplicationPayment>>();
+                    .GetJsonAsync<BaseApplicationResponse<LicenseApplicationPaymentModel>>();
                 if (response == null) throw new Exception("No response");
                 return response.value;
             }
@@ -93,5 +94,16 @@ namespace NCELAP.WebAPI.Services.Application
             }
         }
 
+        public RemitaReferenceRetrievalModel GetRemitaRRModel(RemitaReferenceRetrievalModel model)
+        {
+            try
+            {
+                return  _remitaService.GetRemitaRRModel(model);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
     }
 }

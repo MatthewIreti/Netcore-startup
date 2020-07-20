@@ -16,6 +16,13 @@ namespace NCELAP.WebAPI.Models.DTO.Applications
         public GasShipperCustomer[] GasShipperCustomers { get; set; }
     }
 
+    public class LicenseApplicationCommentModel
+    {
+        public string Comment { get; set; }
+        public long LicenseApplication { get; set; }
+        public bool Status { get; set; }
+    }
+
     public class LicenseApplicationUpload
     {
         public long LicenseApplicationRecId { get; set; }
@@ -87,7 +94,7 @@ namespace NCELAP.WebAPI.Models.DTO.Applications
         public string Name { get; set; }
         public string Location { get; set; }
         public string GasShipperPointType { get; set; }
-        public string UniqueId { get; set; }
+         
     }
 
     public class GasShipperCustomer
@@ -98,7 +105,7 @@ namespace NCELAP.WebAPI.Models.DTO.Applications
         public string GasShipperCustCategory { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
-        public string UniqueId { get; set; }
+       
     }
 
     public class ApplicationInfoForSave
@@ -121,7 +128,8 @@ namespace NCELAP.WebAPI.Models.DTO.Applications
         public string AgentShipperName { get; set; }
         public string AgentLocationOfShipper { get; set; }
         //public string NominatedCapacityEntryPoint { get; set; }
-        public string EntryExitPoint { get; set; }
+        public string ExitPoint { get; set; }
+        public string EntryPoint { get; set; }
         public string Location { get; set; }
         public double MaximumNominatedCapacity { get; set; }
         public string PipelineAndGasTransporterName { get; set; }

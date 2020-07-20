@@ -41,7 +41,7 @@ namespace NCELAP.WebAPI.Controllers.Application
 
         [HttpPost]
         [Route("submitPaymentInformation")]
-        public async Task<IActionResult> SaveLicensePaymentInformation(LicenseApplicationPayment model)
+        public async Task<IActionResult> SaveLicensePaymentInformation(LicenseApplicationPaymentModel model)
         {
             try
             {
@@ -69,6 +69,19 @@ namespace NCELAP.WebAPI.Controllers.Application
             }
         }
 
-
+        [HttpPost]
+        [Route("getRRRPayload")]
+        public IActionResult GetRRRPayload(RemitaReferenceRetrievalModel model)
+        {
+            try
+            {
+                var response =  _service.GetRemitaRRModel(model);
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
