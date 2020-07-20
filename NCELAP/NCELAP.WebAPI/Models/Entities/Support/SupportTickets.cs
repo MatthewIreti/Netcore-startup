@@ -7,6 +7,7 @@ namespace NCELAP.WebAPI.Models.Entities.Support
     {
         [Key]
         public int Id { get; set; }
+        public long CustomerRecId { get; set; }
         public string Department { get; set; }
         public int Priority { get; set; }
         public string Subject { get; set; }
@@ -16,5 +17,6 @@ namespace NCELAP.WebAPI.Models.Entities.Support
         public string CaseOwner { get; set; }
         public string Attachment { get; set; }
         public string Response { get; set; }
+        public DateTime RaisedOn { get; set; }
     }
 }

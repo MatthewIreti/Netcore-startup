@@ -9,6 +9,7 @@ namespace NCELAP.WebAPI.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
         {
+
         }
 
         public DbSet<SupportTickets> SupportTickets { get; set; }

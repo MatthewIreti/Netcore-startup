@@ -151,7 +151,6 @@ namespace NCELAP.WebAPI.Services.Application
         }
 
         
-
         public async Task<bool> SaveGasShipperCustomers(GasShipperCustomer[] customers, long applicationRecId)
         {
             bool response = false;

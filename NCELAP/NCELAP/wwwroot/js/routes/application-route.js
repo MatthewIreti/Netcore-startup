@@ -52,5 +52,25 @@
                     templateUrl: '/App/Users/Create.html'
                 }
             ]
+        })
+        .state({
+            name: 'site.tickets',
+            template: '<div ui-view>',
+            url: '/tickets',
+            abstract: true,
+            children: [
+                {
+                    name: 'index',
+                    url: '/',
+                    templateUrl: '/App/Support/Index.html',
+                    controller: 'TicketsList'
+                },
+                {
+                    name: 'create',
+                    url: '/create',
+                    controller: 'TicketCreate',
+                    templateUrl: '/App/Support/Create.html'
+                }
+            ]
         });
 }]);
