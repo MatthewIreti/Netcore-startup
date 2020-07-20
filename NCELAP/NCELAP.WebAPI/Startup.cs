@@ -43,7 +43,7 @@ namespace NCELAP.WebAPI
                 options.AddPolicy("CorsApiPolicy",
                     builder =>
                     {
-                        builder.WithOrigins("https://localhost:44374", "https://ncelap-demo.azurewebsites.net")
+                        builder.WithOrigins("https://localhost:44374", "https://ncelap-demo.azurewebsites.net", "https://ncelas.dpr.gov.ng")
                             .WithHeaders(new[] { "authorization", "content-type", "accept" })
                             .WithMethods(new[] { "GET", "POST", "PUT", "DELETE", "OPTIONS" });
                     });
