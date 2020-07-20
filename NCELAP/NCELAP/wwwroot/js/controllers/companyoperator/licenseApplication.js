@@ -55,7 +55,6 @@
     $scope.GasShipperPointType = [
         { "Name": "Delivery", "Value": "Delivery" },
         { "Name": "Take Off", "Value": "TakeOff" }
-
     ];
 
     $scope.GasShipperCustCategory = [
@@ -198,7 +197,8 @@
                 }
             };
         })(file);
-    }
+    };
+
     $scope.licenseApplicationUploadsFileSizeCheckModel = {
         HoldRelatedLicenseFileSizeValid: '', HasRelatedLicenseFileSizeValid: '', HasLicenseRevokedFileSizeValid: '', HasLicenseRefusedFileSizeValid: '', DeclarationSignatureValid: ''
     };
@@ -298,7 +298,8 @@
     $scope.setError = function (errors) {
         $scope.errors = [];
         $scope.errors = errors;
-    }
+    };
+
     $scope.submitForm = function () {
         $scope.errors = [];
         var proposedArrangementDetails = document.getElementById("proposedArrangementDetails").value;
@@ -365,7 +366,7 @@ appModule.controller('ApplicationList', function ($scope, $http, $state) {
         }, function (error) {
             console.log(error);
         });
-    };
+    }
 });
 
 

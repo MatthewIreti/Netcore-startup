@@ -4,7 +4,7 @@ appModule.config([
     '$httpProvider', '$locationProvider', function (stateHelperProvider, $urlRouterProvider, $httpProvider, $locationProvider) {
         $urlRouterProvider.rule(function ($injector, $location) {
             var path = $location.path(), normalized = path.toLowerCase();
-            if (path != normalized) {
+            if (path !== normalized) {
                 $location.replace().path(normalized);
             }
         });
@@ -34,7 +34,7 @@ appModule.run(['$rootScope', '$state', '$stateParams', function ($rootScope, $st
     $rootScope.breadcrumb = [{ title: 'Home' }];
     $rootScope.loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
     $rootScope.goToState = function (index) {
-        if (index + 1 != $rootScope.breadcrumb.length) {
+        if (index + 1 !== $rootScope.breadcrumb.length) {
             var link = $rootScope.breadcrumb[index];
             $state.go(link.link, (link.config || $stateParams));
         }
@@ -66,12 +66,12 @@ appModule.directive('ngUploadChange', function () {
                     $scope.ngUploadChange(event, $attrs.tag);
                 }
 
-            })
+            });
             $scope.$on("$destroy", function () {
                 $element.off();
             });
         }
-    }
+    };
 });
 
 // add floating-number-only as an attribute e.g <input type="text" floating-number-only />
