@@ -34,6 +34,20 @@
             ]
         })
         .state({
+            name: 'site.payment',
+            template: '<div ui-view>',
+            url: '/payment',
+            abstract: true,
+            children: [
+                {
+                    name: 'list',
+                    url: '/list',
+                    templateUrl: '/App/Payment/List.html',
+                    controller: 'PaymentList'
+                }
+            ]
+        })
+        .state({
             name: 'site.users',
             template: '<div ui-view>',
             url: '/users',

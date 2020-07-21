@@ -24,13 +24,13 @@ namespace NCELAP.WebAPI.Controllers.Application
         }
 
 
-        [HttpPost]
-        [Route("generateRRR")]
-        public async Task<IActionResult> GenerateRemitaRetrievalReference(RemitaReferenceRetrievalModel model)
+        [HttpGet]
+        [Route("generateRRR/{applicationId}")]
+        public async Task<IActionResult> GenerateRemitaRetrievalReference(long applicationId)
         {
             try
             {
-                var response = await _service.GetRemitaRetrivalReference(model);
+                var response = await _service.GetRemitaRetrivalReference(applicationId);
                 return Ok(response);
             }
             catch (Exception ex)
@@ -38,21 +38,7 @@ namespace NCELAP.WebAPI.Controllers.Application
                 return BadRequest(ex.Message);
             }
         }
-
-        [HttpPost]
-        [Route("submitPaymentInformation")]
-        public async Task<IActionResult> SaveLicensePaymentInformation(LicenseApplicationPaymentModel model)
-        {
-            try
-            {
-                var response = await _service.SavePaymentInformation(model);
-                return Ok(response);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
+        
 
         [HttpGet]
         [Route("customerPayments/{custRecId}")]
@@ -69,19 +55,5 @@ namespace NCELAP.WebAPI.Controllers.Application
             }
         }
 
-        [HttpPost]
-        [Route("getRRRPayload")]
-        public IActionResult GetRRRPayload(RemitaReferenceRetrievalModel model)
-        {
-            try
-            {
-                var response =  _service.GetRemitaRRModel(model);
-                return Ok(response);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
     }
 }

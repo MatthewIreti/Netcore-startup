@@ -395,85 +395,20 @@ appModule.controller('ApplicationGetDetails', function ($scope, $http, $state) {
     });
 });
 
-appModule.controller('ApplicationInvoice', function ($scope, $http, $state) {
+appModule.controller('ApplicationInvoice', function ($scope, $http, $state, $timeout, $window) {
 
     $scope.waiting++;
     $http({
         method: 'GET',
-        url: baseUrl + 'applications/licenseapplicationdetails/' + $state.params.recordId
-
+        url: baseUrl + 'payment/generateRRR/' + $state.params.recordId
     }).then(function (response) {
         $scope.item = response.data;
-
-        $http({
-            method: 'GET',
-            url: baseUrl + 'applications/licensefees/'
-        }).then(function (response) {
-            $scope.waiting--;
-            $scope.licenseFees = response.data;
-            initPaymentData($scope.item)
-        }, function (error) {
-            console.log(error);
-        });
+        $scope.waiting--;
     }, function (error) {
         $scope.waiting--;
     });
 
-
-
-    var initPaymentData = function (application) {
-
-        if ($scope.licenseFees.length > 0) {
-            for (var i = 0; i < $scope.licenseFees.length - 1; i++) {
-                var currentLicenseFee = $scope.licenseFees[i];
-
-                if (currentLicenseFee.licenseType === application.custLicenseType && application.maximumNominatedCapacity >= currentLicenseFee.minimum && application.maximumNominatedCapacity <= currentLicenseFee.maximum) {
-                    $scope.statutoryFee = currentLicenseFee.statutory;
-                    $scope.serviceTypeId = currentLicenseFee.StatutoryFeeServiceTypeId;
-                    $scope.processingFee = currentLicenseFee.processingFee;
-                }
-            }
-        }
-
-        var req = {
-            method: 'POST',
-            url: baseUrl + 'Payment/getRRRPayload',
-            data: {
-                serviceTypeId: "40816498",
-                amount: $scope.processingFee,
-                orderId: application.applicationNum,
-                payerName: application.declarationName,
-                payerEmail: "dflont@gmail.com",
-                description: 'Payment for A' + application.custLicenseType
-            }
-        }
-        console.log(req);
-        $http(req).then(function (response) {
-            $scope.remita = response.data;
-            $scope.remita.responseUrl = "";
-            $scope.remita.action = "http://remitademo.net/remita/ecomm/finalize.reg";
-            $scope.remita.rrr = "330007846039";
-            console.log($scope.remita);
-            var rrrReq = {
-                method: 'POST',
-                headers: {
-                    'Authorization': 'remitaConsumerKey=' + response.data.merchantId + ',remitaConsumerToken=' + response.data.hash
-                },
-                url: response.data.url,
-                data: req.data
-            }
-            //$http(rrrReq).then(function (response) {
-            //    console.log(response);
-            //      var rrrResponse = response.replace("jsonp (", "").replace(")", "");
-            //     var jsonResponse = JSON.parse(rrrResponse);
-            //     console.log(jsonResponse);
-            //    console.log(rrrResponse);
-            //}, function (error) {
-            //    console.log(error);
-            //});
-
-        }, function (error) {
-            console.log(error);
-        });
+    $scope.printInvoice = function () {
+        $timeout($window.print, 0);
     }
 });

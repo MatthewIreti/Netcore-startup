@@ -71,12 +71,11 @@
                                                 <div class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="split-button{{$index}}">
                                                     <a ui-sref="site.application.details({recordId:application.recordId})" class="dropdown-item">View Details</a>
                                                     <a ng-show="application.custLicenseApplicationStatus == 'Submitted'" ui-sref="#" class="dropdown-item">Update application</a>
-                                                    <a ng-show="application.custLicenseApplicationStatus == 'AwaitingProcessingFee'" ui-sref="#ProcessingFee" class="dropdown-item">
-                                                        Update Payment Evidence
+                                                    <a ng-show="application.custLicenseApplicationStatus == 'AwaitingProcessingFee'
+                                                       || application.custLicenseApplicationStatus == 'AwaitingLicenseFee'" ui-sref="site.application.invoice({recordId:application.recordId})" class="dropdown-item">
+                                                        Generate Invoice
                                                     </a>
-                                                    <a ng-show="application.custLicenseApplicationStatus == 'AwaitingLicenseFee'" ui-sref="#LicenseFee" class="dropdown-item">
-                                                        Update Payment Evidence
-                                                    </a>
+
                                                     <div class="dropdown-divider"></div>
                                                     <!--<a ui-sref="site.application.invoice({recordId:application.recordId})"
                                                        ng-show="application.custLicenseApplicationStatus == 'AwaitingProcessingFee'" class="dropdown-item">Generate Invoice</a>-->
