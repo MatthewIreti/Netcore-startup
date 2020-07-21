@@ -28,21 +28,23 @@
 
     
     $scope.businessInfoDocumentsForUpload = {
-        CertificateOfRegistrationFileName: '', CertificateOfRegistrationFileExtension: '', CertificateOfRegistrationBase64: '',
+        //CertificateOfRegistrationFileName: '', CertificateOfRegistrationFileExtension: '', CertificateOfRegistrationBase64: '',
         CertificateOfIncorporationFileName: '', CertificateOfIncorporationFileExtension: '', CertificateOfIncorporationBase64: '',
         MemorandumArticlesOfAssociationFileName: '', MemorandumArticlesOfAssociationFileExtension: '', MemorandumArticlesOfAssociationBase64: '',
-        DeedOfPartnershipFileName: '', DeedOfPartnershipFileExtension: '', DeedOfPartnershipBase64: '',
-        DeedOfTrustFileName: '', DeedOfTrustFileExtension: '', DeedOfTrustBase64: ''
+        //DeedOfPartnershipFileName: '', DeedOfPartnershipFileExtension: '', DeedOfPartnershipBase64: '',
+        TaxClearanceFileName: '', TaxClearanceFileExtension: '', TaxClearanceBase64: '',
+        BankStatementFileName: '', BankStatementFileExtension: '', BankStatementBase64: '',
+        OrganizationChartFileName: '', OrganizationChartFileExtension: '', OrganizationChartBase64: ''
     };
 
     $scope.custProspectUploadsFileSizeCheckModel = {
         CertificationOfRegistrationFileSizeValid: '', CertificateOfIncorporationFileSizeValid: '', MemorandumArticlesOfAssociationFileSizeValid: '',
-        DeedOfPartnershipFileSizeValid: '', DeedOfTrustFileSizeValid: ''
+        DeedOfPartnershipFileSizeValid: '', TaxClearanceFileSizeValid: '', BankStatementFileSizeValid: '', OrganizationChartFileSizeValid: ''
     };
 
     $scope.custProspectUploadsFileExtensionCheckModel = {
         CertificationOfRegistrationFileExtensionValid: '', CertificateOfIncorporationFileExtensionValid: '', MemorandumArticlesOfAssociationFileExtensionValid: '',
-        DeedOfPartnershipFileExtensionValid: '', DeedOfTrustFileExtensionValid: ''
+        DeedOfPartnershipFileExtensionValid: '', TaxClearanceFileExtensionValid: '', BankStatementFileExtensionValid: '', OrganizationChartFileExtensionValid: ''
     };
 
     // custProspectUploads
@@ -375,29 +377,29 @@
                             const fileNameFormatted = selectedFile.name.substring(0, lastDot);
                             const extension = extractExtensionFromFileName(selectedFile.name);
 
-                            $scope.businessInfoDocumentsForUpload.DeedOfTrustFileName = fileNameFormatted;
-                            $scope.businessInfoDocumentsForUpload.DeedOfTrustFileExtension = extension;
-                            $scope.businessInfoDocumentsForUpload.DeedOfTrustBase64 = base64String;
+                            $scope.businessInfoDocumentsForUpload.TaxClearanceFileName = fileNameFormatted;
+                            $scope.businessInfoDocumentsForUpload.TaxClearanceFileExtension = extension;
+                            $scope.businessInfoDocumentsForUpload.TaxClearanceBase64 = base64String;
 
                             if (selectedFile.size > maxFileSize) {
-                                $scope.custProspectUploadsFileSizeCheckModel.DeedOfTrustFileSizeValid = false;
+                                $scope.custProspectUploadsFileSizeCheckModel.TaxClearanceFileSizeValid = false;
                                 document.getElementById('deedOfTrustIndicator').innerHTML = "File size cannot be more than 2MB!";
 
                             } else {
-                                $scope.custProspectUploadsFileSizeCheckModel.DeedOfTrustFileSizeValid = true;
+                                $scope.custProspectUploadsFileSizeCheckModel.TaxClearanceFileSizeValid = true;
                                 document.getElementById('deedOfTrustIndicator').innerHTML = "";
                             }
 
-                            if ($scope.custProspectUploadsFileSizeCheckModel.DeedOfTrustFileSizeValid === true) {
+                            if ($scope.custProspectUploadsFileSizeCheckModel.TaxClearanceFileSizeValid === true) {
                                 if (extension === 'pdf') {
-                                    $scope.custProspectUploadsFileSizeCheckModel.DeedOfTrustFileExtensionValid = true;
+                                    $scope.custProspectUploadsFileSizeCheckModel.TaxClearanceFileExtensionValid = true;
                                     document.getElementById('deedOfTrustIndicator').innerHTML = "";
                                 } else {
-                                    $scope.custProspectUploadsFileSizeCheckModel.DeedOfTrustFileExtensionValid = false;
+                                    $scope.custProspectUploadsFileSizeCheckModel.TaxClearanceFileExtensionValid = false;
                                     document.getElementById('deedOfTrustIndicator').innerHTML = "Only PDF files are allowed!";
                                 }
                             }
-                            console.log($scope.custProspectUploadsFileSizeCheckModel.DeedOfTrustFileSizeValid);
+                            console.log($scope.custProspectUploadsFileSizeCheckModel.TaxClearanceFileSizeValid);
                         };
                     })(selectedFile);
                 }
@@ -407,6 +409,113 @@
         }
 
         $scope.registrationInformationModel.CompanyLegalStatus = $scope.registrationInformationModel.CompanyLegalStatus;
+    };
+
+    $scope.bankStatementFileHandler = function () {
+        var fi = document.getElementById('bankStatement');
+        var selectedFile;
+
+        if (fi.files.length > 0) {
+            for (var i = 0; i <= fi.files.length - 1; i++) {
+                var reader = new FileReader();
+                selectedFile = fi.files.item(0);
+
+                reader.readAsBinaryString(selectedFile);
+                if (selectedFile !== undefined) {
+                    const lastDot = selectedFile.name.lastIndexOf('.');
+
+                    reader.onload = (function (theFile) {
+                        return function (e) {
+                            var binaryData = e.target.result;
+                            var base64String = window.btoa(binaryData);
+                            const fileNameFormatted = selectedFile.name.substring(0, lastDot);
+                            const extension = extractExtensionFromFileName(selectedFile.name);
+
+                            $scope.businessInfoDocumentsForUpload.BankStatementFileName = fileNameFormatted;
+                            $scope.businessInfoDocumentsForUpload.BankStatementFileExtension = extension;
+                            $scope.businessInfoDocumentsForUpload.BankStatementBase64 = base64String;
+
+                            if (selectedFile.size > maxFileSize) {
+                                $scope.custProspectUploadsFileSizeCheckModel.BankStatementFileSizeValid = false;
+                                document.getElementById('bankStatementIndicator').innerHTML = "File size cannot be more than 2MB!";
+
+                            } else {
+                                $scope.custProspectUploadsFileSizeCheckModel.BankStatementFileSizeValid = true;
+                                document.getElementById('bankStatementIndicator').innerHTML = "";
+                            }
+
+                            if ($scope.custProspectUploadsFileSizeCheckModel.BankStatementFileSizeValid === true) {
+                                if (extension === 'pdf') {
+                                    $scope.custProspectUploadsFileSizeCheckModel.BankStatementFileExtensionValid = true;
+                                    document.getElementById('bankStatementIndicator').innerHTML = "";
+                                } else {
+                                    $scope.custProspectUploadsFileSizeCheckModel.BankStatementFileExtensionValid = false;
+                                    document.getElementById('bankStatementIndicator').innerHTML = "Only PDF files are allowed!";
+                                }
+                            }
+                            console.log($scope.custProspectUploadsFileSizeCheckModel.BankStatementFileSizeValid);
+                        };
+                    })(selectedFile);
+                }
+                //console.clear();
+                console.log($scope.businessInfoDocumentsForUpload);
+            }
+        }
+
+        //$scope.registrationInformationModel.CompanyLegalStatus = $scope.registrationInformationModel.CompanyLegalStatus;
+    };
+
+    $scope.organizationChartFileHandler = function () {
+        var fi = document.getElementById('organizationalChart');
+        var selectedFile;
+
+        if (fi.files.length > 0) {
+            for (var i = 0; i <= fi.files.length - 1; i++) {
+                var reader = new FileReader();
+                selectedFile = fi.files.item(0);
+
+                reader.readAsBinaryString(selectedFile);
+                if (selectedFile !== undefined) {
+                    const lastDot = selectedFile.name.lastIndexOf('.');
+
+                    reader.onload = (function (theFile) {
+                        return function (e) {
+                            var binaryData = e.target.result;
+                            var base64String = window.btoa(binaryData);
+                            const fileNameFormatted = selectedFile.name.substring(0, lastDot);
+                            const extension = extractExtensionFromFileName(selectedFile.name);
+
+                            $scope.businessInfoDocumentsForUpload.OrganizationChartFileName = fileNameFormatted;
+                            $scope.businessInfoDocumentsForUpload.OrganizationChartFileExtension = extension;
+                            $scope.businessInfoDocumentsForUpload.OrganizationChartBase64 = base64String;
+
+                            if (selectedFile.size > maxFileSize) {
+                                $scope.custProspectUploadsFileSizeCheckModel.OrganizationChartFileSizeValid = false;
+                                document.getElementById('organizationalChartIndicator').innerHTML = "File size cannot be more than 2MB!";
+
+                            } else {
+                                $scope.custProspectUploadsFileSizeCheckModel.OrganizationChartFileSizeValid = true;
+                                document.getElementById('organizationalChartIndicator').innerHTML = "";
+                            }
+
+                            if ($scope.custProspectUploadsFileSizeCheckModel.OrganizationChartFileSizeValid === true) {
+                                if (extension === 'pdf') {
+                                    $scope.custProspectUploadsFileSizeCheckModel.OrganizationChartFileExtensionValid = true;
+                                    document.getElementById('organizationalChartIndicator').innerHTML = "";
+                                } else {
+                                    $scope.custProspectUploadsFileSizeCheckModel.OrganizationChartFileExtensionValid = false;
+                                    document.getElementById('organizationalChartIndicator').innerHTML = "Only PDF files are allowed!";
+                                }
+                            }
+                            console.log($scope.custProspectUploadsFileSizeCheckModel.OrganizationChartFileExtensionValid);
+                        };
+                    })(selectedFile);
+                }
+                //console.clear();
+                console.log($scope.businessInfoDocumentsForUpload);
+            }
+        }
+
     };
 
     $scope.test = function () {
@@ -428,8 +537,9 @@
         
         console.log($scope.registrationInformationModel);
 
-        if ($scope.businessInfoDocumentsForUpload.CertificateOfRegistrationBase64 === '' || $scope.businessInfoDocumentsForUpload.CertificateOfIncorporationBase64 === '' ||
-            $scope.businessInfoDocumentsForUpload.MemorandumArticlesOfAssociationBase64 === '' || $scope.businessInfoDocumentsForUpload.DeedOfTrustBase64 === '')
+        if ($scope.businessInfoDocumentsForUpload.CertificateOfRegistrationBase64 === '' || $scope.businessInfoDocumentsForUpload.CertificateOfIncorporationBase64 === ''
+            || $scope.businessInfoDocumentsForUpload.MemorandumArticlesOfAssociationBase64 === '' || $scope.businessInfoDocumentsForUpload.TaxClearanceBase64 === ''
+            || $scope.businessInfoDocumentsForUpload.BankStatementBase64 === '' || $scope.businessInfoDocumentsForUpload.TaxClearanceBase64 === '')
         {
             toastr.warning('At least one of the supporting documents has not been selected', 'Warning!', {});
         } else {

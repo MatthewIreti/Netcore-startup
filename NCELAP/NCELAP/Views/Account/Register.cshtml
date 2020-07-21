@@ -513,18 +513,18 @@
                                                                                 <div id="collapse220" class="collapse" aria-labelledby="heading220" data-parent="#accordionExample0">
                                                                                     <div class="card-body">
                                                                                         <div class="row">
-                                                                                            <div class="col col-lg-6 col-xl-6 col-12">
-                                                                                                <fieldset class="form-group">
-                                                                                                    <label for="certificateOfRegistration">
-                                                                                                        Certificate Of Registration <span class="text-danger">*</span><span class="text-sm"> (pdf files only)</span>
-                                                                                                    </label>
-                                                                                                    <div class="custom-file">
-                                                                                                        <input type="file" class="form-control" onchange="angular.element(this).scope().certificateOfRegistrationFileHandler()" name="Attachment" id="certificateOfRegistration" accept=".pdf">
-                                                                                                    </div>
-                                                                                                    <div class="text-danger text-sm" id="certificateOfRegistrationWarningIndicator"></div>
-                                                                                                </fieldset>
+                                                                                            @*<div class="col col-lg-6 col-xl-6 col-12">
+                <fieldset class="form-group">
+                    <label for="certificateOfRegistration">
+                        Certificate Of Registration <span class="text-danger">*</span><span class="text-sm"> (pdf files only)</span>
+                    </label>
+                    <div class="custom-file">
+                        <input type="file" class="form-control" onchange="angular.element(this).scope().certificateOfRegistrationFileHandler()" name="Attachment" id="certificateOfRegistration" accept=".pdf">
+                    </div>
+                    <div class="text-danger text-sm" id="certificateOfRegistrationWarningIndicator"></div>
+                </fieldset>
 
-                                                                                            </div>
+            </div>*@
                                                                                             <div class="col col-lg-6 col-xl-6 col-12">
                                                                                                 <fieldset class="form-group">
                                                                                                     <label for="certificateOfIncorporation">
@@ -536,9 +536,6 @@
                                                                                                     <div class="text-danger text-sm" id="certificateOfIncorporationWarningIndicator"></div>
                                                                                                 </fieldset>
                                                                                             </div>
-                                                                                        </div>
-
-                                                                                        <div class="row">
                                                                                             <div class="col col-lg-6 col-xl-6 col-12">
                                                                                                 <fieldset class="form-group">
                                                                                                     <label for="memorandumAndArticlesOfAssociation">
@@ -550,6 +547,10 @@
                                                                                                     <div class="text-danger text-sm" id="memorandumOfAssociationIndicator"></div>
                                                                                                 </fieldset>
                                                                                             </div>
+                                                                                        </div>
+
+                                                                                        <div class="row">
+
                                                                                             <div class="col col-lg-6 col-xl-6 col-12">
                                                                                                 <fieldset class="form-group">
                                                                                                     <label for="deedOfTrust">
@@ -561,25 +562,40 @@
                                                                                                     </div>
                                                                                                 </fieldset>
                                                                                             </div>
-                                                                                            @*<div class="col col-lg-6 col-xl-6 col-12">
-                            <fieldset class="form-group">
-                                <label for="deedOfPartnership">
-                                    Deed Of Partnership<span class="text-danger">*</span><span class="text-sm"> (pdf files only)</span>
-                                </label>
-                                <div class="custom-file">
-                                    <input accept=".pdf" class="form-control" onchange="angular.element(this).scope().deedOfPartnershipFileHandler()" type="file" id="deedOfPartnership">
-                                    <div class="text-danger text-sm" id="deedOfPartnershipIndicator"></div>
-                                </div>
-                            </fieldset>
-                        </div>*@
+                                                                                            <div class="col col-lg-6 col-xl-6 col-12">
+                                                                                                <fieldset class="form-group">
+                                                                                                    <label for="organizationalChart">
+                                                                                                        Organizational Chart<span class="text-danger">*</span><span class="text-sm"> (pdf files only)</span>
+                                                                                                    </label>
+                                                                                                    <div class="custom-file">
+                                                                                                        <input accept=".pdf" class="form-control" onchange="angular.element(this).scope().organizationChartFileHandler()" type="file" id="organizationalChart">
+                                                                                                        <div class="text-danger text-sm" id="organizationalChartIndicator"></div>
+                                                                                                    </div>
+                                                                                                </fieldset>
+                                                                                            </div>
+
                                                                                         </div>
-                                                                                        
+
+                                                                                        <div class="row">
+                                                                                            <div class="col col-lg-6 col-xl-6 col-12">
+                                                                                                <fieldset class="form-group">
+                                                                                                    <label for="bankStatement">
+                                                                                                        Financial Bank Statement/Letter of Comfort (this should be from a bank or a partner providing the funding)<span class="text-danger">*</span><span class="text-sm"> (pdf files only)</span>
+                                                                                                    </label>
+                                                                                                    <div class="custom-file">
+                                                                                                        <input accept=".pdf" class="form-control" onchange="angular.element(this).scope().bankStatementFileHandler()" type="file" id="bankStatement">
+                                                                                                        <div class="text-danger text-sm" id="bankStatementIndicator"></div>
+                                                                                                    </div>
+                                                                                                </fieldset>
+                                                                                            </div>
+                                                                                        </div>
+
                                                                                         <hr />
                                                                                         <div class="row">
                                                                                             <div class="col col-12 text-center">
                                                                                                 <button ng-show="processing === false" ng-click="saveBusinessAccountInformation()"
                                                                                                         class="btn btn-success"
-                                                                                                        ng-disabled="!registrationInformationModel.BusinessName || 
+                                                                                                        ng-disabled="!registrationInformationModel.BusinessName ||
                                                                                                         !registrationInformationModel.Email || !registrationInformationModel.Telephone || !registrationInformationModel.AuthorizedRepName || !registrationInformationModel.AuthorizedRepEmail || !registrationInformationModel.AuthorizedRepMobile">
                                                                                                     <i class="fa fa-pencil"></i> Register
                                                                                                 </button>

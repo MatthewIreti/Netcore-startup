@@ -306,10 +306,12 @@ namespace NCELAP.WebAPI.Services.Account
 
                     custProspectUploads.CustProspectRecId = custProspectRecId;
                     custProspectUploads.CertificateOfIncorporationFileName = businessName + "_Cert_of_Incorporation";
-                    custProspectUploads.CertificateOfRegistrationFileName = businessName + "_Cert_of_Registration";
+                    //custProspectUploads.CertificateOfRegistrationFileName = businessName + "_Cert_of_Registration";
                     custProspectUploads.MemorandumArticlesOfAssociationFileName = businessName + "_Memo_Articles_of_Association";
-                    custProspectUploads.DeedOfPartnershipFileName = businessName + "_Deed_of_Partnership";
-                    custProspectUploads.DeedOfTrustFileName = businessName + "_Deed_of_Trust";
+                    //custProspectUploads.DeedOfPartnershipFileName = businessName + "_Deed_of_Partnership";
+                    custProspectUploads.TaxClearanceFileName = businessName + "_Tax_Clearance";
+                    custProspectUploads.OrganizationChartFileName = businessName + "_Organization_Chart";
+                    custProspectUploads.BankStatementFileName = businessName + "_Bank_Statement";
 
                     var dateRegistered = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc);
 
