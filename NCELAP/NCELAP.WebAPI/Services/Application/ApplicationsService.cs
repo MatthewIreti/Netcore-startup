@@ -517,7 +517,7 @@ namespace NCELAP.WebAPI.Services.Application
 
                     jsonResponse = reader.ReadToEnd();
 
-                   var  webResponse = JsonConvert.DeserializeObject<BaseApplicationInfoResponse<APPlicationInfoDetails>>(jsonResponse);
+                   var  webResponse = JsonConvert.DeserializeObject<BaseApplicationResponse<APPlicationInfoDetails>>(jsonResponse);
                     applicationInfo = webResponse.value[0];
 
                     var proposedShareholders = await currentEnvironment.AppendPathSegment("AppCustShareholders")
