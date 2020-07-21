@@ -9,7 +9,7 @@
                             <a>Home</a>
                         </li>
                         <li class="breadcrumb-item active">
-                            <a ui-sref="site.users.index">User Accounts</a>
+                            <a ui-sref="site.users.index">Support Tickets</a>
                         </li>
 
                     </ol>
@@ -22,47 +22,77 @@
 <!-- Zero configuration table -->
 <section id="basic-datatable" waiting="{{waiting}}">
     <div class="row">
-        <div class="col col-lg-6 col-xl-6 col-12">
+        <div class="col col-lg-7 col-xl-7 col-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Create User Account</h4>
+                    <h4 class="card-title">Create Support Ticket</h4>
 
                 </div>
                 <hr />
                 <div class="card-content">
                     <div class="card-body card-dashboard">
-                        <form class="form" name="createUserForm" novalidate>
+                        <form class="form" name="createSupportTicketForm" novalidate>
                             <div class="form-body">
                                 <div class="row">
                                     <div class="col-12">
-                                        <div class="form-label-group">
-                                            <input type="text" ng-model="userCreateFormModel.Name" id="full-name-floating" class="form-control" placeholder="Enter Department" name="fname-floating">
-                                            <label for="full-name-floating">Department</label>
+                                        <div class="form-group">
+                                            <label for="department">Subject</label>
+                                            <input type="text" ng-model="supportCreateFormModel.Subject" id="department" class="form-control" name="Subject">
                                         </div>
                                     </div>
+                                </div>
+
+                                <div class="row">
                                     <div class="col-12" style="margin-bottom: 8px">
-                                        <div class="form-label-group">
-                                            <select class="form-control" ng-model="userCreateFormModel.Priority">
+                                        <div class="form-group">
+                                            <label for="email">Priority</label>
+                                            <select class="form-control" ng-model="supportCreateFormModel.Priority">
                                                 <option value="">-- Select --</option>
                                                 <option ng-repeat="caseseverity in caseseverities" value="{{ caseseverity.Value }}"> {{ caseseverity.Name }} </option>
                                             </select>
-                                            <label for="email-floating">Email</label>
                                         </div>
                                     </div>
+                                </div>
+
+                                <!--<div class="row">
                                     <div class="col-12">
-                                        <div class="form-label-group">
-                                            <input type="text" ng-model="userCreateFormModel.Department" id="department-floating" class="form-control" name="department-floating" placeholder="Department">
-                                            <label for="department-floating">Department</label>
+                                        <div class="form-group">
+                                            <label for="department">Department</label>
+                                            <input type="text" ng-model="userCreateFormModel.Name" id="department" class="form-control" name="Department">
                                         </div>
                                     </div>
+                                </div>-->
+
+                                <div class="row">
                                     <div class="col-12">
-                                        <button ng-disabled="userCreateFormModel.Name === '' || userCreateFormModel.Email === '' || userCreateFormModel.Department === '' || emailCheckResponse || verifyingEmail"
-                                                class="btn btn-primary mr-1 mb-1 waves-effect waves-light" ng-click="createUserAccount()">
-                                            Create Account
+                                        <div class="form-group">
+                                            <label for="Message">Message</label>
+                                            <!--<input type="text" ng-model="userCreateFormModel.Message" id="department" class="form-control" name="Message">-->
+                                            <textarea maxlength="500" rows="4" id="message" class="form-control" placeholder=""></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label for="department">Attachment</label>
+                                            <input type="file"  id="attachment" class="form-control" name="Attachment">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-12">
+                                        <button ng-disabled="supportCreateFormModel.Subject === '' || supportCreateFormModel.Email === '' || supportCreateFormModel.Department === '' || emailCheckResponse || verifyingEmail"
+                                                class="btn btn-primary mr-1 mb-1 waves-effect waves-light" ng-click="submitTicket()">
+                                            Submit Ticket
                                         </button>
                                         <button type="reset" class="btn btn-outline-warning mr-1 mb-1 waves-effect waves-light">Reset</button>
                                     </div>
                                 </div>
+
+
                             </div>
                         </form>
                     </div>
