@@ -31,11 +31,16 @@ namespace NCELAP.WebAPI.Models.Entities.Accounts
     public class CustProspectUploads
     {
         public long CustProspectRecId { get; set; }
-
+        public string BankStatementFileName { get; set; }
+        public string BankStatementFileExtension { get; set; }
+        public string BankStatementBase64 { get; set; }
+        public string OrganizationChartFileName { get; set; }
+        public string OrganizationChartFileExtension { get; set; }
+        public string OrganizationChartBase64 { get; set; }
         // Certificate Of Registration
-        public string CertificateOfRegistrationFileName { get; set; }
-        public string CertificateOfRegistrationFileExtension { get; set; }
-        public string CertificateOfRegistrationBase64 { get; set; }
+        //public string CertificateOfRegistrationFileName { get; set; }
+        //public string CertificateOfRegistrationFileExtension { get; set; }
+        //public string CertificateOfRegistrationBase64 { get; set; }
 
         // Certificate Of Incorporation
         public string CertificateOfIncorporationFileName { get; set; }
@@ -48,13 +53,13 @@ namespace NCELAP.WebAPI.Models.Entities.Accounts
         public string MemorandumArticlesOfAssociationBase64 { get; set; }
 
         // Deed Of Partnership
-        public string DeedOfPartnershipFileName { get; set; }
-        public string DeedOfPartnershipFileExtension { get; set; }
-        public string DeedOfPartnershipBase64 { get; set; }
+        //public string DeedOfPartnershipFileName { get; set; }
+        //public string DeedOfPartnershipFileExtension { get; set; }
+        //public string DeedOfPartnershipBase64 { get; set; }
 
         // Deed Of Trust
-        public string DeedOfTrustFileName { get; set; }
-        public string DeedOfTrustFileExtension { get; set; }
-        public string DeedOfTrustBase64 { get; set; }
+        public string TaxClearanceFileName { get; set; }
+        public string TaxClearanceFileExtension { get; set; }
+        public string TaxClearanceBase64 { get; set; }
     }
 }
