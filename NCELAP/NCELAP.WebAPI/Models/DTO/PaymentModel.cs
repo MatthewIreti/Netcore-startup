@@ -17,6 +17,21 @@ namespace NCELAP.WebAPI.Models.DTO
         public string description { get; set; }
 
     }
+    public class InfoReponse<T>
+    {
+        public bool Status{ get; set; }
+        public string  Message{ get; set; }
+        public T Data{ get; set; }
+    }
+    public class RemitaCollectionResponse
+    {   
+        public string status { get; set; }
+        public string RRR { get; set; }
+        public string merchantId { get; set; }
+        public string statusmessage { get; set; }
+        public string transactiontime { get; set; }
+        public string orderId { get; set; }
+    }
     public class ReferenceResponseModel
     {
         public string statusCode { get; set; }
@@ -26,6 +41,14 @@ namespace NCELAP.WebAPI.Models.DTO
         public string uniqueReference { get; set; }
         public RemitaReferenceRetrievalModel metadata { get; set; }
         public LicenseApplicationPaymentModel paymentInfo { get; set; }
+        public RemitaOnlineReference onlinePaymentReference { get; set; }
+    }
+    public class RemitaOnlineReference
+    {
+        public string hash { get; set; }
+        public string returnUrl { get; set; }
+        public string actionUrl { get; set; }
+
     }
 
     public class AXCustomSevice<T>

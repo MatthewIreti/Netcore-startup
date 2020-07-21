@@ -395,14 +395,17 @@ appModule.controller('ApplicationGetDetails', function ($scope, $http, $state) {
     });
 });
 
-appModule.controller('ApplicationInvoice', function ($scope, $http, $state, $timeout, $window) {
-
+appModule.controller('ApplicationInvoice', function ($scope, $http, $state, $timeout, $window, $sce) {
+    $scope.trustSrc = function (src) {
+        return $sce.trustAsResourceUrl(src);
+    }
     $scope.waiting++;
     $http({
         method: 'GET',
         url: baseUrl + 'payment/generateRRR/' + $state.params.recordId
     }).then(function (response) {
         $scope.item = response.data;
+        $scope.returnUrl = webBaseUrl + $scope.item.onlinePaymentReference.returnUrl;
         $scope.waiting--;
     }, function (error) {
         $scope.waiting--;

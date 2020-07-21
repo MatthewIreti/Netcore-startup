@@ -14,11 +14,14 @@
 
 
     function getCustomerApplications(custrecid) {
+
+
         $http({
             method: 'GET',
             url: baseUrl + 'payment/customerPayments/' + custrecid
         }).then(function (response) {
             $scope.items = response.data;
+           
             // if the datatable instance already exist, destroy before recreating, otherwise, just create
             if ($.fn.DataTable.isDataTable('#applicationsTable')) {
                 $('#applicationsTable').DataTable().destroy();

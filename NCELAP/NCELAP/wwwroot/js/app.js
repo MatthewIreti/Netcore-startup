@@ -1,4 +1,4 @@
-﻿var appModule = angular.module('ncLasPortalApp', ['ui.router', 'ui.router.stateHelper', 'ui.bootstrap']);
+﻿var appModule = angular.module('ncLasPortalApp', ['ui.router', 'ui.router.stateHelper', 'ui.bootstrap', 'ngSanitize']);
 appModule.config([
     'stateHelperProvider', '$urlRouterProvider',
     '$httpProvider', '$locationProvider', function (stateHelperProvider, $urlRouterProvider, $httpProvider, $locationProvider) {
