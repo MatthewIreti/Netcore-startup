@@ -1,33 +1,40 @@
 ﻿<section class="invoice-print mb-1">
     <div class="row">
         <div class="col-12 col-md-7 d-flex flex-column flex-md-row justify-content-end">
-            <button class="btn btn-primary btn-print mb-1 mb-md-0 pull-right"> <i class="feather icon-file-text"></i> Print</button>
-            <form action="http://remitademo.net/remita/ecomm/finalize.reg" method="POST">
-                <input type="hidden" name="merchantId" value="{{remita.merchantId}}" />
-                <input type="hidden" name="hash" value="884B73B56F3C65B1502A99DB0FB5973371981688ACDD74FE876639E7EF259CB371D70A24AD8DDE807DE4ADAA4104F043CA68614AFD16F7707827494CF66D4A19" />
-                <input type="hidden" name="rrr" value="{{remita.rrr}}" />
-                <input type="hidden" name="responseUrl" value="{{remita.responseUrl}}" />
-                <input class="btn btn-warning mb-1  mb-md-0 ml-1 pull-right" type="submit" name="submit_btn" value="Pay Via Remita" />
-            </form>
+            <button ng-click="printInvoice()" class="btn btn-primary btn-print mb-1 mb-md-0 pull-right"> <i class="feather icon-file-text"></i> Print</button>
+            <div hidden="hidden" class="pull-right">
+                {{item.paymentUrl}}
+                <img src="/Content/assets/images/remita-payment-logo-horizonal.png" />
+                <form action="{{item.paymentUrl}}" name="SubmitRemitaForm" method="POST">
+                    <input name="merchantId" value="{{item.merchantId}}" type="hidden">
+                    <input name="hash" value="{{item.hash}}" type="hidden">
+                    <input name="rrr" value="{{item.remitaRetrievalResponse}}" type="hidden">
+                    <input name="responseurl" value="{{item.returnUrl}}" type="hidden">
+                    <button class="btn btn-success pull-right">
+                        <i class="fa fa-money"></i> Pay now
+                    </button>
+                </form>
+
+            </div>
         </div>
     </div>
 </section>
 <section class="card invoice-page" waiting="{{waiting}}">
-    <div id="invoice-template" class="card-body">
+    <div class="card-body padding-0">
         <!-- Invoice Company Details -->
         <div id="invoice-company-details" class="row">
             <div class="col-sm-6 col-12 text-left pt-1">
                 <div class="media pt-1">
-                    <img src="../../../app-assets/images/logo/logo.png" alt="company logo" />
+                    <img src="https://www.dpr.gov.ng/wp-content/uploads/2019/10/LOGO-NEW.fw_.png" width="450" height="150" alt="Department of Petroleum Resources">
                 </div>
             </div>
             <div class="col-sm-6 col-12 text-right">
                 <h1>Invoice</h1>
                 <div class="invoice-details mt-2">
-                    <h6>INVOICE NO.</h6>
-                    <p>001/2019</p>
+                    <h6>Remita Reference Number</h6>
+                    <h3>{{item.rrr}}</h3>
                     <h6 class="mt-2">INVOICE DATE</h6>
-                    <p>10 Dec 2018</p>
+                    <p>{{item.paymentInfo.invoiceDate|date:"MMM d, y"}}</p>
                 </div>
             </div>
         </div>
@@ -37,37 +44,28 @@
             <div class="col-sm-6 col-12 text-left">
                 <h5>Recipient</h5>
                 <div class="recipient-info my-2">
-                    <p>Peter Stark</p>
-                    <p>8577 West West Drive</p>
-                    <p>Holbrook, NY</p>
-                    <p>90001</p>
+                    <p>Department of Petroleum Resources</p>
+                    <p>12, Kofo Abayomi Avenue</p>
+                    <p>Victoria Island, Lagos</p>
                 </div>
                 <div class="recipient-contact pb-2">
                     <p>
                         <i class="feather icon-mail"></i>
-                        peter@mail.com
-                    </p>
-                    <p>
-                        <i class="feather icon-phone"></i>
-                        +91 988 888 8888
+                        info@dpr.gov.ng
                     </p>
                 </div>
             </div>
             <div class="col-sm-6 col-12 text-right">
-                <h5>Microsion Technologies Pvt. Ltd.</h5>
-                <div class="company-info my-2">
-                    <p>9 N. Sherwood Court</p>
-                    <p>Elyria, OH</p>
-                    <p>94203</p>
-                </div>
+                <h5>{{item.metadata.payerName}}</h5>
+                
                 <div class="company-contact">
                     <p>
                         <i class="feather icon-mail"></i>
-                        hello@pixinvent.net
+                       {{item.metadata.payerEmail}}
                     </p>
-                    <p>
+                    <p ng-show="item.metadata.payerPhone">
                         <i class="feather icon-phone"></i>
-                        +91 999 999 9999
+                       {{item.metadata.payerPhone}}
                     </p>
                 </div>
             </div>
@@ -80,64 +78,21 @@
                     <table class="table table-borderless">
                         <thead>
                             <tr>
-                                <th>TASK DESCRIPTION</th>
-                                <th>HOURS</th>
-                                <th>RATE</th>
+                                <th>DESCRIPTION</th>
+                                <th>ORDER NO</th>
                                 <th>AMOUNT</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td>Website Redesign</td>
-                                <td>60</td>
-                                <td>15 USD</td>
-                                <td>90000 USD</td>
-                            </tr>
-                            <tr>
-                                <td>Newsletter template design</td>
-                                <td>20</td>
-                                <td>12 USD</td>
-                                <td>24000 USD</td>
+                                <td>{{item.metadata.description}}</td>
+                                <td>{{item.metadata.orderId}}</td>
+                                <td>{{item.paymentInfo.amount | currency:"₦"}}</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
-        <div id="invoice-total-details" class="invoice-total-table">
-            <div class="row">
-                <div class="col-7 offset-5">
-                    <div class="table-responsive">
-                        <table class="table table-borderless">
-                            <tbody>
-                                <tr>
-                                    <th>SUBTOTAL</th>
-                                    <td>114000 USD</td>
-                                </tr>
-                                <tr>
-                                    <th>DISCOUNT (5%)</th>
-                                    <td>5700 USD</td>
-                                </tr>
-                                <tr>
-                                    <th>TOTAL</th>
-                                    <td>108300 USD</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Invoice Footer -->
-        <div id="invoice-footer" class="text-right pt-3">
-            <p>Transfer the amounts to the business amount below. Please include invoice number on your check.
-            <p class="bank-details mb-0">
-                <span class="mr-4">BANK: <strong>FTSBUS33</strong></span>
-                <span>IBAN: <strong>G882-1111-2222-3333</strong></span>
-            </p>
-        </div>
-        <!--/ Invoice Footer -->
-
     </div>
 </section>
