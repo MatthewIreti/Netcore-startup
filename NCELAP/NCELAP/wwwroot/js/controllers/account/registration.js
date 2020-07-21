@@ -1,5 +1,6 @@
 ﻿userAccessModule.controller('registrationPageCtrl', function ($scope, $http) {
     $scope.emailExist = false; //"is-valid";
+    $scope.uploadMissing = false;
     $scope.processing = false;
     var maxFileSize = 2500000; // 2 Megabytes
     $scope.shareholders = [];
@@ -408,8 +409,12 @@
         $scope.registrationInformationModel.CompanyLegalStatus = $scope.registrationInformationModel.CompanyLegalStatus;
     };
 
+    $scope.test = function () {
+        toastr.warning('At least one of the supporting documents has not been selected', 'Warning!', {});
+    };
+
     $scope.saveBusinessAccountInformation = function () {
-        $scope.processing = true;
+        
         var businessAddress = document.getElementById("addressLocation").value;
         var authorizedRepAddress = document.getElementById("addressAuthorizedRepresentative").value;
         var detailsOfConviction = document.getElementById("DirectorCriminalActDetailsfConviction").value;
@@ -423,18 +428,28 @@
         
         console.log($scope.registrationInformationModel);
 
-        $http({
-            method: 'POST',
-            url: baseUrl + 'accounts/registeredbusiness',
-            data: $scope.registrationInformationModel,
-            dataType: 'json'
-        }).then(function (response) {
-            if (response.data === true) {
-                window.location.href = "/account/registrationcomplete";
-            }
-        }, function (error) {
-            console.log(error);
-        });
+        if ($scope.businessInfoDocumentsForUpload.CertificateOfRegistrationBase64 === '' || $scope.businessInfoDocumentsForUpload.CertificateOfIncorporationBase64 === '' ||
+            $scope.businessInfoDocumentsForUpload.MemorandumArticlesOfAssociationBase64 === '' || $scope.businessInfoDocumentsForUpload.DeedOfTrustBase64 === '')
+        {
+            toastr.warning('At least one of the supporting documents has not been selected', 'Warning!', {});
+        } else {
+            $scope.processing = true;
+
+            $http({
+                method: 'POST',
+                url: baseUrl + 'accounts/registeredbusiness',
+                data: $scope.registrationInformationModel,
+                dataType: 'json'
+            }).then(function (response) {
+                if (response.data === true) {
+                    window.location.href = "/account/registrationcomplete";
+                }
+            }, function (error) {
+                console.log(error);
+            });
+        }
+
+        
     };
 
     $scope.loadYearsofExperience = function () {
