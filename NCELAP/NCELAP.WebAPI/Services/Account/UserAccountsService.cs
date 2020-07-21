@@ -20,7 +20,7 @@ namespace NCELAP.WebAPI.Services.Account
     public class UserAccountsService
     {
         readonly IConfiguration _configuration;
-        private readonly string businessaccount, businessaccountlegalstatus, businessaccountshareholder, businessaccountdirector, docupload;
+        private readonly string businessaccount, businessaccountlegalstatus, businessaccountshareholder, businessaccountdirector, docupload, custpropspectstafflist;
         private readonly string ncelasloginendpoint, companynamebycustrecid, accountdetails, ncelasinfoupdate, ncelasusers, ncelasuserbyemail, ncelasusersbycreatorrecid;
         private string jsonResponse;
         private readonly AuthService _authService;
@@ -43,6 +43,7 @@ namespace NCELAP.WebAPI.Services.Account
             ncelasusers = _configuration.GetSection("Endpoints").GetSection("ncelasusers").Value;
             ncelasuserbyemail = _configuration.GetSection("Endpoints").GetSection("ncelasuserbyemail").Value;
             ncelasusersbycreatorrecid = _configuration.GetSection("Endpoints").GetSection("ncelasusersbycreatorrecid").Value;
+            custpropspectstafflist = _configuration.GetSection("Endpoints").GetSection("custpropspectstafflist").Value;
         }
 
         public async Task<bool> SaveBusinessInformation(RegisteredBusiness registeredBusiness)
@@ -104,15 +105,73 @@ namespace NCELAP.WebAPI.Services.Account
 
                         // save business directors
                         var prospectDirectorsSaveResponse = await this.SaveCustProspectDirectors(registeredBusiness.Directors, custProspectResponse.RecordId, custProspectForSave.CustProspectId);
+                        
+                        // save staffs
+                        var staffSaveResponse = await this.SaveStaffList(registeredBusiness.Staffs, custProspectResponse.RecordId, custProspectForSave.CustProspectId);
 
                         // upload supporting documents
                         var supportingDocsUpload = await this.UploadCustProspectSupportingDocuments(registeredBusiness.SupportingDocuments, custProspectResponse.RecordId, custProspectForSave.BusinessName);
+
                     }
                 }
             }
             catch (Exception ex)
             {
                 Log.Error(ex.StackTrace);
+            }
+
+            return response;
+        }
+
+        public async Task<bool> SaveStaffList(Staff[] custProspectStaffs, long custProspectRecId, string custProspectId)
+        {
+            bool response = false;
+
+            var helper = new Helper(_configuration);
+            var authOperation = new AuthService(_configuration);
+            int count = 0;
+
+            string token = _authService.GetAuthToken();
+            string currentEnvironment = helper.GetEnvironmentUrl();
+
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri(currentEnvironment);
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+                    client.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/json");
+
+                    foreach (var custProspectStaff in custProspectStaffs)
+                    {
+                        custProspectStaff.CustProspectId = custProspectId;
+                        custProspectStaff.CustProspect = custProspectRecId;
+                        custProspectStaff.UniqueId = Helper.RandomAlhpaNumeric(15);
+                        var dateRegistered = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc);
+
+                        var responseMessage = await client.PostAsJsonAsync(custpropspectstafflist, custProspectStaff);
+                        var errorMessage = responseMessage.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+
+                        StreamReader sr = new StreamReader(await responseMessage.Content.ReadAsStreamAsync());
+                        var reportSaveResponse = sr.ReadToEnd();
+
+                        if (responseMessage.IsSuccessStatusCode)
+                        {
+                            count++;
+                        }
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex.StackTrace);
+            }
+
+            if (count > 0)
+            {
+                response = true;
             }
 
             return response;
@@ -454,7 +513,6 @@ namespace NCELAP.WebAPI.Services.Account
 
             return companyName;
         }
-
 
         public async Task<bool> CreateUser(UserToCreate userToCreate)
         {
