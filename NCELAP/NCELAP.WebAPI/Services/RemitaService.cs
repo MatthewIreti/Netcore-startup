@@ -1,7 +1,9 @@
-﻿using Flurl.Http;
+﻿using Flurl;
+using Flurl.Http;
 using NCELAP.WebAPI.Models.DTO;
 using NCELAP.WebAPI.Util;
 using Newtonsoft.Json;
+using Serilog;
 using System;
 using System.IO;
 using System.Net.Http;
@@ -14,6 +16,7 @@ namespace NCELAP.WebAPI.Services
     {
         Task<ReferenceResponseModel> GetRRR(RemitaReferenceRetrievalModel model);
         RemitaReferenceRetrievalModel GetRemitaRRModel(RemitaReferenceRetrievalModel model);
+        Task<InfoReponse<RemitaCollectionResponse>> GetTransactionStatus(string RRR);
     }
     public class RemitaService : IRemitaService
     {
@@ -45,7 +48,50 @@ namespace NCELAP.WebAPI.Services
                 throw;
             }
         }
+        public async Task<InfoReponse<RemitaCollectionResponse>> GetTransactionStatus(string RRR)
+        {
+            try
+            {
+                var hash = Helper.ComputeSHA512($"{RRR}{_remitaAppSetting.APIKey}{_remitaAppSetting.merchantId}");
+                var url = _remitaAppSetting.baseUrl;
+                var request = await url
+                    .AppendPathSegment($"{_remitaAppSetting.domain}/{_remitaAppSetting.merchantId}/{RRR}/{hash}/status.reg")
+                    .GetAsync()
+                  .ReceiveString();
+                var jsonResult = request.Replace("jsonp (", "")
+                    .Replace(")", "");
+                var response = JsonConvert.DeserializeObject<RemitaCollectionResponse>(jsonResult);
+                if (response == null)
+                    throw new Exception("Invalid Remita response");
+                if (!string.IsNullOrEmpty(response.status) && (response.status.Equals("01") || response.status.Equals("00")))
+                {
+                    return new InfoReponse<RemitaCollectionResponse> { 
+                    Data = response,
+                    Status = true,
+                    Message =  "Transaction Completed Successfully"
+                    };
+                }
+                else
+                {
 
+                    return new InfoReponse<RemitaCollectionResponse>
+                    {
+                        Data = null,
+                        Status = false,
+                        Message ="Error Processing Payment"
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                return new InfoReponse<RemitaCollectionResponse>
+                {
+                    Data = null,
+                    Status = false,
+                    Message = ex.Message
+                };
+            }
+        }
         public async Task<ReferenceResponseModel> GetRRR(RemitaReferenceRetrievalModel model)
         {
             try
@@ -57,7 +103,7 @@ namespace NCELAP.WebAPI.Services
                     merchantId = model.merchantId,
                     serviceTypeId = model.serviceTypeId,
                     description = model.description,
-                    orderId =  model.orderId,
+                    orderId = model.orderId,
                     payerEmail = model.payerEmail,
                     payerName = model.payerName,
                     url = model.url

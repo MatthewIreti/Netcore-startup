@@ -21,6 +21,7 @@ namespace NCELAP.WebAPI.Services.Application
         Task<LicenseApplicationPaymentModel> SavePaymentInformation(LicenseApplicationEntity model);
         Task<List<LicenseApplicationPaymentModel>> GetAllCustomerPaymentInformation(long custRecId);
         Task<ReferenceResponseModel> GetRemitaRetrivalReference(long applicationId);
+        Task<InfoReponse<RemitaCollectionResponse>> GetCustomerPaymentStatus(string rrr);
     }
     public class PaymentService : IPaymentService
     {
@@ -29,13 +30,15 @@ namespace NCELAP.WebAPI.Services.Application
         private readonly Helper _helper;
         //IConfigurationSection section;
         private readonly IRemitaService _remitaService;
-        public PaymentService(IRemitaService remitaService, IConfiguration configuration)
+        private readonly RemitaAppSetting _remitaAppSetting;
+        public PaymentService(IRemitaService remitaService, IConfiguration configuration, RemitaAppSetting remitaAppSetting)
         {
             _configuration = configuration;
             _authService = new AuthService(configuration);
             _helper = new Helper(configuration);
             //section = configuration.GetSection("Remita");
             _remitaService = remitaService;
+            _remitaAppSetting = remitaAppSetting;
         }
         public async Task<RemitaReferenceRetrievalModel> FetchRRRPayload(long applicationId)
         {
@@ -104,11 +107,15 @@ namespace NCELAP.WebAPI.Services.Application
                     }
                 }
                 response.metadata = payload;
+                response.onlinePaymentReference = new RemitaOnlineReference
+                {
+                    hash = Helper.ComputeSHA512($"{response.metadata.merchantId}{response.RRR}{response.metadata.apiKey}"),
+                    actionUrl = $"{_remitaAppSetting.baseUrl}/remita/ecomm/finalize.reg",
+                    returnUrl = "companyOperator/paymentsuccessful"
+                };
                 response.metadata.apiKey = "";
                 response.metadata.url = "";
-                response.metadata.merchantId = "";
                 response.paymentInfo = paymentInfo;
-
                 return response;
             }
             catch (Exception ex)
@@ -161,6 +168,24 @@ namespace NCELAP.WebAPI.Services.Application
             try
             {
                 return _remitaService.GetRemitaRRModel(model);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public async Task<InfoReponse<RemitaCollectionResponse>> GetCustomerPaymentStatus(string rrr)
+        {
+            try
+            {
+                var response =  await _remitaService.GetTransactionStatus(rrr);
+
+                    if (response.Status)
+                    {
+                        //Call Dynamics to update payment
+                    }
+                    return response;
             }
             catch (Exception ex)
             {

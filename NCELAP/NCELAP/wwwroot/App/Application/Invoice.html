@@ -2,14 +2,12 @@
     <div class="row">
         <div class="col-12 col-md-7 d-flex flex-column flex-md-row justify-content-end">
             <button ng-click="printInvoice()" class="btn btn-primary btn-print mb-1 mb-md-0 pull-right"> <i class="feather icon-file-text"></i> Print</button>
-            <div hidden="hidden" class="pull-right">
-                {{item.paymentUrl}}
-                <img src="/Content/assets/images/remita-payment-logo-horizonal.png" />
-                <form action="{{item.paymentUrl}}" name="SubmitRemitaForm" method="POST">
-                    <input name="merchantId" value="{{item.merchantId}}" type="hidden">
-                    <input name="hash" value="{{item.hash}}" type="hidden">
-                    <input name="rrr" value="{{item.remitaRetrievalResponse}}" type="hidden">
-                    <input name="responseurl" value="{{item.returnUrl}}" type="hidden">
+            <div class="pull-right ml-2">
+                <form novalidate action="{{trustSrc(item.onlinePaymentReference.actionUrl)}}" name="SubmitRemitaForm" method="POST">
+                    <input name="merchantId" value="{{item.metadata.merchantId}}" type="hidden">
+                    <input name="hash" value="{{item.onlinePaymentReference.hash}}" type="hidden">
+                    <input name="rrr" value="{{item.rrr}}" type="hidden">
+                    <input name="responseurl" value="{{returnUrl}}" type="hidden">
                     <button class="btn btn-success pull-right">
                         <i class="fa fa-money"></i> Pay now
                     </button>
