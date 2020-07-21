@@ -1,6 +1,6 @@
-﻿const baseUrl = 'https://localhost:44310/api/';
+﻿// const baseUrl = 'https://localhost:44310/api/';
 //const baseUrl = 'https://ncelap-demo-api.azurewebsites.net/api/';
-//const baseUrl = 'http://ncelaapi.azurewebsites.net/';
+const baseUrl = 'https://ncelaapi.azurewebsites.net/api/';
 
 
 function extractExtensionFromFileName(fileName) {
@@ -9,4 +9,3 @@ function extractExtensionFromFileName(fileName) {
 
     return extension;
 }
-

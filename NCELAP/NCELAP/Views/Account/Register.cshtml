@@ -78,7 +78,7 @@
                                                                                                     <label for="inputTelePhone">
                                                                                                         <span>Telephone<span class="text-danger">*</span></span>
                                                                                                     </label>
-                                                                                                    <input type="text" maxlength="15" name="Telephone" ng-model="registrationInformationModel.Telephone" value="+234" id="inputTelePhone" class="form-control" required>
+                                                                                                    <input type="text" name="Telephone" ng-model="registrationInformationModel.Telephone" value="+234" id="inputTelePhone" class="form-control">
 
                                                                                                     <span class="text-danger text-small" ng-show="businessRegistrationForm.Telephone.$touched && businessRegistrationForm.Telephone.$invalid">
                                                                                                         <span ng-show="businessRegistrationForm.Telephone.$error.required">Telephone is required.</span>
@@ -90,7 +90,7 @@
                                                                                                     <label for="inputMobile">
                                                                                                         <span>Mobile</span>
                                                                                                     </label>
-                                                                                                    <input type="text" maxlength="15" ng-model="registrationInformationModel.Mobile" value="+234" id="inputMobile" name="Mobile" class="form-control">
+                                                                                                    <input type="text"  ng-model="registrationInformationModel.Mobile" value="+234" id="inputMobile" name="Mobile" class="form-control">
                                                                                                     <span class="text-danger text-small" ng-show="businessRegistrationForm.Mobile.$touched && businessRegistrationForm.Mobile.$invalid">
                                                                                                         <span ng-show="businessRegistrationForm.Mobile.$error.required">Mobile is required.</span>
                                                                                                     </span>
@@ -104,7 +104,7 @@
                                                                                                     <span>Postal Code</span>
                                                                                                 </label>
                                                                                                 <div class="form-group">
-                                                                                                    <input type="text" maxlength="15" ng-model="registrationInformationModel.PostalCode" id="inputPostalCode" class="form-control">
+                                                                                                    <input type="text"  ng-model="registrationInformationModel.PostalCode" id="inputPostalCode" class="form-control">
                                                                                                 </div>
 
                                                                                             </div>
@@ -125,7 +125,7 @@
                                                                                                     <label for="addressLocation">
                                                                                                         <span>Address<span class="text-danger">*</span></span>
                                                                                                     </label>
-                                                                                                    <textarea maxlength="100" rows="4" id="addressLocation" class="form-control" required></textarea>
+                                                                                                    <textarea maxlength="100" name="addressLocation" rows="4" id="addressLocation" class="form-control"></textarea>
 
                                                                                                 </div>
                                                                                             </div>
@@ -142,6 +142,7 @@
                                                                                                 <div class="form-group" ng-show="registrationInformationModel.CompanyLegalStatus === 'Others'">
                                                                                                     <input ng-model="OtherLegalStatus" type="text" placeholder="Enter Legal Status" class="form-control" />
                                                                                                 </div>
+
                                                                                             </div>
 
                                                                                             <div class="row">
@@ -199,7 +200,7 @@
                                                                                                     <label for="ShareHolderAddress">
                                                                                                         <span>Address</span>
                                                                                                     </label>
-                                                                                                    <textarea maxlength="100" rows="4" id="ShareHolderAddress" class="form-control" required></textarea>
+                                                                                                    <textarea maxlength="100" rows="4" id="ShareHolderAddress" class="form-control"></textarea>
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
@@ -237,6 +238,116 @@
                                                                                                 </table>
                                                                                             </div>
                                                                                         </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="collapse-border-item card collapse-header">
+                                                                                <div class="card-header" id="heading260" data-toggle="collapse" role="button" data-target="#listOfDirectors"
+                                                                                     aria-expanded="false" aria-controls="listOfDirectors">
+                                                                                    <span class="lead collapse-title">
+                                                                                        <strong> List & Particular of Directors</strong>
+                                                                                    </span>
+                                                                                </div>
+                                                                                <div id="listOfDirectors" class="collapse" aria-labelledby="heading260" data-parent="#accordionExample0">
+                                                                                    <div class="card-body">
+                                                                                        <div class="row">
+                                                                                            <div class="col col-lg-6 col-xl-6 col-12">
+                                                                                                <div class="form-group">
+                                                                                                    <label for="DirectorName">
+                                                                                                        <span>Name<span class="text-danger">*</span></span>
+                                                                                                    </label>
+                                                                                                    <input type="text" maxlength="50" ng-model="directorModel.Name" id="DirectorName" class="form-control">
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="col col-lg-6 col-xl-6 col-12">
+                                                                                                <div class="form-group">
+                                                                                                    <label for="DirectorNationality">
+                                                                                                        <span>Nationality<span class="text-danger">*</span></span>
+                                                                                                    </label>
+                                                                                                    <input type="text" maxlength="50" ng-model="directorModel.Nationality" id="DirectorNationality" class="form-control">
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                        <div class="row">
+                                                                                            <div class="col col-lg-6 col-xl-6 col-12">
+                                                                                                <div class="form-group">
+                                                                                                    <label for="DirectorCountryOfUsualResidence">
+                                                                                                        <span>Country Of Usual Residence<span class="text-danger">*</span></span>
+                                                                                                    </label>
+                                                                                                    <select class="form-control" ng-model="directorModel.CountryOfUsualResidence" id="DirectorCountryOfUsualResidence">
+                                                                                                        <option value="">-- Select --</option>
+                                                                                                        <option ng-repeat="country in countries"> {{ country.name }} </option>
+                                                                                                    </select>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="col col-lg-6 col-xl-6 col-12">
+                                                                                                <div class="form-group">
+                                                                                                    <label for="DirectorAddress">
+                                                                                                        <span>Address</span>
+                                                                                                    </label>
+                                                                                                    <textarea maxlength="100" rows="4" id="DirectorAddress" class="form-control"></textarea>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                        <div class="row">
+                                                                                            <div class="col col-12">
+                                                                                                <button ng-disabled="directorModel.Name === '' || directorModel.Nationality === '' || directorModel.CountryOfUsualResidence ===''"
+                                                                                                        ng-click="addDirector()" class="btn btn-success float-right">
+                                                                                                    <i class="fa fa-user-plus"></i> Add
+                                                                                                </button>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="row" ng-show="directors.length > 0">
+                                                                                            <div class="col col-12">
+                                                                                                <table class="table table-hover table-bordered" id="sampleTable" style="font-size: 14px">
+                                                                                                    <thead>
+                                                                                                        <tr>
+                                                                                                            <th>Name</th>
+                                                                                                            <th>Nationality</th>
+                                                                                                            <th>Country of Residence</th>
+                                                                                                            <th>Address</th>
+                                                                                                            <th>Actions</th>
+                                                                                                        </tr>
+                                                                                                    </thead>
+                                                                                                    <tr ng-repeat="director in directors">
+                                                                                                        <td>{{ director.Name }}</td>
+                                                                                                        <td>{{ director.Nationality }}</td>
+                                                                                                        <td>{{ director.CountryOfUsualResidence }}</td>
+                                                                                                        <td>{{ director.Address }}</td>
+                                                                                                        <td>
+                                                                                                            <button ng-click="removeDirector(director)" class="btn btn-danger btn-md"><i class="fa fa-trash"></i></button>
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                </table>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <hr />
+                                                                                        <h5>State if any Director has ever been convicted of any criminal offence in Nigeria or in any other country:</h5>
+                                                                                        <div class="row">
+                                                                                            <div class="col col-lg-6 col-xl-6 col-12">
+                                                                                                <div class="form-group">
+                                                                                                    <label for="DirectorCriminalAct">
+                                                                                                        <span>Convicted  of Criminal Act</span>
+                                                                                                    </label>
+                                                                                                    <select class="form-control" ng-model="registrationInformationModel.DirectorCriminalAct" id="DirectorCriminalAct">
+                                                                                                        <option value="">-- Select --</option>
+                                                                                                        <option ng-repeat="convictedAct in convictedActs"> {{ convictedAct.Name }} </option>
+                                                                                                    </select>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="col col-lg-6 col-xl-6 col-12">
+                                                                                                <div class="form-group">
+                                                                                                    <label for="DirectorCriminalActDetailsfConviction">
+                                                                                                        <span>Details of Conviction</span>
+                                                                                                    </label>
+                                                                                                    <textarea maxlength="100" rows="4" id="DirectorCriminalActDetailsfConviction" class="form-control"></textarea>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -295,7 +406,7 @@
                                                                                                     <label for="addressAuthorizedRepresentative">
                                                                                                         <span>Address</span>
                                                                                                     </label>
-                                                                                                    <textarea maxlength="100" rows="4" id="addressAuthorizedRepresentative" class="form-control" required></textarea>
+                                                                                                    <textarea maxlength="100" rows="4" id="addressAuthorizedRepresentative" class="form-control"></textarea>
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
@@ -330,7 +441,7 @@
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
-                                                                                        
+
                                                                                         <div class="row">
                                                                                             <div class="col col-lg-6 col-xl-6 col-12">
                                                                                                 <div class="form-group">
@@ -349,7 +460,7 @@
                                                                                                     <label for="CareerSummary">
                                                                                                         <span>Resource Profile<span class="text-danger">*</span></span>
                                                                                                     </label>
-                                                                                                    <textarea maxlength="250" rows="4" id="staffCareerSummary" class="form-control" placeholder="Resource profile ( kindly type in details of your technical resources )" required></textarea>
+                                                                                                    <textarea maxlength="250" rows="4" id="staffCareerSummary" class="form-control" placeholder="Resource profile (kindly type in the career summary and experience of your technical resources)"></textarea>
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
@@ -390,115 +501,7 @@
                                                                                 </div>
                                                                             </div>
 
-                                                                            <div class="collapse-border-item card collapse-header">
-                                                                                <div class="card-header" id="heading260" data-toggle="collapse" role="button" data-target="#listOfDirectors"
-                                                                                     aria-expanded="false" aria-controls="listOfDirectors">
-                                                                                    <span class="lead collapse-title">
-                                                                                        <strong> List & Particular of Directors</strong>
-                                                                                    </span>
-                                                                                </div>
-                                                                                <div id="listOfDirectors" class="collapse" aria-labelledby="heading260" data-parent="#accordionExample0">
-                                                                                    <div class="card-body">
-                                                                                        <div class="row">
-                                                                                            <div class="col col-lg-6 col-xl-6 col-12">
-                                                                                                <div class="form-group">
-                                                                                                    <label for="DirectorName">
-                                                                                                        <span>Name<span class="text-danger">*</span></span>
-                                                                                                    </label>
-                                                                                                    <input type="text" maxlength="50" ng-model="directorModel.Name" id="DirectorName" class="form-control">
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="col col-lg-6 col-xl-6 col-12">
-                                                                                                <div class="form-group">
-                                                                                                    <label for="DirectorNationality">
-                                                                                                        <span>Nationality<span class="text-danger">*</span></span>
-                                                                                                    </label>
-                                                                                                    <input type="text" maxlength="50" ng-model="directorModel.Nationality" id="DirectorNationality" class="form-control">
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
 
-                                                                                        <div class="row">
-                                                                                            <div class="col col-lg-6 col-xl-6 col-12">
-                                                                                                <div class="form-group">
-                                                                                                    <label for="DirectorCountryOfUsualResidence">
-                                                                                                        <span>Country Of Usual Residence<span class="text-danger">*</span></span>
-                                                                                                    </label>
-                                                                                                    <select class="form-control" ng-model="directorModel.CountryOfUsualResidence" id="DirectorCountryOfUsualResidence">
-                                                                                                        <option value="">-- Select --</option>
-                                                                                                        <option ng-repeat="country in countries"> {{ country.name }} </option>
-                                                                                                    </select>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="col col-lg-6 col-xl-6 col-12">
-                                                                                                <div class="form-group">
-                                                                                                    <label for="DirectorAddress">
-                                                                                                        <span>Address</span>
-                                                                                                    </label>
-                                                                                                    <textarea maxlength="100" rows="4" id="DirectorAddress" class="form-control" required></textarea>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-
-                                                                                        <div class="row">
-                                                                                            <div class="col col-12">
-                                                                                                <button ng-disabled="directorModel.Name === '' || directorModel.Nationality === '' || directorModel.CountryOfUsualResidence ===''"
-                                                                                                        ng-click="addDirector()" class="btn btn-success float-right">
-                                                                                                    <i class="fa fa-user-plus"></i> Add
-                                                                                                </button>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div class="row" ng-show="directors.length > 0">
-                                                                                            <div class="col col-12">
-                                                                                                <table class="table table-hover table-bordered" id="sampleTable" style="font-size: 14px">
-                                                                                                    <thead>
-                                                                                                        <tr>
-                                                                                                            <th>Name</th>
-                                                                                                            <th>Nationality</th>
-                                                                                                            <th>Country of Residence</th>
-                                                                                                            <th>Address</th>
-                                                                                                            <th>Actions</th>
-                                                                                                        </tr>
-                                                                                                    </thead>
-                                                                                                    <tr ng-repeat="director in directors">
-                                                                                                        <td>{{ director.Name }}</td>
-                                                                                                        <td>{{ director.Nationality }}</td>
-                                                                                                        <td>{{ director.CountryOfUsualResidence }}</td>
-                                                                                                        <td>{{ director.Address }}</td>
-                                                                                                        <td>
-                                                                                                            <button ng-click="removeDirector(director)" class="btn btn-danger btn-md"><i class="fa fa-trash"></i></button>
-                                                                                                        </td>
-                                                                                                    </tr>
-                                                                                                </table>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <hr />
-                                                                                        <h5>State if any Director has ever been convicted of any criminal offence in Nigeria or in any other country:</h5>
-                                                                                        <div class="row">
-                                                                                            <div class="col col-lg-6 col-xl-6 col-12">
-                                                                                                <div class="form-group">
-                                                                                                    <label for="DirectorCriminalAct">
-                                                                                                        <span>Convicted  of Criminal Act</span>
-                                                                                                    </label>
-                                                                                                    <select class="form-control" ng-model="registrationInformationModel.DirectorCriminalAct" id="DirectorCriminalAct">
-                                                                                                        <option value="">-- Select --</option>
-                                                                                                        <option ng-repeat="convictedAct in convictedActs"> {{ convictedAct.Name }} </option>
-                                                                                                    </select>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="col col-lg-6 col-xl-6 col-12">
-                                                                                                <div class="form-group">
-                                                                                                    <label for="DirectorCriminalActDetailsfConviction">
-                                                                                                        <span>Details of Conviction</span>
-                                                                                                    </label>
-                                                                                                    <textarea maxlength="100" rows="4" id="DirectorCriminalActDetailsfConviction" class="form-control" required></textarea>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
 
                                                                             <div class="card collapse-header collapse-border-item">
                                                                                 <div class="card-header" id="heading220" data-toggle="collapse" role="button" data-target="#collapse220"
@@ -516,7 +519,7 @@
                                                                                                         Certificate Of Registration <span class="text-danger">*</span><span class="text-sm"> (pdf files only)</span>
                                                                                                     </label>
                                                                                                     <div class="custom-file">
-                                                                                                        <input type="file" class="form-control" onchange="angular.element(this).scope().certificateOfRegistrationFileHandler()" name="Attachment" id="certificateOfRegistration" ng-required="true" accept=".pdf">
+                                                                                                        <input type="file" class="form-control" onchange="angular.element(this).scope().certificateOfRegistrationFileHandler()" name="Attachment" id="certificateOfRegistration" accept=".pdf">
                                                                                                     </div>
                                                                                                     <div class="text-danger text-sm" id="certificateOfRegistrationWarningIndicator"></div>
                                                                                                 </fieldset>
@@ -559,16 +562,16 @@
                                                                                                 </fieldset>
                                                                                             </div>
                                                                                             @*<div class="col col-lg-6 col-xl-6 col-12">
-                                                                                                <fieldset class="form-group">
-                                                                                                    <label for="deedOfPartnership">
-                                                                                                        Deed Of Partnership<span class="text-danger">*</span><span class="text-sm"> (pdf files only)</span>
-                                                                                                    </label>
-                                                                                                    <div class="custom-file">
-                                                                                                        <input accept=".pdf" class="form-control" onchange="angular.element(this).scope().deedOfPartnershipFileHandler()" type="file" id="deedOfPartnership">
-                                                                                                        <div class="text-danger text-sm" id="deedOfPartnershipIndicator"></div>
-                                                                                                    </div>
-                                                                                                </fieldset>
-                                                                                            </div>*@
+                            <fieldset class="form-group">
+                                <label for="deedOfPartnership">
+                                    Deed Of Partnership<span class="text-danger">*</span><span class="text-sm"> (pdf files only)</span>
+                                </label>
+                                <div class="custom-file">
+                                    <input accept=".pdf" class="form-control" onchange="angular.element(this).scope().deedOfPartnershipFileHandler()" type="file" id="deedOfPartnership">
+                                    <div class="text-danger text-sm" id="deedOfPartnershipIndicator"></div>
+                                </div>
+                            </fieldset>
+                        </div>*@
                                                                                         </div>
                                                                                         
                                                                                         <hr />
@@ -576,9 +579,8 @@
                                                                                             <div class="col col-12 text-center">
                                                                                                 <button ng-show="processing === false" ng-click="saveBusinessAccountInformation()"
                                                                                                         class="btn btn-success"
-                                                                                                        ng-disabled="registrationInformationModel.BusinessName === '' || registrationInformationModel.Email === '' || registrationInformationModel.Telephone === '' ||
-                                                                                                             registrationInformationModel.CompanyLegalStatus === '' ||
-                                                                                                            registrationInformationModel.AuthorizedRepName ==='' || registrationInformationModel.AuthorizedRepEmail === '' || registrationInformationModel.AuthorizedRepMobile === ''">
+                                                                                                        ng-disabled="!registrationInformationModel.BusinessName || 
+                                                                                                        !registrationInformationModel.Email || !registrationInformationModel.Telephone || !registrationInformationModel.AuthorizedRepName || !registrationInformationModel.AuthorizedRepEmail || !registrationInformationModel.AuthorizedRepMobile">
                                                                                                     <i class="fa fa-pencil"></i> Register
                                                                                                 </button>
                                                                                                 <button ng-show="processing" class="btn btn-success"><div class="spinner-border"></div> Processing...</button>

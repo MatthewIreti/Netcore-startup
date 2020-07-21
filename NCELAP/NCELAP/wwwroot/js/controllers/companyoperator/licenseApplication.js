@@ -175,7 +175,7 @@
                     $scope.licenseApplicationUpload.DeclarationSignatureFileExtension = extension;
                     $scope.licenseApplicationUpload.DeclarationSignatureBase64 = base64Str;
                 }
-                else if (tag == "holdRelatedLicense") {
+                else if (tag === "holdRelatedLicense") {
                     $scope.licenseApplicationUpload.HoldRelatedLicenseFileName = filename;
                     $scope.licenseApplicationUpload.HoldRelatedLicenseFileExtension = extension;
                     $scope.licenseApplicationUpload.HoldRelatedLicenseBase64 = base64Str;

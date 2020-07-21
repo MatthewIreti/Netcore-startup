@@ -21,6 +21,8 @@
     <link href="~/assets/plugins/themify/themify-icons.min.css" rel="stylesheet">
     @*<link href="~/assets/plugins/simple-line-icons/css/simple-line-icons.css" rel="stylesheet">*@
 
+    
+
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
     <script src="https://cdn.rawgit.com/auth0/angular-jwt/master/dist/angular-jwt.min.js"></script>
 
@@ -37,21 +39,27 @@
 <body data-preloader="4">
     <div class="wrapper">
 
+        
+
         <!-- Header -->
-        <div class="header absolute-light">
+        <nav class="header absolute-light fixed-top">
             <div class="container">
                 <div class="logo">
                     <h4 class="uppercase letter-spacing-2"><a>NCELAS</a></h4>
                 </div>
                 <div class="header-menu-wrapper">
-                    <!-- Menu -->
+                
                     <ul class="header-menu">
                         <li class="m-item">
                             <a class="m-link" href="#">Home</a>
 
                         </li>
                         <li class="m-item">
-                            <a class="m-link" href="#services">Services</a>
+                            <a class="m-link" href="#about">About NCELAS</a>
+
+                        </li>
+                        <li class="m-item">
+                            <a class="m-link" href="#services">DPR Services</a>
 
                         </li>
                         <li class="m-item">
@@ -62,10 +70,7 @@
                             <a class="m-link" href="#faq">FAQs</a>
 
                         </li>
-                        <li class="m-item">
-                            <a class="m-link" href="#about">About Us</a>
 
-                        </li>
                         <li class="m-item">
                             <a class="m-link" href="#contact">Contact Us</a>
 
@@ -77,17 +82,17 @@
                             <a class="m-link" href="account/register" target="_blank">Create Account</a>
                         </li>
                     </ul>
-                    <!-- Close Button -->
+                   
                     <button class="close-button">
                         <span></span>
                     </button>
-                </div><!-- end header-menu-wrapper -->
-                <!-- Menu Toggle on Mobile -->
+                </div>
+               
                 <button class="m-toggle">
                     <span></span>
                 </button>
-            </div><!-- end container -->
-        </div>
+            </div>
+        </nav>
         <!-- end Header -->
 
         @RenderBody()
@@ -109,10 +114,10 @@
                             <div class="col-6">
                                 <h6 class="font-weight-medium margin-lg-bottom-20">Useful links</h6>
                                 <ul class="list-dash font-lg-small">
-                                    <li><a href="https://www.dpr.gov.ng/">DPR</a></li>
-                                    <li><a href="https://ngc.nnpcgroup.com/">NGC</a></li>
-                                    <li><a href="https://elps.dpr.gov.ng/">ELPS</a></li>
-                                    <li><a href="https://www.wagpa.org/the-wagp/">WAGP</a></li>
+                                    <li><a href="https://www.dpr.gov.ng/" target="_blank">DPR</a></li>
+                                    <li><a href="https://ngc.nnpcgroup.com/" target="_blank">NGC</a></li>
+                                    <li><a href="https://elps.dpr.gov.ng/" target="_blank">ELPS</a></li>
+                                    <li><a href="https://www.wagpa.org/the-wagp/" target="_blank">WAGP</a></li>
 
 
                                 </ul>
@@ -134,6 +139,20 @@
     <!-- Plugins -->
     <script src="~/assets/plugins/plugins.js"></script>
     <script src="~/assets/js/functions.js"></script>
+
+    <script>
+         $(document).ready(function() {
+        // Transition effect for navbar 
+        $(window).scroll(function() {
+          // checks if window is scrolled more than 500px, adds/removes solid class
+          if($(this).scrollTop() > 500) { 
+              $('.navbar').addClass('solid');
+          } else {
+              $('.navbar').removeClass('solid');
+          }
+        });
+});
+    </script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>
