@@ -83,26 +83,27 @@ namespace NCELAP.WebAPI.Services.Application
                     .GetJsonAsync<BaseApplicationResponse<LicenseApplicationPaymentModel>>();
                 if (licensePayment.value.Count > 0)
                 {
-                     paymentInfo = licensePayment.value[0]; 
+                    paymentInfo = licensePayment.value[0];
                     response = new ReferenceResponseModel
                     {
                         RRR = paymentInfo.RemitaRetrievalRef,
                         status = paymentInfo.StatusMessage
                     };
-                     
+
                 }
                 else
                 {
-                     response = await _remitaService.GetRRR(payload);
+                    response = await _remitaService.GetRRR(payload);
                     if (response != null)
                     {
                         //submit the response to server.
-                        paymentInfo =  await SavePaymentInformation(new LicenseApplicationEntity
+                        paymentInfo = await SavePaymentInformation(new LicenseApplicationEntity
                         {
                             Amount = double.Parse(payload.amount),
                             LicenseApplication = applicationId,
                             RemitaRetrievalRef = response.RRR,
-                            OrderId = payload.orderId
+                            OrderId = payload.orderId,
+                            Description = payload.description
                         });
                     }
                 }
@@ -151,7 +152,7 @@ namespace NCELAP.WebAPI.Services.Application
                 var env = _helper.GetEnvironmentUrl();
                 var token = _authService.GetAuthToken();
                 var response = await env.AppendPathSegment("LicenseApplicationPayment")
-                    .SetQueryParam("$filter","Customer eq "+ custRecId)
+                    .SetQueryParam("$filter", "Customer eq " + custRecId)
                     .WithOAuthBearerToken(token)
                     .GetJsonAsync<BaseApplicationResponse<LicenseApplicationPaymentModel>>();
                 if (response == null) throw new Exception("No response");
@@ -179,13 +180,35 @@ namespace NCELAP.WebAPI.Services.Application
         {
             try
             {
-                var response =  await _remitaService.GetTransactionStatus(rrr);
-
-                    if (response.Status)
+                var response = await _remitaService.GetTransactionStatus(rrr);
+                if (response.Status)
+                {
+                    //get payment by orderId;
+                    var payment = await _helper.GetEnvironmentUrl()
+                       .AppendPathSegment("LicenseApplicationPayment")
+                       .SetQueryParam("$filter", $"OrderId eq '{response.Data.orderId}'")
+                       .WithOAuthBearerToken(_authService.GetAuthToken())
+                       .GetJsonAsync<BaseApplicationResponse<LicenseApplicationPayment>>();
+                    var record = payment.value[0];
+                    if (record != null)
                     {
-                        //Call Dynamics to update payment
+                        record.StatusMessage = response.Data?.message;
+                        record.Status = true;
+                        record.PaymentDate = response.Data?.paymentDate;
+
+                        var updatePaymentResponse = await _helper.GetEnvironmentUrl()
+                        .AppendPathSegment($"LicenseApplicationPayment(RemitaRetrievalRef='{record.RemitaRetrievalRef}',dataAreaId='dpr')")
+                        .WithOAuthBearerToken(_authService.GetAuthToken())
+                        .PatchJsonAsync(new { 
+                         Description = record.StatusMessage,
+                         Status=true,
+                         PaymentDate = DateTime.Parse(record.PaymentDate).ToString("yyyy-MM-dd"),
+                         Amount = record.Amount
+                        })
+                        .ReceiveString();
                     }
-                    return response;
+                }
+                return response;
             }
             catch (Exception ex)
             {

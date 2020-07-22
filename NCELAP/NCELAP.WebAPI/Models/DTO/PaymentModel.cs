@@ -29,6 +29,8 @@ namespace NCELAP.WebAPI.Models.DTO
         public string RRR { get; set; }
         public string merchantId { get; set; }
         public string statusmessage { get; set; }
+        public string message { get; set; }
+        public string paymentDate { get; set; }
         public string transactiontime { get; set; }
         public string orderId { get; set; }
     }
