@@ -486,7 +486,7 @@
 
 
 
-<div class="section" id="contact">
+<div class="section" id="contact" waiting="{{waiting}}">
     <div class="container">
         <div class="row mb-3">
             <div class="col-lg-12 text-center">
@@ -500,13 +500,13 @@
                         <div class="col-lg-6 col-md-6">
                             <div class="form-group">
                                 <label>Name</label>
-                                <input type="text" class="form-control" placeholder="Chidinma Tanko Kunle" />
+                                <input type="text" ng-model="contactFormModel.Name" class="form-control" placeholder="Chidinma Tanko Kunle" />
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6">
                             <div class="form-group">
                                 <label>Email</label>
-                                <input type="text" class="form-control" placeholder="chidinmatankokunle@mail.com" />
+                                <input type="text" ng-model="contactFormModel.Email" class="form-control" placeholder="chidinmatankokunle@mail.com" />
                             </div>
                         </div>
                     </div>
@@ -518,7 +518,7 @@
                             </div>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-success">Contact us</button>
+                    <button type="submit" ng-click="submittinContactForm()" class="btn btn-success">Contact us</button>
                 </form>
             </div>
         </div>
