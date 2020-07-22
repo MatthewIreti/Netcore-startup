@@ -470,7 +470,6 @@ namespace NCELAP.WebAPI.Services.Account
                 Log.Error(ex.StackTrace);
             }
 
-
             return userAccount;
         }
 
