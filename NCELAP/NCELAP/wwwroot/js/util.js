@@ -4,7 +4,7 @@
 //const baseUrl = 'https://ncelap-demo-api.azurewebsites.net/api/';
 const baseUrl = 'https://ncelaapi.azurewebsites.net/api/';
 const webBaseUrl = 'https://ncelap-demo.azurewebsites.net/';
-
+ 
 
 function extractExtensionFromFileName(fileName) {
     const lastDot = fileName.lastIndexOf('.');
