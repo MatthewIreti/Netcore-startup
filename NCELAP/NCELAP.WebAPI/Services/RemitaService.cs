@@ -68,7 +68,7 @@ namespace NCELAP.WebAPI.Services
                     return new InfoReponse<RemitaCollectionResponse> { 
                     Data = response,
                     Status = true,
-                    Message =  "Transaction Completed Successfully"
+                    Message =  response.message
                     };
                 }
                 else
@@ -78,7 +78,7 @@ namespace NCELAP.WebAPI.Services
                     {
                         Data = null,
                         Status = false,
-                        Message ="Error Processing Payment"
+                        Message =response.message
                     };
                 }
             }

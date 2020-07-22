@@ -24,5 +24,6 @@ namespace NCELAP.WebAPI.Models.Entities.Applications
         public long LicenseApplication { get; set; }
         public double Amount { get; set; }
         public string OrderId { get; set; }
+        public string Description { get; set; }
     }
 }
