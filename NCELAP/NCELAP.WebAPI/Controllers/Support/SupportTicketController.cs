@@ -27,10 +27,17 @@ namespace NCELAP.WebAPI.Controllers.Support {
                         Subject = supportTicketsInput.Subject,
                         Description = supportTicketsInput.Description,
                         Message = supportTicketsInput.Message,
-                        Status = supportTicketsInput.Status,
+                        Status = "Open",
                         CaseOwner = supportTicketsInput.CaseOwner,
                         Attachment = supportTicketsInput.Attachment,
                         Response = supportTicketsInput.Response,
+                        CompanyName = supportTicketsInput.CompanyName,
+                        CompanyRecId = supportTicketsInput.CompanyRecId,
+                        EmployeeRecId = supportTicketsInput.EmployeeRecId,
+                        ContactEmail = supportTicketsInput.ContactEmail,
+                        EmployeeEmail = supportTicketsInput.EmployeeEmail,
+                        EmployeeName = supportTicketsInput.EmployeeName,
+                        RaisedOn = supportTicketsInput.RaisedOn,
                         //DateCreated = DateTime.Now,
                         //DateUpdated = DateTime.Now,
                     };
@@ -202,6 +209,47 @@ namespace NCELAP.WebAPI.Controllers.Support {
 
             } catch (Exception e) {
                 return new GenericResponse<SupportTickets> {
+                    Data = null,
+                    Message = e.Message,
+                    Success = false
+                };
+            }
+        }
+
+        [HttpGet]
+        [Route("getsupportticketsbyemployee/{employeeRecId}/{companyRecId}")]
+        public async Task<ActionResult<GenericResponse<List<SupportTickets>>>> GetAllSupportTicketsByEmployee(long employeeRecId, long companyRecId)
+        {
+            try
+            {
+                var ticket = await _supportTicketsService.GetAllSupportTicketsByEmployee(employeeRecId, companyRecId);
+
+                if (ticket.Success == true)
+                {
+                    return new GenericResponse<List<SupportTickets>>
+                    {
+                        Data = ticket.Data,
+                        Message = "ticket found",
+                        Success = true
+
+                    };
+                }
+                else
+                {
+                    return new GenericResponse<List<SupportTickets>>
+                    {
+                        Data = null,
+                        Message = "ticket not found",
+                        Success = false
+
+                    };
+                }
+
+            }
+            catch (Exception e)
+            {
+                return new GenericResponse<List<SupportTickets>>
+                {
                     Data = null,
                     Message = e.Message,
                     Success = false

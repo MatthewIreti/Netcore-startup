@@ -7,7 +7,12 @@ namespace NCELAP.WebAPI.Models.Entities.Support
     {
         [Key]
         public int Id { get; set; }
-        public long CustomerRecId { get; set; }
+        public long CompanyRecId { get; set; }
+        public long EmployeeRecId { get; set; }
+        public string CompanyName { get; set; }
+        public string EmployeeName { get; set; }
+        public string EmployeeEmail { get; set; }
+        public string ContactEmail { get; set; }
         public string Department { get; set; }
         public int Priority { get; set; }
         public string Subject { get; set; }

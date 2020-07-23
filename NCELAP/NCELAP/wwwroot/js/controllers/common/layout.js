@@ -1,4 +1,4 @@
-﻿appModule.controller('layoutCtrl', function ($scope/*$http, jwtHelper*/) {
+﻿appModule.controller('layoutCtrl', function ($scope, $http) {
     $scope.contactFormModel = {};
 
     $scope.logout = function () {
@@ -6,19 +6,7 @@
         window.location.href = '/';
     };
 
-    $scope.submittinContactForm = function () {
-        console.log($scope.contactFormModel);
-
-        // Hide it after 3 seconds
-        setTimeout(function () {
-            $('#contact').LoadingOverlay("hide", {
-                background: "rgba(149,131,80,0.24)",
-                text: 'Preparing Receipt, please wait...',
-                imageAnimation: null
-                //image: overlayAmination
-            });
-        }, 3000);
-    };
+    
 
     $scope.getLoggedInUserDetails = function () {
         var loggedInUser = localStorage.getItem('loggedInUser');

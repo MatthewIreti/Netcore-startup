@@ -52,7 +52,6 @@
     <Folder Include="Services\Common\" />
     <Folder Include="Controllers\Support\" />
     <Folder Include="Services\Support\" />
-    <Folder Include="Models\Entities\Support\" />
     <Folder Include="Data\" />
   </ItemGroup>
 

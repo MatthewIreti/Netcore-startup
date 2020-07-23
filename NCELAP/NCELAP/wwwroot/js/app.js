@@ -14,7 +14,7 @@ appModule.config([
             .state({
                 name: 'site',
                 abstract: true,
-                template: '<div ui-view></div>',
+                template: '<div ui-view></div>'
             });
         //$locationProvider.html5Mode(true);
         //$httpProvider.interceptors.push('ResponseInterceptorSvc');

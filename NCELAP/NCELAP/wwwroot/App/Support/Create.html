@@ -36,8 +36,8 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="form-group">
-                                            <label for="department">Subject</label>
-                                            <input type="text" ng-model="supportCreateFormModel.Subject" id="department" class="form-control" name="Subject">
+                                            <label for="department">Subject<span class="text-danger">*</span></label>
+                                            <input type="text" ng-model="ticketModel.Subject" id="subject" class="form-control" name="Subject">
                                         </div>
                                     </div>
                                 </div>
@@ -45,8 +45,8 @@
                                 <div class="row">
                                     <div class="col-12" style="margin-bottom: 8px">
                                         <div class="form-group">
-                                            <label for="email">Priority</label>
-                                            <select class="form-control" ng-model="supportCreateFormModel.Priority">
+                                            <label for="email">Priority<span class="text-danger">*</span></label>
+                                            <select class="form-control" ng-model="ticketModel.Priority">
                                                 <option value="">-- Select --</option>
                                                 <option ng-repeat="caseseverity in caseseverities" value="{{ caseseverity.Value }}"> {{ caseseverity.Name }} </option>
                                             </select>
@@ -54,21 +54,30 @@
                                     </div>
                                 </div>
 
-                                <!--<div class="row">
+                                <div class="row">
                                     <div class="col-12">
                                         <div class="form-group">
-                                            <label for="department">Department</label>
-                                            <input type="text" ng-model="userCreateFormModel.Name" id="department" class="form-control" name="Department">
+                                            <label for="department">Contact Email<span class="text-danger">*</span></label>
+                                            <input type="email" ng-model="ticketModel.ContactEmail" id="contactemail" class="form-control" name="Subject">
                                         </div>
                                     </div>
-                                </div>-->
+                                </div>
+
+                                <!--<div class="row">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="department">Department</label>
+                <input type="text" ng-model="userCreateFormModel.Name" id="department" class="form-control" name="Department">
+            </div>
+        </div>
+    </div>-->
 
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="form-group">
-                                            <label for="Message">Message</label>
+                                            <label for="Message">Message <span class="text-danger">*</span></label>
                                             <!--<input type="text" ng-model="userCreateFormModel.Message" id="department" class="form-control" name="Message">-->
-                                            <textarea maxlength="500" rows="4" id="message" class="form-control" placeholder=""></textarea>
+                                            <textarea maxlength="500" ng-blur="setMessageBody()" rows="4" id="message" class="form-control" placeholder=""></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -77,14 +86,15 @@
                                     <div class="col-12">
                                         <div class="form-group">
                                             <label for="department">Attachment</label>
-                                            <input type="file"  id="attachment" class="form-control" name="Attachment">
+                                            <input type="file" id="attachment" class="form-control" name="Attachment" onchange="angular.element(this).scope().attachmentFileHandler()">
+                                            <div class="text-danger text-sm" id="attachmentUploadSizeIndicator"></div>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="col-12">
-                                        <button ng-disabled="supportCreateFormModel.Subject === '' || supportCreateFormModel.Email === '' || supportCreateFormModel.Department === '' || emailCheckResponse || verifyingEmail"
+                                        <button ng-disabled="ticketModel.Subject === '' || ticketModel.Priority === '' || ticketModel.EmployeeEmail === '' || ticketModel.ContactEmail === ''"
                                                 class="btn btn-primary mr-1 mb-1 waves-effect waves-light" ng-click="submitTicket()">
                                             Submit Ticket
                                         </button>
