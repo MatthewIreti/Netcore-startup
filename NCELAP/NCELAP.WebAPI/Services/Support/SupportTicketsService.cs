@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using NCELAP.WebAPI.Data;
@@ -29,6 +30,9 @@ namespace NCELAP.WebAPI.Services.Support
                 }
                 else
                 {
+                    var dateRegistered = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc);
+                    supportTickets.RaisedOn = dateRegistered;
+
                     await _dbcontext.SupportTickets.AddAsync(supportTickets);
                     _dbcontext.SaveChanges();
 
@@ -159,6 +163,44 @@ namespace NCELAP.WebAPI.Services.Support
             catch (Exception e)
             {
                 return new GenericResponse<IEnumerable<SupportTickets>>
+                {
+                    Data = null,
+                    Message = e.Message,
+                    Success = false
+                };
+            }
+        }
+
+        public async Task<GenericResponse<List<SupportTickets>>> GetAllSupportTicketsByEmployee(long employeeRecId, long companyRecId)
+        {
+            try
+            {
+                var supportTickets = await _dbcontext.SupportTickets.Where(s => s.CompanyRecId == companyRecId && s.EmployeeRecId == employeeRecId).
+                    OrderByDescending(s=>s.RaisedOn).ToListAsync();
+
+                if (supportTickets != null)
+                {
+                    return new GenericResponse<List<SupportTickets>>
+                    {
+                        Data = supportTickets,
+                        Message = "All templates listed",
+                        Success = true
+
+                    };
+                }
+                else
+                {
+                    return new GenericResponse<List<SupportTickets>>
+                    {
+                        Data = null,
+                        Message = "templates not found",
+                        Success = false
+                    };
+                }
+            }
+            catch (Exception e)
+            {
+                return new GenericResponse<List<SupportTickets>>
                 {
                     Data = null,
                     Message = e.Message,

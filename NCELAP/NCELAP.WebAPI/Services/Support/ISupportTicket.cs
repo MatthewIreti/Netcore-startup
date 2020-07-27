@@ -12,5 +12,6 @@ namespace NCELAP.WebAPI.Services.Support
         Task<GenericResponse<SupportTickets>> EditSupportAsync(SupportTickets supportTickets);
         Task<GenericResponse<SupportTickets>> GetSupportTicketByIdAsync(int Id);
         Task<GenericResponse<IEnumerable<SupportTickets>>> GetAllSupportTicketsAsync();
+        Task<GenericResponse<List<SupportTickets>>> GetAllSupportTicketsByEmployee(long employeeRecId, long companyRecId);
     }
 }

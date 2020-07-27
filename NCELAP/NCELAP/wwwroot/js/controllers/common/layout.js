@@ -1,16 +1,17 @@
-﻿appModule.controller('layoutCtrl', function ($scope/*$http, jwtHelper*/) {
+﻿appModule.controller('layoutCtrl', function ($scope, $http) {
+    $scope.contactFormModel = {};
 
     $scope.logout = function () {
         localStorage.clear();
         window.location.href = '/';
     };
 
-    $scope.test = "sdnsdnb";
+    
+
     $scope.getLoggedInUserDetails = function () {
         var loggedInUser = localStorage.getItem('loggedInUser');
         $scope.loggedInUser = JSON.parse(loggedInUser);
 
-        
 
         if ($scope.loggedInUser.name !== '') {
             //alert($scope.loggedInUser.name);

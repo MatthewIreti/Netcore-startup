@@ -1,4 +1,6 @@
 ﻿var appModule = angular.module('ncLasPortalApp', ['ui.router', 'ui.router.stateHelper', 'ui.bootstrap', 'ngSanitize']);
+var homepageModule = angular.module('ncLasPortalAppHome', []);
+
 appModule.config([
     'stateHelperProvider', '$urlRouterProvider',
     '$httpProvider', '$locationProvider', function (stateHelperProvider, $urlRouterProvider, $httpProvider, $locationProvider) {
@@ -12,7 +14,7 @@ appModule.config([
             .state({
                 name: 'site',
                 abstract: true,
-                template: '<div ui-view></div>',
+                template: '<div ui-view></div>'
             });
         //$locationProvider.html5Mode(true);
         //$httpProvider.interceptors.push('ResponseInterceptorSvc');

@@ -14,6 +14,7 @@ using NCELAP.WebAPI.Models.DTO;
 using NCELAP.WebAPI.Models.ODataResponse.Account;
 using System.Net;
 using NCELAP.WebAPI.Models.ODataResponse;
+using NCELAP.WebAPI.Models.Entities.Support;
 
 namespace NCELAP.WebAPI.Services.Account
 {
@@ -22,6 +23,7 @@ namespace NCELAP.WebAPI.Services.Account
         readonly IConfiguration _configuration;
         private readonly string businessaccount, businessaccountlegalstatus, businessaccountshareholder, businessaccountdirector, docupload, custpropspectstafflist;
         private readonly string ncelasloginendpoint, companynamebycustrecid, accountdetails, ncelasinfoupdate, ncelasusers, ncelasuserbyemail, ncelasusersbycreatorrecid;
+        private readonly string contactsupport;
         private string jsonResponse;
         private readonly AuthService _authService;
         private readonly Helper _helper;
@@ -44,6 +46,7 @@ namespace NCELAP.WebAPI.Services.Account
             ncelasuserbyemail = _configuration.GetSection("Endpoints").GetSection("ncelasuserbyemail").Value;
             ncelasusersbycreatorrecid = _configuration.GetSection("Endpoints").GetSection("ncelasusersbycreatorrecid").Value;
             custpropspectstafflist = _configuration.GetSection("Endpoints").GetSection("custpropspectstafflist").Value;
+            contactsupport = _configuration.GetSection("Endpoints").GetSection("ncelassupport").Value;
         }
 
         public async Task<bool> SaveBusinessInformation(RegisteredBusiness registeredBusiness)
@@ -470,7 +473,6 @@ namespace NCELAP.WebAPI.Services.Account
                 Log.Error(ex.StackTrace);
             }
 
-
             return userAccount;
         }
 
@@ -539,6 +541,47 @@ namespace NCELAP.WebAPI.Services.Account
                     client.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/json");
 
                     var responseMessage = await client.PostAsJsonAsync(ncelasusers, userToCreate);
+                    var errorMessage = responseMessage.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+
+                    StreamReader sr = new StreamReader(await responseMessage.Content.ReadAsStreamAsync());
+                    var reportSaveResponse = sr.ReadToEnd();
+
+                    if (responseMessage.IsSuccessStatusCode)
+                    {
+                        response = true;
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex.StackTrace);
+            }
+
+            return response;
+        }
+
+        public async Task<bool> ContactSupport(ContactSupport supportMessagePayload)
+        {
+            bool response = false;
+
+            var helper = new Helper(_configuration);
+            string token = _authService.GetAuthToken();
+            string currentEnvironment = helper.GetEnvironmentUrl();
+            string url = currentEnvironment;
+
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri(url);
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+                    client.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/json");
+
+                    supportMessagePayload.UniqueId = Helper.RandomAlhpaNumeric(15);
+
+                    var responseMessage = await client.PostAsJsonAsync(contactsupport, supportMessagePayload);
                     var errorMessage = responseMessage.Content.ReadAsStringAsync().GetAwaiter().GetResult();
 
                     StreamReader sr = new StreamReader(await responseMessage.Content.ReadAsStreamAsync());

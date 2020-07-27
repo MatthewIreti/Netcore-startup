@@ -36,32 +36,26 @@
                 <div class="card-content">
                     <div class="card-body card-dashboard">
                         <div class="table-responsive">
-                            <table class="table table-hover table-bordered" id="userAccountsTable">
+                            <table class="table table-hover table-bordered" id="ticketsTable">
                                 <thead>
                                     <tr>
                                         <th>Subject</th>
-                                        <th>Subject</th>
-                                        <th>Case Owner</th>
-                                        <th>Department</th>
-                                        <th>Priority</th>
+                                        <th>Message</th>
+                                        <th>Status</th>
+                                        <th>Raised On</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr ng-repeat="ticket in tickets">
                                         <td>
-                                            <!--<span><a target="_blank" href="/companyoperator/applicationdetails/{{ application.recordId }}">{{ application.applicationNum }}</a> </span>-->
-                                            {{ userAccount.name }}
+                                            {{ ticket.subject }}
                                         </td>
-                                        <td>{{ userAccount.email }}</td>
-                                        <td>{{ userAccount.department }}</td>
+                                        <td>{{ ticket.message }}</td>
                                         <td>
-                                            <div class="badge badge-warning" ng-show="userAccount.status === 'Inactive'">{{ userAccount.status }}</div>
-                                            <div class="badge badge-success" ng-show="userAccount.status === 'Active'">{{ userAccount.status }}</div>
+                                            <div class="badge badge-warning" ng-show="ticket.status === 'Open'">{{ ticket.status }}</div>
+                                            <div class="badge badge-success" ng-show="ticket.status === 'Closed'">{{ ticket.status }}</div>
                                         </td>
-                                        <td>
-                                            <div class="badge badge-warning" ng-show="userAccount.activated === 'No'">{{ userAccount.activated }}</div>
-                                            <div class="badge badge-success" ng-show="userAccount.activated === 'Yes'">{{ userAccount.activated }}</div>
-                                        </td>
+                                        <td>{{ ticket.raisedOn | date : "MMM d, y"}}</td>
                                     </tr>
                                 </tbody>
 

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NCELAP.WebAPI.Data;
 
 namespace NCELAP.WebAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200723082831_CreatedByUserRecIdColumn")]
+    partial class CreatedByUserRecIdColumn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,29 +34,17 @@ namespace NCELAP.WebAPI.Migrations
                     b.Property<string>("CaseOwner")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CompanyName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("CompanyRecId")
+                    b.Property<long>("CreatedByUserRecId")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("ContactEmail")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<long>("CustomerRecId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Department")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("EmployeeEmail")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("EmployeeName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("EmployeeRecId")
-                        .HasColumnType("bigint");
 
                     b.Property<string>("Message")
                         .HasColumnType("nvarchar(max)");

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NCELAP.WebAPI.Data;
 
 namespace NCELAP.WebAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200723091709_CompanyRecIdColumn")]
+    partial class CompanyRecIdColumn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,9 +54,6 @@ namespace NCELAP.WebAPI.Migrations
 
                     b.Property<string>("EmployeeName")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("EmployeeRecId")
-                        .HasColumnType("bigint");
 
                     b.Property<string>("Message")
                         .HasColumnType("nvarchar(max)");

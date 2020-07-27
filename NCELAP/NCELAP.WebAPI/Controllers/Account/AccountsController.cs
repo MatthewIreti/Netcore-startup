@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using NCELAP.WebAPI.Models.DTO;
 using NCELAP.WebAPI.Models.Entities.Accounts;
+using NCELAP.WebAPI.Models.Entities.Support;
 using NCELAP.WebAPI.Services.Account;
 
 namespace NCELAP.WebAPI.Controllers.Account
@@ -30,6 +31,14 @@ namespace NCELAP.WebAPI.Controllers.Account
         public async Task<IActionResult> SaveRegisteredBusinessInformation(RegisteredBusiness registeredBusiness)
         {
             var response = await _userAccountService.SaveBusinessInformation(registeredBusiness);
+            return Ok(response);
+        }
+
+        [HttpPost]
+        [Route("contactsupport")]
+        public async Task<IActionResult> ContactSupport(ContactSupport contactSupport)
+        {
+            var response = await _userAccountService.ContactSupport(contactSupport);
             return Ok(response);
         }
 
