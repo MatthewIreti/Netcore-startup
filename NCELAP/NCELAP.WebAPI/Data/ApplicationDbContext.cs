@@ -13,5 +13,8 @@ namespace NCELAP.WebAPI.Data
         }
 
         public DbSet<SupportTickets> SupportTickets { get; set; }
+
+        public DbSet<SupportTicketsComment> SupportComments { get; set; }
+
     }
 }
