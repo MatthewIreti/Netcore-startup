@@ -13,5 +13,8 @@ namespace NCELAP.WebAPI.Services.Support
         Task<GenericResponse<SupportTickets>> GetSupportTicketByIdAsync(int Id);
         Task<GenericResponse<IEnumerable<SupportTickets>>> GetAllSupportTicketsAsync();
         Task<GenericResponse<List<SupportTickets>>> GetAllSupportTicketsByEmployee(long employeeRecId, long companyRecId);
+        Task<GenericResponse<SupportTicketsComment>> AddSupportTicketComment(SupportTicketsComment supportTicketsComment);
+        Task<GenericResponse<List<SupportTicketsComment>>> GetSupportTicketCommentByTicketId(int supportticketId);
+
     }
 }
