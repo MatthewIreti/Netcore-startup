@@ -32,5 +32,10 @@ namespace NCELAP.Controllers.Account
         {
             return View();
         }
+
+        public IActionResult PasswordReset()
+        {
+            return View();
+        }
     }
 }
