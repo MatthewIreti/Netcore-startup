@@ -18,5 +18,15 @@ namespace NCELAP.WebAPI.Models.DTO
     {
         public string Value { get; set; }
     }
-     
+    public class PasswordReset
+    {
+        public string Email { get; set; }
+        public string ActivationCode { get; set; }
+    }
+
+    public class EmailPasswordDto
+    {
+        public string Email { get; set; }
+        public string Password { get; set; }
+    }
 }

@@ -11,7 +11,6 @@
     });
 
     function checkStrength(password) {
-
         //initial strength
         var strength = 0;
 
