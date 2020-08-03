@@ -88,7 +88,7 @@
                                                                                             <div class="col col-lg-6 col-xl-6 col-12">
                                                                                                 <div class="form-group">
                                                                                                     <label for="inputMobile">
-                                                                                                        <span>Mobile</span>
+                                                                                                        <span>Mobile<span class="text-danger">*</span></span>
                                                                                                     </label>
                                                                                                     <input type="text"  ng-model="registrationInformationModel.Mobile" value="+234" id="inputMobile" name="Mobile" class="form-control">
                                                                                                     <span class="text-danger text-small" ng-show="businessRegistrationForm.Mobile.$touched && businessRegistrationForm.Mobile.$invalid">
@@ -596,7 +596,7 @@
                                                                                                 <button ng-show="processing === false" ng-click="saveBusinessAccountInformation()"
                                                                                                         class="btn btn-success"
                                                                                                         ng-disabled="!registrationInformationModel.BusinessName ||
-                                                                                                        !registrationInformationModel.Email || !registrationInformationModel.Telephone || !registrationInformationModel.AuthorizedRepName || !registrationInformationModel.AuthorizedRepEmail || !registrationInformationModel.AuthorizedRepMobile">
+                                                                                                        !registrationInformationModel.Email || !registrationInformationModel.Telephone || !registrationInformationModel.Mobile  || !registrationInformationModel.AuthorizedRepName || !registrationInformationModel.AuthorizedRepEmail || !registrationInformationModel.AuthorizedRepMobile">
                                                                                                     <i class="fa fa-pencil"></i> Register
                                                                                                 </button>
                                                                                                 <button ng-show="processing" class="btn btn-success"><div class="spinner-border"></div> Processing...</button>

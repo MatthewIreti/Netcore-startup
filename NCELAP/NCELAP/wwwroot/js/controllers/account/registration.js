@@ -537,10 +537,13 @@
         
         console.log($scope.registrationInformationModel);
 
-        if ($scope.businessInfoDocumentsForUpload.CertificateOfRegistrationBase64 === '' || $scope.businessInfoDocumentsForUpload.CertificateOfIncorporationBase64 === ''
+        if ($scope.shareholders.length === 0) {
+            toastr.warning("At least one share holder's information must be supllied.", 'Warning!', {});
+        } else if ($scope.directors.length === 0) {
+            toastr.warning("At least one director's information must be supllied.", 'Warning!', {});
+        } else if ($scope.businessInfoDocumentsForUpload.CertificateOfRegistrationBase64 === '' || $scope.businessInfoDocumentsForUpload.CertificateOfIncorporationBase64 === ''
             || $scope.businessInfoDocumentsForUpload.MemorandumArticlesOfAssociationBase64 === '' || $scope.businessInfoDocumentsForUpload.TaxClearanceBase64 === ''
-            || $scope.businessInfoDocumentsForUpload.BankStatementBase64 === '' || $scope.businessInfoDocumentsForUpload.TaxClearanceBase64 === '')
-        {
+            || $scope.businessInfoDocumentsForUpload.BankStatementBase64 === '' || $scope.businessInfoDocumentsForUpload.TaxClearanceBase64 === '') {
             toastr.warning('At least one of the supporting documents has not been selected', 'Warning!', {});
         } else {
             $scope.processing = true;
