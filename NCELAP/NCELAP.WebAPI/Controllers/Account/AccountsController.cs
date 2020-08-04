@@ -81,12 +81,28 @@ namespace NCELAP.WebAPI.Controllers.Account
             var response = await _userAccountService.CreateUser(userToCreate);
             return Ok(response);
         }
-
+        //
         [HttpPost]
         [Route("emailcheck")]
         public async Task<IActionResult> GetUserInfo(UserEmail userEmail )
         {
             var response = await _userAccountService.GetNcelasUserEmailExist(userEmail.Value);
+            return Ok(response);
+        }
+        
+        [HttpPost]
+        [Route("sendpassresetcode")]
+        public async Task<IActionResult> SendpPsswordResetCode(UserEmail userEmail )
+        {
+            var response = await _userAccountService.SendPasswordResetCode(userEmail.Value);
+            return Ok(response);
+        }
+
+        [HttpPost]
+        [Route("resetncelasuserpassword")]
+        public async Task<IActionResult> ResetNcelasPassword(EmailPasswordDto emailPasswordDto)
+        {
+            var response = await _userAccountService.PasswordReset(emailPasswordDto);
             return Ok(response);
         }
     }

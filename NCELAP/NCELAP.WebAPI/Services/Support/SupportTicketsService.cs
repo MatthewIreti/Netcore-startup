@@ -15,6 +15,47 @@ namespace NCELAP.WebAPI.Services.Support
         {
             _dbcontext = dbcontext;
         }
+
+        public async Task<GenericResponse<SupportTicketsComment>> AddSupportTicketComment(SupportTicketsComment supportTicketsComment)
+        {
+            try
+            {
+                if (supportTicketsComment == null)
+                {
+                    return new GenericResponse<SupportTicketsComment>
+                    {
+                        Data = null,
+                        Message = "support ticket is null",
+                        Success = false
+                    };
+                }
+                else
+                {
+                    var dateRegistered = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc);
+                    supportTicketsComment.UpdateTime = dateRegistered;
+
+                    await _dbcontext.SupportComments.AddAsync(supportTicketsComment);
+                    _dbcontext.SaveChanges();
+
+                    return new GenericResponse<SupportTicketsComment>
+                    {
+                        Data = supportTicketsComment,
+                        Message = "support ticket created successfully",
+                        Success = true
+                    };
+                }
+            }
+            catch (Exception e)
+            {
+                return new GenericResponse<SupportTicketsComment>
+                {
+                    Data = null,
+                    Message = e.Message,
+                    Success = false
+                };
+            }
+        }
+
         public async Task<GenericResponse<SupportTickets>> CreateSupportTicketAsync(SupportTickets supportTickets)
         {
             try
@@ -176,7 +217,7 @@ namespace NCELAP.WebAPI.Services.Support
             try
             {
                 var supportTickets = await _dbcontext.SupportTickets.Where(s => s.CompanyRecId == companyRecId && s.EmployeeRecId == employeeRecId).
-                    OrderByDescending(s=>s.RaisedOn).ToListAsync();
+                    OrderByDescending(s => s.RaisedOn).ToListAsync();
 
                 if (supportTickets != null)
                 {
@@ -220,7 +261,7 @@ namespace NCELAP.WebAPI.Services.Support
                     return new GenericResponse<SupportTickets>
                     {
                         Data = supportTicket,
-                        Message = "template found",
+                        Message = "ticket found",
                         Success = true
 
                     };
@@ -246,6 +287,47 @@ namespace NCELAP.WebAPI.Services.Support
                 };
             }
 
+        }
+
+        public async Task<GenericResponse<List<SupportTicketsComment>>> GetSupportTicketCommentByTicketId(int supportticketId)
+        {
+            try
+            {
+                var supportTicket = await _dbcontext.SupportTickets.SingleOrDefaultAsync(s => s.Id == supportticketId);
+
+                if (supportTicket != null)
+                {
+                    var supportTicketComments = await _dbcontext.SupportComments.Where
+                        (s => s.CaseId == supportticketId).ToListAsync();
+
+                    return new GenericResponse<List<SupportTicketsComment>>
+                    {
+                        Data = supportTicketComments,
+                        Message = "Ticket Comments found",
+                        Success = true
+
+                    };
+                }
+                else
+                {
+                    return new GenericResponse<List<SupportTicketsComment>>
+                    {
+                        Data = null,
+                        Message = "Ticket Id doesnt exist",
+                        Success = false
+
+                    };
+                }
+            }
+            catch (Exception e)
+            {
+                return new GenericResponse<List<SupportTicketsComment>>
+                {
+                    Data = null,
+                    Message = e.Message,
+                    Success = false
+                };
+            }
         }
     }
 }

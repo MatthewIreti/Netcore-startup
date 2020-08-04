@@ -23,7 +23,7 @@ namespace NCELAP.WebAPI.Services.Account
         readonly IConfiguration _configuration;
         private readonly string businessaccount, businessaccountlegalstatus, businessaccountshareholder, businessaccountdirector, docupload, custpropspectstafflist;
         private readonly string ncelasloginendpoint, companynamebycustrecid, accountdetails, ncelasinfoupdate, ncelasusers, ncelasuserbyemail, ncelasusersbycreatorrecid;
-        private readonly string contactsupport;
+        private readonly string contactsupport, passwordreset, ncelaspasswordupdate;
         private string jsonResponse;
         private readonly AuthService _authService;
         private readonly Helper _helper;
@@ -47,6 +47,8 @@ namespace NCELAP.WebAPI.Services.Account
             ncelasusersbycreatorrecid = _configuration.GetSection("Endpoints").GetSection("ncelasusersbycreatorrecid").Value;
             custpropspectstafflist = _configuration.GetSection("Endpoints").GetSection("custpropspectstafflist").Value;
             contactsupport = _configuration.GetSection("Endpoints").GetSection("ncelassupport").Value;
+            passwordreset = _configuration.GetSection("Endpoints").GetSection("passwordreset").Value;
+            ncelaspasswordupdate = _configuration.GetSection("Endpoints").GetSection("ncelasuserpasswordupdate").Value;
         }
 
         public async Task<bool> SaveBusinessInformation(RegisteredBusiness registeredBusiness)
@@ -540,7 +542,7 @@ namespace NCELAP.WebAPI.Services.Account
                     client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
                     client.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/json");
 
-                    var responseMessage = await client.PostAsJsonAsync(ncelasusers, userToCreate);
+                    var responseMessage = await client.PostAsJsonAsync(passwordreset, userToCreate);
                     var errorMessage = responseMessage.Content.ReadAsStringAsync().GetAwaiter().GetResult();
 
                     StreamReader sr = new StreamReader(await responseMessage.Content.ReadAsStreamAsync());
@@ -695,6 +697,98 @@ namespace NCELAP.WebAPI.Services.Account
 
 
             return userAccounts;
+        }
+    
+        public async Task<PasswordResetResponse> SendPasswordResetCode(string email)
+        {
+            var helper = new Helper(_configuration);
+            string token = _authService.GetAuthToken();
+            string currentEnvironment = helper.GetEnvironmentUrl();
+            string url = currentEnvironment + passwordreset;
+            var passwordReset = new PasswordReset()
+            {
+                ActivationCode = Helper.RandomNumbers(6),
+                Email = email
+            };
+
+            var passwordResetResponse = new PasswordResetResponse()
+            {
+                ActivationCode = passwordReset.ActivationCode,
+                Email = email,
+                Status = false
+            };
+
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri(url);
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+                    client.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/json");
+
+                    var responseMessage = await client.PostAsJsonAsync(passwordreset, passwordReset);
+                    var errorMessage = responseMessage.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+
+                    StreamReader sr = new StreamReader(await responseMessage.Content.ReadAsStreamAsync());
+                    var passwordResetResponseText = sr.ReadToEnd();
+
+                    if (responseMessage.IsSuccessStatusCode)
+                    {
+                        passwordResetResponse.Status = true;
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex.StackTrace);
+            }
+
+            return passwordResetResponse;
+        }
+
+        public async Task<bool> PasswordReset(EmailPasswordDto emailPasswordDto)
+        {
+            var helper = new Helper(_configuration);
+            var authOperation = new AuthService(_configuration);
+
+            bool userPasswordUpdateResponse = false;
+            string token = authOperation.GetAuthToken();
+            string currentEnvironmentEndpoint = helper.GetEnvironmentUrl();
+            string requestUri = String.Format(ncelaspasswordupdate, emailPasswordDto.Email);
+
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri(currentEnvironmentEndpoint);
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+                    client.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/json");
+
+                    var userPassPayload = new Dictionary<string, string>
+                    {
+                        { "Password", Helper.ComputeSha256Hash(emailPasswordDto.Password) }
+                    };
+
+                    var requestContent = JsonConvert.SerializeObject(userPassPayload, Formatting.Indented);
+                    var stringContent = new StringContent(requestContent, System.Text.Encoding.UTF8, "application/json");
+
+                    var passwordUpdateResponse = await client.PatchAsync(requestUri, stringContent);
+                    if (passwordUpdateResponse.StatusCode == HttpStatusCode.NoContent)
+                    {
+                        userPasswordUpdateResponse = true;
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex.StackTrace);
+            }
+
+            return userPasswordUpdateResponse;
         }
     }
 }
