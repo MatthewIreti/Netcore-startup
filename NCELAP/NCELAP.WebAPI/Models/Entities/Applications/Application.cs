@@ -39,6 +39,8 @@ namespace NCELAP.WebAPI.Models.Entities.Applications
         public string CustLicenseApplicationStatus { get; set; }
         public string ExitPoint { get; set; }
         public string EntryPoint { get; set; }
+        public long EntryPointState { get; set; }
+        public long ExitPointState  { get; set; }
         public string UniqueId { get; set; }
         public DateTime SubmittedOn { get; set; }
 
@@ -53,5 +55,11 @@ namespace NCELAP.WebAPI.Models.Entities.Applications
         public List<LicenseApplicationCommentModel> LicenseApplicationComments { get; set; }
     }
 
+    public class DPRZoneStates
+    {
+        public string State  { get; set; }
+        public long RecordId { get; set; }
+
+    }
     
 }

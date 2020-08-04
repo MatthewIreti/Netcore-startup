@@ -39,7 +39,7 @@
     $scope.licenseApplicationModel = {
         CompanyName: '', Customer: 0, CustomerTier: '', SubmittedBy: 0, CustApplicationNum: '', CustLicenseType: '', EffectiveDate: '', HoldRelatedLicense: '', RelatedLicenseDetail: '',
         HasRelatedLicense: '', RelatedLicenseType: '', HasLicenseRevoked: '', RevokedLicenseType: '', HasGasApplicationRefused: '',
-        RefusedLicenseType: '', AgentShipperName: '', AgentLocationOfShipper: '', EntryPoint: '', ExitPoint: '', Location: '',
+        RefusedLicenseType: '', AgentShipperName: '', AgentLocationOfShipper: '', EntryPointState: undefined, ExitPointState: undefined, EntryPoint: '', ExitPoint: '', Location: '',
         MaximumNominatedCapacity: 0.0, PipelineAndGasTransporterName: '', GasPipelineNetwork: '', InstalledCapacity: '', DeclarationName: '', DeclarationCapacity: '',
         DeclarationDate: '', ProposedArrangementLicensingActivity: '', HasStandardModificationRequest: '', ModificationRequestDetails: '',
         ModificationRequestReason: '', CustLicenseApplicationStatus: '',
@@ -281,7 +281,20 @@
             console.log(error);
         });
     };
+
+    $scope.getStates = function () {
+        $http({
+            method: 'GET',
+            url: baseUrl + 'applications/states/'
+        }).then(function (response) {
+            $scope.states = response.data;
+        }, function (error) {
+            console.log(error);
+        });
+    };
+
     $scope.getLicenseFees();
+    $scope.getStates();
     $scope.setCustomerRecId = function () {
         var loggedInUser = localStorage.getItem('loggedInUser');
         $scope.loggedInUser = JSON.parse(loggedInUser);
@@ -311,7 +324,6 @@
         $scope.licenseApplicationModel.DeclarationDate = declarationDate;
         $scope.licenseApplicationModel.MaximumNominatedCapacity = parseFloat($scope.licenseApplicationModel.MaximumNominatedCapacity);
         $scope.submittingInformation = 'true';
-        console.log(JSON.stringify($scope.licenseApplicationModel));
         $scope.waiting++;
         $http({
             method: 'POST',

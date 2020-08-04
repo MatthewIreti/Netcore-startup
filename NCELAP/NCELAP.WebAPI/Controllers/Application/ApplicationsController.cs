@@ -49,6 +49,22 @@ namespace NCELAP.WebAPI.Controllers.Application
         }
 
         [HttpGet]
+        [Route("states")]
+        public async Task<IActionResult> GetStates()
+        {
+            try
+            {
+                var response = await _applicationsService.GetZoneStates();
+                return Ok(response);
+            }
+            catch (Exception exception)
+            {
+
+                return BadRequest(exception.Message);
+            }
+        }
+
+        [HttpGet]
         [Route("customer/{custrecid}")]
         public async Task<IActionResult> CustomerApplications(long custrecid)
         {

@@ -478,7 +478,6 @@ namespace NCELAP.WebAPI.Services.Application
                 MaximumNominatedCapacity = licenseApplication.MaximumNominatedCapacity,
                 ModificationRequestDetails = licenseApplication.ModificationRequestDetails,
                 ModificationRequestReason = licenseApplication.ModificationRequestReason,
-                //MaximumNominatedCapacity = licenseApplication.MaximumNominatedCapacity,
                 PipelineAndGasTransporterName = licenseApplication.PipelineAndGasTransporterName,
                 ProposedArrangementLicensingActivity = licenseApplication.ProposedArrangementLicensingActivity,
                 RefusedLicenseType = licenseApplication.RefusedLicenseType,
@@ -487,9 +486,32 @@ namespace NCELAP.WebAPI.Services.Application
                 RevokedLicenseType = licenseApplication.RevokedLicenseType,
                 SubmittedOn = dateRegistered,
                 UniqueId = Helper.RandomAlhpaNumeric(15),
+                EntryPoint = licenseApplication.EntryPoint,
+                ExitPoint = licenseApplication.ExitPoint,
+                ExitPointState = licenseApplication.ExitPointState,
+                EntryPointState = licenseApplication.EntryPointState
             };
 
             return licenseApplicationForSave;
+        }
+
+        public async Task<List<DPRZoneStates>> GetZoneStates()
+        {
+            try
+            {
+                string token = _authService.GetAuthToken();
+                var helper = new Helper(_configuration);
+                string currentEnvironment = helper.GetEnvironmentUrl();
+                var response = await currentEnvironment.AppendPathSegment("DprZoneStates")
+                    .WithOAuthBearerToken(token)
+                    .GetJsonAsync<BaseApplicationResponse<DPRZoneStates>>();
+                return response.value;
+            }
+            catch (Exception exp)
+            {
+                Log.Error(exp.StackTrace);
+                throw new Exception(exp.Message);
+            }
         }
 
         public async Task<ApplicationInfo> GetLicenseApplicationDetails(long licenseApplicationRecId)

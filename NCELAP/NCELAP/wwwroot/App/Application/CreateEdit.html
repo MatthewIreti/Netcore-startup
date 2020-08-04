@@ -275,12 +275,36 @@
                                             </div>
                                             <div class="col col-lg-6 col-xl-6 col-12">
                                                 <div class="form-group">
+                                                    <label>
+                                                        <strong>Entry Point State <span class="text-danger">*</span></strong>
+                                                    </label>
+                                                    <select name="entryPointState{{$index}}" class="form-control required" data-msg="Entry point state is required"
+                                                            ng-model="licenseApplicationModel.EntryPointState" ng-options="state.recordId as state.state for state in states">
+                                                        <option value="">--Select--</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col col-lg-6 col-xl-6 col-12">
+                                                <div class="form-group">
                                                     <label><strong>Exit point</strong><span class="text-danger">*</span></label>
                                                     <input name="exitPoint" type="text" class="form-control required" ng-model="licenseApplicationModel.ExitPoint"
                                                            data-msg="Please provide the Exit point" />
                                                 </div>
                                             </div>
+                                            <div class="col col-lg-6 col-xl-6 col-12">
+                                                <div class="form-group">
+                                                    <label>
+                                                        <strong>Exit Point State <span class="text-danger">*</span></strong>
+                                                    </label>
+                                                    <select name="exitPointState{{$index}}" class="form-control required" data-msg="Exit point state is required"
+                                                            ng-model="licenseApplicationModel.ExitPointState" ng-options="state.recordId as state.state for state in states">
+                                                        <option value="">--Select--</option>
 
+                                                    </select>
+                                                </div>
+
+                                            </div>
+                                             
                                             <div class="col col-lg-3 col-xl-3 col-12">
                                                 <div class="form-group">
                                                     <label><strong>Nominated capacity</strong><span class="text-danger">*</span></label>
@@ -312,25 +336,7 @@
                                                            ng-model="licenseApplicationModel.PipelineAndGasTransporterName" />
                                                 </div>
                                             </div>
-                                            <div class="col col-lg-6 col-xl-5 col-12">
-                                                <div class="form-group">
-                                                    <label><strong>Present Entry point</strong><span class="text-danger">*</span></label>
-                                                    <input name="EntryPoint" type="text" class="form-control required"
-                                                           data-msg="Please provide the present entry point"
-                                                           ng-model="licenseApplicationModel.EntryPoint" />
-                                                </div>
-                                            </div>
-                                            <div class="col col-lg-6 col-xl-5 col-12">
-                                                <div class="form-group">
-                                                    <label><strong>Present Exit point</strong><span class="text-danger">*</span></label>
-                                                    <input name="ExitPoint" type="text" class="form-control required"
-                                                           data-msg="Please provide the present exit point"
-                                                           ng-model="licenseApplicationModel.ExitPoint" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col col-lg-4 col-xl-4 col-12">
+                                            <div class="col col-lg-6 col-xl-6 col-12">
                                                 <div class="form-group">
                                                     <label><strong>Location </strong><span class="text-danger">*</span></label>
                                                     <input type="text" class="form-control required" name="location"
@@ -338,6 +344,51 @@
                                                            ng-model="licenseApplicationModel.Location" />
                                                 </div>
                                             </div>
+                                            <div class="col col-lg-6 col-xl-6 col-12">
+                                                <div class="form-group">
+                                                    <label><strong>Present Entry point</strong><span class="text-danger">*</span></label>
+                                                    <input name="EntryPoint" type="text" class="form-control required"
+                                                           data-msg="Please provide the present entry point"
+                                                           ng-model="licenseApplicationModel.EntryPoint" />
+                                                </div>
+
+                                            </div>
+                                            <div class="col col-lg-6 col-xl-6 col-12">
+                                                <div class="form-group">
+                                                    <label>
+                                                        <strong>Entry Point State <span class="text-danger">*</span></strong>
+                                                    </label>
+                                                    <select name="entryPointState{{$index}}" class="form-control required" data-msg="Entry point state is required"
+                                                            ng-model="licenseApplicationModel.EntryPointState" ng-options="state.recordId as state.state for state in states">
+                                                        <option value="">--Select--</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col col-lg-6 col-xl-6 col-12">
+                                                <div class="form-group">
+                                                    <label><strong>Present Exit point</strong><span class="text-danger">*</span></label>
+                                                    <input name="ExitPoint" type="text" class="form-control required"
+                                                           data-msg="Please provide the present exit point"
+                                                           ng-model="licenseApplicationModel.ExitPoint" />
+                                                </div>
+                                            </div>
+                                            <div class="col col-lg-6 col-xl-6 col-12">
+                                                <div class="form-group">
+                                                    <label>
+                                                        <strong>Exit Point State <span class="text-danger">*</span></strong>
+                                                    </label>
+                                                    <select name="exitPointState{{$index}}" class="form-control required" data-msg="Exit point state is required"
+                                                            ng-model="licenseApplicationModel.ExitPointState" ng-options="state.recordId as state.state for state in states">
+                                                        <option value="">--Select--</option>
+
+                                                    </select>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                        <div class="row">
+                                            
                                             <div class="col col-lg-3 col-xl-3 col-12">
                                                 <div class="form-group">
                                                     <label><strong>Nominated capacity</strong><span class="text-danger">*</span></label>
@@ -347,7 +398,7 @@
                                                            ng-change="evaluateGasShipperNominalCapacity(licenseApplicationModel.MaximumNominatedCapacity)" />
                                                 </div>
                                             </div>
-                                            <div class="col-lg-5 col-xl-5 col-12">
+                                            <div class="col-lg-7 col-xl-7 col-12">
                                                 <div class="form-group">
                                                     <label>Copy of applicable Operation License or Permit (Issued by Approved Government entity e.g DPR)<span class="text-danger">*</span></label>
                                                     <input class="form-control required" type="file" 
@@ -578,7 +629,18 @@
                                                            ng-model="licenseApplicationModel.EntryPoint" />
                                                 </div>
                                             </div>
-                                            <div class="col col-lg-5 col-xl-5 col-12">
+                                            <div class="col col-lg-4 col-xl-6 col-12">
+                                                <div class="form-group">
+                                                    <label>
+                                                        <strong>Entry Point State <span class="text-danger">*</span></strong>
+                                                    </label>
+                                                    <select name="entryPointState{{$index}}" class="form-control required" data-msg="Entry point state is required"
+                                                            ng-model="licenseApplicationModel.EntryPointState" ng-options="state.recordId as state.state for state in states">
+                                                        <option value="">--Select--</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col col-lg-4 col-xl-5 col-12">
                                                 <div class="form-group">
                                                     <label><strong>Present Exit point</strong><span class="text-danger">*</span></label>
                                                     <input type="text" class="form-control" name="exitPointPresent"
@@ -586,7 +648,21 @@
                                                            ng-model="licenseApplicationModel.ExitPoint" />
                                                 </div>
                                             </div>
-                                            <div class="col col-lg-4 col-xl-4 col-12">
+                                            <div class="col col-lg-4 col-xl-6 col-12">
+                                                <div class="form-group">
+                                                    <label>
+                                                        <strong>Exit Point State <span class="text-danger">*</span></strong>
+                                                    </label>
+                                                    <select name="exitPointState{{$index}}" class="form-control required" data-msg="Exit point state is required"
+                                                            ng-model="licenseApplicationModel.ExitPointState" ng-options="state.recordId as state.state for state in states">
+                                                        <option value="">--Select--</option>
+
+                                                    </select>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col col-lg-6 col-xl-6 col-12">
                                                 <div class="form-group">
                                                     <label><strong>Location </strong><span class="text-danger">*</span></label>
                                                     <input type="text" class="form-control required"

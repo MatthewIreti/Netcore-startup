@@ -145,5 +145,7 @@ namespace NCELAP.WebAPI.Models.DTO.Applications
         public string CustLicenseApplicationStatus { get; set; }
         public string UniqueId { get; set; }
         public DateTime SubmittedOn { get; set; }
+        public long EntryPointState { get; set; }
+        public long ExitPointState { get; set; }
     }
 }

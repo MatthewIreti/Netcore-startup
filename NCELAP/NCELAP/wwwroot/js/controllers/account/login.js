@@ -13,7 +13,6 @@
     };
 
     $scope.submitForm = function () {
-        console.log($scope.loginModel);
         $scope.accountdoesnotexist = false;
         $scope.loggingIn = true;
         $scope.hideAccountActivationError();
