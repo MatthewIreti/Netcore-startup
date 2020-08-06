@@ -29,6 +29,8 @@
 
     
 
+    
+
     $scope.setCustomerRecId = function () {
         var loggedInUser = localStorage.getItem('loggedInUser');
         $scope.loggedInUser = JSON.parse(loggedInUser);
@@ -621,8 +623,6 @@
     //    });
     //    paymentEngine.showPaymentWidget();
     //};
-
-
 
     $scope.setCustomerRecId();
     $scope.getLicenseFees();

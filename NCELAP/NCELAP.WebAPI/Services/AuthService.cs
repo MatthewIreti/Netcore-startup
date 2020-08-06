@@ -20,6 +20,32 @@ namespace NCELAP.WebAPI.Services
             _configuration = configuration;
         }
 
+        public string GetApiServiceEndpoint()
+        {
+            string currentEnv = string.Empty, apiServiceEndpoint = string.Empty;
+            currentEnv = _configuration.GetSection("ApiServiceEnvironments").GetSection("current").Value;
+            apiServiceEndpoint = _configuration.GetSection("ApiServiceEnvironments").GetSection(currentEnv).Value;
+            //if (currentEnv == "dev")
+            //{
+            //    environmentAuthConfig = "DevAuthConfig";
+            //}
+            //else if (currentEnv == "sat")
+            //{
+            //    environmentAuthConfig = "SatAuthConfig";
+            //}
+            //else if (currentEnv == "cherry")
+            //{
+            //    environmentAuthConfig = "CherryDevAuthConfig";
+            //}
+            //else
+            //{
+            //    environmentAuthConfig = "ProdAuthConfig";
+            //}
+
+            //apiServiceEndpoint = _configuration.GetSection(environmentAuthConfig).GetSection("currentEnv").Value;
+            return apiServiceEndpoint;
+        }
+
         public string GetAuthToken()
         {
             string environmentAuthConfig, currentEnv = string.Empty;

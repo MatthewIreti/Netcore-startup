@@ -379,6 +379,38 @@ appModule.controller('ApplicationList', function ($scope, $http, $state) {
             console.log(error);
         });
     }
+
+    $scope.getLicenseCertificateBase64 = function (licenseRecId) {
+        $scope.licenseCertificateModel = {};
+        $scope.licenseCertificateModel.payload = { LicenseId: licenseRecId };
+        console.log($scope.licenseCertificateModel);
+
+        $scope.waiting++;
+        $http({
+            method: 'POST',
+            url: baseUrl + 'licensecertificate/generate',
+            data: $scope.licenseCertificateModel,
+            dataType: 'json'
+        }).then(function (response) {
+            $scope.waiting--;
+            if (response.data) {
+                $scope.generateLicensePdf(response.data);
+            }
+        }, function (error) {
+            $scope.waiting--;
+            console.log(error);
+        });
+    };
+
+    $scope.generateLicensePdf = function (base64String) {
+        const linkSource = `data:application/pdf;base64, ${base64String}`;
+        const downloadLink = document.createElement("a");
+        const fileName = "license.pdf";
+        downloadLink.href = linkSource;
+        downloadLink.download = fileName;
+        downloadLink.click();
+    };
+
 });
 
 
@@ -410,7 +442,8 @@ appModule.controller('ApplicationGetDetails', function ($scope, $http, $state) {
 appModule.controller('ApplicationInvoice', function ($scope, $http, $state, $timeout, $window, $sce) {
     $scope.trustSrc = function (src) {
         return $sce.trustAsResourceUrl(src);
-    }
+    };
+
     $scope.waiting++;
     $http({
         method: 'GET',
@@ -425,5 +458,6 @@ appModule.controller('ApplicationInvoice', function ($scope, $http, $state, $tim
 
     $scope.printInvoice = function () {
         $timeout($window.print, 0);
-    }
+    };
+
 });
