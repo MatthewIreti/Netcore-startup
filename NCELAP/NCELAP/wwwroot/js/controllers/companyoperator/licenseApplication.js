@@ -380,9 +380,11 @@ appModule.controller('ApplicationList', function ($scope, $http, $state) {
         });
     }
 
-    $scope.getLicenseCertificateBase64 = function (licenseRecId) {
+    
+
+    $scope.getLicenseCertificateBase64 = function (applicationRecId) {
         $scope.licenseCertificateModel = {};
-        $scope.licenseCertificateModel.payload = { LicenseId: licenseRecId };
+        $scope.licenseCertificateModel.payload = { custLicenseApplicationId: applicationRecId };
         console.log($scope.licenseCertificateModel);
 
         $scope.waiting++;
@@ -460,4 +462,72 @@ appModule.controller('ApplicationInvoice', function ($scope, $http, $state, $tim
         $timeout($window.print, 0);
     };
 
+});
+
+appModule.controller('applicationLicenses', function ($scope, $http, $state) {
+    
+
+    if ($scope.loggedInUser.custTableRecId) {
+        $scope.waiting++;
+        // getCustomerApplications($scope.loggedInUser.custTableRecId);
+        getApplicationLicenses($scope.loggedInUser.custTableRecId);
+        $scope.waiting--;
+    }
+
+    if ($scope.loggedInUser.companyName) {
+        $scope.companyName = $scope.loggedInUser.companyName;
+    }
+
+    function getApplicationLicenses(custrecid) {
+        $http({
+            method: 'GET',
+            url: baseUrl + 'applications/licenses/' + custrecid
+        }).then(function (response) {
+            $scope.licenses = response.data;
+            // if the datatable instance already exist, destroy before recreating, otherwise, just create
+            if ($.fn.DataTable.isDataTable('#licensesTable')) {
+                $('#licensesTable').DataTable().destroy();
+            }
+
+            angular.element(document).ready(function () {
+                dTable = $('#licensesTable');
+                dTable.DataTable({
+                    "aaSorting": [] // disables first colum auto-sorting
+                });
+            });
+        }, function (error) {
+            console.log(error);
+        });
+    }
+
+    $scope.generateLicensePdf = function (base64String, licenseType, licenseNumber) {
+        const linkSource = `data:application/pdf;base64, ${base64String}`;
+        const downloadLink = document.createElement("a");
+        const fileName = $scope.companyName + "_" + licenseType + "_" + licenseNumber + ".pdf";
+        downloadLink.href = linkSource;
+        downloadLink.download = fileName;
+        downloadLink.click();
+    };
+
+    $scope.getLicenseCertificateBase64 = function (licenseRecId, licenseType, licenseNumber) {
+        $scope.licenseCertificateModel = {};
+        $scope.licenseCertificateModel.payload = { LicenseId: licenseRecId };
+        console.log($scope.licenseCertificateModel);
+
+        $scope.waiting++;
+        $http({
+            method: 'POST',
+            url: baseUrl + 'licensecertificate/generate',
+            data: $scope.licenseCertificateModel,
+            dataType: 'json'
+        }).then(function (response) {
+            $scope.waiting--;
+            if (response.data) {
+                $scope.generateLicensePdf(response.data, licenseType, licenseNumber);
+            }
+        }, function (error) {
+            $scope.waiting--;
+            console.log(error);
+        });
+    };
 });

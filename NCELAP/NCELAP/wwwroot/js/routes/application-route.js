@@ -30,6 +30,12 @@
                     url: '/details/:recordId',
                     controller: 'ApplicationGetDetails',
                     templateUrl: '/App/Application/Details.html'
+                },
+                {
+                    name: 'licenses',
+                    url: '/licenses',
+                    controller: 'applicationLicenses',
+                    templateUrl: '/App/Application/Licenses.html'
                 }
             ]
         })
