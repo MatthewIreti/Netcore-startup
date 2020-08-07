@@ -3,7 +3,7 @@
     var maxFileSize = 5000000; // 5 Megabytes
 
     $scope.caseseverities = [
-        { Name: "Veyh High", Value: 1 },
+        { Name: "Very High", Value: 1 },
         { Name: "High", Value: 2 },
         { Name: "Medium", Value: 3 },
         { Name: "Low", Value: 4 },
