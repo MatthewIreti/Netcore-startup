@@ -362,3 +362,4 @@ FodyWeavers.xsd
 #NCLEAS SPECIFIC Files
 NCELAP/NCELAP/wwwroot/js/util.js
 NCELAP/NCELAP.WebAPI/appsettings.json
+NCELAP/NCELAP.WebAPI/appsettings.Development.json
