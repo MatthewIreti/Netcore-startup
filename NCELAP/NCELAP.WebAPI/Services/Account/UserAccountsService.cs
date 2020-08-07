@@ -542,7 +542,7 @@ namespace NCELAP.WebAPI.Services.Account
                     client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
                     client.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/json");
 
-                    var responseMessage = await client.PostAsJsonAsync(passwordreset, userToCreate);
+                    var responseMessage = await client.PostAsJsonAsync(ncelasusers, userToCreate);
                     var errorMessage = responseMessage.Content.ReadAsStringAsync().GetAwaiter().GetResult();
 
                     StreamReader sr = new StreamReader(await responseMessage.Content.ReadAsStreamAsync());
