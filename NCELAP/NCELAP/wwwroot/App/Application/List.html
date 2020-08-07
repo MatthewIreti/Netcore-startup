@@ -82,11 +82,12 @@
                                                     <a ng-show="application.custLicenseApplicationStatus == 'DueForRenewal'
                                                        || application.custLicenseApplicationStatus == 'Active'
                                                        || application.custLicenseApplicationStatus == 'Expired'
-                                                       || application.custLicenseApplicationStatus == 'Approved'" href="#" class="dropdown-item">
+                                                       || application.custLicenseApplicationStatus == 'Approved'"  ng-click="getLicenseCertificateBase64(application.recordId)" class="dropdown-item">
                                                         Download License
                                                     </a>
+                                                    
                                                     <a ng-show="application.custLicenseApplicationStatus == 'DueForRenewal'|| application.custLicenseApplicationStatus == 'Expired'"
-                                                       href="#" class="dropdown-item">Renew License</a>
+                                                       class="dropdown-item">Renew License</a>
                                                 </div>
                                             </div>
                                             <!--<span><a class="btn btn-success btn-md" target="_blank" href="/companyoperator/applicationdetails/{{ application.recordId }}">View Details</a> </span>-->

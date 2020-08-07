@@ -81,6 +81,22 @@ namespace NCELAP.WebAPI.Controllers.Application
         }
 
         [HttpGet]
+        [Route("licenses/{custrecid}")]
+        public async Task<IActionResult> CustomerApplicationLicenses(long custrecid)
+        {
+            try
+            {
+                var response = await _applicationsService.GetCustomerApplicationLicenses(custrecid);
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet]
         [Route("licenseapplicationdetails/{licenseapplicationrecid}")]
         public async Task<IActionResult> LicenseApplicationDetails(long licenseapplicationrecid)
         {

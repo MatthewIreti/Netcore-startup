@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using NCELAP.WebAPI.Models.DTO;
 using NCELAP.WebAPI.Models.DTO.Applications;
 using NCELAP.WebAPI.Models.Entities.Applications;
+using NCELAP.WebAPI.Models.ODataResponse.Account;
 using NCELAP.WebAPI.Models.ODataResponse.Application;
 using NCELAP.WebAPI.Util;
 using Newtonsoft.Json;
@@ -22,7 +23,8 @@ namespace NCELAP.WebAPI.Services.Application
     public class ApplicationsService
     {
         readonly IConfiguration _configuration;
-        private readonly string licenseapplication, custapplicationshareholder, gasShipperTakeOffLink, gasShipperCustomerLink, docupload, licensefees, custlicensebycustomerrecid, custlicenseapplicationdetails;
+        private readonly string licenseapplication, custapplicationshareholder, gasShipperTakeOffLink, gasShipperCustomerLink;
+        private readonly string docupload, licensefees, custlicensebycustomerrecid, custlicenseapplicationdetails, networkcodelicenses;
         private string jsonResponse;
         private readonly AuthService _authService;
 
@@ -38,7 +40,7 @@ namespace NCELAP.WebAPI.Services.Application
             licensefees = _configuration.GetSection("Endpoints").GetSection("licensefee").Value;
             custlicensebycustomerrecid = _configuration.GetSection("Endpoints").GetSection("custlicensebycustomerrecid").Value;
             custlicenseapplicationdetails = _configuration.GetSection("Endpoints").GetSection("custlicenseapplicationdetails").Value;
-            
+            networkcodelicenses = _configuration.GetSection("Endpoints").GetSection("networkcodelicenses").Value;
         }
 
         public async Task<bool> SaveApplication(LicenseApplication licenseApplication)
@@ -405,6 +407,51 @@ namespace NCELAP.WebAPI.Services.Application
                 Log.Error(ex.StackTrace);
                 throw;
             }
+        }
+
+        public async Task<List<NetworkCodeLicense>> GetCustomerApplicationLicenses(long custrecid)
+        {
+            string token = _authService.GetAuthToken();
+            var helper = new Helper(_configuration);
+            string currentEnvironment = helper.GetEnvironmentUrl();
+            string url = currentEnvironment + networkcodelicenses;
+            string formattedUrl = String.Format(url, custrecid);
+            var networkCodeLicenses = new List<NetworkCodeLicense>();
+
+            try
+            {
+                var webRequest = WebRequest.Create(formattedUrl);
+                if (webRequest != null)
+                {
+                    webRequest.Method = "GET";
+                    webRequest.Timeout = 120000;
+                    webRequest.Headers.Add("Authorization", "Bearer " + token);
+
+                    WebResponse response = await webRequest.GetResponseAsync();
+                    Stream dataStream = response.GetResponseStream();
+
+                    StreamReader reader = new StreamReader(dataStream);
+
+                    var webResponse = new NetworkCodeResponse();
+                    jsonResponse = reader.ReadToEnd();
+
+                    webResponse = JsonConvert.DeserializeObject<NetworkCodeResponse>(jsonResponse);
+                    networkCodeLicenses = webResponse.value;
+                    
+                    response.Dispose();
+                    dataStream.Close();
+                    dataStream.Dispose();
+                    reader.Close();
+                    reader.Dispose();
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex.StackTrace);
+                throw;
+            }
+
+            return networkCodeLicenses;
         }
 
         public async Task<List<LicenseFee>> GetLicenseFees()
