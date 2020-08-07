@@ -42,7 +42,7 @@
                                         <th>Name</th>
                                         <th>Email</th>
                                         <th>Department</th>
-                                        <th>Status</th>
+                                        <!--<th>Status</th>-->
                                         <th>Activated</th>
                                     </tr>
                                 </thead>
@@ -54,10 +54,10 @@
                                         </td>
                                         <td>{{ userAccount.email }}</td>
                                         <td>{{ userAccount.department }}</td>
-                                        <td>
+                                        <!--<td>
                                             <div class="badge badge-warning" ng-show="userAccount.status === 'Inactive'">{{ userAccount.status }}</div>
                                             <div class="badge badge-success" ng-show="userAccount.status === 'Active'">{{ userAccount.status }}</div>
-                                        </td>
+                                        </td>-->
                                         <td>
                                             <div class="badge badge-warning" ng-show="userAccount.activated === 'No'">{{ userAccount.activated }}</div>
                                             <div class="badge badge-success" ng-show="userAccount.activated === 'Yes'">{{ userAccount.activated }}</div>
