@@ -96,6 +96,7 @@ namespace NCELAP.WebAPI.Services.Application
             catch (Exception ex)
             {
                 Log.Error(ex.StackTrace);
+                throw;
             }
 
             return response;
@@ -507,7 +508,7 @@ namespace NCELAP.WebAPI.Services.Application
             {
                 AgentLocationOfShipper = licenseApplication.AgentLocationOfShipper,
                 AgentShipperName = licenseApplication.AgentShipperName,
-                CustLicenseApplicationStatus = "AwaitingProcessingFee",
+               // CustLicenseApplicationStatus = "AwaitingProcessingFee",
                 CustLicenseType = licenseApplication.CustLicenseType,
                 CustLicenseCategory = "NewApplication",
                 Customer = licenseApplication.Customer,

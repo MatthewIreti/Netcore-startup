@@ -142,7 +142,7 @@ namespace NCELAP.WebAPI.Models.DTO.Applications
         public bool HasStandardModificationRequest { get; set; }
         public string ModificationRequestDetails { get; set; }
         public string ModificationRequestReason { get; set; }
-        public string CustLicenseApplicationStatus { get; set; }
+       // public string CustLicenseApplicationStatus { get; set; }
         public string UniqueId { get; set; }
         public DateTime SubmittedOn { get; set; }
         public long EntryPointState { get; set; }
