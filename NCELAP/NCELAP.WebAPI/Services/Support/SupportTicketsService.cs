@@ -96,7 +96,6 @@ namespace NCELAP.WebAPI.Services.Support
             }
         }
 
-
         public async Task<GenericResponse<SupportTickets>> DeleteSupportTicketAsync(int Id)
         {
             try

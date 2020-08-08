@@ -531,3 +531,114 @@ appModule.controller('applicationLicenses', function ($scope, $http, $state) {
         });
     };
 });
+
+appModule.controller('applicationLicenseUpdate', function ($scope, $http, $state) {
+    $scope.licenseInformation = {};
+    $scope.stakeholdersLocations = [{}];
+    $scope.takeOffPoints = [{}];
+    $scope.gasShipperCustomers = [{}];
+    document.title = "License Application Update " + appTitle;
+
+    function extractApplicationRecId() {
+        var urlParts = window.location.href.split('/');
+        var applicationRecId = urlParts[6];
+
+        $scope.getLicenseApplicationDetails(applicationRecId);
+    }
+
+    $scope.GasShipperPointType = [
+        { "Name": "Delivery", "Value": "Delivery" },
+        { "Name": "Take Off", "Value": "TakeOff" }
+    ];
+
+    $scope.GasShipperCustCategory = [
+        { "Name": "Buyer", "Value": "Buyer" },
+        { "Name": "Seller", "Value": "Seller" }
+
+    ];
+    $scope.getLicenseFees = function () {
+        $http({
+            method: 'GET',
+            url: baseUrl + 'applications/licensefees/'
+        }).then(function (response) {
+            $scope.licenseFees = response.data;
+            console.log($scope.licenseFees);
+        }, function (error) {
+            console.log(error);
+        });
+    };
+    $scope.addCustomerStakeholder = function () {
+        $scope.stakeholdersLocations.push({});
+    };
+    $scope.removeCustomerStakeholder = function (objectToRemove) {
+        var objectToRemovePosition = $scope.stakeholdersLocations.indexOf(objectToRemove);
+        $scope.stakeholdersLocations.splice(objectToRemovePosition, 1);
+    };
+
+    $scope.addGasShipperCustomer = function () {
+        $scope.gasShipperCustomers.push({});
+    };
+
+    $scope.removeGasShipperCustomer = function (objectToRemove) {
+        var objectToRemovePosition = $scope.gasShipperCustomers.indexOf(objectToRemove);
+        $scope.gasShipperCustomers.splice(objectToRemovePosition, 1);
+    };
+
+    $scope.addTakeOffPoint = function () {
+        $scope.takeOffPoints.push({});
+    };
+
+    $scope.removeTakeOffPoint = function (objectToRemove) {
+        var objectToRemovePosition = $scope.takeOffPoints.indexOf(objectToRemove);
+        $scope.takeOffPoints.splice(objectToRemovePosition, 1);
+    };
+    $scope.getStates = function () {
+        $http({
+            method: 'GET',
+            url: baseUrl + 'applications/states/'
+        }).then(function (response) {
+            $scope.states = response.data;
+        }, function (error) {
+            console.log(error);
+        });
+    };
+
+    $scope.getLicenseApplicationDetails = function (applicationRecId) {
+        $scope.waiting++;
+
+        $http({
+            method: 'GET',
+            url: baseUrl + 'applications/licenseapplicationdetails/' + applicationRecId
+        }).then(function (response) {
+            $scope.licenseInformation = response.data;
+            $scope.gasShipperCustomers = $scope.licenseInformation.gasShipperCustomers;
+            $scope.stakeholdersLocations = $scope.licenseInformation.stakeholdersLocations;
+            $scope.takeOffPoints = $scope.licenseInformation.takeOffPoints;
+            $scope.waiting--;
+
+            if ($scope.licenseInformation.effectiveDate) {
+                $scope.licenseInformation.effectiveDate = new Date($scope.licenseInformation.effectiveDate);
+            }
+
+            if ($scope.licenseInformation.declarationDate) {
+                $scope.licenseInformation.declarationDate = new Date($scope.licenseInformation.declarationDate);
+            }
+
+            document.getElementById("proposedArrangementDetails").value = $scope.licenseInformation.proposedArrangementLicensingActivity;
+            
+        }, function (error) {
+            $scope.waiting--;
+            console.log(error);
+        });
+    };
+
+    $scope.submitApplicationUpdate = function () {
+        
+    };
+    $scope.submitForm = function () {
+        console.log($scope.licenseInformation);
+    };
+
+    $scope.getStates();
+    extractApplicationRecId();
+});

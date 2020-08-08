@@ -618,6 +618,21 @@ namespace NCELAP.WebAPI.Services.Application
                         applicationInfo.GasShipperTakeOffPoints = gasShipperTakeOffPoints.value;
 
                     }
+
+                    if (applicationInfo.CustLicenseType == "NetworkAgent")
+                    {
+                        applicationInfo.CustLicenseType = "Network Agent";
+                    }
+
+                    if (applicationInfo.CustLicenseType == "GasShipperLicense")
+                    {
+                        applicationInfo.CustLicenseType = "Gas Shipper License";
+                    }
+
+                    if (applicationInfo.CustLicenseType == "GasTransporterLicense")
+                    {
+                        applicationInfo.CustLicenseType = "Gas Transporter License";
+                    }
                     response.Dispose();
                     dataStream.Close();
                     dataStream.Dispose();

@@ -36,6 +36,12 @@
                     url: '/licenses',
                     controller: 'applicationLicenses',
                     templateUrl: '/App/Application/Licenses.html'
+                },
+                {
+                    name: 'update',
+                    url: '/update/:recordId',
+                    controller: 'applicationLicenseUpdate',
+                    templateUrl: '/App/Application/Update.html'
                 }
             ]
         })
