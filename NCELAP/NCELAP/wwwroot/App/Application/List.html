@@ -70,7 +70,7 @@
                                                 <button id="split-button{{$index}}" type="button" class="btn btn-flat-primary dropdown-toggle" uib-dropdown-toggle>Actions</button>
                                                 <div class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="split-button{{$index}}">
                                                     <a ui-sref="site.application.details({recordId:application.recordId})" class="dropdown-item">View Details</a>
-                                                    <a ui-sref="site.application.update({recordId:application.recordId})" ng-show="application.custLicenseApplicationStatus == 'Submitted'" class="dropdown-item">Update application</a>
+                                                    <!--<a ui-sref="site.application.update({recordId:application.recordId})" ng-show="application.custLicenseApplicationStatus == 'Submitted'" class="dropdown-item">Update application</a>-->
                                                     <a ng-show="application.custLicenseApplicationStatus == 'AwaitingProcessingFee'
                                                        || application.custLicenseApplicationStatus == 'AwaitingLicenseFee'" ui-sref="site.application.invoice({recordId:application.recordId})" class="dropdown-item">
                                                         Generate Invoice
