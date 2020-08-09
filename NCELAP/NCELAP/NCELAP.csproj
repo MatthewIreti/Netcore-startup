@@ -19,4 +19,7 @@
     <Folder Include="wwwroot\app-assets\vendors\css\font-awesome\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Remove="wwwroot\app-assets\images\turned-on-pendant-lamp-132340.png" />
+  </ItemGroup>
 </Project>

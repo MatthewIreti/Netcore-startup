@@ -4,10 +4,12 @@
     <meta charset="utf-8" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="NCELAS is an electronic platform established by the regulator of the Nigerian Gas Transportation Network Code (NGTNC) for the efficient processing of all licenses required for operating gas transportation arrangements within the NC regime and administration of all regulatory roles required to support the optimal performance of the NC">
+    <meta name="keywords" content="Nigerian, Gas, NCELAS, Federal Government, OilFields, Oil and Gas, oil license">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <title>@ViewData["Title"] - NCELAS</title>
     <link rel="stylesheet" href="~/css/site.css" />
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600" rel="stylesheet">
+    <link href="~/css/fonts.css" rel="stylesheet">
     <!-- CSS -->
     <link href="~/assets/plugins/bootstrap/bootstrap.min.css" rel="stylesheet">
     <link href="~/assets/plugins/owl-carousel/owl.carousel.min.css" rel="stylesheet">
@@ -18,7 +20,7 @@
     <link href="~/assets/css/main.css" rel="stylesheet">
     <!-- Fonts/Icons -->
     <link href="~/assets/plugins/themify/themify-icons.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@9.8.2/dist/sweetalert2.min.css">
+    <link rel="stylesheet" href="~/css/sweetalert2.min.css">
 
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
@@ -119,10 +121,10 @@
                             <div class="col-6">
                                 <h6 class="font-weight-medium margin-lg-bottom-20">Useful links</h6>
                                 <ul class="list-dash font-lg-small">
-                                    <li><a href="https://www.dpr.gov.ng/" target="_blank">DPR</a></li>
-                                    <li><a href="https://ngc.nnpcgroup.com/" target="_blank">NGC</a></li>
-                                    <li><a href="https://elps.dpr.gov.ng/" target="_blank">ELPS</a></li>
-                                    <li><a href="https://www.wagpa.org/the-wagp/" target="_blank">WAGP</a></li>
+                                    <li><a rel="noreferrer" href="https://www.dpr.gov.ng/" target="_blank">DPR</a></li>
+                                    <li><a rel="noreferrer" href="https://ngc.nnpcgroup.com/" target="_blank">NGC</a></li>
+                                    <li><a rel="noreferrer" href="https://elps.dpr.gov.ng/" target="_blank">ELPS</a></li>
+                                    <li><a rel="noreferrer" href="https://www.wagpa.org/the-wagp/" target="_blank">WAGP</a></li>
 
 
                                 </ul>
@@ -147,8 +149,7 @@
     <script src="~/assets/plugins/plugins.js"></script>
     <script src="~/assets/js/functions.js"></script>
 
-    <script>
-        $(document).ready(function () {
+    <script>$(document).ready(function () {
             // Transition effect for navbar
             $(window).scroll(function () {
                 // checks if window is scrolled more than 500px, adds/removes solid class
@@ -158,8 +159,7 @@
                     $('.navbar').removeClass('solid');
                 }
             });
-        });
-    </script>
+        });</script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>
