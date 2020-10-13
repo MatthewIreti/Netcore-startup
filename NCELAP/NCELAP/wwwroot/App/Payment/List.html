@@ -1,0 +1,75 @@
+﻿<div class="content-header row">
+    <div class="content-header-left col-md-9 col-12 mb-2">
+        <div class="row breadcrumbs-top">
+            <div class="col-12">
+                <!--<h2 class="content-header-title float-left mb-0">License Applications</h2>-->
+                <div class="breadcrumb-wrapper col-12">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a>Home</a>
+                        </li>
+                        <li class="breadcrumb-item active">
+                            <a ui-sref="#">License Application</a>
+                        </li>
+
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Zero configuration table -->
+<section id="basic-datatable" waiting="{{waiting}}">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Payments</h4>
+                </div>
+                <hr />
+                <div class="card-content">
+                    <div class="card-body card-dashboard">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-bordered" id="applicationsTable">
+                                <thead>
+                                    <tr>
+                                        <th>Order No</th>
+                                        <th>RRR</th>
+                                        <th>Amount</th>
+                                        <th>Invoice Date</th>
+                                        <!--<th>Payment Date</th>-->
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in items">
+                                        <td>
+                                            {{item.orderId}}
+                                        </td>
+                                        <td>
+                                            {{item.remitaRetrievalRef}}
+                                        </td>
+                                        <td>
+                                            {{item.amount| currency:'₦'}}
+                                        </td>
+                                        <td>{{ item.invoiceDate  | date : "MMM d, y"}}</td>
+                                        <!--<td>
+                                            <span> {{ item.paymentDate  | date : "MMM d, y"}}</span>
+                                        </td>-->
+                                        <td>
+                                            <label class="badge" ng-class="(item.status?'badge-sucess':
+                                                   'badge-warning')" ng-bind="item.status?'Paid':'Not Paid'"></label>
+                                        </td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--/ Zero configuration table -->

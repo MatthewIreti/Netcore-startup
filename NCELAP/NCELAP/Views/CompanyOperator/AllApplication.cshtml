@@ -1,0 +1,229 @@
+﻿
+@{
+    ViewData["Title"] = "All Application";
+       Layout = "_LayoutDashboard";
+}
+
+<div class="content-header row">
+    <div class="content-header-left col-md-9 col-12 mb-2">
+        <div class="row breadcrumbs-top">
+            <div class="col-12">
+                <h2 class="content-header-title float-left mb-0">Dashboard</h2>
+                <div class="breadcrumb-wrapper col-12">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a>Home</a>
+                        </li>
+                        <li class="breadcrumb-item active">
+                            <a href="#">All Application</a>
+                        </li>
+
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content-header-right text-md-right col-md-3 col-12 d-md-block d-none">
+        <div class="form-group breadcrum-right">
+            <div class="dropdown">
+                <button class="btn-icon btn btn-primary btn-round btn-sm dropdown-toggle waves-effect waves-light" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="feather icon-settings"></i></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Zero configuration table -->
+<section id="basic-datatable">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Applications</h4>
+                    <div class="float-right">
+                        <button class="btn btn-info" data-toggle="modal" data-target="#licenseInquiry">Licence Inquiry</button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="licenseInquiry" tabindex="-1" role="dialog"
+                             aria-labelledby="licenseInquiryTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-dialog-centered modal-dialog-scrollable"
+                                 role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="licenseInquiryTitle">Licence Inquiry</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form>
+                                            <div class="form-group">
+                                                <label>License Type</label>
+                                                <select class="form-control">
+                                                    <option>Gas Shipper</option>
+                                                    <option>Gas Transporter</option>
+                                                    <option>Gas Shipper Agent</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>License Category</label>
+                                                <select class="form-control">
+                                                    <option>T1:</option>
+                                                    <option>T2: </option>
+                                                    <option>T3: </option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Capacity</label>
+                                                <select class="form-control">
+                                                    <option> Systems with capacity < 1 BSCF/D</option>
+                                                    <option>Systems with capacity < 10 BSCF/D</option>
+                                                    <option>Systems with capacity < 100 BSCF/D</option>
+                                                </select>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button class="btn btn-success" data-toggle="modal" data-target="#licenseDetails">Submit Inquiry</button>
+                                                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <a class="btn btn-success text-white"><i class="fa fa-plus"></i> &nbsp; Application</a>
+
+                    </div>
+                </div>
+                <hr />
+                <div class="card-content">
+                    <div class="card-body card-dashboard">
+                        <div class="table-responsive">
+                            <table class="table zero-configuration">
+                                <thead>
+                                    <tr>
+                                        <th>Application ID</th>
+                                        <th>Application Date</th>
+                                        <th>Duration</th>
+                                        <th>Business Name</th>
+                                        <th>Authorized Representative</th>
+                                        <th>LIcense Type</th>
+                                        <th>Effective Date</th>
+                                        <th>Status</th>
+                                        <th class="largeHead">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <tr>
+                                        <td>001</td>
+                                        <td>22/10/2020</td>
+                                        <td>12 months</td>
+                                        <td>Wade and co</td>
+                                        <td>Giwa Adams</td>
+                                        <td>Gas transporter</td>
+                                        <td>22/10/2020</td>
+                                        <td><div class="badge badge-pill badge-warning">Pending</div></td>
+                                        <td><a class="btn btn-primary text-white" asp-action="ApplicationDetails" asp-controller="CompanyOperator">View Details</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>001</td>
+                                        <td>22/10/2020</td>
+                                        <td>12 months</td>
+                                        <td>Wade and co</td>
+                                        <td>Giwa Adams</td>
+                                        <td>Gas transporter</td>
+                                        <td>22/10/2020</td>
+                                        <td><div class="badge badge-pill badge-warning">Pending</div></td>
+                                        <td><a class="btn btn-primary text-white" asp-action="ApplicationDetails" asp-controller="CompanyOperator">View Details</a></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>001</td>
+                                        <td>22/10/2020</td>
+                                        <td>12 months</td>
+                                        <td>Wade and co</td>
+                                        <td>Giwa Adams</td>
+                                        <td>Gas transporter</td>
+                                        <td>22/10/2020</td>
+                                        <td><div class="badge badge-pill badge-warning">Pending</div></td>
+                                        <td><a class="btn btn-primary text-white" asp-action="ApplicationDetails" asp-controller="CompanyOperator">View Details</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>001</td>
+                                        <td>22/10/2020</td>
+                                        <td>12 months</td>
+                                        <td>Wade and co</td>
+                                        <td>Giwa Adams</td>
+                                        <td>Gas transporter</td>
+                                        <td>22/10/2020</td>
+                                        <td><div class="badge badge-pill badge-warning">Pending</div></td>
+                                        <td><a class="btn btn-primary text-white" asp-action="ApplicationDetails" asp-controller="CompanyOperator">View Details</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>001</td>
+                                        <td>22/10/2020</td>
+                                        <td>12 months</td>
+                                        <td>Wade and co</td>
+                                        <td>Giwa Adams</td>
+                                        <td>Gas transporter</td>
+                                        <td>22/10/2020</td>
+                                        <td><div class="badge badge-pill badge-warning">Pending</div></td>
+                                        <td><a class="btn btn-primary text-white" asp-action="ApplicationDetails" asp-controller="CompanyOperator">View Details</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>001</td>
+                                        <td>22/10/2020</td>
+                                        <td>12 months</td>
+                                        <td>Wade and co</td>
+                                        <td>Giwa Adams</td>
+                                        <td>Gas transporter</td>
+                                        <td>22/10/2020</td>
+                                        <td><div class="badge badge-pill badge-warning">Pending</div></td>
+                                        <td><a class="btn btn-primary text-white" asp-action="ApplicationDetails" asp-controller="CompanyOperator">View Details</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>001</td>
+                                        <td>22/10/2020</td>
+                                        <td>12 months</td>
+                                        <td>Wade and co</td>
+                                        <td>Giwa Adams</td>
+                                        <td>Gas transporter</td>
+                                        <td>22/10/2020</td>
+                                        <td><div class="badge badge-pill badge-warning">Pending</div></td>
+                                        <td><a class="btn btn-primary text-white" asp-action="ApplicationDetails" asp-controller="CompanyOperator">View Details</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>001</td>
+                                        <td>22/10/2020</td>
+                                        <td>12 months</td>
+                                        <td>Wade and co</td>
+                                        <td>Giwa Adams</td>
+                                        <td>Gas transporter</td>
+                                        <td>22/10/2020</td>
+                                        <td><div class="badge badge-pill badge-warning">Pending</div></td>
+                                        <td><a class="btn btn-primary text-white" asp-action="ApplicationDetails" asp-controller="CompanyOperator">View Details</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>001</td>
+                                        <td>22/10/2020</td>
+                                        <td>12 months</td>
+                                        <td>Wade and co</td>
+                                        <td>Giwa Adams</td>
+                                        <td>Gas transporter</td>
+                                        <td>22/10/2020</td>
+                                        <td><div class="badge badge-pill badge-warning">Pending</div></td>
+                                        <td><a class="btn btn-primary text-white" asp-action="ApplicationDetails" asp-controller="CompanyOperator">View Details</a></td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--/ Zero configuration table -->

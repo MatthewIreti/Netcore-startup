@@ -1,0 +1,292 @@
+﻿<div class="content-header row">
+    <div class="content-header-left col-md-9 col-12 mb-2">
+        <div class="row breadcrumbs-top">
+            <div class="col-12">
+                <h2 class="content-header-title float-left mb-0">NCLEAS</h2>
+                <div class="breadcrumb-wrapper col-12">
+                    <ol class="breadcrumb">
+                        <li ng-repeat="record in breadcrumb" class="breadcrumb-item" ng-class="{'active':$index+1 ==breadcrumb.length}">
+                            <a ui-sref="{{record.link}}" ng-bind="record.title"></a>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="content-body" waiting="{{waiting}}">
+    <!--native-font-stack -->
+    <section class="card">
+        <div class="card-header">
+            <h2 class="card-title">{{item.applicationNum}}</h2>
+            <div class="chip chip-info">
+                <div class="chip-body">
+                    <div class="chip-text">{{item.custLicenseApplicationStatus}}</div>
+                </div>
+            </div>
+        </div>
+        <div class="card-content">
+            <div class="row">
+                <div class="card-body col-12 col-lg-5 col-sm-12">
+                    <h5>Application Overview</h5>
+                    <div class="table-responsive">
+                        <table class="table table-responsive mb-0">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <strong>License Type</strong>
+                                    </td>
+                                    <td ng-bind="item.custLicenseType"></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>Application Type</strong>
+                                    </td>
+                                    <td ng-bind="item.custLicenseCategory"></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>
+                                            Application Date
+                                        </strong>
+                                    </td>
+                                    <td>{{item.submittedOn|date:"EEE, MMMM d, y"}}</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>
+                                            Desired Effective Date
+                                        </strong>
+                                    </td>
+                                    <td>{{item.effectiveDate|date:"EEE, MMMM d, y"}}</td>
+                                </tr>
+                                <tr ng-show="item.custLicenseType == 'NetworkAgent'">
+                                    <td>
+                                        <strong>
+                                            Shipper Name
+                                        </strong>
+                                    </td>
+                                    <td>{{item.agentShipperName}}</td>
+                                </tr>
+                                <tr ng-show="item.custLicenseType == 'NetworkAgent'">
+                                    <td>
+                                        <strong>
+                                            Shipper Location
+                                        </strong>
+                                    </td>
+                                    <td>{{item.agentLocationOfShipper}}</td>
+                                </tr>
+                                <tr ng-show="item.custLicenseType == 'GasShipperLicense'">
+                                    <td>
+                                        <strong>
+                                            Pipeline and Gas transporter name
+                                        </strong>
+                                    </td>
+                                    <td>{{item.pipelineAndGasTransporterName}}</td>
+                                </tr>
+                                <tr ng-show="item.custLicenseType == 'GasTransporterLicense'">
+                                    <td>
+                                        <strong>
+                                            Gas Pipeline / PipeLine Network
+                                        </strong>
+                                    </td>
+                                    <td>{{item.gasPipelineNetwork}}</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>
+                                            Entry point
+                                        </strong>
+                                    </td>
+                                    <td>{{item.entryPoint}}</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>
+                                           Exit Point
+                                        </strong>
+                                    </td>
+                                    <td>{{item.exitPoint}}</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>
+                                            Authorised Signatory
+                                        </strong>
+                                    </td>
+                                    <td ng-bind="item.declarationName"></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>
+                                            Authorised Signatory Capacity
+                                        </strong>
+                                    </td>
+                                    <td ng-bind="item.declarationCapacity"></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>
+                                            Declaration Date
+                                        </strong>
+                                    </td>
+                                    <td>{{item.declarationDate|date:"EEE, MMMM d, y"}}</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>
+                                            Holds related license
+                                        </strong>
+                                    </td>
+                                    <td>
+                                        <div class="vs-checkbox-con vs-checkbox-success">
+                                            <input disabled type="checkbox" value="{{item.holdRelatedLicense}}">
+                                            <span class="vs-checkbox vs-checkbox-lg">
+                                                <span class="vs-checkbox--check">
+                                                    <i class="vs-icon feather icon-check"></i>
+                                                </span>
+                                            </span>
+                                            <span ng-bind="item.holdRelatedLicense==='false'?'Disagree':'Agree'"></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>
+                                            Has revoked license
+                                        </strong>
+                                    </td>
+                                    <td>
+                                        <div class="vs-checkbox-con vs-checkbox-success">
+                                            <input disabled type="checkbox" value="{{item.hasLicenseRevoked}}">
+                                            <span class="vs-checkbox vs-checkbox-lg">
+                                                <span class="vs-checkbox--check">
+                                                    <i class="vs-icon feather icon-check"></i>
+                                                </span>
+                                            </span>
+                                            <span ng-bind="item.hasLicenseRevoked==='false'?'Disagree':'Agree'"></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>
+                                            Has previously refused gas license application
+                                        </strong>
+                                    </td>
+                                    <td>
+                                        <div class="vs-checkbox-con vs-checkbox-success">
+                                            <input disabled type="checkbox" value="{{item.hasGasApplicationRefused}}">
+                                            <span class="vs-checkbox vs-checkbox-lg">
+                                                <span class="vs-checkbox--check">
+                                                    <i class="vs-icon feather icon-check"></i>
+                                                </span>
+                                            </span>
+                                            <span ng-bind="item.hasGasApplicationRefused==='false'?'Disagree':'Agree'"></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>
+                                            Requested for standard modifications
+                                        </strong>
+                                    </td>
+                                    <td>
+                                        <div class="vs-checkbox-con vs-checkbox-success">
+                                            <input disabled type="checkbox" value="{{item.hasStandardModificationRequest}}">
+                                            <span class="vs-checkbox vs-checkbox-lg">
+                                                <span class="vs-checkbox--check">
+                                                    <i class="vs-icon feather icon-check"></i>
+                                                </span>
+                                            </span>
+                                            <span ng-bind="item.hasStandardModificationRequest==='false'?'Disagree':'Agree'"></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+                <div class="col-sm-12 col-md-7">
+                    <div ng-show="item.stakeholderLocations.length>0">
+                        <table class="table table-responsive">
+                            <thead class="thead-light">
+                                <tr>
+                                    <td colspan="2"><strong>PROSPOSED CUSTOMERS</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>Customer</td>
+                                    <td>Location</td>
+                                </tr>
+
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="stakeHolder in item.stakeholderLocations">
+                                    <td>{{stakeHolder.customer}}</td>
+                                    <td>{{stakeHolder.location}}</td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div ng-show="item.gasShipperCustomers.length>0">
+                        <table class="table table-responsive">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <td colspan="5"><strong>PROPOSED SELLERS AND BUYERS</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>Business Name</td>
+                                    <td>Location</td>
+                                    <td>Category</td>
+                                    <td>Email</td>
+                                    <td>PhoneNumber</td>
+                                </tr>
+
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="customer in item.gasShipperCustomers">
+                                    <td>{{customer.businessName}}</td>
+                                    <td>{{customer.location}}</td>
+                                    <td>{{customer.gasShipperCustCategory}}</td>
+                                    <td>{{customer.email}}</td>
+                                    <td>{{customer.phoneNumber}}</td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div ng-show="item.gasShipperTakeOffPoints.length>0">
+                        <table class="table table-responsive">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <td colspan="3"><strong>TAKE OFF AND DELIVERY POINTS</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Location</td>
+                                    <td>Point Type</td>
+                                </tr>
+
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="point in item.gasShipperTakeOffPoints">
+                                    <td>{{point.name}}</td>
+                                    <td>{{point.location}}</td>
+                                    <td>{{point.gasShipperPointType}}</td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                        <h5 class="text-primary">Proposed Arrangements for licensing activity</h5>
+                        <p>{{item.proposedArrangementLicensingActivity}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

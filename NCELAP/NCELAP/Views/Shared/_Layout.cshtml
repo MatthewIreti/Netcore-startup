@@ -2,47 +2,163 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - NCELAP</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="NCELAS is an electronic platform established by the regulator of the Nigerian Gas Transportation Network Code (NGTNC) for the efficient processing of all licenses required for operating gas transportation arrangements within the NC regime and administration of all regulatory roles required to support the optimal performance of the NC">
+    <meta name="keywords" content="Nigerian, Gas, NCELAS, Federal Government, OilFields, Oil and Gas, oil license">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <title>@ViewData["Title"] - NCELAS</title>
     <link rel="stylesheet" href="~/css/site.css" />
+    <link href="~/css/fonts.css" rel="stylesheet">
+    <!-- CSS -->
+    <link href="~/assets/plugins/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="~/assets/plugins/owl-carousel/owl.carousel.min.css" rel="stylesheet">
+    <link href="~/assets/plugins/owl-carousel/owl.theme.default.min.css" rel="stylesheet">
+    <link href="~/assets/plugins/magnific-popup/magnific-popup.min.css" rel="stylesheet">
+    <link href="~/assets/plugins/justified-gallery/justified-gallery.min.css" rel="stylesheet">
+    <link href="~/assets/plugins/sal/sal.min.css" rel="stylesheet">
+    <link href="~/assets/css/main.css" rel="stylesheet">
+    <!-- Fonts/Icons -->
+    <link href="~/assets/plugins/themify/themify-icons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/sweetalert2.min.css">
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-animate/1.8.0/angular-animate.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0rc1/angular-sanitize.min.js"></script>
+        <script src="https://morgul.github.io/ui-bootstrap4/ui-bootstrap-tpls-3.0.6.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.2/angular-ui-router.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router.statehelper/1.3.1/statehelper.js"></script>*@
+
+    <script src="~/js/jwt-decode.js"></script>
+
+    <script src="~/js/app.js"></script>
+    <script src="~/js/routes/application-route.js"></script>
+
+    <script src="~/js/angular-base64-upload/angular-base64-upload.min.js"></script>
+    <script src="~/js/controllers/common/layout.js"></script>
+    <script src="~/js/controllers/hompage.js"></script>
+    <script src="~/js/util.js"></script>
+
 </head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+
+
+<body ng-app="ncLasPortalAppHome" data-preloader="4" ng-controller="indexPageCtrl">
+    <div class="wrapper">
+
+
+
+        <!-- Header -->
+        <nav class="header absolute-light fixed-top">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">NCELAP</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                <div class="logo">
+                    <h4 class="uppercase letter-spacing-2"><a>NCELAS</a></h4>
+                </div>
+                <div class="header-menu-wrapper">
+
+                    <ul class="header-menu">
+                        <li class="m-item">
+                            <a class="m-link" href="#">Home</a>
+
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        <li class="m-item">
+                            <a class="m-link" href="#about">About NCELAS</a>
+
+                        </li>
+                        <li class="m-item">
+                            <a class="m-link" href="#services">DPR Services</a>
+
+                        </li>
+                        <li class="m-item">
+                            <a class="m-link" href="#news">News</a>
+
+                        </li>
+                        <li class="m-item">
+                            <a class="m-link" href="#faq">FAQs</a>
+
+                        </li>
+                        <li class="m-item">
+                            <a class="m-link" href="https://ems.dpr.gov.ng/" target="_blank">Contact Us</a>
+
+                        </li>
+                        <li class="m-item">
+                            <a class="m-link" href="/account/login">Login</a>
+                        </li>
+                        <li class="m-item">
+                            <a class="m-link" href="account/register" target="_blank">Create Account</a>
                         </li>
                     </ul>
+
+                    <button class="close-button">
+                        <span></span>
+                    </button>
                 </div>
+
+                <button class="m-toggle">
+                    <span></span>
+                </button>
             </div>
         </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+        <!-- end Header -->
+
+        @RenderBody()
+
+        <!-- Footer -->
+        <div class="section bg-dark">
+            <div class="container">
+                <div class="row col-spacing-40">
+                    <div class="col-12 col-lg-7">
+                        <h6 class="font-weight-medium margin-lg-bottom-20">NCELAS</h6>
+                        <p>To ensure the sustainable development of Nigeria’s Oil and Gas resources across the value chain for our stakeholders through effective regulation, while entrenching world class professionalism, accountability, and transparency</p>
+
+                    </div>
+                    <div class="col-12 col-lg-5">
+                        <div class="row">
+                            <div class="col-6">
+
+                            </div>
+                            <div class="col-6">
+                                <h6 class="font-weight-medium margin-lg-bottom-20">Useful links</h6>
+                                <ul class="list-dash font-lg-small">
+                                    <li><a rel="noreferrer" href="https://www.dpr.gov.ng/" target="_blank">DPR</a></li>
+                                    <li><a rel="noreferrer" href="https://ngc.nnpcgroup.com/" target="_blank">NGC</a></li>
+                                    <li><a rel="noreferrer" href="https://elps.dpr.gov.ng/" target="_blank">ELPS</a></li>
+                                    <li><a rel="noreferrer" href="https://www.wagpa.org/the-wagp/" target="_blank">WAGP</a></li>
+                                    <li><a rel="noreferrer" href=" https://ems.dpr.gov.ng/" target="_blank">Enquiry</a></li>
+
+                                </ul>
+
+                            </div>
+
+                        </div><!-- end row(inner) -->
+                    </div>
+                </div><!-- end row -->
+            </div><!-- end container -->
+        </div>
+        <!-- end Footer -->
+
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2020 - NCELAP - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <!-- ***** JAVASCRIPTS ***** -->
+
+    <script src="~/assets/plugins/jquery.min.js"></script>
+    <!-- Plugins -->
+    <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.29.2/sweetalert2.all.js"></script>
+    <script src="~/assets/plugins/plugins.js"></script>
+    <script src="~/assets/js/functions.js"></script>
+
+    <script>$(document).ready(function () {
+            // Transition effect for navbar
+            $(window).scroll(function () {
+                // checks if window is scrolled more than 500px, adds/removes solid class
+                if ($(this).scrollTop() > 500) {
+                    $('.navbar').addClass('solid');
+                } else {
+                    $('.navbar').removeClass('solid');
+                }
+            });
+        });</script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>
