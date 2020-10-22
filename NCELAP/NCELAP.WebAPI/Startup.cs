@@ -43,7 +43,7 @@ namespace NCELAP.WebAPI
                 options.AddPolicy("CorsApiPolicy",
                     builder =>
                     {
-                        builder.WithOrigins("https://localhost:5001", "https://localhost:5003", "https://localhost:5002", "https://localhost:44374", "https://ncelap-demo.azurewebsites.net", "https://ncelas.dpr.gov.ng")
+                        builder.WithOrigins("https://localhost:44374", "https://ncleas.herokuapp.com", "https://ncelas.dpr.gov.ng")
                             .WithHeaders(new[] { "authorization", "content-type", "accept" })
                             .WithMethods(new[] { "GET", "POST", "PUT", "DELETE", "OPTIONS" });
                     });
@@ -70,19 +70,6 @@ namespace NCELAP.WebAPI
                     }
                 });
             });
-            //services.AddHttpClient("remita", config =>
-            //{
-            //    config.DefaultRequestHeaders.Clear();
-            //    config.BaseAddress = new Uri(Configuration.GetSection("Remita").GetSection("baseUrl").Value);
-            //}).ConfigurePrimaryHttpMessageHandler(() =>
-            //{
-            //    //use Fiddler 
-            //    var httpClientHandler = new HttpClientHandler()
-            //    {
-            //        AllowAutoRedirect = false
-            //    };
-            //    return new DisableActivityHandler(httpClientHandler);
-            //});
             services.AddSwaggerGenNewtonsoftSupport();
             services.AddSingleton(Configuration.GetSection("Remita").Get<RemitaAppSetting>());
             services.AddTransient<IRemitaService, RemitaService>();
