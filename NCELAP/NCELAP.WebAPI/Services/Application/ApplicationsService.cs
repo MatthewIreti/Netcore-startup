@@ -59,7 +59,7 @@ namespace NCELAP.WebAPI.Services.Application
                 return new InfoReponse<BaseApplicationResponse<LicenseApplication>>
                 {
                     Data = updateApplicationResponse,
-                    Message = "",
+                    Message = "Successful Operation",
                     Status = true
                 };
             }
