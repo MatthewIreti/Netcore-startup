@@ -1,4 +1,22 @@
 ﻿<section id="icon-tabs">
+
+    <div class="content-header row">
+        <div class="content-header-left col-md-9 col-12 mb-2">
+            <div class="row breadcrumbs-top">
+                <div class="col-12">
+                    <h2 class="content-header-title float-left mb-0">NCLEAS</h2>
+                    <div class="breadcrumb-wrapper col-12">
+                        <ol class="breadcrumb">
+                            <li ng-repeat="record in breadcrumb" class="breadcrumb-item" ng-class="{'active':$index+1 ==breadcrumb.length}">
+                                <a ui-sref="{{record.link}}" ng-bind="record.title"></a>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -8,13 +26,6 @@
                 <hr />
                 <div class="card-content">
                     <div class="card-body">
-                        <!--<div ng-show="errors.length>0" class="alert alert-danger mt-1 alert-validation-msg" role="alert">
-                            <p><strong>Please fix the follow errors</strong></p>
-                            <p ng-repeat="error in errors">
-                                <i class="feather icon-info mr-1 align-middle"></i>
-                                <span ng-bind="error"></span>
-                            </p>
-                        </div>-->
                         <section class="wizard-container" custom-wizard waiting="{{waiting}}">
                             <header class="px-3">
                                 <div class="progress progress-step">
@@ -242,7 +253,7 @@
                                 </article>
 
                                 <article class="step-wizard-content m-0">
-                                    
+
                                     <!-- Network Agent License -->
                                     <div ng-show="licenseInformation.custLicenseType === 'Network Agent'">
                                         <div class="row">
@@ -852,7 +863,7 @@
                                     <div class="row">
                                         <div class="col col-xs-12 col-lg-11 col-xl-11 col-10">
                                             <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input required"
+                                                <input type="checkbox" checked class="custom-control-input required"
                                                        data-msg="You must accept the conditions stated below to continue."
                                                        name="customCheck" ng-model="agreementCheck" id="customCheck1">
                                                 <label class="custom-control-label" for="customCheck1">By checking this box, i declare that</label>

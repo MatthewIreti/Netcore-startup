@@ -533,18 +533,24 @@ appModule.controller('applicationLicenses', function ($scope, $http, $state) {
 });
 
 appModule.controller('applicationLicenseUpdate', function ($scope, $http, $state) {
+    $scope.waiting++;
+    $scope.title = "License Application Update";
+    $scope.breadcrumb.splice(0, $scope.breadcrumb.length);
+    $scope.breadcrumb.push(
+        {
+            title: 'License Applications',
+            link: 'site.application.list'
+        },
+        {
+            title: $scope.title,
+            link: '#'
+        }
+    );
     $scope.licenseInformation = {};
     $scope.stakeholdersLocations = [{}];
     $scope.takeOffPoints = [{}];
     $scope.gasShipperCustomers = [{}];
     document.title = "License Application Update " + appTitle;
-
-    function extractApplicationRecId() {
-        var urlParts = window.location.href.split('/');
-        var applicationRecId = urlParts[6];
-
-        $scope.getLicenseApplicationDetails(applicationRecId);
-    }
 
     $scope.GasShipperPointType = [
         { "Name": "Delivery", "Value": "Delivery" },
@@ -567,6 +573,7 @@ appModule.controller('applicationLicenseUpdate', function ($scope, $http, $state
             console.log(error);
         });
     };
+
     $scope.addCustomerStakeholder = function () {
         $scope.stakeholdersLocations.push({});
     };
@@ -603,35 +610,7 @@ appModule.controller('applicationLicenseUpdate', function ($scope, $http, $state
         });
     };
 
-    $scope.getLicenseApplicationDetails = function (applicationRecId) {
-        $scope.waiting++;
-
-        $http({
-            method: 'GET',
-            url: baseUrl + 'applications/licenseapplicationdetails/' + applicationRecId
-        }).then(function (response) {
-            $scope.licenseInformation = response.data;
-            $scope.gasShipperCustomers = $scope.licenseInformation.gasShipperCustomers;
-            $scope.stakeholdersLocations = $scope.licenseInformation.stakeholdersLocations;
-            $scope.takeOffPoints = $scope.licenseInformation.takeOffPoints;
-            $scope.waiting--;
-
-            if ($scope.licenseInformation.effectiveDate) {
-                $scope.licenseInformation.effectiveDate = new Date($scope.licenseInformation.effectiveDate);
-            }
-
-            if ($scope.licenseInformation.declarationDate) {
-                $scope.licenseInformation.declarationDate = new Date($scope.licenseInformation.declarationDate);
-            }
-
-            document.getElementById("proposedArrangementDetails").value = $scope.licenseInformation.proposedArrangementLicensingActivity;
-            
-        }, function (error) {
-            $scope.waiting--;
-            console.log(error);
-        });
-    };
-
+   
     $scope.submitApplicationUpdate = function () {
         
     };
@@ -639,6 +618,32 @@ appModule.controller('applicationLicenseUpdate', function ($scope, $http, $state
         console.log($scope.licenseInformation);
     };
 
+    //Get Application Details
+    $http({
+        method: 'GET',
+        url: baseUrl + 'applications/licenseapplicationdetails/' + $state.params.recordId
+    }).then(function (response) {
+        $scope.licenseInformation = response.data;
+        $scope.gasShipperCustomers = $scope.licenseInformation.gasShipperCustomers;
+        $scope.stakeholdersLocations = $scope.licenseInformation.stakeholdersLocations;
+        $scope.takeOffPoints = $scope.licenseInformation.takeOffPoints;
+        $scope.waiting--;
+
+        if ($scope.licenseInformation.effectiveDate) {
+            $scope.licenseInformation.effectiveDate = new Date($scope.licenseInformation.effectiveDate);
+        }
+
+        if ($scope.licenseInformation.declarationDate) {
+            $scope.licenseInformation.declarationDate = new Date($scope.licenseInformation.declarationDate);
+        }
+
+        document.getElementById("proposedArrangementDetails").value = $scope.licenseInformation.proposedArrangementLicensingActivity;
+
+    }, function (error) {
+        $scope.waiting--;
+        console.log(error);
+    });
     $scope.getStates();
-    extractApplicationRecId();
+
+
 });

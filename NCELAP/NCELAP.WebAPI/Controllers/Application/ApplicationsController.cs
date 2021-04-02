@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using NCELAP.WebAPI.Models.DTO.Applications;
+using NCELAP.WebAPI.Models.Entities.Applications;
 using NCELAP.WebAPI.Services.Application;
 
 namespace NCELAP.WebAPI.Controllers.Application
@@ -38,7 +39,26 @@ namespace NCELAP.WebAPI.Controllers.Application
                 return BadRequest(exception.Message);
             }
 
+
         }
+        [HttpPut]
+        [Route("updatelicenseapplication")]
+        public async Task<IActionResult> UpdateLicenseApplicationInformation(ApplicationInfo model)
+        {
+            try
+            {
+                var response = await _applicationsService.UpdateApplication(model);
+                return Ok(response);
+            }
+            catch (Exception exception)
+            {
+
+                return BadRequest(exception.Message);
+            }
+
+
+        }
+
 
         [HttpGet]
         [Route("licensefees")]

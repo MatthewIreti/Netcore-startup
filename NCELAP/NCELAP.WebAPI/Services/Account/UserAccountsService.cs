@@ -15,6 +15,7 @@ using NCELAP.WebAPI.Models.ODataResponse.Account;
 using System.Net;
 using NCELAP.WebAPI.Models.ODataResponse;
 using NCELAP.WebAPI.Models.Entities.Support;
+using Flurl.Http;
 
 namespace NCELAP.WebAPI.Services.Account
 {
@@ -779,6 +780,15 @@ namespace NCELAP.WebAPI.Services.Account
                     if (passwordUpdateResponse.StatusCode == HttpStatusCode.NoContent)
                     {
                         userPasswordUpdateResponse = true;
+
+                        //Send password rest confirmation;
+                        String postUrl = "https://prod-68.westeurope.logic.azure.com:443/workflows/bca8fbc56ffd4b0f874630f3e0014d6a/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=HMUVikMKxunhFv6SVyGj_4sqCBJ9PRbqIiu3gXP7o9o";
+                        var resposne = await postUrl
+                            .PostJsonAsync(new{Email = emailPasswordDto.Email})
+                            .ReceiveString();
+                         
+
+
                     }
 
                 }
