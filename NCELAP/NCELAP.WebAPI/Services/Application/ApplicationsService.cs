@@ -27,10 +27,12 @@ namespace NCELAP.WebAPI.Services.Application
         private readonly string docupload, licensefees, custlicensebycustomerrecid, custlicenseapplicationdetails, networkcodelicenses;
         private string jsonResponse;
         private readonly AuthService _authService;
+        private readonly Helper _helper;
 
         public ApplicationsService(IConfiguration configuration)
         {
             _configuration = configuration;
+            _helper = new Helper(_configuration);
             _authService = new AuthService(_configuration);
             licenseapplication = _configuration.GetSection("Endpoints").GetSection("custlicenseapplication").Value;
             custapplicationshareholder = _configuration.GetSection("Endpoints").GetSection("custapplicationshareholder").Value;
@@ -43,18 +45,38 @@ namespace NCELAP.WebAPI.Services.Application
             networkcodelicenses = _configuration.GetSection("Endpoints").GetSection("networkcodelicenses").Value;
         }
 
+        public async Task<InfoReponse<BaseApplicationResponse<LicenseApplication>>> UpdateApplication(ApplicationInfo model)
+        {
+            try
+            {
+                ApplicationInfoForSave item = null; //ExtractApplicationInfo(model, true);
+                var updateApplicationResponse = await _helper.GetEnvironmentUrl()
+                      .AppendPathSegment($"LicenseApplicationPayment(RemitaRetrievalRef='{model.Customer}',dataAreaId='dpr')")
+                      .WithOAuthBearerToken(_authService.GetAuthToken())
+                      .PatchJsonAsync(item)
+                      .ReceiveJson<BaseApplicationResponse<LicenseApplication>>();
+
+                return new InfoReponse<BaseApplicationResponse<LicenseApplication>>
+                {
+                    Data = updateApplicationResponse,
+                    Message = "",
+                    Status = true
+                };
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         public async Task<bool> SaveApplication(LicenseApplication licenseApplication)
         {
             bool response = false;
             long applicationRecId = 0;
-            var helper = new Helper(_configuration);
-            var authOperation = new AuthService(_configuration);
-
             string token = _authService.GetAuthToken();
-            string currentEnvironment = helper.GetEnvironmentUrl();
+            string currentEnvironment = _helper.GetEnvironmentUrl();
             var applicationResponse = new ApplicationInfoRecordId();
-
-            var licenseApplicationForSave = this.ExtractApplicationInfo(licenseApplication);
+            var licenseApplicationForSave = ExtractApplicationInfo(licenseApplication);
 
             try
             {
@@ -103,7 +125,7 @@ namespace NCELAP.WebAPI.Services.Application
         }
 
 
-        public async Task<bool> SaveLicenseApplicationShareholders(StakeholderLocation[] stakeholderLocations, long applicationRecId)
+        private async Task<bool> SaveLicenseApplicationShareholders(StakeholderLocation[] stakeholderLocations, long applicationRecId)
         {
 
             var helper = new Helper(_configuration);
@@ -147,11 +169,11 @@ namespace NCELAP.WebAPI.Services.Application
                 Log.Error(ex.StackTrace);
                 throw;
             }
-            
+
         }
 
-        
-        public async Task<bool> SaveGasShipperCustomers(GasShipperCustomer[] customers, long applicationRecId)
+
+        private async Task<bool> SaveGasShipperCustomers(GasShipperCustomer[] customers, long applicationRecId)
         {
             var helper = new Helper(_configuration);
             var authOperation = new AuthService(_configuration);
@@ -194,7 +216,7 @@ namespace NCELAP.WebAPI.Services.Application
                 throw;
             }
         }
-        public async Task<bool> SaveGasShipperTakeOffPoints(GasShipperTakeOffPoint[] model, long applicationRecId)
+        private async Task<bool> SaveGasShipperTakeOffPoints(GasShipperTakeOffPoint[] model, long applicationRecId)
         {
 
             var helper = new Helper(_configuration);
@@ -239,7 +261,7 @@ namespace NCELAP.WebAPI.Services.Application
             }
 
         }
-        public async Task<bool> UploadLicenseApplicationDocuments(LicenseApplicationUpload licenseApplicationUpload, long applicationRecId, string companyName)
+        private async Task<bool> UploadLicenseApplicationDocuments(LicenseApplicationUpload licenseApplicationUpload, long applicationRecId, string companyName)
         {
             bool response = false;
 
@@ -343,7 +365,7 @@ namespace NCELAP.WebAPI.Services.Application
                             default:
                                 break;
                         }
-                        switch(item.CustLicenseCategory)
+                        switch (item.CustLicenseCategory)
                         {
                             case BaseConstantHelper.NewApplication:
                                 item.CustLicenseCategoryName = "New";
@@ -392,7 +414,7 @@ namespace NCELAP.WebAPI.Services.Application
                             default:
                                 break;
                         }
-                        
+
                     }
 
                     response.Dispose();
@@ -438,7 +460,7 @@ namespace NCELAP.WebAPI.Services.Application
 
                     webResponse = JsonConvert.DeserializeObject<NetworkCodeResponse>(jsonResponse);
                     networkCodeLicenses = webResponse.value;
-                    
+
                     response.Dispose();
                     dataStream.Close();
                     dataStream.Dispose();
@@ -500,45 +522,86 @@ namespace NCELAP.WebAPI.Services.Application
             return licenseFees;
         }
 
-        public ApplicationInfoForSave ExtractApplicationInfo(LicenseApplication licenseApplication)
+        private ApplicationInfoForSave ExtractApplicationInfo(LicenseApplication licenseApplication, bool isUpdate = false)
         {
+            var licenseApplicationForSave = new ApplicationInfoForSave();
             var dateRegistered = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc);
-
-            var licenseApplicationForSave = new ApplicationInfoForSave()
+            if (!isUpdate)
             {
-                AgentLocationOfShipper = licenseApplication.AgentLocationOfShipper,
-                AgentShipperName = licenseApplication.AgentShipperName,
-               // CustLicenseApplicationStatus = "AwaitingProcessingFee",
-                CustLicenseType = licenseApplication.CustLicenseType,
-                CustLicenseCategory = "NewApplication",
-                Customer = licenseApplication.Customer,
-                DeclarationCapacity = licenseApplication.DeclarationCapacity,
-                DeclarationDate = licenseApplication.DeclarationDate,
-                DeclarationName = !String.IsNullOrEmpty(licenseApplication.DeclarationName) ? licenseApplication.DeclarationName.ToUpper() : "",
-                EffectiveDate = licenseApplication.EffectiveDate,
-                GasPipelineNetwork = licenseApplication.GasPipelineNetwork,
-                HasGasApplicationRefused = String.IsNullOrEmpty(licenseApplication.HasGasApplicationRefused) ? false : Convert.ToBoolean(licenseApplication.HasGasApplicationRefused),
-                HasLicenseRevoked = String.IsNullOrEmpty(licenseApplication.HasLicenseRevoked) ? false : Convert.ToBoolean(licenseApplication.HasLicenseRevoked),
-                HasRelatedLicense = String.IsNullOrEmpty(licenseApplication.HasRelatedLicense) ? false : Convert.ToBoolean(licenseApplication.HasRelatedLicense),
-                HasStandardModificationRequest = String.IsNullOrEmpty(licenseApplication.HasStandardModificationRequest) ? false : Convert.ToBoolean(licenseApplication.HasStandardModificationRequest),
-                HoldRelatedLicense = String.IsNullOrEmpty(licenseApplication.HoldRelatedLicense) ? false : Convert.ToBoolean(licenseApplication.HoldRelatedLicense),
-                InstalledCapacity = licenseApplication.InstalledCapacity,
-                MaximumNominatedCapacity = licenseApplication.MaximumNominatedCapacity,
-                ModificationRequestDetails = licenseApplication.ModificationRequestDetails,
-                ModificationRequestReason = licenseApplication.ModificationRequestReason,
-                PipelineAndGasTransporterName = licenseApplication.PipelineAndGasTransporterName,
-                ProposedArrangementLicensingActivity = licenseApplication.ProposedArrangementLicensingActivity,
-                RefusedLicenseType = licenseApplication.RefusedLicenseType,
-                RelatedLicenseDetail = licenseApplication.RelatedLicenseDetail,
-                RelatedLicenseType = licenseApplication.RelatedLicenseType,
-                RevokedLicenseType = licenseApplication.RevokedLicenseType,
-                SubmittedOn = dateRegistered,
-                UniqueId = Helper.RandomAlhpaNumeric(15),
-                EntryPoint = licenseApplication.EntryPoint,
-                ExitPoint = licenseApplication.ExitPoint,
-                ExitPointState = licenseApplication.ExitPointState,
-                EntryPointState = licenseApplication.EntryPointState
-            };
+
+                licenseApplicationForSave = new ApplicationInfoForSave
+                {
+                    AgentLocationOfShipper = licenseApplication.AgentLocationOfShipper,
+                    AgentShipperName = licenseApplication.AgentShipperName,
+                    // CustLicenseApplicationStatus = "AwaitingProcessingFee",
+                    CustLicenseType = licenseApplication.CustLicenseType,
+                    CustLicenseCategory = "NewApplication",
+                    Customer = licenseApplication.Customer,
+                    DeclarationCapacity = licenseApplication.DeclarationCapacity,
+                    DeclarationDate = licenseApplication.DeclarationDate,
+                    DeclarationName = !String.IsNullOrEmpty(licenseApplication.DeclarationName) ? licenseApplication.DeclarationName.ToUpper() : "",
+                    EffectiveDate = licenseApplication.EffectiveDate,
+                    GasPipelineNetwork = licenseApplication.GasPipelineNetwork,
+                    HasGasApplicationRefused = String.IsNullOrEmpty(licenseApplication.HasGasApplicationRefused) ? false : Convert.ToBoolean(licenseApplication.HasGasApplicationRefused),
+                    HasLicenseRevoked = String.IsNullOrEmpty(licenseApplication.HasLicenseRevoked) ? false : Convert.ToBoolean(licenseApplication.HasLicenseRevoked),
+                    HasRelatedLicense = String.IsNullOrEmpty(licenseApplication.HasRelatedLicense) ? false : Convert.ToBoolean(licenseApplication.HasRelatedLicense),
+                    HasStandardModificationRequest = String.IsNullOrEmpty(licenseApplication.HasStandardModificationRequest) ? false : Convert.ToBoolean(licenseApplication.HasStandardModificationRequest),
+                    HoldRelatedLicense = String.IsNullOrEmpty(licenseApplication.HoldRelatedLicense) ? false : Convert.ToBoolean(licenseApplication.HoldRelatedLicense),
+                    InstalledCapacity = licenseApplication.InstalledCapacity,
+                    MaximumNominatedCapacity = licenseApplication.MaximumNominatedCapacity,
+                    ModificationRequestDetails = licenseApplication.ModificationRequestDetails,
+                    ModificationRequestReason = licenseApplication.ModificationRequestReason,
+                    PipelineAndGasTransporterName = licenseApplication.PipelineAndGasTransporterName,
+                    ProposedArrangementLicensingActivity = licenseApplication.ProposedArrangementLicensingActivity,
+                    RefusedLicenseType = licenseApplication.RefusedLicenseType,
+                    RelatedLicenseDetail = licenseApplication.RelatedLicenseDetail,
+                    RelatedLicenseType = licenseApplication.RelatedLicenseType,
+                    RevokedLicenseType = licenseApplication.RevokedLicenseType,
+                    SubmittedOn = dateRegistered,
+                    UniqueId = Helper.RandomAlhpaNumeric(15),
+                    EntryPoint = licenseApplication.EntryPoint,
+                    ExitPoint = licenseApplication.ExitPoint,
+                    ExitPointState = licenseApplication.ExitPointState,
+                    EntryPointState = licenseApplication.EntryPointState
+                };
+            }
+            else
+            {
+                licenseApplicationForSave = new ApplicationInfoForSave
+                {
+                    AgentLocationOfShipper = licenseApplication.AgentLocationOfShipper,
+                    AgentShipperName = licenseApplication.AgentShipperName,
+                    // CustLicenseApplicationStatus = "AwaitingProcessingFee",
+                    CustLicenseType = licenseApplication.CustLicenseType,
+                    CustLicenseCategory = "NewApplication",
+                    Customer = licenseApplication.Customer,
+                    DeclarationCapacity = licenseApplication.DeclarationCapacity,
+                    DeclarationDate = licenseApplication.DeclarationDate,
+                    DeclarationName = !String.IsNullOrEmpty(licenseApplication.DeclarationName) ? licenseApplication.DeclarationName.ToUpper() : "",
+                    EffectiveDate = licenseApplication.EffectiveDate,
+                    GasPipelineNetwork = licenseApplication.GasPipelineNetwork,
+                    HasGasApplicationRefused = String.IsNullOrEmpty(licenseApplication.HasGasApplicationRefused) ? false : Convert.ToBoolean(licenseApplication.HasGasApplicationRefused),
+                    HasLicenseRevoked = String.IsNullOrEmpty(licenseApplication.HasLicenseRevoked) ? false : Convert.ToBoolean(licenseApplication.HasLicenseRevoked),
+                    HasRelatedLicense = String.IsNullOrEmpty(licenseApplication.HasRelatedLicense) ? false : Convert.ToBoolean(licenseApplication.HasRelatedLicense),
+                    HasStandardModificationRequest = String.IsNullOrEmpty(licenseApplication.HasStandardModificationRequest) ? false : Convert.ToBoolean(licenseApplication.HasStandardModificationRequest),
+                    HoldRelatedLicense = String.IsNullOrEmpty(licenseApplication.HoldRelatedLicense) ? false : Convert.ToBoolean(licenseApplication.HoldRelatedLicense),
+                    InstalledCapacity = licenseApplication.InstalledCapacity,
+                    MaximumNominatedCapacity = licenseApplication.MaximumNominatedCapacity,
+                    ModificationRequestDetails = licenseApplication.ModificationRequestDetails,
+                    ModificationRequestReason = licenseApplication.ModificationRequestReason,
+                    PipelineAndGasTransporterName = licenseApplication.PipelineAndGasTransporterName,
+                    ProposedArrangementLicensingActivity = licenseApplication.ProposedArrangementLicensingActivity,
+                    RefusedLicenseType = licenseApplication.RefusedLicenseType,
+                    RelatedLicenseDetail = licenseApplication.RelatedLicenseDetail,
+                    RelatedLicenseType = licenseApplication.RelatedLicenseType,
+                    RevokedLicenseType = licenseApplication.RevokedLicenseType,
+                    EntryPoint = licenseApplication.EntryPoint,
+                    ExitPoint = licenseApplication.ExitPoint,
+                    ExitPointState = licenseApplication.ExitPointState,
+                    EntryPointState = licenseApplication.EntryPointState
+                };
+            }
+
 
             return licenseApplicationForSave;
         }
@@ -587,7 +650,7 @@ namespace NCELAP.WebAPI.Services.Application
 
                     jsonResponse = reader.ReadToEnd();
 
-                   var  webResponse = JsonConvert.DeserializeObject<BaseApplicationResponse<APPlicationInfoDetails>>(jsonResponse);
+                    var webResponse = JsonConvert.DeserializeObject<BaseApplicationResponse<APPlicationInfoDetails>>(jsonResponse);
                     applicationInfo = webResponse.value[0];
 
                     var proposedShareholders = await currentEnvironment.AppendPathSegment("AppCustShareholders")
