@@ -29,5 +29,24 @@ namespace NCELAP.WebAPI.Util
         public const string NewApplication = "NewApplication";
         public const string Renewal = "Renewal";
 
+        //Application uploads name extensions constants
+        public const string DeclarationSignatureFileName = "_declaration_signature";
+        public const string HasLicenseRefusedFileName = "_licenserefused";
+        public const string HasLicenseRevokedFileName = "_licenserevoked";
+        public const string HasRelatedLicenseFileName = "_relatedlicense";
+        public const string HoldRelatedLicenseFileName = "_holdrelatedlicense";
+        public const string ProposedArrangementAttachmentFileName = "_proposedarrangementlicense";
+        public const string OPLFileName = "_OPL_License";
+        public const string SafetyCaseFileName = "_SafetyCaseApproved";
+        public const string SCADAFileName = "_SCADA_System";
+        public const string GTSFileName = "_Gas_transmission_system";
+        public const string TechnicalAttributeFileName = "_technical_attributes";
+        public const string AuxiliarySystemFileName = "_Auxiliary_systems";
+        public const string TariffAndPricingFileName = "_Tarrif_and_pricing";
+        public const string RiskManagementFileName = "_Risk_management";
+        public const string CommunityMOUFileName = "_CommunityMOU";
+         
+
+
     }
 }

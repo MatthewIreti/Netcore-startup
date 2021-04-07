@@ -6,6 +6,7 @@ namespace NCELAP.WebAPI.Models.Entities.Applications
 {
     public class ApplicationInfo
     {
+        public long RecordId { get; set; }
         public string ApplicationNum { get; set; }
         public long Customer { get; set; }
         public string CustomerTier { get; set; }
@@ -32,19 +33,19 @@ namespace NCELAP.WebAPI.Models.Entities.Applications
         public string DeclarationName { get; set; }
         public string DeclarationCapacity { get; set; }
         public string DeclarationDate { get; set; } //date 
-        public string ProposedArrangementLicensingActivity { get; set; } 
-        public string HasStandardModificationRequest { get; set; } 
-        public string ModificationRequestDetails { get; set; } 
-        public string ModificationRequestReason { get; set; } 
+        public string ProposedArrangementLicensingActivity { get; set; }
+        public string HasStandardModificationRequest { get; set; }
+        public string ModificationRequestDetails { get; set; }
+        public string ModificationRequestReason { get; set; }
         public string CustLicenseApplicationStatus { get; set; }
         public string ExitPoint { get; set; }
         public string EntryPoint { get; set; }
         public long EntryPointState { get; set; }
-        public long ExitPointState  { get; set; }
+        public long ExitPointState { get; set; }
         public string UniqueId { get; set; }
         public DateTime SubmittedOn { get; set; }
 
-       
+
     }
     public class APPlicationInfoDetails : ApplicationInfo
     {
@@ -53,13 +54,22 @@ namespace NCELAP.WebAPI.Models.Entities.Applications
         public List<StakeholderLocation> StakeholderLocations { get; set; }
         public List<LicenseApplicationPaymentModel> LicenseApplicationPayments { get; set; }
         public List<LicenseApplicationCommentModel> LicenseApplicationComments { get; set; }
+        public List<LicenseAttachmentModel> LicenseApplicationAttachments { get; set; }
+    }
+
+    public class LicenseAttachmentModel
+    {
+        public long ApplicationId { get; set; }
+        public string FileType { get; set; }
+        public string ApplicationNum { get; set; }
+        public string FileName { get; set; }
     }
 
     public class DPRZoneStates
     {
-        public string State  { get; set; }
+        public string State { get; set; }
         public long RecordId { get; set; }
 
     }
-    
+
 }

@@ -6,12 +6,16 @@
 
   <ItemGroup>
     <Compile Remove="EmailTemplates\**" />
+    <Compile Remove="Services\Common\**" />
     <Compile Remove="Utils\**" />
     <Content Remove="EmailTemplates\**" />
+    <Content Remove="Services\Common\**" />
     <Content Remove="Utils\**" />
     <EmbeddedResource Remove="EmailTemplates\**" />
+    <EmbeddedResource Remove="Services\Common\**" />
     <EmbeddedResource Remove="Utils\**" />
     <None Remove="EmailTemplates\**" />
+    <None Remove="Services\Common\**" />
     <None Remove="Utils\**" />
   </ItemGroup>
 
@@ -49,7 +53,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Services\Common\" />
     <Folder Include="Controllers\Support\" />
     <Folder Include="Services\Support\" />
     <Folder Include="Data\" />

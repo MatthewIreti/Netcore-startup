@@ -15,4 +15,9 @@ namespace NCELAP.WebAPI.Models.DTO.Applications
         public long CustLicenseApplicationId { get; set; }
         public long LicenseId { get; set; }
     }
+
+    public class LicenseAttachment
+    {
+        public LicenseCertificatePayload contract { get; set; }
+    }
 }

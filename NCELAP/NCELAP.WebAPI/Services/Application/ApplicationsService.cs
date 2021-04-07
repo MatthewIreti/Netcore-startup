@@ -1,11 +1,11 @@
-﻿using AspNetCore.Http.Extensions;
+﻿using Microsoft.Extensions.Configuration;
+
+using AspNetCore.Http.Extensions;
 using Flurl;
 using Flurl.Http;
-using Microsoft.Extensions.Configuration;
 using NCELAP.WebAPI.Models.DTO;
 using NCELAP.WebAPI.Models.DTO.Applications;
 using NCELAP.WebAPI.Models.Entities.Applications;
-using NCELAP.WebAPI.Models.ODataResponse.Account;
 using NCELAP.WebAPI.Models.ODataResponse.Application;
 using NCELAP.WebAPI.Util;
 using Newtonsoft.Json;
@@ -13,7 +13,6 @@ using Serilog;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -281,23 +280,23 @@ namespace NCELAP.WebAPI.Services.Application
                     client.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/json");
 
                     licenseApplicationUpload.LicenseApplicationRecId = applicationRecId;
-                    licenseApplicationUpload.DeclarationSignatureFileName = companyName + "_declaration_signature";
-                    licenseApplicationUpload.HasLicenseRefusedFileName = companyName + "_licenserefused";
-                    licenseApplicationUpload.HasLicenseRevokedFileName = companyName + "_licenserevoked";
-                    licenseApplicationUpload.HasRelatedLicenseFileName = companyName + "_relatedlicense";
-                    licenseApplicationUpload.HoldRelatedLicenseFileName = companyName + "_holdrelatedlicense";
-                    licenseApplicationUpload.ProposedArrangementAttachmentFileName = companyName + "_proposedarrangementlicense";
-                    licenseApplicationUpload.OPLFileName = $"{companyName}_OPL_License";
-                    licenseApplicationUpload.SafetyCaseFileName = $"{companyName}_SafetyCaseApproved";
-                    licenseApplicationUpload.SCADAFileName = $"{companyName}_SCADA_System";
-                    licenseApplicationUpload.GTSFileName = $"{companyName}_Gas_transmission_system";
-                    licenseApplicationUpload.TechnicalAttributeFileName = $"{companyName}_technical_attributes";
-                    licenseApplicationUpload.AuxiliarySystemFileName = $"{companyName}_Auxiliary_systems";
-                    licenseApplicationUpload.TariffAndPricingFileName = $"{companyName}_Tarrif_and_pricing";
-                    licenseApplicationUpload.RiskManagementFileName = $"{companyName}_Risk_management";
-                    licenseApplicationUpload.CommunityMOUFileName = $"{companyName}_CommunityMOU";
-                    licenseApplicationUpload.NetworkAgentOPLFileName = $"{companyName}_OPL_License";
-                    licenseApplicationUpload.GasShipperOPLFileName = $"{companyName}_OPL_License";
+                    licenseApplicationUpload.DeclarationSignatureFileName = companyName + BaseConstantHelper.DeclarationSignatureFileName;
+                    licenseApplicationUpload.HasLicenseRefusedFileName = companyName + BaseConstantHelper.HasLicenseRefusedFileName;
+                    licenseApplicationUpload.HasLicenseRevokedFileName = companyName + BaseConstantHelper.HasLicenseRevokedFileName;
+                    licenseApplicationUpload.HasRelatedLicenseFileName = companyName + BaseConstantHelper.HasRelatedLicenseFileName;
+                    licenseApplicationUpload.HoldRelatedLicenseFileName = companyName + BaseConstantHelper.HoldRelatedLicenseFileName;
+                    licenseApplicationUpload.ProposedArrangementAttachmentFileName = companyName + BaseConstantHelper.ProposedArrangementAttachmentFileName;
+                    licenseApplicationUpload.OPLFileName = $"{companyName}{BaseConstantHelper.OPLFileName}";
+                    licenseApplicationUpload.SafetyCaseFileName = $"{companyName}{BaseConstantHelper.SafetyCaseFileName}";
+                    licenseApplicationUpload.SCADAFileName = $"{companyName}{BaseConstantHelper.SCADAFileName}";
+                    licenseApplicationUpload.GTSFileName = $"{companyName}{BaseConstantHelper.GTSFileName}";
+                    licenseApplicationUpload.TechnicalAttributeFileName = $"{companyName}{BaseConstantHelper.TechnicalAttributeFileName}";
+                    licenseApplicationUpload.AuxiliarySystemFileName = $"{companyName}{BaseConstantHelper.AuxiliarySystemFileName}";
+                    licenseApplicationUpload.TariffAndPricingFileName = $"{companyName}{BaseConstantHelper.TariffAndPricingFileName}";
+                    licenseApplicationUpload.RiskManagementFileName = $"{companyName}{BaseConstantHelper.RiskManagementFileName}";
+                    licenseApplicationUpload.CommunityMOUFileName = $"{companyName}{BaseConstantHelper.CommunityMOUFileName}";
+                    licenseApplicationUpload.NetworkAgentOPLFileName = $"{companyName}{BaseConstantHelper.OPLFileName}";
+                    licenseApplicationUpload.GasShipperOPLFileName = $"{companyName}{BaseConstantHelper.OPLFileName}";
 
                     var responseMessage = await client.PostAsJsonAsync(docupload, licenseApplicationUpload);
                     var errorMessage = responseMessage.Content.ReadAsStringAsync().GetAwaiter().GetResult();
@@ -665,44 +664,57 @@ namespace NCELAP.WebAPI.Services.Application
                         .WithOAuthBearerToken(token)
                         .GetJsonAsync<BaseApplicationResponse<LicenseApplicationCommentModel>>();
 
+                    //Get the attachments
+                    var attachments = await _authService.GetApiServiceEndpoint()
+                        .AppendPathSegment("NCLEAS/LicenseAttachmentService/GetAttachments")
+                        .WithOAuthBearerToken(token)
+                        .PostJsonAsync(new LicenseAttachment
+                        {
+                            contract = new LicenseCertificatePayload
+                            {
+                                CustLicenseApplicationId = licenseApplicationRecId
+                            }
+                        }).ReceiveJson<List<LicenseAttachmentModel>>();
+
+                    applicationInfo.LicenseApplicationAttachments = attachments;
                     applicationInfo.LicenseApplicationComments = applicationComment.value;
 
-                    if (applicationInfo.CustLicenseType == BaseConstantHelper.gasShipperLicenseType)
-                    {
-                        var gasShipperCustomers = await currentEnvironment.AppendPathSegment($"GasShipperCustomer")
-                             .SetQueryParam("$filter", $"CustApplication eq {licenseApplicationRecId}")
-                            .WithOAuthBearerToken(token)
-                            .GetJsonAsync<BaseApplicationResponse<GasShipperCustomer>>();
-                        applicationInfo.GasShipperCustomers = gasShipperCustomers.value;
+                if (applicationInfo.CustLicenseType == BaseConstantHelper.gasShipperLicenseType)
+                {
+                    var gasShipperCustomers = await currentEnvironment.AppendPathSegment($"GasShipperCustomer")
+                         .SetQueryParam("$filter", $"CustApplication eq {licenseApplicationRecId}")
+                        .WithOAuthBearerToken(token)
+                        .GetJsonAsync<BaseApplicationResponse<GasShipperCustomer>>();
+                    applicationInfo.GasShipperCustomers = gasShipperCustomers.value;
 
-                        var gasShipperTakeOffPoints = await currentEnvironment.AppendPathSegment($"GasShipperDeliveryTakeOffPoint")
-                            .SetQueryParam("$filter", $"CustApplication eq {licenseApplicationRecId}")
-                           .WithOAuthBearerToken(token)
-                           .GetJsonAsync<BaseApplicationResponse<GasShipperTakeOffPoint>>();
-                        applicationInfo.GasShipperTakeOffPoints = gasShipperTakeOffPoints.value;
+                    var gasShipperTakeOffPoints = await currentEnvironment.AppendPathSegment($"GasShipperDeliveryTakeOffPoint")
+                        .SetQueryParam("$filter", $"CustApplication eq {licenseApplicationRecId}")
+                       .WithOAuthBearerToken(token)
+                       .GetJsonAsync<BaseApplicationResponse<GasShipperTakeOffPoint>>();
+                    applicationInfo.GasShipperTakeOffPoints = gasShipperTakeOffPoints.value;
 
-                    }
-
-                    if (applicationInfo.CustLicenseType == "NetworkAgent")
-                    {
-                        applicationInfo.CustLicenseType = "Network Agent";
-                    }
-
-                    if (applicationInfo.CustLicenseType == "GasShipperLicense")
-                    {
-                        applicationInfo.CustLicenseType = "Gas Shipper License";
-                    }
-
-                    if (applicationInfo.CustLicenseType == "GasTransporterLicense")
-                    {
-                        applicationInfo.CustLicenseType = "Gas Transporter License";
-                    }
-                    response.Dispose();
-                    dataStream.Close();
-                    dataStream.Dispose();
-                    reader.Close();
-                    reader.Dispose();
                 }
+
+                if (applicationInfo.CustLicenseType == "NetworkAgent")
+                {
+                    applicationInfo.CustLicenseType = "Network Agent";
+                }
+
+                if (applicationInfo.CustLicenseType == "GasShipperLicense")
+                {
+                    applicationInfo.CustLicenseType = "Gas Shipper License";
+                }
+
+                if (applicationInfo.CustLicenseType == "GasTransporterLicense")
+                {
+                    applicationInfo.CustLicenseType = "Gas Transporter License";
+                }
+                response.Dispose();
+                dataStream.Close();
+                dataStream.Dispose();
+                reader.Close();
+                reader.Dispose();
+            }
             }
             catch (Exception ex)
             {
