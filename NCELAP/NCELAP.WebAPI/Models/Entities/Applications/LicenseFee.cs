@@ -15,5 +15,6 @@ namespace NCELAP.WebAPI.Models.Entities.Applications
         public double Statutory { get; set; }
         public string StatutoryFeeServiceTypeId { get; set; }
         public string ProcessingFeeServiceTypeId { get; set; }
+        public double RecordId { get; set; }
     }
 }

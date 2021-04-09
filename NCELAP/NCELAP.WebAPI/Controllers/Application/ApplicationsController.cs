@@ -8,6 +8,8 @@ using Microsoft.Extensions.Configuration;
 using NCELAP.WebAPI.Models.DTO.Applications;
 using NCELAP.WebAPI.Models.Entities.Applications;
 using NCELAP.WebAPI.Services.Application;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace NCELAP.WebAPI.Controllers.Application
 {
@@ -31,7 +33,12 @@ namespace NCELAP.WebAPI.Controllers.Application
             try
             {
                 var response = await _applicationsService.SaveApplication(licenseApplication);
-                return Ok(response);
+                if (response.Status)
+                {
+                    return Ok(response);
+
+                }
+                return BadRequest(response);
             }
             catch (Exception exception)
             {
@@ -41,18 +48,21 @@ namespace NCELAP.WebAPI.Controllers.Application
 
 
         }
+
         [HttpPut]
         [Route("updatelicenseapplication")]
-        public async Task<IActionResult> UpdateLicenseApplicationInformation(ApplicationInfo model)
+        public async Task<IActionResult> UpdateLicenseApplicationInformationAsync(APPlicationInfoDetails model)
         {
             try
             {
                 var response = await _applicationsService.UpdateApplication(model);
-                return Ok(response);
+                if (response.Status)
+                    return Ok(response);
+
+                return BadRequest(response);
             }
             catch (Exception exception)
             {
-
                 return BadRequest(exception.Message);
             }
 

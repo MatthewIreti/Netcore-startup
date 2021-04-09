@@ -33,7 +33,11 @@ appModule.run(['$rootScope', '$state', '$stateParams', function ($rootScope, $st
         { Name: "NewApplication", Value: "New" },
         { Name: "Renewal", Value: "Renewal" }
     ];
-
+    $rootScope.yesNo = [
+        { "Name": "--Select---", "Value": false },
+        { "Name": "No", "Value": false },
+        { "Name": "Yes", "Value": true }
+    ];
     $rootScope.breadcrumb = [{ title: 'Home' }];
     $rootScope.loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
     $rootScope.goToState = function (index) {

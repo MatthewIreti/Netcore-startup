@@ -6,6 +6,7 @@ namespace NCELAP.WebAPI.Models.Entities.Applications
 {
     public class ApplicationInfo
     {
+        public long LicenseFeeCategory { get; set; }
         public long RecordId { get; set; }
         public string ApplicationNum { get; set; }
         public long Customer { get; set; }
@@ -14,15 +15,16 @@ namespace NCELAP.WebAPI.Models.Entities.Applications
         public string CompanyName { get; set; }
         //public string CustApplicationNum { get; set; }
         public string CustLicenseType { get; set; }
+        public string LicenseType    { get; set; }
         public string CustLicenseCategory { get; set; }
         public string EffectiveDate { get; set; } //date
-        public string HoldRelatedLicense { get; set; }
+        public bool HoldRelatedLicense { get; set; }
         public string RelatedLicenseDetail { get; set; }
-        public string HasRelatedLicense { get; set; }
+        public bool HasRelatedLicense { get; set; }
         public string RelatedLicenseType { get; set; }
-        public string HasLicenseRevoked { get; set; } //bool
+        public bool HasLicenseRevoked { get; set; } //bool
         public string RevokedLicenseType { get; set; }
-        public string HasGasApplicationRefused { get; set; }
+        public bool HasGasApplicationRefused { get; set; }
         public string RefusedLicenseType { get; set; }
         public string AgentShipperName { get; set; }
         public string AgentLocationOfShipper { get; set; }
@@ -34,7 +36,9 @@ namespace NCELAP.WebAPI.Models.Entities.Applications
         public string DeclarationCapacity { get; set; }
         public string DeclarationDate { get; set; } //date 
         public string ProposedArrangementLicensingActivity { get; set; }
-        public string HasStandardModificationRequest { get; set; }
+        public string ProposedArrangementDetail { get; set; }
+        public string Location { get; set; }
+        public bool HasStandardModificationRequest { get; set; }
         public string ModificationRequestDetails { get; set; }
         public string ModificationRequestReason { get; set; }
         public string CustLicenseApplicationStatus { get; set; }
@@ -50,7 +54,7 @@ namespace NCELAP.WebAPI.Models.Entities.Applications
     public class APPlicationInfoDetails : ApplicationInfo
     {
         public List<GasShipperCustomer> GasShipperCustomers { get; set; }
-        public List<GasShipperTakeOffPoint> GasShipperTakeOffPoints { get; set; }
+        public List<GasShipperTakeOffPointDetails> GasShipperTakeOffPoints { get; set; }
         public List<StakeholderLocation> StakeholderLocations { get; set; }
         public List<LicenseApplicationPaymentModel> LicenseApplicationPayments { get; set; }
         public List<LicenseApplicationCommentModel> LicenseApplicationComments { get; set; }

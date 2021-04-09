@@ -91,17 +91,14 @@
                                                                                     <div class="col col-lg-6 col-xl-6 col-12">
                                                                                         <div class="form-group">
                                                                                             <label>Response<span class="text-danger">*</span></label>
-                                                                                            <select name="holdRelatedLicense" class="form-control" ng-model="licenseApplicationModel.HoldRelatedLicense" ng-change="holdRelatedLicenseSelectionHandler()">
-                                                                                                <option value="">--Select Response--</option>
-                                                                                                <option value=true>Yes</option>
-                                                                                                <option value=false>No</option>
-                                                                                            </select>
+                                                                                            <select name="holdRelatedLicense" class="form-control" ng-model="licenseApplicationModel.holdRelatedLicense" ng-options="x.Value as x.Name for x in yesNo"> </select>
+
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="col col-lg-6 col-xl-6 col-12">
                                                                                         <div class="form-group">
                                                                                             <label>Details of License(s)</label>
-                                                                                            <input ng-model="licenseApplicationModel.RelatedLicenseDetail" type="text" class="form-control" ng-disabled="licenseApplicationModel.HoldRelatedLicense === 'false' || licenseApplicationModel.HoldRelatedLicense === ''" />
+                                                                                            <input ng-model="licenseApplicationModel.relatedLicenseDetail" type="text" class="form-control" ng-disabled="!licenseApplicationModel.holdRelatedLicense" />
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -110,7 +107,7 @@
                                                                                         <div class="form-group">
                                                                                             <label>Details of License(s) as attachment</label>
                                                                                             <input type="file" class="form-control" ng-upload-change="setFileRecord" tag="holdRelatedLicense"
-                                                                                                   ng-disabled="licenseApplicationModel.HoldRelatedLicense === 'false' || licenseApplicationModel.HoldRelatedLicense === ''" />
+                                                                                                   ng-disabled="!licenseApplicationModel.holdRelatedLicense" />
                                                                                             <div class="text-danger text-sm" id="holdRelatedLicenseWarningIndicator"></div>
                                                                                         </div>
                                                                                     </div>
@@ -130,17 +127,13 @@
                                                                                     <div class="col col-lg-5 col-xl-5 col-12">
                                                                                         <div class="form-group">
                                                                                             <label>Response<span class="text-danger">*</span></label>
-                                                                                            <select name="hasRelatedLicense" class="form-control" ng-model="licenseApplicationModel.HasRelatedLicense" ng-change="hasRelatedLicenseSelectionHandler()">
-                                                                                                <option value="">--Select Response--</option>
-                                                                                                <option value=true>Yes</option>
-                                                                                                <option value=false>No</option>
-                                                                                            </select>
+                                                                                            <select name="hasRelatedLicense" class="form-control" ng-model="licenseApplicationModel.HasRelatedLicense" ng-options="x.Value as x.Name for x in yesNo"></select>
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="col col-lg-7 col-xl-7 col-12">
                                                                                         <div class="form-group">
                                                                                             <label>Type of license(s) applied for or intended to be applied for</label>
-                                                                                            <input type="text" class="form-control" ng-model="licenseApplicationModel.RelatedLicenseType" ng-disabled="licenseApplicationModel.HasRelatedLicense === 'false' || licenseApplicationModel.HasRelatedLicense === ''" />
+                                                                                            <input type="text" class="form-control" ng-model="licenseApplicationModel.RelatedLicenseType" ng-disabled="!licenseApplicationModel.HasRelatedLicense" />
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -148,7 +141,7 @@
                                                                                     <div class="col col-lg-6 col-xl-6 col-12">
                                                                                         <div class="form-group">
                                                                                             <label>Type of license(s) applied for or intended to be applied for as attachment</label>
-                                                                                            <input type="file" class="form-control" tag="hasRelatedLicense" ng-upload-change="setFileRecord" ng-disabled="licenseApplicationModel.HasRelatedLicense === 'false' || licenseApplicationModel.HasRelatedLicense === ''" />
+                                                                                            <input type="file" class="form-control" tag="hasRelatedLicense" ng-upload-change="setFileRecord" ng-disabled="!licenseApplicationModel.HasRelatedLicense" />
                                                                                             <div class="text-danger text-sm" id="hasRelatedLicenseWarningIndicator"></div>
                                                                                         </div>
                                                                                     </div>
@@ -168,18 +161,14 @@
                                                                                     <div class="col col-lg-6 col-xl-6 col-12">
                                                                                         <div class="form-group">
                                                                                             <label>Response<span class="text-danger">*</span></label>
-                                                                                            <select name="hasLicensedRevoked" class="form-control" ng-model="licenseApplicationModel.HasLicenseRevoked" ng-change="hasLicenseRevokedHandler()">
-                                                                                                <option value="">--Select Response--</option>
-                                                                                                <option value=true>Yes</option>
-                                                                                                <option value=false>No</option>
-                                                                                            </select>
+                                                                                            <select name="hasLicensedRevoked" class="form-control" ng-model="licenseApplicationModel.HasLicenseRevoked" ng-options="x.Value as x.Name for x in yesNo"> </select>
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="col col-lg-6 col-xl-6 col-12">
                                                                                         <div class="form-group">
                                                                                             <label>Type of License revoked</label>
                                                                                             <input type="text" class="form-control" ng-model="licenseApplicationModel.RevokedLicenseType" 
-                                                                                                   ng-disabled="licenseApplicationModel.HasLicenseRevoked === 'false' || licenseApplicationModel.HasLicenseRevoked === ''" />
+                                                                                                   ng-disabled="!licenseApplicationModel.HasLicenseRevoked"/>
                                                                                         </div>
                                                                                     </div>
 
@@ -188,7 +177,7 @@
                                                                                     <div class="col col-lg-6 col-xl-6 col-12">
                                                                                         <div class="form-group">
                                                                                             <label>Type of License revoked as attachment</label>
-                                                                                            <input type="file" class="form-control" tag="hasLicenseRevoked" ng-upload-change="setFileRecord" accept=".pdf" ng-disabled="licenseApplicationModel.HasLicenseRevoked === 'false' || licenseApplicationModel.HasLicenseRevoked === ''" />
+                                                                                            <input type="file" class="form-control" tag="hasLicenseRevoked" ng-upload-change="setFileRecord" accept=".pdf" ng-disabled="!licenseApplicationModel.HasLicenseRevoked" />
                                                                                             <div class="text-danger text-sm" id="hasLicenseRevokedWarningIndicator"></div>
                                                                                         </div>
                                                                                     </div>
@@ -208,17 +197,13 @@
                                                                                     <div class="col col-lg-6 col-xl-6 col-12">
                                                                                         <div class="form-group">
                                                                                             <label>Response<span class="text-danger">*</span></label>
-                                                                                            <select name="hasGasApplicationRefused" class="form-control" ng-model="licenseApplicationModel.HasGasApplicationRefused" ng-change="hasLicenseRefusedHandler()">
-                                                                                                <option value="">--Select Response--</option>
-                                                                                                <option value=true>Yes</option>
-                                                                                                <option value=false>No</option>
-                                                                                            </select>
+                                                                                            <select name="hasGasApplicationRefused" class="form-control" ng-model="licenseApplicationModel.HasGasApplicationRefused" ng-options="x.Value as x.Name for x in yesNo"> </select>
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="col col-lg-6 col-xl-6 col-12">
                                                                                         <div class="form-group">
                                                                                             <label>Type of License(s) application(s) refused</label>
-                                                                                            <input name="refusedApplcationType" type="text" class="form-control" ng-model="licenseApplicationModel.RefusedLicenseType" ng-disabled="licenseApplicationModel.HasGasApplicationRefused === 'false' || licenseApplicationModel.HasGasApplicationRefused === ''" />
+                                                                                            <input name="refusedApplcationType" type="text" class="form-control" ng-model="licenseApplicationModel.RefusedLicenseType" ng-disabled="!licenseApplicationModel.HasGasApplicationRefused" />
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -227,7 +212,7 @@
                                                                                     <div class="col col-lg-6 col-xl-6 col-12">
                                                                                         <div class="form-group">
                                                                                             <label>Type of License(s) application(s) refused as attachment</label>
-                                                                                            <input type="file" class="form-control" tag="hasRefusedLicense" ng-upload-change="setFileRecord" ng-disabled="licenseApplicationModel.HasGasApplicationRefused === 'false' || licenseApplicationModel.HasGasApplicationRefused === ''" />
+                                                                                            <input type="file" class="form-control" tag="hasRefusedLicense" ng-upload-change="setFileRecord" ng-disabled="!licenseApplicationModel.HasGasApplicationRefused" />
                                                                                             <div class="text-danger text-sm" id="hasLicenseRefusedWarningIndicator"></div>
                                                                                         </div>
                                                                                     </div>
@@ -781,17 +766,13 @@
                                         <div class="col col-lg-7 col-xl-7 col-12">
                                             <div class="form-group">
                                                 <label>Do you wish to request any modification to any standard conditions for type of license applied for:<span class="text-danger">*</span></label>
-                                                <select class="form-control" ng-model="licenseApplicationModel.HasStandardModificationRequest">
-                                                    <option value="">---Select response type---</option>
-                                                    <option value=true>Yes</option>
-                                                    <option value=false>No</option>
-                                                </select>
+                                                <select class="form-control" ng-model="licenseApplicationModel.HasStandardModificationRequest" ng-options="x.Value as x.Name for x in yesNo"> </select>
                                             </div>
                                         </div>
                                         <div class="col col-lg-5 col-xl-5 col-12">
                                             <div class="form-group">
                                                 <label>Provide full details of the modification requested</label>
-                                                <input type="text" class="form-control" ng-model="licenseApplicationModel.ModificationRequestDetails" ng-disabled="licenseApplicationModel.HasStandardModificationRequest !== 'true'" />
+                                                <input type="text" class="form-control" ng-model="licenseApplicationModel.ModificationRequestDetails" ng-disabled="!licenseApplicationModel.HasStandardModificationRequest" />
                                             </div>
                                         </div>
                                     </div>

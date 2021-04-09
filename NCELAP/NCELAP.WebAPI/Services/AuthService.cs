@@ -79,7 +79,7 @@ namespace NCELAP.WebAPI.Services
                 Log.Error(ex.StackTrace);
             }
 
-            return authResponse.Access_Token.Trim();
+            return "";// authResponse.Access_Token.Trim();
         }
     }
 }

@@ -37,13 +37,10 @@
         GasShipperOPLFileName: '', GasShipperOPLFileExtension: '', GasShipperOPLBase64: ''
     };
     $scope.licenseApplicationModel = {
-        CompanyName: '', Customer: 0, CustomerTier: '', SubmittedBy: 0, CustApplicationNum: '', CustLicenseType: '', EffectiveDate: '', HoldRelatedLicense: '', RelatedLicenseDetail: '',
-        HasRelatedLicense: '', RelatedLicenseType: '', HasLicenseRevoked: '', RevokedLicenseType: '', HasGasApplicationRefused: '',
-        RefusedLicenseType: '', AgentShipperName: '', AgentLocationOfShipper: '', EntryPointState: undefined, ExitPointState: undefined, EntryPoint: '', ExitPoint: '', Location: '',
-        MaximumNominatedCapacity: 0.0, PipelineAndGasTransporterName: '', GasPipelineNetwork: '', InstalledCapacity: '', DeclarationName: '', DeclarationCapacity: '',
-        DeclarationDate: '', ProposedArrangementLicensingActivity: '', HasStandardModificationRequest: '', ModificationRequestDetails: '',
-        ModificationRequestReason: '', CustLicenseApplicationStatus: '',
-        FileUploads: $scope.licenseApplicationUpload, StakeholderLocations: $scope.stakeholdersLocations, TakeOffPoints: $scope.takeOffPoints, GasShipperCustomers: $scope.gasShipperCustomers
+        FileUploads: $scope.licenseApplicationUpload,
+        StakeholderLocations: $scope.stakeholdersLocations,
+        TakeOffPoints: $scope.takeOffPoints,
+        GasShipperCustomers: $scope.gasShipperCustomers
     };
     $scope.licenseApplicationModel.EffectiveDate = new Date();
     $scope.licensetypes = [
@@ -203,42 +200,6 @@
         HoldRelatedLicenseFileSizeValid: '', HasRelatedLicenseFileSizeValid: '', HasLicenseRevokedFileSizeValid: '', HasLicenseRefusedFileSizeValid: '', DeclarationSignatureValid: ''
     };
 
-    $scope.holdRelatedLicenseSelectionHandler = function () {
-        if ($scope.licenseApplicationModel.HoldRelatedLicense !== 'true') {
-            $scope.licenseApplicationModel.RelatedLicenseDetail = '';
-            $scope.licenseApplicationUpload.HoldRelatedLicenseFileName = '';
-            $scope.licenseApplicationUpload.HoldRelatedLicenseFileExtension = '';
-            $scope.licenseApplicationUpload.HoldRelatedLicenseBase64 = '';
-        }
-    };
-
-    $scope.hasRelatedLicenseSelectionHandler = function () {
-        if ($scope.licenseApplicationModel.HasRelatedLicense !== 'true') {
-            $scope.licenseApplicationModel.RelatedLicenseType = '';
-            $scope.licenseApplicationUpload.HasRelatedLicenseFileName = '';
-            $scope.licenseApplicationUpload.HasRelatedLicenseFileExtension = '';
-            $scope.licenseApplicationUpload.HasRelatedLicenseBase64 = '';
-        }
-    };
-
-    $scope.hasLicenseRevokedHandler = function () {
-        if ($scope.licenseApplicationModel.HasLicenseRevoked !== 'true') {
-            $scope.licenseApplicationModel.RevokedLicenseType = '';
-            $scope.licenseApplicationUpload.HasLicenseRevokedFileName = '';
-            $scope.licenseApplicationUpload.HasLicenseRevokedFileExtension = '';
-            $scope.licenseApplicationUpload.HasLicenseRevokedLicenseBase64 = '';
-        }
-    };
-
-    $scope.hasLicenseRefusedHandler = function () {
-        if ($scope.licenseApplicationModel.HasGasApplicationRefused !== 'true') {
-            $scope.licenseApplicationModel.RefusedLicenseType = '';
-            $scope.licenseApplicationUpload.HasLicenseRefusedFileName = '';
-            $scope.licenseApplicationUpload.HasLicenseRefusedFileExtension = '';
-            $scope.licenseApplicationUpload.HasLicenseRefusedLicenseBase64 = '';
-            document.getElementById("hasRefusedLicense").value = "";
-        }
-    };
 
     $scope.evaluateGasShipperNominalCapacity = function (capacity) {
         $scope.licenseFeeEvaluated = false;
@@ -252,6 +213,7 @@
                 $scope.processingFee = currentLicenseFee.processingFee;
                 $scope.totalFee = parseInt($scope.statutoryFee) + parseInt($scope.processingFee);
                 $scope.licenseApplicationModel.CustomerTier = currentLicenseFee.categoryDescription;
+                $scope.licenseApplicationModel.LicenseFeeCategory = currentLicenseFee.recordId;
             }
         }
     };
@@ -267,10 +229,12 @@
                 $scope.statutoryFee = currentLicenseFee.statutory;
                 $scope.processingFee = currentLicenseFee.processingFee;
                 $scope.totalFee = parseInt($scope.statutoryFee) + parseInt($scope.processingFee);
+                $scope.licenseApplicationModel.LicenseFeeCategory = currentLicenseFee.recordId;
+                $scope.licenseApplicationModel.CustomerTier = currentLicenseFee.categoryDescription;
             }
         }
     };
-   
+
     $scope.getLicenseFees = function () {
         $http({
             method: 'GET',
@@ -323,6 +287,7 @@
         $scope.licenseApplicationModel.EffectiveDate = effectiveDate;
         $scope.licenseApplicationModel.DeclarationDate = declarationDate;
         $scope.licenseApplicationModel.MaximumNominatedCapacity = parseFloat($scope.licenseApplicationModel.MaximumNominatedCapacity);
+
         $scope.submittingInformation = 'true';
         $scope.waiting++;
         $http({
@@ -331,10 +296,8 @@
             data: $scope.licenseApplicationModel,
             dataType: 'json'
         }).then(function (response) {
-            if (response.data === true) {
-                $state.go('site.application.list');
-                $scope.waiting--;
-            }
+            $state.go('site.application.list');
+            $scope.waiting--;
         }, function (error) {
             $scope.waiting--;
             console.log(error);
@@ -380,7 +343,7 @@ appModule.controller('ApplicationList', function ($scope, $http, $state) {
         });
     }
 
-    
+
 
     $scope.getLicenseCertificateBase64 = function (applicationRecId) {
         $scope.licenseCertificateModel = {};
@@ -465,7 +428,7 @@ appModule.controller('ApplicationInvoice', function ($scope, $http, $state, $tim
 });
 
 appModule.controller('applicationLicenses', function ($scope, $http, $state) {
-    
+
 
     if ($scope.loggedInUser.custTableRecId) {
         $scope.waiting++;
@@ -546,10 +509,30 @@ appModule.controller('applicationLicenseUpdate', function ($scope, $http, $state
             link: '#'
         }
     );
+    $scope.agreementCheck = true;
     $scope.licenseInformation = {};
     $scope.stakeholdersLocations = [{}];
     $scope.takeOffPoints = [{}];
     $scope.gasShipperCustomers = [{}];
+    $scope.licenseApplicationUpload = {
+        HoldRelatedLicenseFileName: '', HoldRelatedLicenseFileExtension: '', HoldRelatedLicenseBase64: '',
+        HasRelatedLicenseFileName: '', HasRelatedLicenseFileExtension: '', HasRelatedLicenseBase64: '',
+        HasLicenseRevokedFileName: '', HasLicenseRevokedFileExtension: '', HasLicenseRevokedLicenseBase64: '',
+        HasLicenseRefusedFileName: '', HasLicenseRefusedFileExtension: '', HasLicenseRefusedLicenseBase64: '',
+        ProposedArrangementAttachmentFileName: '', ProposedArrangementAttachmentFileExtension: '', ProposedArrangementAttachmentBase64: '',
+        DeclarationSignatureFileName: '', DeclarationSignatureFileExtension: '', DeclarationSignatureBase64: '',
+        OPLFileName: '', OPLFileExtension: '', OPLBase64: '',
+        SafetyCaseFileName: '', SafetyCaseFileExtension: '', SafetyCaseBase64: '',
+        SCADAFileName: '', SCADAFileExtension: '', SCADABase64: '',
+        GTSFileName: '', GTSFileExtension: '', GTSBase64: '',
+        TechnicalAttributeFileName: '', TechnicalAttributeFileExtension: '', TechnicalAttributeBase64: '',
+        AuxiliarySystemFileName: '', AuxiliarySystemFileExtension: '', AuxiliarySystemBase64: '',
+        TariffAndPricingFileName: '', TariffAndPricingFileExtension: '', TariffAndPricingBase64: '',
+        RiskManagmentFileName: '', RiskManagmentFileExtension: '', RiskManagmentBase64: '',
+        CommunityMOUFileName: '', CommunityMOUFileExtension: '', CommunityMOUBase64: '',
+        NetworkAgentOPLFileName: '', NetworkAgentOPLFileExtension: '', NetworkAgentOPLBase64: '',
+        GasShipperOPLFileName: '', GasShipperOPLFileExtension: '', GasShipperOPLBase64: ''
+    };
     document.title = "License Application Update " + appTitle;
 
     $scope.GasShipperPointType = [
@@ -562,6 +545,7 @@ appModule.controller('applicationLicenseUpdate', function ($scope, $http, $state
         { "Name": "Seller", "Value": "Seller" }
 
     ];
+    
     $scope.getLicenseFees = function () {
         $http({
             method: 'GET',
@@ -575,29 +559,29 @@ appModule.controller('applicationLicenseUpdate', function ($scope, $http, $state
     };
 
     $scope.addCustomerStakeholder = function () {
-        $scope.stakeholdersLocations.push({});
+        $scope.licenseInformation.stakeholderLocations.push({});
     };
     $scope.removeCustomerStakeholder = function (objectToRemove) {
-        var objectToRemovePosition = $scope.stakeholdersLocations.indexOf(objectToRemove);
-        $scope.stakeholdersLocations.splice(objectToRemovePosition, 1);
+        var objectToRemovePosition = $scope.licenseInformation.stakeholderLocations.indexOf(objectToRemove);
+        $scope.licenseInformation.stakeholderLocations.splice(objectToRemovePosition, 1);
     };
 
     $scope.addGasShipperCustomer = function () {
-        $scope.gasShipperCustomers.push({});
+        $scope.licenseInformation.gasShipperCustomers.push({});
     };
 
     $scope.removeGasShipperCustomer = function (objectToRemove) {
-        var objectToRemovePosition = $scope.gasShipperCustomers.indexOf(objectToRemove);
-        $scope.gasShipperCustomers.splice(objectToRemovePosition, 1);
+        var objectToRemovePosition = $scope.licenseInformation.gasShipperCustomers.indexOf(objectToRemove);
+        $scope.licenseInformation.gasShipperCustomers.splice(objectToRemovePosition, 1);
     };
 
     $scope.addTakeOffPoint = function () {
-        $scope.takeOffPoints.push({});
+        $scope.licenseInformation.gasShipperTakeOffPoints.push({name:'',location:'', gasShipperPointType:'', UniqueId:''});
     };
 
     $scope.removeTakeOffPoint = function (objectToRemove) {
-        var objectToRemovePosition = $scope.takeOffPoints.indexOf(objectToRemove);
-        $scope.takeOffPoints.splice(objectToRemovePosition, 1);
+        var objectToRemovePosition = $scope.licenseInformation.gasShipperTakeOffPoints.indexOf(objectToRemove);
+        $scope.licenseInformation.gasShipperTakeOffPoints.splice(objectToRemovePosition, 1);
     };
     $scope.getStates = function () {
         $http({
@@ -610,12 +594,20 @@ appModule.controller('applicationLicenseUpdate', function ($scope, $http, $state
         });
     };
 
-   
-    $scope.submitApplicationUpdate = function () {
-        
-    };
     $scope.submitForm = function () {
-        console.log($scope.licenseInformation);
+        $scope.waiting++;
+        $http({
+            method: 'PUT',
+            url: baseUrl + 'applications/updatelicenseapplication',
+            data: $scope.licenseInformation,
+            dataType: 'json'
+        }).then(function (response) {
+            $state.go('site.application.list');
+            $scope.waiting--;
+        }, function (error) {
+            $scope.waiting--;
+            console.log(error);
+        });
     };
 
     //Get Application Details
@@ -627,6 +619,7 @@ appModule.controller('applicationLicenseUpdate', function ($scope, $http, $state
         $scope.gasShipperCustomers = $scope.licenseInformation.gasShipperCustomers;
         $scope.stakeholdersLocations = $scope.licenseInformation.stakeholdersLocations;
         $scope.takeOffPoints = $scope.licenseInformation.takeOffPoints;
+        $scope.processLicenseAttachment($scope.licenseInformation.licenseApplicationAttachments);
         $scope.waiting--;
 
         if ($scope.licenseInformation.effectiveDate) {
@@ -645,5 +638,129 @@ appModule.controller('applicationLicenseUpdate', function ($scope, $http, $state
     });
     $scope.getStates();
 
+
+    $scope.processLicenseAttachment = function (attachments) {
+        console.log(attachments);
+        attachments.forEach(function (item) {
+            if (item.fileName.includes(OPLFileName)) {
+                $scope.licenseApplicationUpload.OPLFileName = item.fileName;
+            }
+            else if (item.fileName.includes(DeclarationSignatureFileName)) {
+                $scope.licenseApplicationUpload.DeclarationSignatureFileName = item.fileName;
+            }
+            else if (item.fileName.includes(HoldRelatedLicenseFileName)) {
+                $scope.licenseApplicationUpload.HoldRelatedLicenseFileName = item.fileName;
+            }
+            else if (item.fileName.includes(HasRelatedLicenseFileName)) {
+                $scope.licenseApplicationUpload.HasRelatedLicenseFileName = item.fileName;
+            }
+            else if (item.fileName.includes(HasLicenseRevokedFileName)) {
+                $scope.licenseApplicationUpload.HasLicenseRevokedFileName = item.fileName;
+            }
+            else if (item.fileName.includes(HasLicenseRefusedFileName)) {
+                $scope.licenseApplicationUpload.HasLicenseRefusedFileName = item.fileName;
+            }
+
+        });
+    }
+
+    $scope.setFileRecord = function ($event, tag) {
+        var file = $event.target.files[0];
+        var filename = file.name;
+        var extension = extractExtensionFromFileName(filename);
+        var reader = new FileReader();
+
+        reader.readAsBinaryString(file);
+        reader.onload = (function () {
+            return function (e) {
+                var base64Str = window.btoa(e.target.result);
+                if (tag === "proposedDetail") {
+                    $scope.licenseApplicationUpload.ProposedArrangementAttachmentFileName = filename;
+                    $scope.licenseApplicationUpload.ProposedArrangementAttachmentFileExtension = extension;
+                    $scope.licenseApplicationUpload.ProposedArrangementAttachmentBase64 = base64Str;
+                }
+                else if (tag === "OPLLicense") {
+                    $scope.licenseApplicationUpload.OPLFileName = filename;
+                    $scope.licenseApplicationUpload.OPLFileExtension = extension;
+                    $scope.licenseApplicationUpload.OPLBase64 = base64Str;
+                }
+                else if (tag === "SafetyCase") {
+                    $scope.licenseApplicationUpload.SafetyCaseFileName = filename;
+                    $scope.licenseApplicationUpload.SafetyCaseFileExtension = extension;
+                    $scope.licenseApplicationUpload.SafetyCaseBase64 = base64Str;
+                }
+                else if (tag === "SCADA") {
+                    $scope.licenseApplicationUpload.SCADAFileName = filename;
+                    $scope.licenseApplicationUpload.SCADAFileExtension = extension;
+                    $scope.licenseApplicationUpload.SCADABase64 = base64Str;
+                }
+                else if (tag === "GTS") {
+                    $scope.licenseApplicationUpload.GTSFileName = filename;
+                    $scope.licenseApplicationUpload.GTSFileExtension = extension;
+                    $scope.licenseApplicationUpload.GTSBase64 = base64Str;
+                }
+                else if (tag === "technicalAttr") {
+                    $scope.licenseApplicationUpload.TechnicalAttributeFileName = filename;
+                    $scope.licenseApplicationUpload.TechnicalAttributeFileExtension = extension;
+                    $scope.licenseApplicationUpload.TechnicalAttributeBase64 = base64Str;
+                }
+                else if (tag === "auxSystems") {
+                    $scope.licenseApplicationUpload.AuxiliarySystemFileName = filename;
+                    $scope.licenseApplicationUpload.AuxiliarySystemFileExtension = extension;
+                    $scope.licenseApplicationUpload.AuxiliarySystemBase64 = base64Str;
+                }
+                else if (tag === "tariff") {
+                    $scope.licenseApplicationUpload.TariffAndPricingFileName = filename;
+                    $scope.licenseApplicationUpload.TariffAndPricingFileExtension = extension;
+                    $scope.licenseApplicationUpload.TariffAndPricingBase64 = base64Str;
+                }
+                else if (tag === "riskManagement") {
+                    $scope.licenseApplicationUpload.RiskManagmentFileName = filename;
+                    $scope.licenseApplicationUpload.RiskManagmentFileExtension = extension;
+                    $scope.licenseApplicationUpload.RiskManagmentBase64 = base64Str;
+                }
+                else if (tag === "MOU") {
+                    $scope.licenseApplicationUpload.CommunityMOUFileName = filename;
+                    $scope.licenseApplicationUpload.CommunityMOUFileExtension = extension;
+                    $scope.licenseApplicationUpload.CommunityMOUBase64 = base64Str;
+                }
+                else if (tag === "NetworkAgentOPL") {
+                    $scope.licenseApplicationUpload.NetworkAgentOPLFileName = filename;
+                    $scope.licenseApplicationUpload.NetworkAgentOPLFileExtension = extension;
+                    $scope.licenseApplicationUpload.NetworkAgentOPLBase64 = base64Str;
+                }
+                else if (tag === "GasShipperOPL") {
+                    $scope.licenseApplicationUpload.GasShipperOPLFileName = filename;
+                    $scope.licenseApplicationUpload.GasShipperOPLFileExtension = extension;
+                    $scope.licenseApplicationUpload.GasShipperOPLBase64 = base64Str;
+                }
+                else if (tag === "Signature") {
+                    $scope.licenseApplicationUpload.DeclarationSignatureFileName = filename;
+                    $scope.licenseApplicationUpload.DeclarationSignatureFileExtension = extension;
+                    $scope.licenseApplicationUpload.DeclarationSignatureBase64 = base64Str;
+                }
+                else if (tag === "holdRelatedLicense") {
+                    $scope.licenseApplicationUpload.HoldRelatedLicenseFileName = filename;
+                    $scope.licenseApplicationUpload.HoldRelatedLicenseFileExtension = extension;
+                    $scope.licenseApplicationUpload.HoldRelatedLicenseBase64 = base64Str;
+                }
+                else if ("hasRelatedLicense") {
+                    $scope.licenseApplicationUpload.HasRelatedLicenseFileName = filename;
+                    $scope.licenseApplicationUpload.HasRelatedLicenseFileExtension = extension;
+                    $scope.licenseApplicationUpload.HasRelatedLicenseBase64 = base64Str;
+                }
+                else if ("hasLicenseRevoked") {
+                    $scope.licenseApplicationUpload.HasLicenseRevokedFileName = filename;
+                    $scope.licenseApplicationUpload.HasLicenseRevokedFileExtension = extension;
+                    $scope.licenseApplicationUpload.HasLicenseRevokedLicenseBase64 = base64Str;
+                }
+                else if ("hasRefusedLicense") {
+                    $scope.licenseApplicationUpload.HasLicenseRefusedFileName = filename;
+                    $scope.licenseApplicationUpload.HasLicenseRefusedFileExtension = extension;
+                    $scope.licenseApplicationUpload.HasLicenseRefusedLicenseBase64 = base64Str;
+                }
+            };
+        })(file);
+    };
 
 });

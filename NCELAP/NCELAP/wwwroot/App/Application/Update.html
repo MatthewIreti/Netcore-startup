@@ -98,27 +98,29 @@
                                                                                     <div class="col col-lg-6 col-xl-6 col-12">
                                                                                         <div class="form-group">
                                                                                             <label>Response<span class="text-danger">*</span></label>
-                                                                                            <select name="holdRelatedLicense" class="form-control" ng-model="licenseInformation.holdRelatedLicense" ng-change="holdRelatedLicenseSelectionHandler()">
-                                                                                                <option value="">--Select Response--</option>
-                                                                                                <option value=true>Yes</option>
-                                                                                                <option value=false>No</option>
-                                                                                            </select>
+                                                                                            <select name="holdRelatedLicense" class="form-control" ng-model="licenseInformation.holdRelatedLicense" ng-options="x.Value as x.Name for x in yesNo"> </select>
+
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="col col-lg-6 col-xl-6 col-12">
                                                                                         <div class="form-group">
                                                                                             <label>Details of License(s)</label>
-                                                                                            <input ng-model="licenseInformation.relatedLicenseDetail" type="text" class="form-control" ng-disabled="licenseInformation.holdRelatedLicense === 'false' || licenseInformation.holdRelatedLicense === ''" />
+                                                                                            <input ng-model="licenseInformation.relatedLicenseDetail" type="text" class="form-control" ng-disabled="!licenseInformation.holdRelatedLicense" />
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="row">
                                                                                     <div class="col col-lg-6 col-xl-6 col-12">
-                                                                                        <div class="form-group">
+                                                                                        <div class="form-group" >
                                                                                             <label>Details of License(s) as attachment</label>
-                                                                                            <input type="file" class="form-control" ng-upload-change="setFileRecord" tag="holdRelatedLicense"
-                                                                                                   ng-disabled="licenseInformation.holdRelatedLicense === 'false' || licenseApplicationModel.HoldRelatedLicense === ''" />
+                                                                                            <input ng-if="!licenseApplicationUpload.HoldRelatedLicenseFileName" type="file" class="form-control" ng-upload-change="setFileRecord" tag="holdRelatedLicense"
+                                                                                                   ng-disabled="!licenseInformation.holdRelatedLicense" />
                                                                                             <div class="text-danger text-sm" id="holdRelatedLicenseWarningIndicator"></div>
+                                                                                            <p ng-if="licenseApplicationUpload.HoldRelatedLicenseFileName">
+                                                                                                <i class="fa fa-file-pdf-o text-danger font-medium-2"></i>
+                                                                                                <span class="text-primary font-medium-1" ng-bind="licenseApplicationUpload.HoldRelatedLicenseFileName"></span>
+                                                                                                <button ng-click="licenseApplicationUpload.HoldRelatedLicenseFileName =''" type="button" class="btn btn-flat btn-sm btn-warning">Change</button>
+                                                                                            </p>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -137,17 +139,13 @@
                                                                                     <div class="col col-lg-5 col-xl-5 col-12">
                                                                                         <div class="form-group">
                                                                                             <label>Response<span class="text-danger">*</span></label>
-                                                                                            <select name="hasRelatedLicense" class="form-control" ng-model="licenseInformation.hasRelatedLicense" ng-change="hasRelatedLicenseSelectionHandler()">
-                                                                                                <option value="">--Select Response--</option>
-                                                                                                <option value=true>Yes</option>
-                                                                                                <option value=false>No</option>
-                                                                                            </select>
+                                                                                            <select name="hasRelatedLicense" class="form-control" ng-model="licenseInformation.hasRelatedLicense" ng-options="x.Value as x.Name for x in yesNo"> </select>
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="col col-lg-7 col-xl-7 col-12">
                                                                                         <div class="form-group">
                                                                                             <label>Type of license(s) applied for or intended to be applied for</label>
-                                                                                            <input type="text" class="form-control" ng-model="licenseInformation.relatedLicenseType" ng-disabled="licenseInformation.hasRelatedLicense === 'false' || licenseInformation.hasRelatedLicense === ''" />
+                                                                                            <input type="text" class="form-control" ng-model="licenseInformation.relatedLicenseType" ng-disabled="!licenseInformation.hasRelatedLicense" />
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -155,8 +153,12 @@
                                                                                     <div class="col col-lg-6 col-xl-6 col-12">
                                                                                         <div class="form-group">
                                                                                             <label>Type of license(s) applied for or intended to be applied for as attachment</label>
-                                                                                            <input type="file" class="form-control" tag="hasRelatedLicense" ng-upload-change="setFileRecord" ng-disabled="licenseInformation.hasRelatedLicense === 'false' || licenseInformation.hasRelatedLicense === ''" />
-                                                                                            <div class="text-danger text-sm" id="hasRelatedLicenseWarningIndicator"></div>
+                                                                                            <input ng-if="!licenseApplicationUpload.HasRelatedLicenseFileName" type="file" class="form-control" tag="hasRelatedLicense" ng-upload-change="setFileRecord" ng-disabled="!licenseInformation.hasRelatedLicense" />
+                                                                                            <p ng-if="licenseApplicationUpload.HasRelatedLicenseFileName">
+                                                                                                <i class="fa fa-file-pdf-o text-danger font-medium-2"></i>
+                                                                                                <span class="text-primary font-medium-1" ng-bind="licenseApplicationUpload.HasRelatedLicenseFileName"></span>
+                                                                                                <button ng-click="licenseApplicationUpload.HasRelatedLicenseFileName =''" type="button" class="btn btn-flat btn-sm btn-warning">Change</button>
+                                                                                            </p>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -175,18 +177,14 @@
                                                                                     <div class="col col-lg-6 col-xl-6 col-12">
                                                                                         <div class="form-group">
                                                                                             <label>Response<span class="text-danger">*</span></label>
-                                                                                            <select name="hasLicensedRevoked" class="form-control" ng-model="licenseInformation.hasLicenseRevoked" ng-change="hasLicenseRevokedHandler()">
-                                                                                                <option value="">--Select Response--</option>
-                                                                                                <option value=true>Yes</option>
-                                                                                                <option value=false>No</option>
-                                                                                            </select>
+                                                                                            <select name="hasLicensedRevoked" class="form-control" ng-model="licenseInformation.hasLicenseRevoked" ng-options="x.Value as x.Name for x in yesNo"> </select>
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="col col-lg-6 col-xl-6 col-12">
                                                                                         <div class="form-group">
                                                                                             <label>Type of License revoked</label>
                                                                                             <input type="text" class="form-control" ng-model="licenseInformation.revokedLicenseType"
-                                                                                                   ng-disabled="licenseInformation.hasLicenseRevoked === 'false' || licenseInformation.hasLicenseRevoked === ''" />
+                                                                                                   ng-disabled="!licenseInformation.hasLicenseRevoked" />
                                                                                         </div>
                                                                                     </div>
 
@@ -195,8 +193,12 @@
                                                                                     <div class="col col-lg-6 col-xl-6 col-12">
                                                                                         <div class="form-group">
                                                                                             <label>Type of License revoked as attachment</label>
-                                                                                            <input type="file" class="form-control" tag="hasLicenseRevoked" ng-upload-change="setFileRecord" accept=".pdf" ng-disabled="licenseInformation.hasLicenseRevoked === 'false' || licenseInformation.hasLicenseRevoked === ''" />
-                                                                                            <div class="text-danger text-sm" id="hasLicenseRevokedWarningIndicator"></div>
+                                                                                            <input ng-if="!licenseApplicationUpload.HasLicenseRevokedFileName" type="file" class="form-control" tag="hasLicenseRevoked" ng-upload-change="setFileRecord" accept=".pdf" ng-disabled="!licenseInformation.hasLicenseRevoked" />
+                                                                                            <p ng-if="licenseApplicationUpload.HasLicenseRevokedFileName">
+                                                                                                <i class="fa fa-file-pdf-o text-danger font-medium-2"></i>
+                                                                                                <span class="text-primary font-medium-1" ng-bind="licenseApplicationUpload.HasLicenseRevokedFileName"></span>
+                                                                                                <button ng-click="licenseApplicationUpload.HasLicenseRevokedFileName =''" type="button" class="btn btn-flat btn-sm btn-warning">Change</button>
+                                                                                            </p>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -215,17 +217,13 @@
                                                                                     <div class="col col-lg-6 col-xl-6 col-12">
                                                                                         <div class="form-group">
                                                                                             <label>Response<span class="text-danger">*</span></label>
-                                                                                            <select name="hasGasApplicationRefused" class="form-control" ng-model="licenseInformation.hasGasApplicationRefused" ng-change="hasLicenseRefusedHandler()">
-                                                                                                <option value="">--Select Response--</option>
-                                                                                                <option value=true>Yes</option>
-                                                                                                <option value=false>No</option>
-                                                                                            </select>
+                                                                                            <select name="hasGasApplicationRefused" class="form-control" ng-model="licenseInformation.hasGasApplicationRefused" ng-options="x.Value as x.Name for x in yesNo"> </select>
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="col col-lg-6 col-xl-6 col-12">
                                                                                         <div class="form-group">
                                                                                             <label>Type of License(s) application(s) refused</label>
-                                                                                            <input name="refusedApplcationType" type="text" class="form-control" ng-model="licenseInformation.refusedLicenseType" ng-disabled="licenseInformation.hasGasApplicationRefused === 'false' || licenseInformation.hasGasApplicationRefused === ''" />
+                                                                                            <input name="refusedApplcationType" type="text" class="form-control" ng-model="licenseInformation.refusedLicenseType" ng-disabled="!licenseInformation.hasGasApplicationRefused" />
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -234,8 +232,12 @@
                                                                                     <div class="col col-lg-6 col-xl-6 col-12">
                                                                                         <div class="form-group">
                                                                                             <label>Type of License(s) application(s) refused as attachment</label>
-                                                                                            <input type="file" class="form-control" tag="hasRefusedLicense" ng-upload-change="setFileRecord" ng-disabled="licenseInformation.hasGasApplicationRefused === 'false' || licenseInformation.hasGasApplicationRefused === ''" />
-                                                                                            <div class="text-danger text-sm" id="hasLicenseRefusedWarningIndicator"></div>
+                                                                                            <input ng-if="!licenseApplicationUpload.HasLicenseRefusedFileName" type="file" class="form-control" tag="hasRefusedLicense" ng-upload-change="setFileRecord" ng-disabled="!licenseInformation.hasGasApplicationRefused" />
+                                                                                            <p ng-if="licenseApplicationUpload.HasLicenseRefusedFileName">
+                                                                                                <i class="fa fa-file-pdf-o text-danger font-medium-2"></i>
+                                                                                                <span class="text-primary font-medium-1" ng-bind="licenseApplicationUpload.HasLicenseRefusedFileName"></span>
+                                                                                                <button ng-click="licenseApplicationUpload.HasLicenseRefusedFileName =''" type="button" class="btn btn-flat btn-sm btn-warning">Change</button>
+                                                                                            </p>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -255,7 +257,7 @@
                                 <article class="step-wizard-content m-0">
 
                                     <!-- Network Agent License -->
-                                    <div ng-show="licenseInformation.custLicenseType === 'Network Agent'">
+                                    <div ng-show="licenseInformation.custLicenseType === 'NetworkAgent'">
                                         <div class="row">
                                             <div class="col col-lg-6 col-sm-12 col-12">
                                                 <div class="form-group">
@@ -327,18 +329,27 @@
                                             </div>
                                             <div class="col-lg-4 col-xl-4 col-12">
                                                 <div class="form-group">
-                                                    <label>Copy of applicable Operation License or Permit<span class="text-danger">*</span></label>
-                                                    <input class="form-control required" type="file"
-                                                           data-msg="OPL License is required" name="OPlLIcenseUpload"
-                                                           ng-upload-change="setFileRecord" tag="NetworkAgentOPL">
-                                                    <div class="text-danger text-sm"></div>
+                                                    <label class="font-md-2">Copy of applicable Operation License or Permit<span class="text-danger">*</span></label>
+                                                    <span ng-if="!licenseApplicationUpload.OPLFileName">
+                                                        <input class="form-control required" type="file"
+                                                               data-msg="OPL License is required" name="OPlLIcenseUpload"
+                                                               ng-upload-change="setFileRecord" tag="NetworkAgentOPL">
+                                                        <!--<button ng-click="processLicenseAttachment(licenseInformation.licenseApplicationAttachments)" type="button" class="btn btn-flat btn-sm btn-info">Revert</button>-->
+                                                    </span>
+
+                                                    <p ng-if="licenseApplicationUpload.OPLFileName">
+                                                        <i class="fa fa-file-pdf-o text-danger font-medium-2"></i>
+                                                        <span class="text-primary font-medium-1" ng-bind="licenseApplicationUpload.OPLFileName"></span>
+                                                        <button ng-click="licenseApplicationUpload.OPLFileName =''" type="button" class="btn btn-flat btn-sm btn-warning">Change</button>
+                                                    </p>
                                                 </div>
+
                                             </div>
                                         </div>
                                     </div>
 
                                     <!-- Gas Shipper License -->
-                                    <div ng-show="licenseInformation.custLicenseType === 'Gas Shipper License'">
+                                    <div ng-show="licenseInformation.custLicenseType === 'GasShipperLicense'">
                                         <div class="row">
                                             <div class="col col-12 col-lg-6 col-xl-6">
                                                 <div class="form-group">
@@ -361,7 +372,7 @@
                                                     <label><strong>Present Entry point</strong><span class="text-danger">*</span></label>
                                                     <input name="EntryPoint" type="text" class="form-control required"
                                                            data-msg="Please provide the present entry point"
-                                                           ng-model="licenseApplicationModel.entryPoint" />
+                                                           ng-model="licenseInformation.entryPoint" />
                                                 </div>
 
                                             </div>
@@ -413,10 +424,15 @@
                                             <div class="col-lg-7 col-xl-7 col-12">
                                                 <div class="form-group">
                                                     <label>Copy of applicable Operation License or Permit (Issued by Approved Government entity e.g DPR)<span class="text-danger">*</span></label>
-                                                    <input class="form-control required" type="file"
+                                                    <input ng-if="!licenseApplicationUpload.OPLFileName" class="form-control required" type="file"
                                                            data-msg="OPL License is required" name="GasShipperOPL"
                                                            ng-upload-change="setFileRecord" tag="GasShipperOPL">
-                                                    <div class="text-danger text-sm"></div>
+
+                                                    <p ng-if="licenseApplicationUpload.OPLFileName">
+                                                        <i class="fa fa-file-pdf-o text-danger font-medium-2"></i>
+                                                        <span class="text-primary font-medium-1" ng-bind="licenseApplicationUpload.OPLFileName"></span>
+                                                        <button ng-click="licenseApplicationUpload.OPLFileName =''" type="button" class="btn btn-flat btn-sm btn-warning">Change</button>
+                                                    </p>
                                                 </div>
                                             </div>
                                         </div>
@@ -426,7 +442,9 @@
                                                 <div class="form-group">
                                                     <label><strong>Fees</strong></label>
                                                     <div>
-                                                        Statutory Fees: <span class="text-success"><b> {{ statutoryFee | currency : "₦"}},</b></span> Processing Fee: <span class="text-success"><b> {{ processingFee | currency : "₦" }},</b></span> Total: <span class="text-success"><b> {{ totalFee | currency : "₦" }}</b></span>
+                                                        Statutory Fees: <span class="text-success"><b> {{ statutoryFee | currency : "₦"}},</b></span> 
+                                                        Processing Fee: <span class="text-success"><b> {{ processingFee | currency : "₦" }},</b></span> 
+                                                        Total: <span class="text-success"><b> {{ totalFee | currency : "₦" }}</b></span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -447,21 +465,21 @@
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                <tr ng-repeat="takeOffPoint in takeOffPoints">
+                                                                <tr ng-repeat="takeOffPoint in licenseInformation.gasShipperTakeOffPoints">
                                                                     <td>
                                                                         <input name="takeOffName{{$index+1}}" type="text" class="form-control required"
                                                                                data-msg="Take off point name {{$index+1}} is required"
-                                                                               ng-model="takeOffPoint.Name" />
+                                                                               ng-model="takeOffPoint.name" />
                                                                     </td>
                                                                     <td>
                                                                         <input name="takeOffLocation{{$index+1}}" type="text" class="form-control required"
                                                                                data-msg="Take off location {{$index+1}} is required"
-                                                                               ng-model="takeOffPoint.Location" />
+                                                                               ng-model="takeOffPoint.location" />
                                                                     </td>
                                                                     <td>
                                                                         <select name="takeOffType" class="form-control required"
                                                                                 data-msg="Take off point type {{$index+1}} is required"
-                                                                                ng-model="takeOffPoint.GasShipperPointType">
+                                                                                ng-model="takeOffPoint.gasShipperPointType">
                                                                             <option value="">--Select--</option>
                                                                             <option value="{{pointType.Value}}" ng-repeat="pointType in GasShipperPointType">{{ pointType.Name }}</option>
                                                                         </select>
@@ -507,28 +525,28 @@
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                <tr ng-repeat="gasShipperCustomer in gasShipperCustomers">
+                                                                <tr ng-repeat="gasShipperCustomer in licenseInformation.gasShipperCustomers">
                                                                     <td>
                                                                         <input type="text" maxlength="50" class="form-control required" name="{{$index+1}}BusinessName"
                                                                                data-msg="Business name {{$index+1}} is required"
-                                                                               ng-model="gasShipperCustomer.BusinessName" />
+                                                                               ng-model="gasShipperCustomer.businessName" />
                                                                     </td>
                                                                     <td>
                                                                         <input type="text" maxlength="50" class="form-control required" name="{{$index+1}}CustomerLocation"
                                                                                data-msg="Customer location {{$index+1}} is required"
-                                                                               ng-model="gasShipperCustomer.Location" />
+                                                                               ng-model="gasShipperCustomer.location" />
                                                                     </td>
                                                                     <td>
                                                                         <input type="text" maxlength="50" class="form-control required" name="{{$index+1}}PhoneNo"
                                                                                data-msg="Customer PhoneNumber {{$index+1}} is required"
-                                                                               ng-model="gasShipperCustomer.PhoneNumber" />
+                                                                               ng-model="gasShipperCustomer.phoneNumber" />
                                                                     </td>
 
                                                                     <td>
                                                                         <select class="form-control required"
                                                                                 name="CustomerCategory{{$index+1}}"
                                                                                 data-msg="Customer category {{$index+1}} is required"
-                                                                                ng-model="gasShipperCustomer.GasShipperCustCategory">
+                                                                                ng-model="gasShipperCustomer.gasShipperCustCategory">
                                                                             <option value="">--Select--</option>
                                                                             <option value="{{category.Value}}" ng-repeat="category in GasShipperCustCategory">{{ category.Name }}</option>
                                                                         </select>
@@ -536,7 +554,7 @@
                                                                     <td>
                                                                         <input type="email" class="form-control required email" name="CustomerEmail{{$index+1}}"
                                                                                data-msg="Customer email {{$index+1}} is required"
-                                                                               ng-model="gasShipperCustomer.Email" />
+                                                                               ng-model="gasShipperCustomer.email" />
                                                                     </td>
                                                                     <td>
                                                                         <a ng-show="$index>0" class="btn btn-icon btn-danger text-white"
@@ -793,17 +811,13 @@
                                         <div class="col col-lg-7 col-xl-7 col-12">
                                             <div class="form-group">
                                                 <label>Do you wish to request any modification to any standard conditions for type of license applied for:<span class="text-danger">*</span></label>
-                                                <select class="form-control" ng-model="licenseInformation.hasStandardModificationRequest">
-                                                    <option value="">---Select response type---</option>
-                                                    <option value=true>Yes</option>
-                                                    <option value=false>No</option>
-                                                </select>
+                                                <select class="form-control" ng-model="licenseInformation.hasStandardModificationRequest" ng-options=" x.Value as x.Name for x in yesNo"> </select>
                                             </div>
                                         </div>
                                         <div class="col col-lg-5 col-xl-5 col-12">
                                             <div class="form-group">
                                                 <label>Provide full details of the modification requested</label>
-                                                <input type="text" class="form-control" ng-model="licenseInformation.modificationRequestDetails" ng-disabled="licenseInformation.hasStandardModificationRequest !== 'true'" />
+                                                <input type="text" class="form-control" ng-model="licenseInformation.modificationRequestDetails" ng-disabled="!licenseInformation.hasStandardModificationRequest" />
                                             </div>
                                         </div>
                                     </div>
@@ -812,7 +826,7 @@
                                         <div class="col col-12">
                                             <div class="form-group">
                                                 <label>State the grounds on which the applicants believe that any such modification is requisite to meet the circumstance of the particular case</label>
-                                                <input type="text" class="form-control" ng-model="licenseInformation.modificationRequestReason" />
+                                                <input type="text" class="form-control" ng-model="licenseInformation.modificationRequestReason" ng-disabled="!licenseInformation.hasStandardModificationRequest" />
                                             </div>
                                         </div>
                                     </div>
@@ -822,11 +836,19 @@
                                     <div class="row">
                                         <div class="col col-lg-4 col-xl-4 col-12">
                                             <div class="form-group">
-                                                <label>Signature<span class="text-danger">*</span></label>
-                                                <input type="file" class="form-control required"
-                                                       data-msg="You must upload your signature"
-                                                       ng-upload-change="setFileRecord" tag="Signature" />
-                                                <div class="text-danger text-sm" id="declarationSignatureWarningIndicator"></div>
+                                                <label class="font-md-2">Signature<span class="text-danger">*</span></label>
+                                                <span ng-if="!licenseApplicationUpload.DeclarationSignatureFileName">
+                                                    <input class="form-control required" type="file"
+                                                           data-msg="You must upload your signature" name="OPlLIcenseUpload"
+                                                           ng-upload-change="setFileRecord" tag="Signature">
+                                                    <!--<button ng-click="processLicenseAttachment(licenseInformation.licenseApplicationAttachments)" type="button" class="btn btn-flat btn-sm btn-info">Revert</button>-->
+                                                </span>
+
+                                                <p ng-if="licenseApplicationUpload.DeclarationSignatureFileName">
+                                                    <i class="fa fa-file-pdf-o text-danger font-medium-2"></i>
+                                                    <span class="text-primary font-medium-1" ng-bind="licenseApplicationUpload.DeclarationSignatureFileName"></span>
+                                                    <button ng-click="licenseApplicationUpload.DeclarationSignatureFileName =''" type="button" class="btn btn-flat btn-sm btn-warning">Change</button>
+                                                </p>
                                             </div>
                                         </div>
                                         <div class="col col-lg-4 col-xl-4 col-12">
@@ -863,7 +885,7 @@
                                     <div class="row">
                                         <div class="col col-xs-12 col-lg-11 col-xl-11 col-10">
                                             <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" checked class="custom-control-input required"
+                                                <input type="checkbox" class="custom-control-input required"
                                                        data-msg="You must accept the conditions stated below to continue."
                                                        name="customCheck" ng-model="agreementCheck" id="customCheck1">
                                                 <label class="custom-control-label" for="customCheck1">By checking this box, i declare that</label>
