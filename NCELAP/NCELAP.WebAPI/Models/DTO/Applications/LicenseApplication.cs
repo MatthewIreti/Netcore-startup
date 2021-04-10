@@ -86,8 +86,12 @@ namespace NCELAP.WebAPI.Models.DTO.Applications
         public long CustApplication { get; set; }
         public string Customer { get; set; }
         public string Location { get; set; }
+    }
+    public class StakeholderLocationDetails : StakeholderLocation
+    {
         public string UniqueId { get; set; }
     }
+
     public class GasShipperTakeOffPoint
     {
         public long CustApplication { get; set; }
@@ -111,8 +115,13 @@ namespace NCELAP.WebAPI.Models.DTO.Applications
         public string GasShipperCustCategory { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
-       
     }
+    public class GasShipperCustomerDetails :GasShipperCustomer
+    {
+        public string UniqueId { get; set; }
+    }
+
+
 
     public class ApplicationInfoForSave
     {

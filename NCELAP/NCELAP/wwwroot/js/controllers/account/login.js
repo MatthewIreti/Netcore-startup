@@ -44,7 +44,6 @@
             }
         }, function (error) {
             $scope.loggingIn = false;
-            console.log(error);
         });
     };
 });

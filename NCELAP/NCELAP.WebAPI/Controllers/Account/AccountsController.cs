@@ -42,6 +42,7 @@ namespace NCELAP.WebAPI.Controllers.Account
         public async Task<IActionResult> SaveRegisteredBusinessInformation(NcelasUserLogin ncelasUserLogin)
         {
             var response = await _userAccountService.GetNcelasUserAsync(ncelasUserLogin);
+            response.Password = "xxxxxxxxxxxxxxxxxx";
             return Ok(response);
         }
 

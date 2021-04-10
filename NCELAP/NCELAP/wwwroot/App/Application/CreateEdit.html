@@ -552,7 +552,7 @@
                                         <div class="row">
                                             <div class="col col-12">
                                                 <div class="form-group">
-                                                    <label><strong>Installed capacity of the gas pipeline</strong><span class="text-danger">*</span></label>
+                                                    <label><strong>Installed capacity of the gas pipeline (MMscf/d)</strong><span class="text-danger">*</span></label>
                                                     <input type="text" class="form-control"
                                                            data-msg="Installed capacity is required"
                                                            ng-model="licenseApplicationModel.InstalledCapacity" />
@@ -574,14 +574,18 @@
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                <tr ng-repeat="stakeholdersLocation in stakeholdersLocations">
+                                                                <tr ng-repeat="stakeholdersLocation in stakeholdersLocations track by $index">
                                                                     <td>
-                                                                        <input type="text" name="customer{{$index+1}}" class="form-control"
-                                                                               ng-model="stakeholdersLocations.Customer" />
+                                                                        <input type="text" class="form-control required" name="{{$index+1}}Customer"
+                                                                               data-msg="Customer name {{$index+1}} is required"
+                                                                               ng-model="stakeholdersLocation.Customer" />
+                                                                       
                                                                     </td>
                                                                     <td>
-                                                                        <input type="text" class="form-control"
-                                                                               ng-model="stakeholdersLocations.Location" />
+                                                                        <input type="text" class="form-control required"
+                                                                               name="{{$index+1}}Location"
+                                                                               data-msg="Location {{$index+1}} is required"
+                                                                               ng-model="stakeholdersLocation.Location" />
                                                                     </td>
                                                                     <td>
                                                                         <a ng-show="$index>0" class="btn btn-icon btn-danger text-white"
@@ -728,15 +732,17 @@
                                                     <input class="form-control" type="file" ng-upload-change="setFileRecord" tag="auxSystems">
                                                     <div class="text-danger text-sm"></div>
                                                 </div>
-                                                <div class="form-group col-md-4">
-                                                    <label>Tariff/Pricing Methodology (including basis &Aacute; Source of Input Parameter) <span class="text-danger">*</span></label>
-                                                    <input class="form-control" type="file" ng-upload-change="setFileRecord" tag="tariff">
-                                                    <div class="text-danger text-sm"></div>
-                                                </div>
-                                                <div class="form-group col-md-4">
-                                                    <label>Risk management strategy in terms of market volatility and system availability<span class="text-danger">*</span></label>
-                                                    <input class="form-control" type="file" ng-upload-change="setFileRecord" tag="riskManagement">
-                                                    <div class="text-danger text-sm"></div>
+                                                <div class="col col-12">
+                                                    <div class="form-group">
+                                                        <label>Tariff/Pricing Methodology (including basis and Source of Input Parameter) <span class="text-danger">*</span></label>
+                                                        <input class="form-control" type="file" ng-upload-change="setFileRecord" tag="tariff">
+                                                        <div class="text-danger text-sm"></div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Risk management strategy in terms of market volatility and system availability<span class="text-danger">*</span></label>
+                                                        <input class="form-control" type="file" ng-upload-change="setFileRecord" tag="riskManagement">
+                                                        <div class="text-danger text-sm"></div>
+                                                    </div>
                                                 </div>
                                                 <div class="form-group col-md-4">
                                                     <label>Community Signed MOU for Gas Transmission System<span class="text-danger">*</span></label>

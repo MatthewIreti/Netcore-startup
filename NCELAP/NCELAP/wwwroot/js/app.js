@@ -38,6 +38,10 @@ appModule.run(['$rootScope', '$state', '$stateParams', function ($rootScope, $st
         { "Name": "No", "Value": false },
         { "Name": "Yes", "Value": true }
     ];
+    $rootScope.currentUser = function () {
+        var loggedInUser = localStorage.getItem('loggedInUser');
+        return JSON.parse(loggedInUser);
+    };
     $rootScope.breadcrumb = [{ title: 'Home' }];
     $rootScope.loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
     $rootScope.goToState = function (index) {

@@ -28,9 +28,9 @@ else if (body.attr("data-preloader") === "4") {
 /*===============================================
   2. Scroll Animations
 ===============================================*/
-sal({
-  duration: 500
-});
+//sal({
+//  duration: 500
+//});
 
 
 /*===============================================
@@ -195,7 +195,6 @@ $(".m-link").each(function() {
   }
 });
 
-//
 // Sub Dropdown Menu //
 //
 $(".m-dropdown-link").each(function() {
@@ -632,13 +631,13 @@ if (justifiedGallery.length) {
 /*===============================================
   16. Masonry
 ===============================================*/
-var $masonryGrid = $(".masonry").imagesLoaded( function() {
-  $masonryGrid.masonry({
-    itemSelector: '.masonry-item', 
-    columnWidth: '.masonry-item', 
-    gutter: 0
-  });
-});
+//var $masonryGrid = $(".masonry").imagesLoaded( function() {
+//  $masonryGrid.masonry({
+//    itemSelector: '.masonry-item', 
+//    columnWidth: '.masonry-item', 
+//    gutter: 0
+//  });
+//});
 
 
 /*===============================================

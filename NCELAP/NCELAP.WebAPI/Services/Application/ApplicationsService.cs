@@ -63,27 +63,79 @@ namespace NCELAP.WebAPI.Services.Application
                     {
                         if (model.GasShipperCustomers != null && model.GasShipperCustomers.Count > 0)
                         {
-                            foreach (var shipperCustomer in model.GasShipperCustomers)
+                            var gasShipperCustomerForSave = model.GasShipperCustomers.Where(x => string.IsNullOrEmpty(x.UniqueId)).ToArray();
+                            var gasShipperCustomerForUpdate = model.GasShipperCustomers.Where(x => !string.IsNullOrEmpty(x.UniqueId)).ToArray();
+
+
+                            var gasShipperCustomers = await _helper.GetEnvironmentUrl().AppendPathSegment($"GasShipperCustomer")
+                               .SetQueryParam("$filter", $"CustApplication eq {model.RecordId}")
+                              .WithOAuthBearerToken(_authService.GetAuthToken())
+                              .GetJsonAsync<BaseApplicationResponse<GasShipperCustomerDetails>>();
+
+                            var gasShipperFordelete = gasShipperCustomers.value.Where(x => !model.GasShipperCustomers.Any(j=> j.UniqueId.Equals(x.UniqueId)));
+
+                            foreach (var deleteRecord in gasShipperFordelete)
                             {
+
+                                var customerUpdate = await _helper.GetEnvironmentUrl()
+                                          .AppendPathSegment($"GasShipperCustomer(UniqueId='{deleteRecord.UniqueId}',dataAreaId='dpr')")
+                                          .WithOAuthBearerToken(_authService.GetAuthToken())
+                                          .DeleteAsync();
+                            }
+
+                            foreach (var shipperCustomer in gasShipperCustomerForUpdate)
+                            {
+                                var customerUpdate = await _helper.GetEnvironmentUrl()
+                                          .AppendPathSegment($"GasShipperCustomer(UniqueId='{shipperCustomer.UniqueId}',dataAreaId='dpr')")
+                                          .WithOAuthBearerToken(_authService.GetAuthToken())
+                                          .PatchJsonAsync(new GasShipperCustomer
+                                          {
+                                              CustApplication = shipperCustomer.CustApplication,
+                                              BusinessName = shipperCustomer.BusinessName,
+                                              Email = shipperCustomer.Email,
+                                              GasShipperCustCategory = shipperCustomer.GasShipperCustCategory,
+                                              Location = shipperCustomer.Location,
+                                              PhoneNumber = shipperCustomer.PhoneNumber
+                                          });
+                            }
+                            if (gasShipperCustomerForSave.Length>0)
+                            {
+                                await SaveGasShipperCustomers(gasShipperCustomerForSave, model.RecordId);
                             }
                         }
                         if (model.GasShipperTakeOffPoints != null && model.GasShipperTakeOffPoints.Count > 0)
                         {
-
                             var gasShipperForSave = model.GasShipperTakeOffPoints.Where(x => string.IsNullOrEmpty(x.UniqueId)).ToArray();
                             var gasShipperForUpdate = model.GasShipperTakeOffPoints.Where(x => !string.IsNullOrEmpty(x.UniqueId));
 
-                            foreach (var takeOffPoint in gasShipperForUpdate)
+                            var gasShipperTakeOffPoints = await _helper.GetEnvironmentUrl().AppendPathSegment($"GasShipperDeliveryTakeOffPoint")
+                                .SetQueryParam("$filter", $"CustApplication eq {model.RecordId}")
+                               .WithOAuthBearerToken(_authService.GetAuthToken())
+                               .GetJsonAsync<BaseApplicationResponse<GasShipperTakeOffPointDetails>>();
+
+                            var takeOffPointsForDelete = gasShipperTakeOffPoints.value.Where(x => !model.GasShipperTakeOffPoints.Any(j => j.UniqueId.Equals(x.UniqueId)));
+
+                            foreach (var deleteRecord in takeOffPointsForDelete)
+                            {
+
+                                var pointsDeleteResponse = await _helper.GetEnvironmentUrl()
+                                          .AppendPathSegment($"GasShipperDeliveryTakeOffPoint(UniqueId='{deleteRecord.UniqueId}',dataAreaId='dpr')")
+                                          .WithOAuthBearerToken(_authService.GetAuthToken())
+                                          .DeleteAsync();
+                            }
+
+
+                            foreach (var m in gasShipperForUpdate)
                             {
                                 var pointUpdate = await _helper.GetEnvironmentUrl()
-                                         .AppendPathSegment($"GasShipperDeliveryTakeOffPoint(UniqueId='{takeOffPoint.UniqueId}',dataAreaId='dpr')")
+                                         .AppendPathSegment($"GasShipperDeliveryTakeOffPoint(UniqueId='{m.UniqueId}',dataAreaId='dpr')")
                                          .WithOAuthBearerToken(_authService.GetAuthToken())
                                          .PatchJsonAsync(new GasShipperTakeOffPoint
                                          {
-                                             CustApplication = takeOffPoint.CustApplication,
-                                             GasShipperPointType = takeOffPoint.GasShipperPointType,
-                                             Location = takeOffPoint.Location,
-                                             Name = takeOffPoint.Name
+                                             CustApplication = m.CustApplication,
+                                             GasShipperPointType = m.GasShipperPointType,
+                                             Location = m.Location,
+                                             Name = m.Name
                                          });
                             }
                             if (gasShipperForSave.Length > 0)
@@ -96,11 +148,52 @@ namespace NCELAP.WebAPI.Services.Application
                     {
                         if (model.StakeholderLocations != null && model.StakeholderLocations.Count > 0)
                         {
+                            var stakeHolderForSave = model.StakeholderLocations.Where(x => string.IsNullOrEmpty(x.UniqueId)).ToArray();
+                            var stakeHolderForUpdate = model.StakeholderLocations.Where(x => !string.IsNullOrEmpty(x.UniqueId)).ToArray();
+                            var proposedShareholders = await _helper.GetEnvironmentUrl().AppendPathSegment("AppCustShareholders")
+                                .SetQueryParam("$filter", $"CustApplication eq {model.RecordId}")
+                                .WithOAuthBearerToken(_authService.GetAuthToken())
+                                .GetJsonAsync<BaseApplicationResponse<StakeholderLocationDetails>>();
 
+                            var shareHoldersForDelete = proposedShareholders.value.Where(x => !model.StakeholderLocations.Any(j => j.UniqueId.Equals(x.UniqueId)));
+
+                            foreach (var deleteRecord in shareHoldersForDelete)
+                            {
+
+                                var shareHolderUpdate = await _helper.GetEnvironmentUrl()
+                                          .AppendPathSegment($"AppCustShareholders(UniqueId='{deleteRecord.UniqueId}',dataAreaId='dpr')")
+                                          .WithOAuthBearerToken(_authService.GetAuthToken())
+                                          .DeleteAsync();
+                            }
+
+                            foreach (var r in stakeHolderForUpdate)
+                            {
+                                var pointUpdate = await _helper.GetEnvironmentUrl()
+                                         .AppendPathSegment($"AppCustShareholders(UniqueId='{r.UniqueId}',dataAreaId='dpr')")
+                                         .WithOAuthBearerToken(_authService.GetAuthToken())
+                                         .PatchJsonAsync(new StakeholderLocation
+                                         {
+                                             CustApplication = r.CustApplication,
+                                             Customer = r.Customer,
+                                             Location = r.Location
+                                         });
+                            }
+                            if (stakeHolderForSave.Length > 0)
+                            {
+                                await SaveLicenseApplicationShareholders(stakeHolderForSave, model.RecordId);
+                            }
                         }
 
                     }
-
+                    if (model.FileUploads != null)
+                    {
+                        var uploadResponse = await UploadLicenseApplicationDocuments(model.FileUploads, model.RecordId, model.CompanyName);
+                        if (!uploadResponse)
+                        {
+                            throw new Exception("An error occurred during file upload");
+                        }
+                    }
+                    
                 }
                 response = new InfoReponse<BaseApplicationResponse<ApplicationInfo>>
                 {
@@ -233,7 +326,6 @@ namespace NCELAP.WebAPI.Services.Application
                     foreach (var stakeholderLocation in stakeholderLocations)
                     {
                         stakeholderLocation.CustApplication = applicationRecId;
-                        stakeholderLocation.UniqueId = Helper.RandomAlhpaNumeric(10);
 
                         var responseMessage = await client.PostAsJsonAsync(custapplicationshareholder, stakeholderLocation);
                         var errorMessage = responseMessage.Content.ReadAsStringAsync().GetAwaiter().GetResult();
@@ -706,7 +798,7 @@ namespace NCELAP.WebAPI.Services.Application
                     var proposedShareholders = await currentEnvironment.AppendPathSegment("AppCustShareholders")
                         .SetQueryParam("$filter", $"CustApplication eq {licenseApplicationRecId}")
                         .WithOAuthBearerToken(token)
-                        .GetJsonAsync<BaseApplicationResponse<StakeholderLocation>>();
+                        .GetJsonAsync<BaseApplicationResponse<StakeholderLocationDetails>>();
 
                     applicationInfo.StakeholderLocations = proposedShareholders.value;
 
@@ -735,7 +827,7 @@ namespace NCELAP.WebAPI.Services.Application
                         var gasShipperCustomers = await currentEnvironment.AppendPathSegment($"GasShipperCustomer")
                              .SetQueryParam("$filter", $"CustApplication eq {licenseApplicationRecId}")
                             .WithOAuthBearerToken(token)
-                            .GetJsonAsync<BaseApplicationResponse<GasShipperCustomer>>();
+                            .GetJsonAsync<BaseApplicationResponse<GasShipperCustomerDetails>>();
                         applicationInfo.GasShipperCustomers = gasShipperCustomers.value;
 
                         var gasShipperTakeOffPoints = await currentEnvironment.AppendPathSegment($"GasShipperDeliveryTakeOffPoint")
@@ -743,6 +835,7 @@ namespace NCELAP.WebAPI.Services.Application
                            .WithOAuthBearerToken(token)
                            .GetJsonAsync<BaseApplicationResponse<GasShipperTakeOffPointDetails>>();
                         applicationInfo.GasShipperTakeOffPoints = gasShipperTakeOffPoints.value;
+ 
 
                     }
 

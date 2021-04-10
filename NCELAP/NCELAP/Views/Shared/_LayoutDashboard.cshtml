@@ -55,7 +55,9 @@
 </head>
 
 
-<body ng-app="ncLasPortalApp" ng-cloak class="vertical-layout vertical-menu-modern 2-columns  navbar-floating footer-static  " data-open="click" data-menu="vertical-menu-modern" data-col="2-columns" ng-controller="layoutCtrl">
+<body ng-app="ncLasPortalApp" ng-cloak class="vertical-layout vertical-menu-modern 2-columns  navbar-floating footer-static  "
+      data-open="click" data-menu="vertical-menu-modern"
+      data-col="2-columns" ng-controller="layoutCtrl">
     @await Html.PartialAsync("_LayoutDashboardHeader")
     @await Html.PartialAsync("_LayoutDashboardMenu")
     <div class="app-content content">
@@ -66,7 +68,7 @@
             <div class="content-body">
                 <div ui-view></div>
             </div>
-            
+
         </div>
     </div>
 
@@ -75,7 +77,6 @@
     <script src="~/lib/popper/popper.min.js"></script>
     <script src="~/app-assets/js/core/app-menu.min.js"></script>
     <script src="~/app-assets/js/core/app.min.js"></script>
-
     <script src="~/app-assets/vendors/js/extensions/jquery.steps.min.js"></script>
     <script src="~/app-assets/vendors/js/extensions/tether.min.js"></script>
 

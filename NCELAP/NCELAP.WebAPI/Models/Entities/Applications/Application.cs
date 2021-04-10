@@ -53,12 +53,13 @@ namespace NCELAP.WebAPI.Models.Entities.Applications
     }
     public class APPlicationInfoDetails : ApplicationInfo
     {
-        public List<GasShipperCustomer> GasShipperCustomers { get; set; }
+        public List<GasShipperCustomerDetails> GasShipperCustomers { get; set; }
         public List<GasShipperTakeOffPointDetails> GasShipperTakeOffPoints { get; set; }
-        public List<StakeholderLocation> StakeholderLocations { get; set; }
+        public List<StakeholderLocationDetails> StakeholderLocations { get; set; }
         public List<LicenseApplicationPaymentModel> LicenseApplicationPayments { get; set; }
         public List<LicenseApplicationCommentModel> LicenseApplicationComments { get; set; }
         public List<LicenseAttachmentModel> LicenseApplicationAttachments { get; set; }
+        public LicenseApplicationUpload FileUploads { get; set; }
     }
 
     public class LicenseAttachmentModel

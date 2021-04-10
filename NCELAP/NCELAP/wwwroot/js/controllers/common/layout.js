@@ -10,18 +10,21 @@
 
     $scope.getLoggedInUserDetails = function () {
         var loggedInUser = localStorage.getItem('loggedInUser');
-        $scope.loggedInUser = JSON.parse(loggedInUser);
+        if (loggedInUser != null) {
+            $scope.loggedInUser = JSON.parse(loggedInUser);
 
 
-        if ($scope.loggedInUser.name !== '') {
-            //alert($scope.loggedInUser.name);
-            $scope.name = $scope.loggedInUser.name;
+            if ($scope.loggedInUser.name !== '') {
+                $scope.name = $scope.loggedInUser.name;
+            }
+
+            if ($scope.loggedInUser.email !== '') {
+                $scope.email = $scope.loggedInUser.email;
+            }
         }
-
-        if ($scope.loggedInUser.email !== '') {
-            $scope.email = $scope.loggedInUser.email;
+        else {
+            $scope.logoutAction();
         }
-        // alert($scope.licenseApplicationModel.Customer);
     };
 
     $scope.logoutAction = function () {
