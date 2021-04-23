@@ -26,6 +26,13 @@
                 <hr />
                 <div class="card-content">
                     <div class="card-body">
+                        <div ng-show="errors.length>0" class="alert alert-danger mt-1 alert-validation-msg" role="alert">
+                            <p><strong>Please fix the follow errors</strong></p>
+                            <p ng-repeat="error in errors">
+                                <i class="feather icon-info mr-1 align-middle"></i>
+                                <span ng-bind="error"></span>
+                            </p>
+                        </div>
                         <section class="wizard-container" custom-wizard waiting="{{waiting}}">
                             <header class="px-3">
                                 <div class="progress progress-step">
@@ -192,7 +199,7 @@
                                                                                     <div class="col col-lg-6 col-xl-6 col-12">
                                                                                         <div class="form-group">
                                                                                             <label>Type of License revoked as attachment</label>
-                                                                                            <input ng-if="!licenseApplicationUpload.HasLicenseRevokedFileName" type="file" class="form-control" tag="hasLicenseRevoked" ng-upload-change="setFileRecord"  ng-disabled="!licenseInformation.hasLicenseRevoked" />
+                                                                                            <input ng-if="!licenseApplicationUpload.HasLicenseRevokedFileName" type="file" class="form-control" tag="hasLicenseRevoked" ng-upload-change="setFileRecord" ng-disabled="!licenseInformation.hasLicenseRevoked" />
                                                                                             <p ng-if="licenseApplicationUpload.HasLicenseRevokedFileName">
                                                                                                 <i class="fa fa-file-pdf-o text-danger font-medium-2"></i>
                                                                                                 <span class="text-primary font-medium-1" ng-bind="licenseApplicationUpload.HasLicenseRevokedFileName"></span>
@@ -356,6 +363,7 @@
                                                     <label><strong>Name of Pipeline and Gas Transporter</strong><span class="text-danger">*</span></label>
                                                     <input type="text" class="form-control required"
                                                            data-msg="Please provide the name of pipeline and Gas transporter"
+                                                           name="pipelineAndGasTransporterName"
                                                            ng-model="licenseInformation.pipelineAndGasTransporterName" />
                                                 </div>
                                             </div>
@@ -418,7 +426,9 @@
                                                     <input type="number" class="form-control required" name="NomincatedCapacity2"
                                                            data-msg="Nominal capacity is required"
                                                            ng-model="licenseInformation.maximumNominatedCapacity"
-                                                           ng-change="evaluateGasShipperNominalCapacity(licenseInformation.maximumNominatedCapacity)" />
+                                                           ng-change="evaluateNominalCapacity(licenseInformation.maximumNominatedCapacity)" />
+                                                    <span ng-if="capacityError" style="font-size:smaller; color:#EA5455; margin-top:.25rem" ng-bind="capacityError"></span>
+
                                                 </div>
                                             </div>
                                             <div class="col-lg-7 col-xl-7 col-12">
@@ -481,7 +491,7 @@
                                                                                 data-msg="Take off point type {{$index+1}} is required"
                                                                                 ng-model="takeOffPoint.gasShipperPointType" ng-options="pointType.Value as pointType.Name for pointType in GasShipperPointType">
                                                                             <option value="">--Select--</option>
-                                                                           <!-- <option value="{{pointType.Value}}" ng-repeat="pointType in GasShipperPointType">{{ pointType.Name }}</option>-->
+                                                                            <!-- <option value="{{pointType.Value}}" ng-repeat="pointType in GasShipperPointType">{{ pointType.Name }}</option>-->
                                                                         </select>
                                                                     </td>
                                                                     <td>
@@ -589,7 +599,7 @@
                                                 <div class="form-group">
                                                     <label><strong>Gas PipeLine/Gas PipeLine Network</strong><span class="text-danger">*</span></label>
                                                     <input type="text" class="form-control required"
-                                                           data-msg="Gas Pipeline is required"
+                                                           data-msg="Gas Pipeline is required" name="gasPipelineNetwork"
                                                            ng-model="licenseInformation.gasPipelineNetwork" />
                                                 </div>
                                             </div>
@@ -598,8 +608,8 @@
                                             <div class="col col-12">
                                                 <div class="form-group">
                                                     <label><strong>Installed capacity of the gas pipeline</strong><span class="text-danger">*</span></label>
-                                                    <input type="text" class="form-control"
-                                                           data-msg="Installed capacity is required"
+                                                    <input type="text" class="form-control required"
+                                                           data-msg="Installed capacity is required" name="installedCapacity"
                                                            ng-model="licenseInformation.installedCapacity" />
                                                 </div>
                                             </div>
@@ -660,7 +670,7 @@
                                             <div class="col col-lg-5 col-xl-5 col-12">
                                                 <div class="form-group">
                                                     <label><strong>Present Entry point</strong><span class="text-danger">*</span></label>
-                                                    <input type="text" class="form-control" name="entryPointPresent"
+                                                    <input type="text" class="form-control required" name="entryPointPresent"
                                                            data-msg="Entry point is required"
                                                            ng-model="licenseInformation.entryPoint" />
                                                 </div>
@@ -679,7 +689,7 @@
                                             <div class="col col-lg-4 col-xl-5 col-12">
                                                 <div class="form-group">
                                                     <label><strong>Present Exit point</strong><span class="text-danger">*</span></label>
-                                                    <input type="text" class="form-control" name="exitPointPresent"
+                                                    <input type="text" class="form-control required" name="exitPointPresent"
                                                            data-msg="Exit point is required"
                                                            ng-model="licenseInformation.exitPoint" />
                                                 </div>
@@ -703,6 +713,7 @@
                                                     <label><strong>Location </strong><span class="text-danger">*</span></label>
                                                     <input type="text" class="form-control required"
                                                            data-msg="Location is required"
+                                                           name="locationTransporter"
                                                            ng-model="licenseInformation.location" />
                                                 </div>
                                             </div>
@@ -711,8 +722,10 @@
                                                     <label><strong>Nominated capacity</strong><span class="text-danger">*</span></label>
                                                     <input type="number" class="form-control required"
                                                            data-msg="Nominated capacity is required"
+                                                           name="transporterNominatedCapacity"
                                                            ng-model="licenseInformation.maximumNominatedCapacity"
-                                                           ng-change="evaluateGasTransporterNominalCapacity(licenseInformation.maximumNominatedCapacity)" />
+                                                           ng-change="evaluateNominalCapacity(licenseInformation.maximumNominatedCapacity)" />
+                                                    <span ng-if="capacityError" style="font-size:smaller; color:#EA5455; margin-top:.25rem" ng-bind="capacityError"></span>
                                                 </div>
                                             </div>
                                         </div>
@@ -730,7 +743,7 @@
                                             <div class="form-row">
                                                 <p><strong>Details of proposed arrangements for compliance with the applicable requirements and the standard conditions</strong><span class="text-danger">*</span></p>
                                                 <div class="form-group col-md-7">
-                                                    <input placeholder="Enter text" type="text" class="form-control"
+                                                    <input placeholder="Enter text" type="text" class="form-control" name="proposedArrangementLicensingActivity"
                                                            ng-model="licenseInformation.proposedArrangementLicensingActivity" />
                                                 </div>
                                                 <div class="form-group col-md-4">
@@ -763,7 +776,8 @@
                                                 </div>
                                                 <div class="form-group col-md-4">
                                                     <label>Safety Case Approved<span class="text-danger">*</span></label>
-                                                    <input ng-if="!licenseApplicationUpload.SafetyCaseFileName" class="form-control" type="file" ng-upload-change="setFileRecord" tag="SafetyCase">
+                                                    <input ng-if="!licenseApplicationUpload.SafetyCaseFileName" class="form-control required" 
+                                                           type="file" ng-upload-change="setFileRecord" name="safetyCaseFileName" tag="SafetyCase">
                                                     <p ng-if="licenseApplicationUpload.SafetyCaseFileName">
                                                         <i class="fa fa-file-pdf-o text-danger font-medium-2"></i>
                                                         <span class="text-primary font-medium-1" ng-bind="licenseApplicationUpload.SafetyCaseFileName"></span>
@@ -772,7 +786,7 @@
                                                 </div>
                                                 <div class="form-group col-md-4">
                                                     <label>Details of Gas transmission SCADA System<span class="text-danger">*</span></label>
-                                                    <input ng-if="!licenseApplicationUpload.SCADAFileName" class="form-control" type="file" ng-upload-change="setFileRecord" tag="SCADA">
+                                                    <input ng-if="!licenseApplicationUpload.SCADAFileName" name="sCADAFileName" class="form-control required" type="file" ng-upload-change="setFileRecord" tag="SCADA">
                                                     <p ng-if="licenseApplicationUpload.SCADAFileName">
                                                         <i class="fa fa-file-pdf-o text-danger font-medium-2"></i>
                                                         <span class="text-primary font-medium-1" ng-bind="licenseApplicationUpload.SCADAFileName"></span>
@@ -781,7 +795,7 @@
                                                 </div>
                                                 <div class="form-group col-md-4">
                                                     <label>Details of the Gas Transmission System (GTS) GIS Coordinates <span class="text-danger">*</span></label>
-                                                    <input ng-if="!licenseApplicationUpload.GTSFileName" class="form-control" type="file" ng-upload-change="setFileRecord" tag="GTS">
+                                                    <input ng-if="!licenseApplicationUpload.GTSFileName" name="gTSFileName" class="form-control required" type="file" ng-upload-change="setFileRecord" tag="GTS">
                                                     <p ng-if="licenseApplicationUpload.GTSFileName">
                                                         <i class="fa fa-file-pdf-o text-danger font-medium-2"></i>
                                                         <span class="text-primary font-medium-1" ng-bind="licenseApplicationUpload.GTSFileName"></span>
@@ -790,7 +804,8 @@
                                                 </div>
                                                 <div class="form-group col-md-4">
                                                     <label>Technical Attributes of all systems Entry/Exit Points<span class="text-danger">*</span></label>
-                                                    <input ng-if="!licenseApplicationUpload.TechnicalAttributeFileName" class="form-control" type="file" ng-upload-change="setFileRecord" tag="technicalAttr">
+                                                    <input ng-if="!licenseApplicationUpload.TechnicalAttributeFileName" name="techicalAttributeFilename" class="form-control required" 
+                                                           type="file" ng-upload-change="setFileRecord" tag="technicalAttr">
                                                     <p ng-if="licenseApplicationUpload.TechnicalAttributeFileName">
                                                         <i class="fa fa-file-pdf-o text-danger font-medium-2"></i>
                                                         <span class="text-primary font-medium-1" ng-bind="licenseApplicationUpload.TechnicalAttributeFileName"></span>
@@ -799,7 +814,8 @@
                                                 </div>
                                                 <div class="form-group col-md-4">
                                                     <label>Auxiliary systems on the Gas Transmission System (GTS)<span class="text-danger">*</span></label>
-                                                    <input ng-if="!licenseApplicationUpload.AuxiliarySystemFileName" class="form-control" type="file" ng-upload-change="setFileRecord" tag="auxSystems">
+                                                    <input ng-if="!licenseApplicationUpload.AuxiliarySystemFileName" class="form-control required" name="auxiliarySystemFileName"
+                                                           type="file" ng-upload-change="setFileRecord" tag="auxSystems">
                                                     <p ng-if="licenseApplicationUpload.AuxiliarySystemFileName">
                                                         <i class="fa fa-file-pdf-o text-danger font-medium-2"></i>
                                                         <span class="text-primary font-medium-1" ng-bind="licenseApplicationUpload.AuxiliarySystemFileName"></span>
@@ -809,7 +825,8 @@
                                                 <div class="col col-12">
                                                     <div class="form-group">
                                                         <label>Tariff/Pricing Methodology (including basis Source of Input Parameter) <span class="text-danger">*</span></label>
-                                                        <input ng-if="!licenseApplicationUpload.TariffAndPricingFileName" class="form-control" type="file" ng-upload-change="setFileRecord" tag="tariff">
+                                                        <input ng-if="!licenseApplicationUpload.TariffAndPricingFileName" name="tariffAndPricingFileName"
+                                                               class="form-control required" type="file" ng-upload-change="setFileRecord" tag="tariff">
                                                         <p ng-if="licenseApplicationUpload.TariffAndPricingFileName">
                                                             <i class="fa fa-file-pdf-o text-danger font-medium-2"></i>
                                                             <span class="text-primary font-medium-1" ng-bind="licenseApplicationUpload.TariffAndPricingFileName"></span>
@@ -818,7 +835,8 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label>Risk management strategy in terms of market volatility and system availability<span class="text-danger">*</span></label>
-                                                        <input ng-if="!licenseApplicationUpload.RiskManagementFileName" class="form-control" type="file" ng-upload-change="setFileRecord" tag="riskManagement">
+                                                        <input ng-if="!licenseApplicationUpload.RiskManagementFileName" class="form-control required" name="riskManagementFileName"
+                                                               type="file" ng-upload-change="setFileRecord" tag="riskManagement">
                                                         <p ng-if="licenseApplicationUpload.RiskManagementFileName">
                                                             <i class="fa fa-file-pdf-o text-danger font-medium-2"></i>
                                                             <span class="text-primary font-medium-1" ng-bind="licenseApplicationUpload.RiskManagementFileName"></span>
@@ -829,7 +847,8 @@
                                                 <div class="form-group col-md-4">
                                                     <label>Community Signed MOU for Gas Transmission System<span class="text-danger">*</span></label>
                                                     <input ng-if="!
-                                                           licenseApplicationUpload.CommunityMOUFileName" class="form-control" type="file" ng-upload-change="setFileRecord" tag="MOU">
+                                                           licenseApplicationUpload.CommunityMOUFileName" class="form-control" name="communityMOUFileName"
+                                                           type="file" ng-upload-change="setFileRecord" tag="MOU">
                                                     <p ng-if="licenseApplicationUpload.CommunityMOUFileName">
                                                         <i class="fa fa-file-pdf-o text-danger font-medium-2"></i>
                                                         <span class="text-primary font-medium-1" ng-bind="licenseApplicationUpload.CommunityMOUFileName"></span>
@@ -950,7 +969,7 @@
                                     <br />
                                     <div class="row">
                                         <div class="col col-12">
-                                            <button id="submitApplication" class="btn btn-success" type="submit"
+                                            <button class="btn btn-success" type="submit"
                                                     ng-disabled="!agreementCheck">
                                                 Update Application
                                             </button>

@@ -510,11 +510,15 @@ appModule.controller('applicationLicenseUpdate', function ($scope, $http, $state
         }
     );
     $scope.agreementCheck = true;
+    $scope.errors = [];
     $scope.stakeholdersLocations = [{}];
     $scope.takeOffPoints = [{}];
     $scope.gasShipperCustomers = [{}];
     $scope.licenseApplicationUpload = {};
     $scope.upload = {};
+    var currentLicenseCategory;
+    var licenseCategoryDetails;
+    $scope.capacityError = "";
 
 
     document.title = "License Application Update " + appTitle;
@@ -529,19 +533,8 @@ appModule.controller('applicationLicenseUpdate', function ($scope, $http, $state
         { "Name": "Seller", "Value": "Seller" }
 
     ];
-
-    $scope.getLicenseFees = function () {
-        $http({
-            method: 'GET',
-            url: baseUrl + 'applications/licensefees/'
-        }).then(function (response) {
-            $scope.licenseFees = response.data;
-            console.log($scope.licenseFees);
-        }, function (error) {
-            console.log(error);
-        });
-    };
-
+    
+    
     $scope.addCustomerStakeholder = function () {
         $scope.licenseInformation.stakeholderLocations.push({UniqueId:''});
     };
@@ -577,21 +570,28 @@ appModule.controller('applicationLicenseUpdate', function ($scope, $http, $state
             console.log(error);
         });
     };
-
+    $scope.setError = function (errors) {
+        $scope.errors = errors;
+    };
     $scope.submitForm = function () {
-        $scope.waiting++;
-        $http({
-            method: 'PUT',
-            url: baseUrl + 'applications/updatelicenseapplication',
-            data: $scope.licenseInformation,
-            dataType: 'json'
-        }).then(function (response) {
-            $state.go('site.application.list');
-            $scope.waiting--;
-        }, function (error) {
-            $scope.waiting--;
-            console.log(error);
-        });
+        $scope.errors = [];
+        if ($scope.capacityError === "") {
+            $scope.waiting++;
+            $http({
+                method: 'PUT',
+                url: baseUrl + 'applications/updatelicenseapplication',
+                data: $scope.licenseInformation,
+                dataType: 'json'
+            }).then(function (response) {
+                $state.go('site.application.list');
+                $scope.waiting--;
+            }, function (error) {
+                $scope.waiting--;
+            });
+        }
+        else {
+            $scope.errors.push($scope.capacityError);
+        }
     };
 
     //Get Application Details
@@ -600,14 +600,15 @@ appModule.controller('applicationLicenseUpdate', function ($scope, $http, $state
         url: baseUrl + 'applications/licenseapplicationdetails/' + $state.params.recordId
     }).then(function (response) {
         $scope.licenseInformation = response.data;
+        currentLicenseCategory = $scope.licenseInformation.licenseFeeCategory;
         $scope.licenseInformation.companyName = $scope.currentUser().companyName;   
         $scope.gasShipperCustomers = $scope.licenseInformation.gasShipperCustomers;
         $scope.stakeholdersLocations = $scope.licenseInformation.stakeholdersLocations;
         $scope.takeOffPoints = $scope.licenseInformation.takeOffPoints;
         $scope.licenseInformation.fileUploads = $scope.upload;
         $scope.processLicenseAttachment($scope.licenseInformation.licenseApplicationAttachments);
-        $scope.evaluateGasShipperNominalCapacity($scope.licenseInformation.maximumNominatedCapacity);
-        $scope.evaluateGasTransporterNominalCapacity($scope.licenseInformation.maximumNominatedCapacity);
+
+        $scope.getLicenseFees();
         $scope.waiting--;
 
         if ($scope.licenseInformation.effectiveDate) {
@@ -624,6 +625,22 @@ appModule.controller('applicationLicenseUpdate', function ($scope, $http, $state
         $scope.waiting--;
         console.log(error);
     });
+    $scope.getLicenseFees = function () {
+        $http({
+            method: 'GET',
+            url: baseUrl + 'applications/licensefees/'
+        }).then(function (response) {
+            $scope.licenseFees = response.data;
+            licenseCategoryDetails = $scope.licenseFees.filter(function (item) {
+                if (item.recordId == currentLicenseCategory) {
+                    return item;
+                }
+            });
+            $scope.evaluateNominalCapacity($scope.licenseInformation.maximumNominatedCapacity);
+        }, function (error) {
+            console.log(error);
+        });
+    };
     $scope.getStates();
 
 
@@ -677,41 +694,28 @@ appModule.controller('applicationLicenseUpdate', function ($scope, $http, $state
 
         });
     }
-
-    $scope.evaluateGasShipperNominalCapacity = function (capacity) {
+    $scope.evaluateNominalCapacity = function (capacity) {
         $scope.licenseFeeEvaluated = false;
-
         for (var i = 0; i < $scope.licenseFees.length - 1; i++) {
             var currentLicenseFee = $scope.licenseFees[i];
-
-            if (currentLicenseFee.licenseType === 'GasShipperLicense' && capacity >= currentLicenseFee.minimum && capacity <= currentLicenseFee.maximum) {
+            if (currentLicenseFee.licenseType === $scope.licenseInformation.custLicenseType && capacity >= currentLicenseFee.minimum && capacity <= currentLicenseFee.maximum) {
                 $scope.licenseFeeEvaluated = true;
                 $scope.statutoryFee = currentLicenseFee.statutory;
                 $scope.processingFee = currentLicenseFee.processingFee;
                 $scope.totalFee = parseInt($scope.statutoryFee) + parseInt($scope.processingFee);
-                $scope.licenseInformation.CustomerTier = currentLicenseFee.categoryDescription;
-                $scope.licenseInformation.LicenseFeeCategory = currentLicenseFee.recordId;
+                $scope.licenseInformation.customerTier = currentLicenseFee.categoryDescription;
+                $scope.licenseInformation.licenseFeeCategory = currentLicenseFee.recordId;
+                break;
             }
         }
-    };
-
-    $scope.evaluateGasTransporterNominalCapacity = function (capacity) {
-        $scope.licenseFeeEvaluated = false;
-
-        for (var i = 0; i < $scope.licenseFees.length - 1; i++) {
-            var currentLicenseFee = $scope.licenseFees[i];
-
-            if (currentLicenseFee.licenseType === 'GasTransporterLicense' && capacity >= currentLicenseFee.minimum && capacity <= currentLicenseFee.maximum) {
-                $scope.licenseFeeEvaluated = true;
-                $scope.statutoryFee = currentLicenseFee.statutory;
-                $scope.processingFee = currentLicenseFee.processingFee;
-                $scope.totalFee = parseInt($scope.statutoryFee) + parseInt($scope.processingFee);
-                $scope.licenseInformation.LicenseFeeCategory = currentLicenseFee.recordId;
-                $scope.licenseInformation.CustomerTier = currentLicenseFee.categoryDescription;
-            }
+        var licenseCategoryDetail = licenseCategoryDetails[0];
+        if (currentLicenseCategory != $scope.licenseInformation.licenseFeeCategory) {
+            $scope.capacityError = "Allowed capacity update should be between " + licenseCategoryDetail.minimum + " and " + licenseCategoryDetail.maximum;
+        }
+        else {
+            $scope.capacityError = "";
         }
     };
-
 
     $scope.setFileRecord = function ($event, tag) {
         var file = $event.target.files[0];
@@ -814,16 +818,6 @@ appModule.controller('applicationLicenseUpdate', function ($scope, $http, $state
             };
         })(file);
     };
-    $scope.getLicenseFees = function () {
-        $http({
-            method: 'GET',
-            url: baseUrl + 'applications/licensefees/'
-        }).then(function (response) {
-            $scope.licenseFees = response.data;
-        }, function (error) {
-            console.log(error);
-        });
-    };
-    $scope.getLicenseFees();
+    
 
 });
