@@ -11,10 +11,14 @@ namespace DPRHSE.WebAPI.Controllers
     {
         private readonly AppSettings _appSettings;
         private readonly IAccountService _accountSvc;
-        public TestController(AppSettings appSettings, IAccountService accountService)
+        private readonly IAuthService _authService;
+        public TestController(AppSettings appSettings, 
+            IAccountService accountService,
+            IAuthService authService)
         {
             _appSettings = appSettings;
             _accountSvc = accountService;
+            _authService = authService;
         }
 
         [HttpGet]
@@ -23,5 +27,7 @@ namespace DPRHSE.WebAPI.Controllers
             var resp = _accountSvc.TestMethod();
             return Ok(resp);
         }
+
+       
     }
 }

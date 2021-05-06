@@ -36,9 +36,9 @@ namespace DPRHSE.WebAPI
                 // c.SchemaFilter<EnumSchemaFilter>();
             });
             #endregion
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson();
             services.AddSingleton(Configuration.GetSection("AppSettings").Get<AppSettings>());
-            services.RegisterServices<AccountService>();
+            services.RegisterServices<AuthService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
